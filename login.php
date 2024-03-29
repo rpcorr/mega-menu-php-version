@@ -1,3 +1,63 @@
+<?php
+// start the session
+session_start();
+
+if (isset($_POST['username'])) {
+  $username = $_POST['username'];
+
+  // Path to the JSON file
+  $json_file = './assets/json/menu.json';
+
+  // Check if the file exists
+  if (!file_exists($json_file)) {
+      die("JSON file not found.");
+  }
+
+  // Read JSON file
+  $json_data = file_get_contents($json_file);
+
+  // Check if the file content could be read
+  if ($json_data === false) {
+      die("Failed to read JSON file.");
+  }
+
+  // Decode JSON data into PHP array or object
+  $data = json_decode($json_data);
+
+  // Check if JSON decoding was successful
+  if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
+      die("Failed to parse JSON data.");
+  }
+
+  // Access data
+  // Check if the "users" array exists
+  if (isset($data->users) && is_array($data->users)) {
+      // Iterate through each person in the "users" array
+
+      // variable to determine if user is found
+      $bFound = false;
+
+      foreach ($data->users as $user) {
+
+        // Check if the person's name exists
+        if ($user->username === $username) {
+
+          // user found; set $bFound to true
+          $bFound = true;
+
+          // set the session variables
+          $_SESSION['user'] = $user->username;
+          $_SESSION['userType'] = $user->userType;
+          $_SESSION['stylePreference'] = $user->stylePreference;
+        }
+    }
+
+  } else {
+      die("Array 'people' not found or not properly formatted in JSON data.");
+  }
+} 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,7 +96,7 @@
 
         <div class="login-form">
           <h1>Login</h1>
-          <form id="loginForm">
+          <form id="loginForm" action="login.php" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required />
             <label for="password">Password:</label>
@@ -48,5 +108,13 @@
 
     <script src="assets/js/jquery.min.js" defer></script>
     <script src="assets/js/scripts.js" defer></script>
+    <?php if ($bFound) { ?>
+      <script>
+            // set the localStorage variable so the menu will appear
+            localStorage.setItem('user', '<?php echo $_SESSION['user'] ?>');
+            localStorage.setItem('userType', '<?php echo $_SESSION['userType'] ?>');
+            localStorage.setItem('stylePreference', '<?php echo $_SESSION['stylePreference'] ?>');
+      </script>
+   <?php } ?>
   </body>
 </html>
