@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TritanopiaRainbow - HTML Elements Example Page</title>
+    <link rel="stylesheet" href="../css/common.css" />
+    <style>
+      /* NAV COLOURS ... */
+      nav {
+        background-color: #ff0000; /* Same background color as the parent menu items */
+      }
+
+      nav ul li a {
+        color: #ebffff; /* Top-level menu text color */
+      }
+
+      nav ul ul {
+        background-color: #00f9ff; /* Submenu background color */
+      }
+
+      nav ul ul ul {
+        background-color: #2b9f84; /* Sub-submenu background color */
+      }
+
+      /* Hover effect for menu items */
+      nav ul li:hover > a {
+        background-color: #ff90b7; /* Hover background color */
+      }
+
+      /* Text color for submenu items */
+      nav ul ul li a {
+        color: #333;
+      }
+
+      /* Text color for third-level submenu items */
+      nav ul ul ul li a {
+        color: #ebffff;
+      }
+
+      /* Hover color for third-level submenu items */
+      nav ul ul ul li a:hover {
+        color: #333;
+      }
+
+      /* ... NAV COLOURS */
+
+      /* HERO COLOURS ... */
+      .hero-background {
+        background-color: #ff0000;
+      }
+
+      .hero-content h1,
+      .hero-content p {
+        color: #ebffff;
+      }
+
+      .hero-buttons .btn.primary {
+        background-color: #ebffff;
+        color: #333333;
+      }
+
+      .hero-buttons .btn:hover.primary {
+        background-color: #00f9ff;
+      }
+      .hero-buttons .btn.secondary {
+        background-color: #00f9ff;
+        color: #333333;
+      }
+      .hero-buttons .btn:hover {
+        background-color: #ebffff;
+      }
+      /* ... HERO COLOURS */
+
+      /* BUTTON COLOURS ... */
+      .btn {
+        background-color: #ff90b7;
+        color: #333; /* White text for better contrast */
+      }
+
+      /* Hover state */
+      .btn:hover {
+        background-color: #00f9ff;
+        color: #333;
+      }
+      /* ... BUTTON COLOURS*/
+
+      /* HEADER/FOOTER COLOURS... */
+      header,
+      footer {
+        background-color: #ff0000; /* Header and footer background color */
+        color: #ffffff; /* Header and footer text color */
+      }
+      /* ... HEADER/FOOTER COLOURS */
+
+      /* CALLOUT COLOURS ... */
+      .callout {
+        background-color: #ff90b7; /* Callout background color */
+        color: #ffffff; /* Callout text color */
+      }
+      /* ... CALLOUT COLOURS */
+
+      /* TABLE COLOURS ... */
+      th,
+      td {
+        border-bottom: 0.063rem solid #ddd;
+      }
+
+      th {
+        background-color: #ff0000;
+        color: #ebffff;
+      }
+
+      tr:nth-child(even) {
+        background-color: #ebffff;
+      }
+
+      tr:nth-child(odd) {
+        background-color: #00f9ff;
+      }
+      /* ... TABLE COLOURS */
+
+      /* SEPARATORS COLOURS ... */
+      .separator-red {
+        background-color: #ff0000;
+      }
+
+      .separator-light-blue {
+        background-color: #ebffff;
+      }
+
+      .separator-blue {
+        background-color: #00f9ff;
+      }
+
+      .separator-green {
+        background-color: #2b9f84;
+      }
+
+      .separator-pink {
+        background-color: #ff90b7;
+      }
+      /* ... SEPARATORS COLOURS */
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>TritanopiaRainbow</h1>
+    </header>
+
+    <nav>
+      <ul>
+        <li>
+          <a href="#">Menu 1</a>
+          <ul>
+            <li>
+              <a href="#">Submenu 1.1</a>
+              <ul>
+                <li><a href="#">Sub-submenu 1.1.1</a></li>
+                <li><a href="#">Sub-submenu 1.1.2</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Submenu 1.2</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Menu 2</a>
+          <ul>
+            <li><a href="#">Submenu 2.1</a></li>
+            <li><a href="#">Submenu 2.2</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Menu 3</a>
+          <ul>
+            <li><a href="#">Submenu 3.1</a></li>
+            <li>
+              <a href="#">Submenu 3.2</a>
+              <ul>
+                <li><a href="#">Sub-submenu 3.2.1</a></li>
+                <li><a href="#">Sub-submenu 3.2.2</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="hero-background">
+      <div class="hero-container">
+        <div class="hero-section">
+          <div class="hero-content">
+            <h1>Title Goes Here</h1>
+            <p>This is the paragraph describing your hero section.</p>
+            <div class="hero-buttons">
+              <button class="btn primary">Primary Button</button>
+              <button class="btn secondary">Secondary Button</button>
+            </div>
+          </div>
+          <div class="hero-image">
+            <img
+              src="https://via.placeholder.com/700x400"
+              alt="Hero Image"
+              style="max-width: 100%"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>Heading 2</h2>
+      <h3>Heading 3</h3>
+      <h4>Heading 4</h4>
+      <h5>Heading 5</h5>
+      <h6>Heading 6</h6>
+
+      <p>This is a paragraph.</p>
+
+      <ul>
+        <li>Unordered List Item 1</li>
+        <li>Unordered List Item 2</li>
+        <li>Unordered List Item 3</li>
+      </ul>
+
+      <ol>
+        <li>Ordered List Item 1</li>
+        <li>Ordered List Item 2</li>
+        <li>Ordered List Item 3</li>
+      </ol>
+
+      <a href="#" class="link">Link</a>
+
+      <button class="btn">Button</button>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+            <th>Column 3</th>
+            <th>Column 4</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Data 1</td>
+            <td>Data 2</td>
+            <td>Data 3</td>
+            <td>Data 4</td>
+          </tr>
+          <tr>
+            <td>Data 5</td>
+            <td>Data 6</td>
+            <td>Data 7</td>
+            <td>Data 8</td>
+          </tr>
+          <tr>
+            <td>Data 9</td>
+            <td>Data 10</td>
+            <td>Data 11</td>
+            <td>Data 12</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required /><br />
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required /><br />
+        <label for="message">Message:</label><br />
+        <textarea id="message" name="message" rows="4" required></textarea
+        ><br />
+        <fieldset>
+          <legend>Gender:</legend>
+          <input type="radio" id="male" name="gender" value="male" />
+          <label for="male">Male</label><br />
+          <input type="radio" id="female" name="gender" value="female" />
+          <label for="female">Female</label><br />
+        </fieldset>
+        <fieldset>
+          <legend>Interests:</legend>
+          <input
+            type="checkbox"
+            id="interest1"
+            name="interests"
+            value="interest1"
+          />
+          <label for="interest1">Interest 1</label><br />
+          <input
+            type="checkbox"
+            id="interest2"
+            name="interests"
+            value="interest2"
+          />
+          <label for="interest2">Interest 2</label><br />
+        </fieldset>
+        <input type="submit" value="Submit" class="btn" />
+      </form>
+
+      <div class="separator long-separator separator-red"></div>
+      <div class="separator medium-separator separator-pink"></div>
+      <div class="separator short-separator separator-blue"></div>
+      <div class="separator long-separator separator-green"></div>
+      <div class="separator thin-separator separator-pink"></div>
+
+      <div class="callout">
+        <h2>Callout Section</h2>
+        <p>
+          This is a callout section. It can be used to highlight important
+          information.
+        </p>
+      </div>
+    </div>
+
+    <footer>
+      <h1>Footer</h1>
+    </footer>
+  </body>
+</html>

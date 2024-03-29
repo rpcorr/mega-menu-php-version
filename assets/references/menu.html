@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        max-width: 90%;
+        margin: 0 auto; /* Center the container */
+      }
+      /* Style for the navigation menu */
+      nav {
+        text-align: center; /* Center align the menu items */
+        background-color: #6fde6e; /* Background color for the nav container */
+      }
+
+      nav ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      nav ul li {
+        display: inline-block;
+        position: relative;
+      }
+
+      nav ul li a {
+        display: block;
+        padding: 0.625rem 1.25rem;
+        color: #e8f086; /* Top-level menu text color */
+        color: #fff; /* Top-level menu text color */
+        text-decoration: none;
+      }
+
+      nav ul ul {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        display: none;
+        background-color: #ff4242; /* Submenu background color */
+      }
+
+      nav ul ul ul {
+        left: 100%;
+        top: 0;
+        background-color: #a691ae; /* Sub-submenu background color */
+      }
+
+      nav ul li:hover > ul {
+        display: block;
+      }
+
+      /* Hover effect for menu items */
+      nav ul li:hover > a {
+        background-color: #235fa4; /* Hover background color */
+      }
+
+      /* Text color for submenu items */
+      nav ul ul li a {
+        color: #ffffff;
+      }
+
+      /* Text color for third-level submenu items */
+      nav ul ul ul li a {
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li>
+          <a href="#">Menu 1</a>
+          <ul>
+            <li>
+              <a href="#">Submenu 1.1</a>
+              <ul>
+                <li><a href="#">Sub-submenu 1.1.1</a></li>
+                <li><a href="#">Sub-submenu 1.1.2</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Submenu 1.2</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Menu 2</a>
+          <ul>
+            <li><a href="#">Submenu 2.1</a></li>
+            <li><a href="#">Submenu 2.2</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Menu 3</a>
+          <ul>
+            <li><a href="#">Submenu 3.1</a></li>
+            <li>
+              <a href="#">Submenu 3.2</a>
+              <ul>
+                <li><a href="#">Sub-submenu 3.2.1</a></li>
+                <li><a href="#">Sub-submenu 3.2.2</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </body>
+</html>
