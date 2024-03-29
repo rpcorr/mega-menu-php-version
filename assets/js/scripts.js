@@ -27,10 +27,6 @@ $(document).ready(function () {
 
         for (let i = 0; i < response.users.length; i++) {
           if (username === response.users[i].username) {
-            console.log('match');
-            console.log(response.users[i].username);
-            console.log(response.users[i].userType);
-
             // store current user in user localstorage variable
             localStorage.setItem('user', response.users[i].username);
             localStorage.setItem('userType', response.users[i].userType);
@@ -60,7 +56,7 @@ $(document).ready(function () {
         };
 
         // update style preferences
-        selectStylesheet(user.stylePreference);
+        //selectStylesheet(user.stylePreference);
 
         // create the menu base on the user
         response.menuItems.forEach((mI) => {
@@ -822,7 +818,16 @@ function isCurrentPage(page) {
 var radioButtons = document.querySelectorAll('input[name="option"]');
 radioButtons.forEach(function (radioButton) {
   radioButton.addEventListener('click', function () {
-    selectStylesheet(this.id);
+    //selectStylesheet(this.id);
+
+    // Send an AJAX request to set the session variable
+    var xhr = new XMLHttpRequest();
+    xhr.open(
+      'GET',
+      `./assets/js/set_preference.php?stylePreference=${this.id}`,
+      true
+    );
+    xhr.send();
   });
 });
 
