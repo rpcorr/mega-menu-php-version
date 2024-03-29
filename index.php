@@ -20,6 +20,9 @@ session_start();
     />
     <link rel="stylesheet" type="text/css" href="assets/css/styles.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/default.css" />
+    <?php if(isset($_SESSION['stylePreference'])) { ?>
+      <link rel="stylesheet" type="text/css" href="assets/css/templatesStyles/<?php echo $_SESSION['stylePreference'];?>.css" />
+    <?php } ?>
     <title>Priority Mega Menu</title>
   </head>
   <body>
@@ -53,17 +56,9 @@ session_start();
             echo "Current user:" . $_SESSION['user']  . "<br/>";
             echo "Current user type:" . $_SESSION['userType']  . "<br/>";
             echo "Style preference exists: " . $_SESSION['stylePreference'];
-          } else {
-            echo "Style preference does not exist";
           }
 
-          echo '<p>&nbsp;</p>';
-
           ?>
-        
-
-           
-
       </div>
     </main>
 

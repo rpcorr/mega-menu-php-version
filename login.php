@@ -67,7 +67,7 @@ if (isset($_POST['username'])) {
     <link rel="stylesheet" href="assets/fontawesome/css/solid.css" />
     <link rel="stylesheet" href="assets/css/styles.css" />
     <link rel="stylesheet" href="assets/css/default.css" />
-    <title>Priority Mega Menu</title>
+    <title>Login - Priority Mega Menu</title>
   </head>
   <body>
     <header id="header" role="banner">

@@ -1,3 +1,8 @@
+<?php 
+// start the session
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,8 +13,11 @@
     <link rel="stylesheet" href="assets/css/colourswatch.css" />
     <link rel="stylesheet" href="assets/css/styles.css" />
     <link rel="stylesheet" href="assets/css/default.css" />
+    <?php if(isset($_SESSION['stylePreference'])) { ?>
+      <link rel="stylesheet" type="text/css" href="assets/css/templatesStyles/<?php echo $_SESSION['stylePreference'];?>.css" />
+    <?php } ?>
 
-    <title>Priority Mega Menu</title>
+    <title>Preferences - Priority Mega Menu</title>
   </head>
   <body>
     <header id="header" role="banner">
