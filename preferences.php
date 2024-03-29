@@ -58,6 +58,9 @@ session_start();
                 id="protanopia"
                 name="option"
                 value="Protanopia"
+                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "protanopia" ) { ?>
+                checked
+                <?php } ?>
               />
               <label for="protanopia">Protanopia</label>
             </div>
@@ -78,6 +81,9 @@ session_start();
                 id="protanomaly"
                 name="option"
                 value="Protanomaly"
+                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "protanomaly" ) { ?>
+                checked
+                <?php } ?>
               />
               <label for="protanomaly">Protanomaly</label>
             </div>
@@ -98,6 +104,9 @@ session_start();
                 id="deuteranopia"
                 name="option"
                 value="Deuteranopia"
+                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "deuteranopia" ) { ?>
+                checked
+                <?php } ?>
               />
               <label for="deuteranopia">Deuteranopia</label>
             </div>
@@ -118,6 +127,9 @@ session_start();
                 id="deuteranomaly"
                 name="option"
                 value="Deuteranomaly"
+                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "deuteranomaly" ) { ?>
+                checked
+                <?php } ?>
               />
               <label for="deuteranomaly">Deuteranomaly</label>
             </div>
@@ -138,6 +150,9 @@ session_start();
                 id="achromatomaly"
                 name="option"
                 value="Achromatomaly"
+                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "achromatomaly" ) { ?>
+                checked
+                <?php } ?>
               />
               <label for="achromatomaly">Achromatomaly</label>
             </div>
@@ -158,6 +173,9 @@ session_start();
                 id="tritanopia"
                 name="option"
                 value="Tritanopia"
+                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "tritanopia" ) { ?>
+                checked
+                <?php } ?>
               />
               <label for="tritanopia">Tritanopia</label>
             </div>
@@ -178,6 +196,9 @@ session_start();
                 id="tritanopia2"
                 name="option"
                 value="Tritanopia2"
+                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "tritanopia2" ) { ?>
+                checked
+                <?php } ?>
               />
               <label for="tritanopia2">Tritanopia2</label>
             </div>
@@ -198,6 +219,9 @@ session_start();
                 id="tritanopiaRYGBV"
                 name="option"
                 value="TritanopiaRYGBV"
+                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "tritanopiaRYGBV" ) { ?>
+                checked
+                <?php } ?>
               />
               <label for="tritanopiaRYGBV">TritanopiaRYGBV</label>
             </div>
@@ -218,6 +242,9 @@ session_start();
                 id="tritanopiaRainbow"
                 name="option"
                 value="TritanopiaRainbow"
+                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "tritanopiaRainbow" ) { ?>
+                checked
+                <?php } ?>
               />
               <label for="tritanopiaRainbow">TritanopiaRainbow</label>
             </div>
@@ -238,6 +265,9 @@ session_start();
                 id="tritanopiaReds"
                 name="option"
                 value="TritanopiaReds"
+                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "tritanopiaReds" ) { ?>
+                checked
+                <?php } ?>
               />
               <label for="tritanopiaReds">TritanopiaReds</label>
             </div>
@@ -258,6 +288,9 @@ session_start();
                 id="tritanopiaBlues"
                 name="option"
                 value="TritanopiaBlues"
+                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "tritanopiaBlues" ) { ?>
+                checked
+                <?php } ?>
               />
               <label for="tritanopiaBlues">TritanopiaBlues</label>
             </div>

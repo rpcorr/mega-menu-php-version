@@ -818,16 +818,7 @@ function isCurrentPage(page) {
 var radioButtons = document.querySelectorAll('input[name="option"]');
 radioButtons.forEach(function (radioButton) {
   radioButton.addEventListener('click', function () {
-    //selectStylesheet(this.id);
-
-    // Send an AJAX request to set the session variable
-    var xhr = new XMLHttpRequest();
-    xhr.open(
-      'GET',
-      `./assets/js/set_preference.php?stylePreference=${this.id}`,
-      true
-    );
-    xhr.send();
+    selectStylesheet(this.id);
   });
 });
 
@@ -845,9 +836,7 @@ function selectStylesheet(stylesheetName) {
     'link[rel="stylesheet"][href^="assets/css/templatesStyles"]:not(:last-of-type)'
   );
 
-  setTimeout(() => {
-    previousStylesheets.forEach(function (previousStylesheet) {
-      document.head.removeChild(previousStylesheet);
-    });
-  }, 1000);
+  previousStylesheets.forEach(function (previousStylesheet) {
+    document.head.removeChild(previousStylesheet);
+  });
 }
