@@ -836,7 +836,9 @@ function selectStylesheet(stylesheetName) {
     'link[rel="stylesheet"][href^="assets/css/templatesStyles"]:not(:last-of-type)'
   );
 
-  previousStylesheets.forEach(function (previousStylesheet) {
-    document.head.removeChild(previousStylesheet);
-  });
+  setTimeout(() => {
+    previousStylesheets.forEach(function (previousStylesheet) {
+      document.head.removeChild(previousStylesheet);
+    });
+  }, 1000);
 }
