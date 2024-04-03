@@ -819,6 +819,27 @@ var radioButtons = document.querySelectorAll('input[name="option"]');
 radioButtons.forEach(function (radioButton) {
   radioButton.addEventListener('click', function () {
     selectStylesheet(this.id);
+
+    // update user preference in JSON file
+    var xhr = new XMLHttpRequest();
+    xhr.open(
+      'GET',
+      'assets/php_scripts/update_style_preference.php?stylePreference=' +
+        this.id,
+      true
+    );
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          console.log('Style preference updated successfully!');
+        } else {
+          console.error('Failed to update style preference.');
+        }
+      }
+    };
+    var data = 'stylePreference=' + encodeURIComponent(this.id);
+    xhr.send(data);
   });
 });
 
