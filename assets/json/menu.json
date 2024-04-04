@@ -105,6 +105,23 @@
       "availableFor": ["basic", "premium"]
     },
     {
+      "name": "Pages",
+      "link": "pages.php",
+      "subMenuType": "regularLinks",
+      "subMenuItems": [
+        {
+          "name": "Admin Only",
+          "link": "an-admin-access-page.php"
+        },
+        {
+          "name": "Admin or Premium Only",
+          "link": "an-admin-or-premium-access-page.php",
+          "availableFor": ["premium"]
+        }
+      ],
+      "availableFor": ["premium"]
+    },
+    {
       "name": "Services",
       "link": "services.php",
       "subMenuType": "regularLinks",

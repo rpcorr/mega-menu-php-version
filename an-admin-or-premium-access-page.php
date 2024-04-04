@@ -1,9 +1,10 @@
-<?php 
+<?php
 // level of access to view page; admin is a given
-$userTypes = array("premium","basic");
+$userTypes = array("premium");
 
 // Include the session check file
 require_once './assets/php_scripts/session_check.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +18,7 @@ require_once './assets/php_scripts/session_check.php';
     <?php if(isset($_SESSION['stylePreference'])) { ?>
       <link rel="stylesheet" type="text/css" href="assets/css/templatesStyles/<?php echo $_SESSION['stylePreference'];?>.css" />
     <?php } ?>
-    <title>About - Priority Mega Menu</title>
+    <title>Admin Access Page - Priority Mega Menu</title>
   </head>
   <body>
     <header id="header" role="banner">
@@ -41,7 +42,10 @@ require_once './assets/php_scripts/session_check.php';
 
     <main>
       <div class="container">
-        <h1>About Page</h1>
+
+        <h1>Admin or Premium Access Page</h1>
+
+        <?php echo 'current session user type: ' . $_SESSION['userType']; ?>
       </div>
     </main>
 

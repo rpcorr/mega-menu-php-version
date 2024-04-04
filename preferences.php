@@ -1,4 +1,7 @@
 <?php 
+// level of access to view page; admin is a given
+$userTypes = array("premium","basic");
+
 // Include the session check file
 require_once './assets/php_scripts/session_check.php';
 ?>
