@@ -116,7 +116,7 @@
         },
         { "name": "Service 2", "link": "https://www.ctv.ca" }
       ],
-      "availableFor": ["premium", "admin"]
+      "availableFor": ["premium"]
     },
     {
       "name": "New",
