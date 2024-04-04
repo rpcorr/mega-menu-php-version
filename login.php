@@ -2,8 +2,16 @@
 // start the session
 session_start();
 
+// check if form has been submitted
 if (isset($_POST['username'])) {
-  $username = $_POST['username'];
+
+  // variable to determine if user is found
+  $bFound = false;
+
+  //assign username and password to PHP variables
+  $username = trim($_POST['username']);
+  $password = $_POST['password'];
+
 
   // Path to the JSON file
   $json_file = './assets/json/menu.json';
@@ -34,13 +42,10 @@ if (isset($_POST['username'])) {
   if (isset($data->users) && is_array($data->users)) {
       // Iterate through each person in the "users" array
 
-      // variable to determine if user is found
-      $bFound = false;
-
       foreach ($data->users as $user) {
 
-        // Check if the person's name exists
-        if ($user->username === $username) {
+        // Check if the credentials are correct
+        if ($user->username === $username && $user->password === $password) {
 
           // user found; set $bFound to true
           $bFound = true;
@@ -96,9 +101,15 @@ if (isset($_POST['username'])) {
 
         <div class="login-form">
           <h1>Login</h1>
+
+          <?php
+            if (isset($_POST['username']) && !$bFound) { ?>
+               <p style="color:red;">Username and/or password is incorrect.<br/>Please try again.</p> 
+           <?php } ?>
+        
           <form id="loginForm" action="login.php" method="post">
             <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required />
+            <input type="text" id="username" name="username" value="<?php echo $username ?>" required />
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required />
             <input type="submit" value="Login" />
