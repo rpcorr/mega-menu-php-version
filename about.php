@@ -1,6 +1,6 @@
 <?php 
-// start the session
-session_start();
+// Include the session check file
+require_once './assets/php_scripts/session_check.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
