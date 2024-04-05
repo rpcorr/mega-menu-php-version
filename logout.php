@@ -19,8 +19,16 @@ session_destroy();
       // remove all variables stored in localstorage
       localStorage.clear();
 
-      // direct user to index page
-      window.location.href = 'index.php';
+      <?php
+          if (isset($_GET['inactivity'])) { ?>
+            // direct user to index page
+            window.location.href = 'index.php?inactivity=1';
+        <?php  }
+          else { ?>
+            // direct user to index page
+            window.location.href = 'index.php';
+       <?php   }
+      ?>
     </script>
   </body>
 </html>

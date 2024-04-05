@@ -47,5 +47,6 @@ require_once './assets/php_scripts/session_check.php';
 
     <script src="assets/js/jquery.min.js" defer></script>
     <script src="assets/js/scripts.js" defer></script>
+    <script src="assets/js/checkTimerInactivity.js" defer></script>
   </body>
 </html>

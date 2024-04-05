@@ -119,6 +119,7 @@ if (isset($_POST['username'])) {
 
     <script src="assets/js/jquery.min.js" defer></script>
     <script src="assets/js/scripts.js" defer></script>
+    <script src="assets/js/checkTimerInactivity.js" defer></script>
     <?php if ($bFound) { ?>
       <script>
             // set the localStorage variable so the menu will appear

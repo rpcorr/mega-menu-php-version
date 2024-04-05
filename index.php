@@ -53,9 +53,14 @@ session_start();
 
           // Check if a session variable exists
           if(isset($_SESSION['stylePreference'])) {
-            echo "Current user:" . $_SESSION['user']  . "<br/>";
+            echo "<p>Current user:" . $_SESSION['user']  . "<br/>";
             echo "Current user type:" . $_SESSION['userType']  . "<br/>";
-            echo "Style preference exists: " . $_SESSION['stylePreference'];
+            echo "Style preference exists: " . $_SESSION['stylePreference'] . "</p>";
+          }
+
+          if (isset($_GET['inactivity'])) {
+            echo "<p>You were logged out due to interactivity.</p>";
+            echo '<p><br/><a href="login.php">Log back in</a>.</p>';
           }
 
           ?>
@@ -64,5 +69,9 @@ session_start();
 
     <script src="assets/js/jquery.min.js" defer></script>
     <script src="assets/js/scripts.js" defer></script>
+
+    <?php if (isset($_SESSION['user'])) { ?>
+      <script src="assets/js/checkTimerInactivity.js" defer></script>
+    <?php } ?>
   </body>
 </html>
