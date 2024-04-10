@@ -43,13 +43,11 @@ The JSON file (menu.json) lives under assets/json/menu.json. It contains the Men
 
 There are three users - one for each types of user:
 
-- user1: admin
-- user2: premium
-- user3: basic
+- user1: admin pw: pw123
+- user2: premium pw: pw123
+- user3: basic pw: pw123
 
-The username and user type are stored as a localstorage variable so the status of the user is presist when browsing from page to page. Upon clicking the logout link, the localstorage variables are cleared and the user is directed back to the home page.
-
-**NOTE:** The program only checks if a user types in a valid username. The password field is not checked at this time.
+The username and user type, and style preferece are stored as PHP session variables so the status of the user is presist when browsing from page to page. Upon clicking the logout link, the PHP session variables are destroyed and the user is directed back to the home page.
 
 When the page loads, the navigation menu is created from the menu.json file to build the navigation menu based on the logged in user. The structure of the file is as follows.
 
@@ -131,4 +129,4 @@ E. Screen reader users know how to use a keyboard when navigating the site. Belo
 
 - read user types from user object in the JSON file - DONE
 - add a login feature - DONE
-- add aria-current="page" to the current page - DONE
+- add aria-current="page" to the current page
