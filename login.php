@@ -96,7 +96,7 @@ if (isset($_POST['username'])) {
 
     <!-- stylesheets -->
     <link rel="stylesheet" href="./assets/css/reset.min.css" />
-    <link rel="stylesheet" href="./assets/css/styles.min.css" />
+    <link rel="stylesheet" href="./assets/css/navigation-menu.css" />
     <link rel="stylesheet" href="./assets/css/default.min.css" />
     <title>Login - Priority Mega Menu</title>
   </head>
