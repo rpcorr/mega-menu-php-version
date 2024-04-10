@@ -56,7 +56,6 @@ $(document).ready(function () {
 
       // toggle sub-menu
       $('#menuMoreLink').click(function (event) {
-        console.log('More Link');
         event.preventDefault();
         $('.menu-item-has-children:not(#menu-more)').removeClass('visible');
 
@@ -168,7 +167,6 @@ $(window).resize(function () {
 // input: current menu item or a string
 // returns: void
 function closeAllMenus(menuItem) {
-  console.log('close all menus');
   // run if the esc key was pressed
   if (menuItem === 'esc') {
     //1.  close all submenus
@@ -509,15 +507,6 @@ radioButtons.forEach(function (radioButton) {
       true
     );
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-          console.log('Style preference updated successfully!');
-        } else {
-          console.error('Failed to update style preference.');
-        }
-      }
-    };
     var data = 'stylePreference=' + encodeURIComponent(this.id);
     xhr.send(data);
   });
