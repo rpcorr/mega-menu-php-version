@@ -285,12 +285,15 @@ function createMenu($mI, $user) {
   
  
 function findValueInArray($value, $arr) {
-    $bFound = false;
-
-    foreach ($arr as $name) {
-      if ($name == $value) {
-        $bFound = true;
-        break;
+  $bFound = false;
+  
+  // check if $arr is an array
+  if (is_array($arr)) {
+      foreach ($arr as $name) {
+        if ($name == $value) {
+          $bFound = true;
+          break;
+        }
       }
     }
     return $bFound;
