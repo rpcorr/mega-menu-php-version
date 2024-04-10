@@ -25,7 +25,7 @@ session_start();
     <link rel="icon" type="image/png" sizes="512x512" href="./assets/imgs/fav-icons/android-chrome-512x512.png">
 
     <!-- For Android devices -->
-    <link rel="manifest" href="./assets/imgs/fav-icons/site.webmanifest">
+    <!-- <link rel="manifest" href="./assets/imgs/fav-icons/site.webmanifest"> -->
 
     <!-- For Windows -->
     <meta name="msapplication-TileColor" content="#ffffff">
