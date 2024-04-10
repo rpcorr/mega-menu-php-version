@@ -53,7 +53,7 @@ require_once './assets/php_scripts/session_check.php';
           <section id="branding">
             <a href="#skipMenu" class="screen-reader-text">Skip to Content</a>
             <div id="siteIdentity">
-              <a href="index.html" rel="home"> [Logo Here] </a>
+              <a href="index.php" rel="home"> [Logo Here] </a>
             </div>
           </section>
           <nav id="menu" aria-label="Menu will change once you log in">
