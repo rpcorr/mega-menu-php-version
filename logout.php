@@ -2,33 +2,16 @@
 // Start the session
 session_start();
 
-// Destroy the session
+// Destroy the session varibles
 session_destroy();
+
+if (isset($_GET['inactivity'])) { 
+  // direct user to index page indicating the user was logged out due to inactivity
+  header("Location: index.php?inactivity=1");
+  die();
+} 
+  
+// direct user to index page after a successful logout
+header("Location: index.php");
+die();
 ?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Logout</title>
-  </head>
-  <body>
-      <?php
-          if (isset($_GET['inactivity'])) { 
-            // direct user to index page
-            //window.location.href = 'index.php?inactivity=1';
-            header("Location: index.php?inactivity=1");
-
-        }
-          else { 
-            // direct user to index page
-            //window.location.href = 'index.php';
-            header("Location: index.php");
-
-
-        }
-      ?>
-  </body>
-</html>
