@@ -15,18 +15,20 @@ session_destroy();
     <title>Logout</title>
   </head>
   <body>
-    <script>
-
       <?php
-          if (isset($_GET['inactivity'])) { ?>
+          if (isset($_GET['inactivity'])) { 
             // direct user to index page
-            window.location.href = 'index.php?inactivity=1';
-        <?php  }
-          else { ?>
+            //window.location.href = 'index.php?inactivity=1';
+            header("Location: index.php?inactivity=1");
+
+        }
+          else { 
             // direct user to index page
-            window.location.href = 'index.php';
-       <?php   }
+            //window.location.href = 'index.php';
+            header("Location: index.php");
+
+
+        }
       ?>
-    </script>
   </body>
 </html>
