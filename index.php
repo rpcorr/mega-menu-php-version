@@ -36,15 +36,15 @@ session_start();
     <link
       rel="stylesheet"
       type="text/css"
-      href="./assets/fontawesome/css/fontawesome.css"
+      href="./assets/fontawesome/css/fontawesome.min.css"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="./assets/fontawesome/css/solid.css"
+      href="./assets/fontawesome/css/solid.min.css"
     />
-    <link rel="stylesheet" type="text/css" href="./assets/css/styles.css" />
-    <link rel="stylesheet" type="text/css" href="./assets/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/styles.min.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/default.min.css" />
     <?php if(isset($_SESSION['stylePreference'])) { ?>
       <link rel="stylesheet" type="text/css" href="./assets/css/templatesStyles/<?php echo $_SESSION['stylePreference'];?>.css" />
     <?php } ?>
@@ -96,10 +96,10 @@ session_start();
     </main>
 
     <script src="./assets/js/jquery.min.js" defer></script>
-    <script src="./assets/js/scripts.js" defer></script>
+    <script src="./assets/js/scripts.min.js" defer></script>
 
     <?php if (isset($_SESSION['user'])) { ?>
-      <script src="./assets/js/checkTimerInactivity.js" defer></script>
+      <script src="./assets/js/checkTimerInactivity.min.js" defer></script>
     <?php } ?>
   </body>
 </html>

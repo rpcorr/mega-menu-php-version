@@ -95,10 +95,10 @@ if (isset($_POST['username'])) {
     <meta name="msapplication-config" content="browserconfig.xml">
 
     <!-- stylesheets -->
-    <link rel="stylesheet" href="./assets/fontawesome/css/fontawesome.css" />
-    <link rel="stylesheet" href="./assets/fontawesome/css/solid.css" />
-    <link rel="stylesheet" href="./assets/css/styles.css" />
-    <link rel="stylesheet" href="./assets/css/default.css" />
+    <link rel="stylesheet" href="./assets/fontawesome/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="./assets/fontawesome/css/solid.min.css" />
+    <link rel="stylesheet" href="./assets/css/styles.min.css" />
+    <link rel="stylesheet" href="./assets/css/default.min.css" />
     <title>Login - Priority Mega Menu</title>
   </head>
   <body>
@@ -145,7 +145,7 @@ if (isset($_POST['username'])) {
     </main>
 
     <script src="./assets/js/jquery.min.js" defer></script>
-    <script src="./assets/js/scripts.js" defer></script>
-    <script src="./assets/js/checkTimerInactivity.js" defer></script>
+    <script src="./assets/js/scripts.min.js" defer></script>
+    <script src="./assets/js/checkTimerInactivity.min.js" defer></script>
   </body>
 </html>
