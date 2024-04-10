@@ -16,8 +16,6 @@ session_destroy();
   </head>
   <body>
     <script>
-      // remove all variables stored in localstorage
-      localStorage.clear();
 
       <?php
           if (isset($_GET['inactivity'])) { ?>

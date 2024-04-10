@@ -17,67 +17,6 @@ $(document).ready(function () {
     if (this.readyState == 4 && this.status == 200) {
       // Typical action to be performed when the document is ready:
 
-      let lsUser = localStorage.getItem('user');
-
-      let response = JSON.parse(xhttp.responseText);
-
-      if (lsUser === null) {
-        let username = $.urlParam('username');
-        let userType = $.urlParam('userType');
-
-        for (let i = 0; i < response.users.length; i++) {
-          if (username === response.users[i].username) {
-            // store current user in user localstorage variable
-            localStorage.setItem('user', response.users[i].username);
-            localStorage.setItem('userType', response.users[i].userType);
-            localStorage.setItem(
-              'stylePreference',
-              response.users[i].stylePreference
-            );
-
-            // exit loop early
-            break;
-          }
-          // create a login link
-          let ariaCurrent = '';
-
-          if (isCurrentPage('login.php')) ariaCurrent = 'aria-current="page"';
-          output = `<li><a href="login.php" ${ariaCurrent}>Login</a></li>`;
-
-          // update nav aria-label to reflect the user is logged out
-          $('nav').attr('aria-label', 'Menu will change once you log in');
-        }
-      } else {
-        // there is a user
-        const user = {
-          username: localStorage.getItem('user'),
-          userType: localStorage.getItem('userType'),
-          stylePreference: localStorage.getItem('stylePreference'),
-        };
-
-        // update nav aria-label
-        $('nav').attr(
-          'aria-label',
-          'Menu items have since changed now that you are logged in'
-        );
-      }
-
-      // redirect user to the home page after login
-
-      // Get the full pathname of the current page
-      let pathname = window.location.pathname;
-
-      // Extract the file name from the pathname
-      let filename = pathname.split('/').pop();
-
-      if (localStorage.getItem('user') !== null && filename === 'login.php') {
-        // redirect user to index page;
-        window.location.href = 'index.php';
-        setTimeout(() => {
-          document.querySelector('#header').focus();
-        }, 10);
-      }
-
       // select all anchor tags
       megaMenuLinks = document.querySelectorAll('nav a[href^="#"]');
 

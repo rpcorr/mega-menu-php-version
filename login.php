@@ -54,6 +54,9 @@ if (isset($_POST['username'])) {
           $_SESSION['user'] = $user->username;
           $_SESSION['userType'] = $user->userType;
           $_SESSION['stylePreference'] = $user->stylePreference;
+
+          // user is successfully logged in, redirect page to index.php
+          header('Location: index.php');
         }
     }
 
@@ -120,13 +123,5 @@ if (isset($_POST['username'])) {
     <script src="assets/js/jquery.min.js" defer></script>
     <script src="assets/js/scripts.js" defer></script>
     <script src="assets/js/checkTimerInactivity.js" defer></script>
-    <?php if ($bFound) { ?>
-      <script>
-            // set the localStorage variable so the menu will appear
-            localStorage.setItem('user', '<?php echo $_SESSION['user'] ?>');
-            localStorage.setItem('userType', '<?php echo $_SESSION['userType'] ?>');
-            localStorage.setItem('stylePreference', '<?php echo $_SESSION['stylePreference'] ?>');
-      </script>
-   <?php } ?>
   </body>
 </html>
