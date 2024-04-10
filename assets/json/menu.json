@@ -247,7 +247,7 @@
       "subMenuItems": [
         {
           "name": "Product 1",
-          "link": "product1.html",
+          "link": "#",
           "subMenuItems": [
             {
               "name": "Product 1a",
@@ -266,7 +266,7 @@
         },
         {
           "name": "Product 2",
-          "link": "product2.html",
+          "link": "#",
           "subMenuItems": [
             {
               "name": "Test 1",

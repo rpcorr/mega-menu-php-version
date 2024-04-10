@@ -81,13 +81,13 @@ if (isset($_POST['username'])) {
           <section id="branding">
             <a href="#skipMenu" class="screen-reader-text">Skip to Content</a>
             <div id="siteIdentity">
-              <a href="index.html" rel="home"> [Logo Here] </a>
+              <a href="index.php" rel="home"> [Logo Here] </a>
             </div>
           </section>
           <nav id="menu" aria-label="Menu will change once you log in">
             <div class="menu-main-menu-container">
               <ul id="menu-main-menu" class="menu">
-                <li><a href="login.html" aria-current="page">Login</a></li>
+                <li><a href="login.php" aria-current="page">Login</a></li>
               </ul>
             </div>
           </nav>

@@ -37,7 +37,10 @@ session_start();
           </section>
           <nav id="menu" aria-label="Menu will change once you log in">
             <div class="menu-main-menu-container">
-              <ul id="menu-main-menu" class="menu"></ul>
+              <ul id="menu-main-menu" class="menu">
+
+              <?php include_once('./assets/php_scripts/menu.php'); ?>
+              </ul>
             </div>
           </nav>
           <a id="skipMenu" class="screen-reader-text"></a>
