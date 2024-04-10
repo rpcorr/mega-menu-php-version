@@ -11,127 +11,114 @@ let output = '';
 let megaMenuLinks = '';
 
 $(document).ready(function () {
-  // read in the Menu JSON file
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      // Typical action to be performed when the document is ready:
+  // select all anchor tags
+  megaMenuLinks = document.querySelectorAll('nav a[href^="#"]');
 
-      // select all anchor tags
-      megaMenuLinks = document.querySelectorAll('nav a[href^="#"]');
+  // add handleLinkClick to eventListener
+  for (let i = 0; i < megaMenuLinks.length; i++) {
+    megaMenuLinks[i].addEventListener('click', handleLinkClick);
+  }
 
-      // add handleLinkClick to eventListener
-      for (let i = 0; i < megaMenuLinks.length; i++) {
-        megaMenuLinks[i].addEventListener('click', handleLinkClick);
-      }
+  winWidth = $(window).width();
 
-      winWidth = $(window).width();
-
-      $('#menu-main-menu').on('keydown', function (e) {
-        if (e.key == 'Escape') {
-          closeAllMenus('esc');
-        }
-      });
-
-      navItems = $('#menu-main-menu > li');
-
-      // add hover class to those with class menu-item-has-children
-      navItems.each(function () {
-        if ($(this).hasClass('menu-item-has-children')) {
-          $(this).addClass('hover');
-        }
-      });
-
-      // get width of each item, and list each as visible
-      navItems.each(function () {
-        navItemWidth.push($(this).outerWidth());
-        navItemVisible.push(true);
-      });
-
-      // add more link
-      $('#menu-main-menu').append(
-        '<li id="menu-more" class="menu-item menu-item-has-children" style="display: none;"><a id="menuMoreLink" href="#" aria-label="More has a sub menu. Click enter to open" aria-expanded="false"></a><ul id="moreSubMenu" class="sub-menu"></ul></li>'
-      );
-      moreWidth = $('#menu-more').outerWidth();
-
-      // toggle sub-menu
-      $('#menuMoreLink').click(function (event) {
-        event.preventDefault();
-        $('.menu-item-has-children:not(#menu-more)').removeClass('visible');
-
-        $(this).parent('.menu-item-has-children').toggleClass('visible');
-
-        if ($(this).parent('.menu-item-has-children').hasClass('visible')) {
-          // set the arrow to the up position (open)
-          $(this)
-            .children('i')
-            .removeClass('fa-angle-down')
-            .addClass('fa-angle-up');
-
-          // update aria-label to close menu
-          $(this).attr('aria-label', 'Click Enter to close More sub menu');
-
-          // set the More sub menu aria-expanded attr to true
-          $(this).attr('aria-expanded', true);
-        } else {
-          // set the arrow to the down position (close)
-          $(this)
-            .children('i')
-            .removeClass('fa-angle-up')
-            .addClass('fa-angle-down');
-
-          // update aria-label to open menu
-          $(this).attr(
-            'aria-label',
-            'More has a sub menu. Click enter to open'
-          );
-
-          // set the More link aria-expanded attr to false
-          $(this).attr('aria-expanded', false);
-        }
-      });
-
-      // collapse all sub-menus when user clicks off
-      $('body').click(function (event) {
-        if (!$(event.target).closest('li').length) {
-          $('.menu-item-has-children').removeClass('visible');
-        }
-
-        // reset arrows to down position
-        resetArrows();
-
-        //  reset aria-labels to Click enter to open
-        $('.menu-item-has-children > a').each(function () {
-          $(this)
-            .attr(
-              'aria-label',
-              `${$(this).text()}has a sub menu. Click enter to open`
-            )
-            .attr('aria-expanded', 'false');
-        });
-      });
-
-      $('.menu-item-has-children a').click(function (e) {
-        e.stopPropagation();
-      });
-
-      $('.menu-item-has-children ul').click(function (e) {
-        e.stopPropagation();
-      });
-
-      $('.menu-item-has-children li').click(function (e) {
-        e.stopPropagation();
-      });
-
-      // format navigation on page load
-      formatNav();
-
-      // watch for difference between touchscreen and mouse
-      watchForHover();
+  $('#menu-main-menu').on('keydown', function (e) {
+    if (e.key == 'Escape') {
+      closeAllMenus('esc');
     }
-  };
-  xhttp.open('GET', 'assets/json/menu.json', true);
-  xhttp.send();
+  });
+
+  navItems = $('#menu-main-menu > li');
+
+  // add hover class to those with class menu-item-has-children
+  navItems.each(function () {
+    if ($(this).hasClass('menu-item-has-children')) {
+      $(this).addClass('hover');
+    }
+  });
+
+  // get width of each item, and list each as visible
+  navItems.each(function () {
+    navItemWidth.push($(this).outerWidth());
+    navItemVisible.push(true);
+  });
+
+  // add more link
+  $('#menu-main-menu').append(
+    '<li id="menu-more" class="menu-item menu-item-has-children" style="display: none;"><a id="menuMoreLink" href="#" aria-label="More has a sub menu. Click enter to open" aria-expanded="false"></a><ul id="moreSubMenu" class="sub-menu"></ul></li>'
+  );
+  moreWidth = $('#menu-more').outerWidth();
+
+  // toggle sub-menu
+  $('#menuMoreLink').click(function (event) {
+    event.preventDefault();
+    $('.menu-item-has-children:not(#menu-more)').removeClass('visible');
+
+    $(this).parent('.menu-item-has-children').toggleClass('visible');
+
+    if ($(this).parent('.menu-item-has-children').hasClass('visible')) {
+      // set the arrow to the up position (open)
+      $(this)
+        .children('i')
+        .removeClass('fa-angle-down')
+        .addClass('fa-angle-up');
+
+      // update aria-label to close menu
+      $(this).attr('aria-label', 'Click Enter to close More sub menu');
+
+      // set the More sub menu aria-expanded attr to true
+      $(this).attr('aria-expanded', true);
+    } else {
+      // set the arrow to the down position (close)
+      $(this)
+        .children('i')
+        .removeClass('fa-angle-up')
+        .addClass('fa-angle-down');
+
+      // update aria-label to open menu
+      $(this).attr('aria-label', 'More has a sub menu. Click enter to open');
+
+      // set the More link aria-expanded attr to false
+      $(this).attr('aria-expanded', false);
+    }
+  });
+
+  // collapse all sub-menus when user clicks off
+  $('body').click(function (event) {
+    if (!$(event.target).closest('li').length) {
+      $('.menu-item-has-children').removeClass('visible');
+    }
+
+    // reset arrows to down position
+    resetArrows();
+
+    //  reset aria-labels to Click enter to open
+    $('.menu-item-has-children > a').each(function () {
+      $(this)
+        .attr(
+          'aria-label',
+          `${$(this).text()}has a sub menu. Click enter to open`
+        )
+        .attr('aria-expanded', 'false');
+    });
+  });
+
+  $('.menu-item-has-children a').click(function (e) {
+    e.stopPropagation();
+  });
+
+  $('.menu-item-has-children ul').click(function (e) {
+    e.stopPropagation();
+  });
+
+  $('.menu-item-has-children li').click(function (e) {
+    e.stopPropagation();
+  });
+
+  // format navigation on page load
+  formatNav();
+
+  // watch for difference between touchscreen and mouse
+  watchForHover();
 });
 
 function handleLinkClick(e) {
