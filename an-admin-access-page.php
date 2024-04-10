@@ -32,6 +32,7 @@ require_once './assets/php_scripts/session_check.php';
     <meta name="msapplication-config" content="browserconfig.xml">
 
     <!-- stylesheets -->
+    <link rel="stylesheet" href="./assets/css/reset.min.css" />
     <link rel="stylesheet" href="./assets/fontawesome/css/fontawesome.min.css" />
     <link rel="stylesheet" href="./assets/fontawesome/css/solid.min.css" />
     <link rel="stylesheet" href="./assets/css/styles.min.css" />

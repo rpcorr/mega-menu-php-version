@@ -43,6 +43,7 @@ session_start();
       type="text/css"
       href="./assets/fontawesome/css/solid.min.css"
     />
+    <link rel="stylesheet" type="text/css" href="./assets/css/reset.min.css" />
     <link rel="stylesheet" type="text/css" href="./assets/css/styles.min.css" />
     <link rel="stylesheet" type="text/css" href="./assets/css/default.min.css" />
     <?php if(isset($_SESSION['stylePreference'])) { ?>
