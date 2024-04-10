@@ -72,22 +72,22 @@ if (isset($_POST['username'])) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Standard favicon -->
-    <link rel="icon" type="image/png" href="assets/imgs/fav-icons/favicon-16x16.png">
+    <link rel="icon" type="image/png" href="./assets/imgs/fav-icons/favicon-16x16.png">
 
     <!-- For IE 11 or below -->
-    <link rel="icon" type="image/x-icon" href="assets/imgs/fav-icons/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="./assets/imgs/fav-icons/favicon.ico">
 
     <!-- For Apple devices -->
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/imgs/fav-icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/imgs/fav-icons/apple-touch-icon.png">
 
     <!-- For Android Chrome -->
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/imgs/fav-icons/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./assets/imgs/fav-icons/android-chrome-192x192.png">
 
     <!-- For Android Chrome (for higher resolution screens) -->
-    <link rel="icon" type="image/png" sizes="512x512" href="assets/imgs/fav-icons/android-chrome-512x512.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="./assets/imgs/fav-icons/android-chrome-512x512.png">
 
     <!-- For Android devices -->
-    <link rel="manifest" href="assets/imgs/fav-icons/site.webmanifest">
+    <link rel="manifest" href="./assets/imgs/fav-icons/site.webmanifest">
 
     <!-- For Windows -->
     <meta name="msapplication-TileColor" content="#ffffff">
@@ -95,10 +95,10 @@ if (isset($_POST['username'])) {
     <meta name="msapplication-config" content="browserconfig.xml">
 
     <!-- stylesheets -->
-    <link rel="stylesheet" href="assets/fontawesome/css/fontawesome.css" />
-    <link rel="stylesheet" href="assets/fontawesome/css/solid.css" />
-    <link rel="stylesheet" href="assets/css/styles.css" />
-    <link rel="stylesheet" href="assets/css/default.css" />
+    <link rel="stylesheet" href="./assets/fontawesome/css/fontawesome.css" />
+    <link rel="stylesheet" href="./assets/fontawesome/css/solid.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/default.css" />
     <title>Login - Priority Mega Menu</title>
   </head>
   <body>
@@ -144,8 +144,8 @@ if (isset($_POST['username'])) {
         </div>
     </main>
 
-    <script src="assets/js/jquery.min.js" defer></script>
-    <script src="assets/js/scripts.js" defer></script>
-    <script src="assets/js/checkTimerInactivity.js" defer></script>
+    <script src="./assets/js/jquery.min.js" defer></script>
+    <script src="./assets/js/scripts.js" defer></script>
+    <script src="./assets/js/checkTimerInactivity.js" defer></script>
   </body>
 </html>
