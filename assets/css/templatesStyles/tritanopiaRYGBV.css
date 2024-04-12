@@ -89,7 +89,7 @@ ul#menu-main-menu li > ul,
 }
 
 .menu-main-menu-container > #menu-main-menu > li li > .sub-menu a {
-  background-color: #01959f; /* second submenu background-colour */
+  background-color: #009999; /* second submenu background-colour */
   color: #fff;
 }
 .menu-main-menu-container > #menu-main-menu > li li li > .sub-menu a {
@@ -104,7 +104,7 @@ ul#menu-main-menu li > ul,
 
 /* Styles from Mega menu */
 header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
-  background-color: rgba(0, 230, 230, 0.9);
+  background-color: rgb(0, 230, 230);
 }
 
 ul.menu li:hover {
@@ -145,7 +145,9 @@ ul.menu li:hover > a {
   color: #ffe6f2;
 }
 
-/* caret styles */
+/***** caret styles ******/
+
+/* --- first level --- */
 
 i.angle-down:before {
   border-top: 7px solid #ffe6f2;
@@ -176,5 +178,95 @@ ul.menu li:hover > a i.angle-up:after {
 }
 
 ul.menu li:hover > a i.angle-up:before {
+  border-bottom: 7px solid #ffe6f2;
+}
+
+/* -- second level --- */
+
+.menu-item-has-children .menu-item-has-children > a i.angle-down:before {
+  border-top: 7px solid #333333;
+}
+
+.menu-item-has-children .menu-item-has-children > a i.angle-down:after {
+  border-top: 4px solid rgba(0, 230, 230, 0.9);
+}
+
+.menu-item-has-children .menu-item-has-children > a i.angle-up:before {
+  border-bottom: 7px solid #333333;
+}
+
+.menu-item-has-children .menu-item-has-children > a i.angle-up:after {
+  border-bottom: 4px solid rgba(0, 230, 230, 0.9);
+}
+
+/* -- third level --- */
+
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  > a
+  i.angle-down:before {
+  border-top: 7px solid #ffffff;
+}
+
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  > a
+  i.angle-down:after {
+  border-top: 4px solid #009999;
+}
+
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  > a
+  i.angle-up:before {
+  border-bottom: 7px solid #ffffff;
+}
+
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  > a
+  i.angle-up:after {
+  border-bottom: 4px solid #009999;
+}
+
+/* target caret background on hover and when open and mouse off 
+for menu for second and third-level menus */
+.menu-item-has-children
+  .menu-item-has-children
+  > a[aria-expanded='true']
+  i.angle-up:after,
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children:hover
+  > a
+  i.angle-up:after,
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  > a[aria-expanded='true']
+  i.angle-up:after {
+  border-bottom: 4px solid #66004d;
+}
+
+/* target caret stroke colour on hover and when open and mouse off 
+for menu for second and third-level menus */
+.menu-item-has-children
+  .menu-item-has-children
+  > a[aria-expanded='true']
+  i.angle-up:before,
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children:hover
+  > a
+  i.angle-up:before,
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  > a[aria-expanded='true']
+  i.angle-up:before {
   border-bottom: 7px solid #ffe6f2;
 }

@@ -237,3 +237,22 @@ ul.menu li:hover > a i.angle-up:before {
   i.angle-up:after {
   border-bottom: 4px solid #2f88dc;
 }
+
+/* target caret background on hover and when open and mouse off 
+for menu for second and third-level menus */
+.menu-item-has-children
+  .menu-item-has-children
+  > a[aria-expanded='true']
+  i.angle-up:after,
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children:hover
+  > a
+  i.angle-up:after,
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  > a[aria-expanded='true']
+  i.angle-up:after {
+  border-bottom: 4px solid #a15229;
+}
