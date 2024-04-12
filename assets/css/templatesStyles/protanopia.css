@@ -135,3 +135,37 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   background-color: #235fa4;
   color: #fff;
 }
+
+/* caret styles */
+
+i.angle-down:before {
+  border-top: 7px solid #000000;
+}
+
+i.angle-down:after {
+  border-top: 4px solid #6fde6e;
+}
+
+i.angle-up:before {
+  border-bottom: 7px solid #000000;
+}
+
+i.angle-up:after {
+  border-bottom: 4px solid #6fde6e;
+}
+
+ul.menu li:hover > a i.angle-down:after {
+  border-top: 4px solid #235fa4;
+}
+
+ul.menu li:hover > a i.angle-down:before {
+  border-top: 7px solid #ffffff;
+}
+
+ul.menu li:hover > a i.angle-up:after {
+  border-bottom: 4px solid #235fa4;
+}
+
+ul.menu li:hover > a i.angle-up:before {
+  border-bottom: 7px solid #ffffff;
+}

@@ -13,7 +13,6 @@ h1 {
 
 ul#menu-main-menu li > ul,
 .menu-main-menu-container > #menu-main-menu > li > a {
-  /* color: #000000; */
   color: #ffe6f2;
 }
 
@@ -22,14 +21,12 @@ header {
 }
 
 a {
-  color: #000000;
   color: #ffe6f2;
 }
 
 a:hover,
 a:focus,
 #siteIdentity a {
-  color: #000000;
   color: #ffe6f2;
 }
 
@@ -42,7 +39,6 @@ ul#menu-main-menu li > ul,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:hover,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:focus,
 .sub-menu-div.mega-menu.mega-menu-column-4 a:hover {
-  background-color: #caa386;
   background-color: #66004d;
 }
 
@@ -56,7 +52,6 @@ ul#menu-main-menu li > ul,
 
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a {
-  color: #fff;
   color: #333;
 }
 
@@ -110,7 +105,6 @@ ul#menu-main-menu li > ul,
 /* Styles from Mega menu */
 header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   background-color: rgba(0, 230, 230, 0.9);
-  /* color: #333333; */
 }
 
 ul.menu li:hover {
@@ -124,12 +118,7 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
   color: #fff;
 }
 
-ul.menu li:hover a {
-  /* color: #000000; */
-}
-
 header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
-  color: #000; /* 4.56 */
   color: #66004d; /* 4.56 */
 }
 
@@ -154,4 +143,38 @@ ul.menu li:hover > a {
 .login-form input[type='submit']:hover {
   background-color: #66004d;
   color: #ffe6f2;
+}
+
+/* caret styles */
+
+i.angle-down:before {
+  border-top: 7px solid #ffe6f2;
+}
+
+i.angle-down:after {
+  border-top: 4px solid #ff0066;
+}
+
+i.angle-up:before {
+  border-bottom: 7px solid #ffe6f2;
+}
+
+i.angle-up:after {
+  border-bottom: 4px solid #ff0066;
+}
+
+ul.menu li:hover > a i.angle-down:after {
+  border-top: 4px solid #66004d;
+}
+
+ul.menu li:hover > a i.angle-down:before {
+  border-top: 7px solid #ffe6f2;
+}
+
+ul.menu li:hover > a i.angle-up:after {
+  border-bottom: 4px solid #66004d;
+}
+
+ul.menu li:hover > a i.angle-up:before {
+  border-bottom: 7px solid #ffe6f2;
 }

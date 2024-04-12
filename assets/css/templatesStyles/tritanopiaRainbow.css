@@ -122,17 +122,9 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
   color: #333333;
 }
 
-ul.menu li:hover a {
-  /* color: #000000; */
-}
-
 header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   color: #000; /* 4.56 */
   color: #ff0000; /* 4.56 */
-}
-
-ul.menu li:hover > a {
-  /* color: #ebffff !important; */
 }
 
 .login-form {
@@ -152,4 +144,38 @@ ul.menu li:hover > a {
 .login-form input[type='submit']:hover {
   background-color: #ff90b7;
   color: #ebffff;
+}
+
+/* caret styles */
+
+i.angle-down:before {
+  border-top: 7px solid #ebffff;
+}
+
+i.angle-down:after {
+  border-top: 4px solid #ff0000;
+}
+
+i.angle-up:before {
+  border-bottom: 7px solid #ebffff;
+}
+
+i.angle-up:after {
+  border-bottom: 4px solid #ff0000;
+}
+
+ul.menu li:hover > a i.angle-down:after {
+  border-top: 4px solid #ff90b7;
+}
+
+ul.menu li:hover > a i.angle-down:before {
+  border-top: 7px solid #ebffff;
+}
+
+ul.menu li:hover > a i.angle-up:after {
+  border-bottom: 4px solid #ff90b7;
+}
+
+ul.menu li:hover > a i.angle-up:before {
+  border-bottom: 7px solid #ebffff;
 }

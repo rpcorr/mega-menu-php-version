@@ -111,3 +111,43 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
 .login-form input[type='submit']:hover {
   background-color: #0056b3;
 }
+
+/* caret styles */
+i.caret {
+  position: relative;
+  left: 5px;
+}
+
+i.caret:before,
+i.caret:after {
+  content: '';
+  position: absolute;
+}
+
+i.angle-down:before {
+  top: 5px;
+  left: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+}
+
+i.angle-down:after {
+  left: 3px;
+  top: 5px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+}
+
+i.angle-up:before {
+  top: 5px;
+  left: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+}
+
+i.angle-up:after {
+  left: 3px;
+  top: 8px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+}

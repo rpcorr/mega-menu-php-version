@@ -114,10 +114,6 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
   color: #000;
 }
 
-ul.menu li:hover a {
-  /* color: #000; */
-}
-
 header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   /* color: #ea4636; */
   color: #e5323b; /* 8.32 */
@@ -146,4 +142,38 @@ ul.menu li:hover > a {
 .login-form input[type='submit']:hover {
   background-color: #bdd9bf;
   color: #000;
+}
+
+/* caret styles */
+
+i.angle-down:before {
+  border-top: 7px solid #ffffff;
+}
+
+i.angle-down:after {
+  border-top: 4px solid #929084;
+}
+
+i.angle-up:before {
+  border-bottom: 7px solid #ffffff;
+}
+
+i.angle-up:after {
+  border-bottom: 4px solid #929084;
+}
+
+ul.menu li:hover > a i.angle-down:after {
+  border-top: 4px solid #ffc857;
+}
+
+ul.menu li:hover > a i.angle-down:before {
+  border-top: 7px solid #000000;
+}
+
+ul.menu li:hover > a i.angle-up:after {
+  border-bottom: 4px solid #ffc857;
+}
+
+ul.menu li:hover > a i.angle-up:before {
+  border-bottom: 7px solid #000000;
 }

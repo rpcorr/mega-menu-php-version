@@ -57,10 +57,7 @@ $(document).ready(function () {
 
     if ($(this).parent('.menu-item-has-children').hasClass('visible')) {
       // set the arrow to the up position (open)
-      $(this)
-        .children('i')
-        .removeClass('fa-angle-down')
-        .addClass('fa-angle-up');
+      $(this).children('i').removeClass('angle-down').addClass('angle-up');
 
       // update aria-label to close menu
       $(this).attr('aria-label', 'Click Enter to close More sub menu');
@@ -69,10 +66,7 @@ $(document).ready(function () {
       $(this).attr('aria-expanded', true);
     } else {
       // set the arrow to the down position (close)
-      $(this)
-        .children('i')
-        .removeClass('fa-angle-up')
-        .addClass('fa-angle-down');
+      $(this).children('i').removeClass('angle-up').addClass('angle-down');
 
       // update aria-label to open menu
       $(this).attr('aria-label', 'More has a sub menu. Click enter to open');
@@ -246,10 +240,10 @@ function formatNav() {
         // change text to "Menu" if no links are showing
         if (count == 0) {
           $('nav').addClass('all-hidden');
-          $('#menuMoreLink').html('Menu <i class="fa fa-angle-down"></i>');
+          $('#menuMoreLink').html('Menu <i class="caret angle-down"></i>');
         } else {
           $('nav').removeClass('all-hidden');
-          $('#menuMoreLink').html('More <i class="fa fa-angle-down"></i>');
+          $('#menuMoreLink').html('More <i class="caret angle-down"></i>');
         }
 
         $('#menu-more').show();
