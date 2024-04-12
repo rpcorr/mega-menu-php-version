@@ -33,16 +33,6 @@ session_start();
     <meta name="msapplication-config" content="browserconfig.xml">
 
     <!-- stylesheets -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="./assets/fontawesome/css/fontawesome.min.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="./assets/fontawesome/css/solid.min.css"
-    />
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.min.css" />
     <link rel="stylesheet" type="text/css" href="./assets/css/navigation-menu.css" />
     <link rel="stylesheet" type="text/css" href="./assets/css/default.min.css" />
@@ -100,7 +90,7 @@ session_start();
     <script src="./assets/js/scripts.min.js" defer></script>
 
     <?php if (isset($_SESSION['user'])) { ?>
-      <script src="./assets/js/checkTimerInactivity.min.js" defer></script>
+      <!-- <script src="./assets/js/checkTimerInactivity.min.js" defer></script> -->
     <?php } ?>
   </body>
 </html>

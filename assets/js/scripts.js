@@ -264,7 +264,7 @@ function formatNav() {
 }
 
 function resetArrows() {
-  $('.fa').removeClass('fa-angle-up').addClass('fa-angle-down');
+  $('.caret').removeClass('angle-up').addClass('angle-down');
 }
 
 function onResize() {
@@ -332,10 +332,7 @@ function toggleTopLevelMenu(menuLink) {
     $(menuLink).parents('.menu-item-has-children').addClass('visible');
 
     // 2-b. set the arrow to upwards position
-    $(menuLink)
-      .children('i')
-      .removeClass('fa-angle-down')
-      .addClass('fa-angle-up');
+    $(menuLink).children('i').removeClass('angle-down').addClass('angle-up');
 
     // 2-c. update aria label to close sub menu
     $(menuLink).attr(
@@ -362,8 +359,8 @@ function toggleTopLevelMenu(menuLink) {
         // 3-b. set the arrow to upwards position
         $(menuLink)
           .children('i')
-          .removeClass('fa-angle-down')
-          .addClass('fa-angle-up');
+          .removeClass('angle-down')
+          .addClass('angle-up');
 
         // 3-c. set the aria-label to close sub menu
         $(menuLink).attr(
@@ -382,8 +379,8 @@ function toggleTopLevelMenu(menuLink) {
         // 4-b. set the arrow to downwards position
         $(menuLink)
           .children('i')
-          .removeClass('fa-angle-up')
-          .addClass('fa-angle-down');
+          .removeClass('angle-up')
+          .addClass('angle-down');
 
         // 4-c. set the aria label to open menu
         $(menuLink).attr(
@@ -440,8 +437,8 @@ function closeSiblingSubMenus(menuLink) {
   $(menuLink)
     .parent()
     .find('li.menu-item-has-children > a > i')
-    .removeClass('fa-angle-up')
-    .addClass('fa-angle-down');
+    .removeClass('angle-up')
+    .addClass('angle-down');
 
   // 3. update links aria-label and aria-expanded to false
   $(menuLink)

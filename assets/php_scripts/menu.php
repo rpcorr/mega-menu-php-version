@@ -86,7 +86,7 @@ function createMenu($mI, $user) {
     }
   
     // define downArrow
-    $downArrow = isset($mI['subMenuType']) ? '<i class="fa fa-angle-down"></i>' : '';
+    $downArrow = isset($mI['subMenuType']) ? '<i class="caret angle-down"></i>' : '';
 
     // define ariaLabel
     $ariaLabel = isset($mI['subMenuType']) ? 'aria-label="' . $mI['name'] . ' has a sub menu. Click enter to open"' : '';
@@ -133,7 +133,7 @@ function createMenu($mI, $user) {
               if (isset($submenu['subMenuItems'])) {
                 // a second level menu is present
                 $output .= '<li class="menu-item-has-children">
-                <a href="' . $hRef . '" ' . $ariaCurrent . '>' . $submenu['name'] . ' <i class="fa fa-angle-down"></i></a>';
+                <a href="' . $hRef . '" ' . $ariaCurrent . '>' . $submenu['name'] . ' <i class="caret angle-down"></i></a>';
                 $secondLevel = '<ul class="sub-menu">';
     
                 foreach ($submenu['subMenuItems'] as $secondLevelItem) {
@@ -148,7 +148,7 @@ function createMenu($mI, $user) {
                   ) {
                     if (isset($secondLevelItem['subMenuItems'])) {
                       // a third level is present
-                      $secondLevel .= '<li class="menu-item-has-children"><a href="' . $hRef . '">' . $secondLevelItem['name'] . ' <i class="fa fa-angle-down"></i></a>';
+                      $secondLevel .= '<li class="menu-item-has-children"><a href="' . $hRef . '">' . $secondLevelItem['name'] . ' <i class="caret angle-down"></i></a>';
                       $thirdLevel = '<ul class="sub-menu">';
     
                       // loop through the links
