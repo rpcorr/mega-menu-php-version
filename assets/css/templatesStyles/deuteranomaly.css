@@ -240,3 +240,61 @@ ul.menu li:hover > a {
   border-bottom: 4px solid #a15229;
   border-bottom: 4px solid rgba(232, 157, 66, 0.9);
 }
+
+/* -- Third-level  --- */
+
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  i.angle-down:after {
+  border-top: 4px solid #2f88dc;
+}
+
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children:hover
+  i.angle-down:after {
+  border-top: 4px solid #a15229;
+}
+
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  a:focus
+  i.angle-down:after {
+  border-top: 4px solid #a15229;
+}
+
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  a:focus
+  i.angle-up:after {
+  border-bottom: 4px solid #a15229;
+}
+
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  a:hover
+  i.angle-up:after {
+  border-bottom: 4px solid #a15229;
+}
+
+.menu-main-menu-container
+  > #menu-main-menu
+  > li
+  > .sub-menu
+  > li.menu-item-has-children:hover
+  i.angle-up:after {
+  border-bottom: 4px solid #a15229;
+}
+
+/*-------- */
+
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  i.angle-up:after {
+  border-bottom: 4px solid #2f88dc;
+}
