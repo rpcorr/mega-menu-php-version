@@ -1,254 +1,382 @@
+/* default colours */
 html {
   background-color: #fff;
   color: #000000;
 }
 
+/* h1 text colour */
 h1 {
   color: #000000;
 }
 
+/* navigation background colour */
 #mainNavigation {
   background-color: #ff0000;
 }
 
-ul#menu-main-menu li > ul,
-.menu-main-menu-container > #menu-main-menu > li > a {
-  /* color: #000000; */
-  color: #ebffff;
-}
-
+/* navigation border bottom colour */
 header {
   border-bottom: 0.15rem solid #000000;
 }
 
+/* link colour */
 a {
-  color: #000000;
   color: #ebffff;
 }
 
-a:hover,
-a:focus,
-#siteIdentity a {
-  color: #000000;
-  color: #ebffff;
-}
-
-ul#menu-main-menu li > ul,
-.menu-main-menu-container
-  > #menu-main-menu
-  > li
-  > .sub-menu
-  > li.menu-item-has-children:hover,
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu a:hover,
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu a:focus,
-.sub-menu-div.mega-menu.mega-menu-column-4 a:hover {
-  background-color: #ff90b7;
-}
-
+/* list item hover, focus, and siteIdentity background colour */
+ul.menu li:hover,
+ul.menu li a:focus,
 #siteIdentity {
   background-color: #ff90b7;
 }
 
+/* top menu list hover anchor and siteIdentity anchor colour */
+ul.menu li:hover a,
 #siteIdentity a {
   color: #ebffff;
 }
 
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu a,
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a {
-  color: #333;
+/* first submenu background colour */
+#menu-main-menu > li.menu-item-has-children > ul.sub-menu {
+  background-color: rgba(0, 251, 255, 0.9);
 }
 
+/* first submenu text colour */
+.menu-main-menu-container > #menu-main-menu > li > .sub-menu a,
+.menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a {
+  color: #333333;
+}
+
+/* first submenu hover and focus background and font colours */
+header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
+.menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a:hover,
+.menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a:focus,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:hover,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:focus {
   background-color: #ff90b7;
-  color: #333333;
+  color: #ebffff;
 }
 
-/* Change top-level background color on hover */
-.menu-main-menu > .menu > li:hover > a {
+/* maintain submenu background colour on hover when another menu item is selected */
+.menu-main-menu-container
+  > #menu-main-menu
+  > li
+  > .sub-menu
+  > li.menu-item-has-children:hover {
   background-color: #ff90b7;
 }
 
-/* Change top-level background color when sub-menu is open */
-.menu-main-menu > .menu > li:hover > ul {
-  display: block;
+/* maintain submenu font colour on hover when another menu item is selected */
+.menu-main-menu-container
+  > #menu-main-menu
+  > li
+  > .sub-menu
+  > li.menu-item-has-children:hover
+  > a:link {
+  color: #ebffff;
 }
 
-#menu-main-menu > li.menu-item-has-children > ul.sub-menu {
-  background-color: rgba(
-    0,
-    251,
-    255,
-    0.9
-  ); /* first submenu background colour */
-}
-
-#menu-main-menu > li.menu-item-has-children > ul.sub-menu > li > a {
-  color: #333; /* first submenu text colour */
-}
-
-#menu-main-menu > li.menu-item-has-children > li li > ul.sub-menu {
-  background-color: #000000;
-}
-
+/* second submenu background and font colours */
 .menu-main-menu-container > #menu-main-menu > li li > .sub-menu a {
-  background-color: #2b9f84; /* second submenu background-colour */
-  color: #ebffff;
-}
-.menu-main-menu-container > #menu-main-menu > li li li > .sub-menu a {
-  background-color: #ff0000; /* third submenu background-colour */
-  color: #ebffff;
-}
-
-.menu-main-menu-container > #menu-main-menu > li li li li > .sub-menu a {
-  background-color: #ebffff; /* fourth submenu background-colour */
-  color: #333333;
-}
-
-/* Styles from Mega menu */
-header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
-  background-color: rgba(0, 251, 255, 0.9);
-  /* color: #333333; */
-}
-
-ul.menu li:hover {
-  background-color: #ff90b7; /* top level hover */
-}
-
-header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a:hover,
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a:focus {
-  background-color: #ff90b7;
-  color: #333333;
-}
-
-header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
-  color: #000; /* 4.56 */
-  color: #ff0000; /* 4.56 */
-}
-
-.login-form {
-  background-color: #ff0000;
-}
-
-.login-form h1,
-.login-form label {
-  color: #ebffff;
-}
-
-.login-form input[type='submit'] {
   background-color: #2b9f84;
   color: #ebffff;
 }
 
-.login-form input[type='submit']:hover {
-  background-color: #ff90b7;
+/* third submenu background and font colours */
+.menu-main-menu-container > #menu-main-menu > li li li > .sub-menu a {
+  background-color: #ff0000;
   color: #ebffff;
 }
 
-/***** caret styles ******/
+/* fourth submenu background and font colours */
+.menu-main-menu-container > #menu-main-menu > li li li li > .sub-menu a {
+  background-color: #ebffff;
+  color: #333333;
+}
 
-/* --- first level --- */
+/* mega menu background colour */
+header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
+  background-color: rgba(0, 251, 255, 0.9);
+}
 
-i.angle-down:before {
+/* title within a mega menu font colour */
+header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
+  color: #ff0000; /* 4.56 */
+}
+
+/***** Carets *****/
+
+/* -- first level -- */
+
+/* down arrow stroke colour */
+.menu-item-has-children i.angle-down:before {
   border-top: 7px solid #ebffff;
 }
 
-i.angle-down:after {
+/* down arrow stroke colour on hover */
+.menu-item-has-children:hover i.angle-down:before {
+  border-top: 7px solid #ebffff;
+}
+
+/* down arrow fill colour */
+.menu-item-has-children i.angle-down:after {
   border-top: 4px solid #ff0000;
 }
 
-i.angle-up:before {
-  border-bottom: 7px solid #ebffff;
-}
-
-i.angle-up:after {
-  border-bottom: 4px solid #ff0000;
-}
-
-ul.menu li:hover > a i.angle-down:after {
+/* down arrow fill colour on hover */
+.menu-item-has-children:hover i.angle-down:after {
   border-top: 4px solid #ff90b7;
 }
 
-ul.menu li:hover > a i.angle-down:before {
-  border-top: 7px solid #ebffff;
-}
+/*---- ---- */
 
-ul.menu li:hover > a i.angle-up:after {
-  border-bottom: 4px solid #ff90b7;
-}
-
-ul.menu li:hover > a i.angle-up:before {
+/* up arrow stroke colour */
+.menu-item-has-children i.angle-up:before {
   border-bottom: 7px solid #ebffff;
 }
 
-/* -- second level --- */
+/* up arrow stroke colour on hover */
+.menu-item-has-children:hover i.angle-up:before {
+  border-bottom: 7px solid #ebffff;
+}
 
-.menu-item-has-children .menu-item-has-children > a i.angle-down:before {
+/* up arrow fill colour */
+.menu-item-has-children i.angle-up:after {
+  border-bottom: 4px solid #ff0000;
+}
+
+/* up arrow fill colour on hover */
+.menu-item-has-children:hover i.angle-up:after {
+  border-bottom: 4px solid #ff90b7;
+}
+
+/* -- second level -- */
+
+/* down arrow stroke colour */
+.menu-item-has-children .menu-item-has-children i.angle-down:before {
   border-top: 7px solid #333333;
 }
 
-.menu-item-has-children .menu-item-has-children > a i.angle-down:after {
+/* down arrow stroke colour on hover */
+.menu-item-has-children .menu-item-has-children:hover i.angle-down:before {
+  border-top: 7px solid #ebffff;
+}
+
+/* down arrow stroke colour on a:focus */
+.menu-item-has-children .menu-item-has-children a:focus i.angle-down:before {
+  border-top: 7px solid #ebffff;
+}
+
+/* down arrow fill colour */
+.menu-item-has-children .menu-item-has-children i.angle-down:after {
   border-top: 4px solid rgba(0, 251, 255, 0.9);
 }
 
-.menu-item-has-children .menu-item-has-children > a i.angle-up:before {
+/* down arrow fill colour on hover */
+.menu-item-has-children .menu-item-has-children:hover i.angle-down:after {
+  border-top: 4px solid #ff90b7;
+}
+
+/* down arrow fill colour on a:hover */
+.menu-item-has-children .menu-item-has-children a:hover i.angle-down:after {
+  border-top: 4px solid #ff90b7;
+}
+
+/* down arrow fill colour on focus */
+.menu-item-has-children .menu-item-has-children:focus i.angle-down:after {
+  border-top: 4px solid #ff90b7;
+}
+
+/* down arrow fill colour on a:focus */
+.menu-item-has-children .menu-item-has-children a:focus i.angle-down:after {
+  border-top: 4px solid #ff90b7;
+}
+
+/*---- ---- */
+
+/* up arrow stroke colour */
+.menu-item-has-children .menu-item-has-children i.angle-up:before {
   border-bottom: 7px solid #333333;
 }
 
-.menu-item-has-children .menu-item-has-children > a i.angle-up:after {
+/* up arrow stroke colour on hover */
+.menu-item-has-children .menu-item-has-children:hover i.angle-up:before {
+  border-bottom: 7px solid #ebffff;
+}
+
+/* up arrow stroke colour on a:focus */
+.menu-item-has-children .menu-item-has-children a:focus i.angle-up:before {
+  border-bottom: 7px solid #ebffff;
+}
+
+/* up arrow fill colour */
+.menu-item-has-children .menu-item-has-children i.angle-up:after {
   border-bottom: 4px solid rgba(0, 251, 255, 0.9);
 }
 
-/* -- third level --- */
-
-.menu-item-has-children
-  .menu-item-has-children
-  .menu-item-has-children
-  > a
-  i.angle-down:before {
-  border-top: 7px solid #ffffff;
+/* up arrow fill colour on hover */
+.menu-item-has-children .menu-item-has-children:hover i.angle-up:after {
+  border-bottom: 4px solid #ff90b7;
 }
 
+/* up arrow fill colour on a:hover */
+.menu-item-has-children .menu-item-has-children a:hover i.angle-up:after {
+  border-bottom: 4px solid #ff90b7;
+}
+
+/* up arrow fill colour on focus */
+.menu-item-has-children .menu-item-has-children:focus i.angle-up:after {
+  border-bottom: 4px solid #ff90b7;
+}
+
+/* up arrow fill colour on a:focus */
+.menu-item-has-children .menu-item-has-children a:focus i.angle-up:after {
+  border-bottom: 4px solid #ff90b7;
+}
+
+/* maintain background colour on the parent on hover */
+.menu-main-menu-container
+  > #menu-main-menu
+  > li
+  > .sub-menu
+  > li.menu-item-has-children:hover
+  i.angle-up:after {
+  border-bottom: 4px solid #ff90b7;
+}
+
+/* -- third level -- */
+
+/* down arrow stroke colour */
 .menu-item-has-children
   .menu-item-has-children
   .menu-item-has-children
-  > a
+  i.angle-down:before {
+  border-top: 7px solid #ebffff;
+}
+
+/* down arrow stroke colour hover */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children:hover
+  i.angle-down:before {
+  border-top: 7px solid #ebffff;
+}
+
+/* down arrow stroke colour focus */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children:focus
+  i.angle-down:before {
+  border-top: 7px solid #ebffff;
+}
+
+/* down arrow fill colour */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
   i.angle-down:after {
   border-top: 4px solid #2b9f84;
 }
 
+/* down arrow hover fill colour */
 .menu-item-has-children
   .menu-item-has-children
-  .menu-item-has-children
-  > a
-  i.angle-up:before {
-  border-bottom: 7px solid #ffffff;
+  .menu-item-has-children:hover
+  i.angle-down:after {
+  border-top: 4px solid #ff90b7;
 }
 
+/* down arrow fill colour a:hover */
 .menu-item-has-children
   .menu-item-has-children
   .menu-item-has-children
-  > a
+  a:hover
+  i.angle-down:after {
+  border-top: 4px solid #ff90b7;
+}
+
+/* down arrow focus fill colour */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children:focus
+  i.angle-down:after {
+  border-top: 4px solid #ff90b7;
+}
+
+/* down arrow fill colour a:focus */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  a:focus
+  i.angle-down:after {
+  border-top: 4px solid #ff90b7;
+}
+
+/*--- --- */
+
+/* up arrow stroke colour */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  i.angle-up:before {
+  border-bottom: 7px solid #ebffff;
+}
+
+/* up arrow stroke colour on hover */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children:hover
+  i.angle-up:before {
+  border-bottom: 7px solid #ebffff;
+}
+
+/* up arrow stroke colour on focus */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children:focus
+  i.angle-up:before {
+  border-bottom: 7px solid #ebffff;
+}
+
+/* up arrow fill colour */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
   i.angle-up:after {
   border-bottom: 4px solid #2b9f84;
 }
 
-/* target caret background on hover and when open and mouse off 
-for menu for second and third-level menus */
-.menu-item-has-children
-  .menu-item-has-children
-  > a[aria-expanded='true']
-  i.angle-up:after,
+/* up arrow fill colour :hover */
 .menu-item-has-children
   .menu-item-has-children
   .menu-item-has-children:hover
-  > a
-  i.angle-up:after,
+  i.angle-up:after {
+  border-bottom: 4px solid #ff90b7;
+}
+
+/* up arrow fill colour a:hover */
 .menu-item-has-children
   .menu-item-has-children
   .menu-item-has-children
-  > a[aria-expanded='true']
+  a:hover
+  i.angle-up:after {
+  border-bottom: 4px solid #ff90b7;
+}
+
+/* up arrow fill colour :focus */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children:focus
+  i.angle-up:after {
+  border-bottom: 4px solid #ff90b7;
+}
+
+/* up arrow fill colour a:focus */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  a:focus
   i.angle-up:after {
   border-bottom: 4px solid #ff90b7;
 }
