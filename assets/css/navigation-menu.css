@@ -432,7 +432,7 @@ ul.sub-menu li > ul.sub-menu {
   -o-transform: rotate(45deg);
 }
 
-/* Styles from Mega menu */
+/* styles for Mega menu */
 header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   position: absolute;
   box-shadow: -2px 2px 70px -25px rgba(0, 0, 0, 0.3);
