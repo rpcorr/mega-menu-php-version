@@ -279,16 +279,12 @@ ul#menu-main-menu
   }
 }
 
-.menu-main-menu-container > #menu-main-menu > li.menu-item-has-children {
-  padding-right: 2.25rem;
-}
-
 .menu-main-menu-container > #menu-main-menu > li.menu-item-has-children > a,
 .menu-main-menu-container
   > #menu-main-menu
   > li.menu-item-has-children
   > button {
-  padding-right: 0;
+  padding-right: 0.45em;
 }
 
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a,

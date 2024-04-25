@@ -90,36 +90,50 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
 i.caret {
   position: relative;
+  top: 7px;
   left: 5px;
 }
 
 i.caret:before,
 i.caret:after {
   content: '';
-  position: absolute;
+  position: relative;
 }
 
 /* down and up arrow stroke */
 i.angle-down:before,
 i.angle-up:before {
-  top: 5px;
-  left: 0;
+  left: 0px;
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
 }
 
+/* down arrow position */
+i.angle-down:before {
+  top: 5px;
+}
+
+/* up arrow position */
+i.angle-up:before {
+  top: -20px;
+}
+
 /* down arrow fill area */
 i.angle-down:after {
-  left: 3px;
-  top: 5px;
+  /* left: 3px; */
+  left: -10px;
+  /* top: 5px; */
+  bottom: -2px;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
 }
 
 /* up arrow fill area */
 i.angle-up:after {
-  left: 3px;
-  top: 8px;
+  /* left: 3px; */
+  left: -10px;
+  /* top: 8px; */
+  top: -17px;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
 }
