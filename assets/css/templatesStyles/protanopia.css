@@ -120,6 +120,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-top: 7px solid #ffffff;
 }
 
+/* down arrow stroke colour on a:focus */
+.menu-item-has-children a:focus i.angle-down:before {
+  border-top: 7px solid #ffffff;
+}
+
 /* down arrow fill colour */
 .menu-item-has-children i.angle-down:after {
   border-top: 4px solid #6fde6e;
@@ -127,6 +132,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 
 /* down arrow fill colour on hover */
 .menu-item-has-children:hover i.angle-down:after {
+  border-top: 4px solid #235fa4;
+}
+
+/* down arrow fill colour on a:focus */
+.menu-item-has-children a:focus i.angle-down:after {
   border-top: 4px solid #235fa4;
 }
 
@@ -142,6 +152,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-bottom: 7px solid #ffffff;
 }
 
+/* up arrow stroke colour on a:focus */
+.menu-item-has-children a:focus i.angle-up:before {
+  border-bottom: 7px solid #ffffff;
+}
+
 /* up arrow fill colour */
 .menu-item-has-children i.angle-up:after {
   border-bottom: 4px solid #6fde6e;
@@ -149,6 +164,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 
 /* up arrow fill colour on hover */
 .menu-item-has-children:hover i.angle-up:after {
+  border-bottom: 4px solid #235fa4;
+}
+
+/* up arrow fill colour on a:focus */
+.menu-item-has-children a:focus i.angle-up:after {
   border-bottom: 4px solid #235fa4;
 }
 

@@ -129,6 +129,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-top: 4px solid #218ab2;
 }
 
+/* down arrow fill colour on a:focus */
+.menu-item-has-children a:focus i.angle-down:after {
+  border-top: 4px solid #218ab2;
+}
+
 /*-------- */
 
 /* up arrow stroke colour */
@@ -148,6 +153,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 
 /* up arrow fill colour on hover */
 .menu-item-has-children:hover i.angle-up:after {
+  border-bottom: 4px solid #218ab2;
+}
+
+/* up arrow fill colour on a:focus */
+.menu-item-has-children a:focus i.angle-up:after {
   border-bottom: 4px solid #218ab2;
 }
 

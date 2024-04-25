@@ -129,6 +129,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-top: 4px solid #194b4f;
 }
 
+/* down arrow fill colour on a:focus */
+.menu-item-has-children a:focus i.angle-down:after {
+  border-top: 4px solid #194b4f;
+}
+
 /*---- ---- */
 
 /* up arrow stroke colour */
@@ -151,6 +156,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-bottom: 4px solid #194b4f;
 }
 
+/* up arrow fill colour on a:focus */
+.menu-item-has-children a:focus i.angle-up:after {
+  border-bottom: 4px solid #194b4f;
+}
+
 /* second-level */
 
 /* down arrow stroke colour */
@@ -163,8 +173,8 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-top: 7px solid #ffffff;
 }
 
-/* down arrow stroke colour on focus */
-.menu-item-has-children .menu-item-has-children:focus i.angle-down:before {
+/* down arrow stroke colour on a:focus */
+.menu-item-has-children .menu-item-has-children a:focus i.angle-down:before {
   border-top: 7px solid #ffffff;
 }
 
