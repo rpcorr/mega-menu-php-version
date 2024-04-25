@@ -8,7 +8,6 @@
 .column-1 {
   display: flex;
   flex: 0 0 60%; /* 60% width */
-  /* border: 0.063rem solid red; */
   justify-content: end;
   align-items: center;
   padding-right: 1.25rem;
@@ -17,7 +16,6 @@
 .column-2 {
   display: flex;
   flex: 0 0 40%; /* 40% width */
-  /* border: 0.063rem solid blue; */
   align-items: center;
 }
 
@@ -27,6 +25,10 @@
   margin: 0.625rem;
   border-radius: 0.313rem;
   box-shadow: 0 0 0.313rem rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 0.313rem;
+  -moz-border-radius: 0.313rem;
+  -ms-border-radius: 0.313rem;
+  -o-border-radius: 0.313rem;
 }
 
 input {
