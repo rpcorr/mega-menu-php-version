@@ -34,7 +34,7 @@ session_start();
 
     <!-- stylesheets -->
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.min.css" />
-    <link rel="stylesheet" type="text/css" href="./assets/css/navigation-menu.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/navigation-menu.min.css" />
     <link rel="stylesheet" type="text/css" href="./assets/css/default.min.css" />
     <?php if(isset($_SESSION['stylePreference'])) { ?>
       <link rel="stylesheet" type="text/css" href="./assets/css/templatesStyles/<?php echo $_SESSION['stylePreference'];?>.css" />
