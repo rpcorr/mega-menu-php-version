@@ -1,0 +1,6 @@
+1.
+
+ like that the menu hangs around when clicking -- but it should eventually disappear to reveal the underlying page content when no longer hovered -- we don't want that to be immediate -- nor do we want it to be forever 
+
+Maybe a 1s transition?
+
