@@ -17,6 +17,19 @@ $(document).ready(function () {
   // add handleLinkClick to eventListener
   for (let i = 0; i < megaMenuLinks.length; i++) {
     megaMenuLinks[i].addEventListener('click', handleLinkClick);
+    megaMenuLinks[i].addEventListener('keyup', function (e) {
+      if (e.keyCode === 13) {
+        // Select the elements matching the CSS selector
+        var elements = document.querySelectorAll(
+          'ul#menu-main-menu li.menu-item-has-children.visible>ul:not(:hover)'
+        );
+
+        // Loop through each matched element and change its opacity to 1
+        elements.forEach(function (element) {
+          element.style.opacity = '1';
+        });
+      }
+    });
   }
 
   winWidth = $(window).width();
