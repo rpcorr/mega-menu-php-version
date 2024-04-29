@@ -430,35 +430,6 @@ ul.sub-menu li > ul.sub-menu {
   text-decoration: none;
 }
 
-.menu-main-menu-container > #menu-main-menu > li > ul.sub-menu::before {
-  content: '';
-  position: absolute;
-  right: 0.35rem;
-  top: -0.75rem;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 0.75rem 0.75rem 0.75rem;
-  z-index: 9999;
-}
-
-.menu-main-menu-container > #menu-main-menu > li > ul.sub-menu:after {
-  content: '';
-  position: absolute;
-  width: 0.5rem;
-  height: 0.5rem;
-  background: rgba(50, 50, 50, 0.75);
-  transform: rotate(45deg);
-  right: 0.85rem;
-  top: -0.6rem;
-  box-shadow: 0.25rem 0.25rem 0.25rem 0.25rem rgba(50, 50, 50, 0.75);
-  z-index: -1;
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-}
-
 /* styles for Mega menu */
 header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   position: absolute;
