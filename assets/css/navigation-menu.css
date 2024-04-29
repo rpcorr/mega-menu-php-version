@@ -210,6 +210,26 @@ ul#menu-main-menu li.menu-item-has-children.visible > ul {
   display: block;
 }
 
+ul#menu-main-menu li.menu-item-has-children.visible > ul,
+ul#menu-main-menu li.menu-item-has-children.visible > div {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -ms-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+}
+
+ul#menu-main-menu li.menu-item-has-children.visible:hover ul,
+ul#menu-main-menu li.menu-item-has-children.visible:hover div {
+  opacity: 1 !important;
+}
+
+ul#menu-main-menu li.menu-item-has-children.visible > ul:not(:hover),
+ul#menu-main-menu li.menu-item-has-children.visible > div:not(:hover) {
+  opacity: 0;
+}
+
 body.has-hover ul#menu-main-menu .hover:hover > ul ul.sub-menu,
 ul#menu-main-menu li.menu-item-has-children.visible > ul ul.sub-menu {
   position: relative;
