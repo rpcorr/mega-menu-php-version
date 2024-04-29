@@ -19,6 +19,8 @@ $(document).ready(function () {
     megaMenuLinks[i].addEventListener('click', handleLinkClick);
     megaMenuLinks[i].addEventListener('keyup', function (e) {
       if (e.keyCode === 13) {
+        // handle downdown menus
+
         // Select the elements matching the CSS selector
         var elements = document.querySelectorAll(
           'ul#menu-main-menu li.menu-item-has-children.visible>ul:not(:hover)'
@@ -26,6 +28,18 @@ $(document).ready(function () {
 
         // Loop through each matched element and change its opacity to 1
         elements.forEach(function (element) {
+          element.style.opacity = '1';
+        });
+
+        // handle Mega Menus
+
+        // Select the mega menus matching the CSS selector
+        const megaMenus = document.querySelectorAll(
+          'ul#menu-main-menu li.menu-item-has-children.visible > div:not(:hover)'
+        );
+
+        // Loop through each matched menu and change its opacity to 1
+        megaMenus.forEach(function (element) {
           element.style.opacity = '1';
         });
       }
