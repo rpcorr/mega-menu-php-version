@@ -18,30 +18,13 @@ $(document).ready(function () {
   for (let i = 0; i < megaMenuLinks.length; i++) {
     megaMenuLinks[i].addEventListener('click', handleLinkClick);
     megaMenuLinks[i].addEventListener('keyup', function (e) {
+      // open current menu when enter key is pressed
       if (e.keyCode === 13) {
-        // handle downdown menus
+        // open current regular menu
+        openMenu();
 
-        // Select the elements matching the CSS selector
-        var elements = document.querySelectorAll(
-          'ul#menu-main-menu li.menu-item-has-children.visible>ul:not(:hover)'
-        );
-
-        // Loop through each matched element and change its opacity to 1
-        elements.forEach(function (element) {
-          element.style.opacity = '1';
-        });
-
-        // handle Mega Menus
-
-        // Select the mega menus matching the CSS selector
-        const megaMenus = document.querySelectorAll(
-          'ul#menu-main-menu li.menu-item-has-children.visible > div:not(:hover)'
-        );
-
-        // Loop through each matched menu and change its opacity to 1
-        megaMenus.forEach(function (element) {
-          element.style.opacity = '1';
-        });
+        // open current mega menu
+        openMegaMenu();
       }
     });
   }
@@ -75,7 +58,7 @@ $(document).ready(function () {
   );
   moreWidth = $('#menu-more').outerWidth();
 
-  // toggle sub-menu
+  // toggle sub-menu on click
   $('#menuMoreLink').click(function (event) {
     event.preventDefault();
     $('.menu-item-has-children:not(#menu-more)').removeClass('visible');
@@ -100,6 +83,15 @@ $(document).ready(function () {
 
       // set the More link aria-expanded attr to false
       $(this).attr('aria-expanded', false);
+    }
+  });
+
+  // toggle sub-menu on key up
+  $('#menuMoreLink').keyup(function (event) {
+    // open "More" menu when enter key is pressed
+    if (event.keyCode === 13) {
+      // open current regular menu
+      openMenu();
     }
   });
 
@@ -536,4 +528,33 @@ function selectStylesheet(stylesheetName) {
       document.head.removeChild(previousStylesheet);
     });
   }, 1000);
+}
+
+// enable openMenu using the keyboard for accessibility
+function openMenu() {
+  // handle downdown menus
+
+  // Select the elements matching the CSS selector
+  var elements = document.querySelectorAll(
+    'ul#menu-main-menu li.menu-item-has-children.visible>ul:not(:hover)'
+  );
+
+  // Loop through each matched element and change its opacity to 1
+  elements.forEach(function (element) {
+    element.style.opacity = '1';
+  });
+}
+
+function openMegaMenu() {
+  // handle Mega Menus
+
+  // Select the mega menus matching the CSS selector
+  const megaMenus = document.querySelectorAll(
+    'ul#menu-main-menu li.menu-item-has-children.visible > div:not(:hover)'
+  );
+
+  // Loop through each matched menu and change its opacity to 1
+  megaMenus.forEach(function (element) {
+    element.style.opacity = '1';
+  });
 }
