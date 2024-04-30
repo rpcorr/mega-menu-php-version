@@ -20,11 +20,10 @@ $(document).ready(function () {
     megaMenuLinks[i].addEventListener('keyup', function (e) {
       // open current menu when enter key is pressed
       if (e.keyCode === 13) {
-        // open current regular menu
-        openMenu();
-
-        // open current mega menu
-        openMegaMenu();
+        // open menu - determine the type of menu
+        const bContainsSubMenuDiv =
+          this.nextElementSibling.classList.contains('sub-menu-div');
+        openMenu(bContainsSubMenuDiv);
       }
     });
   }
@@ -90,8 +89,8 @@ $(document).ready(function () {
   $('#menuMoreLink').keyup(function (event) {
     // open "More" menu when enter key is pressed
     if (event.keyCode === 13) {
-      // open current regular menu
-      openMenu();
+      // open current regular menu, there param is false
+      openMenu(false);
     }
   });
 
@@ -531,30 +530,24 @@ function selectStylesheet(stylesheetName) {
 }
 
 // enable openMenu using the keyboard for accessibility
-function openMenu() {
+function openMenu(bContainsSubMenuDiv) {
   // handle downdown menus
 
+  let elements;
+
   // Select the elements matching the CSS selector
-  var elements = document.querySelectorAll(
-    'ul#menu-main-menu li.menu-item-has-children.visible>ul:not(:hover)'
-  );
+  if (!bContainsSubMenuDiv) {
+    elements = document.querySelectorAll(
+      'ul#menu-main-menu li.menu-item-has-children.visible>ul:not(:hover)'
+    );
+  } else {
+    elements = document.querySelectorAll(
+      'ul#menu-main-menu li.menu-item-has-children.visible > div:not(:hover)'
+    );
+  }
 
   // Loop through each matched element and change its opacity to 1
   elements.forEach(function (element) {
-    element.style.opacity = '1';
-  });
-}
-
-function openMegaMenu() {
-  // handle Mega Menus
-
-  // Select the mega menus matching the CSS selector
-  const megaMenus = document.querySelectorAll(
-    'ul#menu-main-menu li.menu-item-has-children.visible > div:not(:hover)'
-  );
-
-  // Loop through each matched menu and change its opacity to 1
-  megaMenus.forEach(function (element) {
     element.style.opacity = '1';
   });
 }
