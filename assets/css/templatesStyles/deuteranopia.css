@@ -174,8 +174,8 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-top: 7px solid #2d3142;
 }
 
-/* down arrow stroke colour on focus */
-.menu-item-has-children .menu-item-has-children:focus i.angle-down:before {
+/* down arrow stroke colour on a:focus */
+.menu-item-has-children .menu-item-has-children a:focus i.angle-down:before {
   border-top: 7px solid #2d3142;
 }
 
@@ -216,8 +216,8 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-bottom: 7px solid #2d3142;
 }
 
-/* up arrow stroke colour on focus */
-.menu-item-has-children .menu-item-has-children:focus i.angle-up:before {
+/* up arrow stroke colour on a:focus */
+.menu-item-has-children .menu-item-has-children a:focus i.angle-up:before {
   border-bottom: 7px solid #2d3142;
 }
 

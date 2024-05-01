@@ -228,7 +228,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 }
 
 /* up arrow stroke colour on a:focus */
-.menu-item-has-children .menu-item-has-children:hover i.angle-up:before {
+.menu-item-has-children .menu-item-has-children a:focus i.angle-up:before {
   border-bottom: 7px solid #e8d3e4;
 }
 

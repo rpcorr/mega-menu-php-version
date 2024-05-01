@@ -11,7 +11,7 @@ h1 {
 
 /* navigation background colour */
 #mainNavigation {
-  background-color: #929084;
+  background-color: #a997df;
 }
 
 /* navigation border bottom colour */
@@ -21,7 +21,7 @@ header {
 
 /* link colour */
 a {
-  color: #ffffff;
+  color: #333333;
 }
 
 /* list item hover, focus, and siteIdentity background and font colours */
@@ -112,7 +112,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 
 /* down arrow stroke colour */
 .menu-item-has-children i.angle-down:before {
-  border-top: 7px solid #ffffff;
+  border-top: 7px solid #333333;
 }
 
 /* down arrow stroke colour on hover */
@@ -144,7 +144,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 
 /* up arrow stroke colour */
 .menu-item-has-children i.angle-up:before {
-  border-bottom: 7px solid #ffffff;
+  border-bottom: 7px solid #333333;
 }
 
 /* up arrow stroke colour on hover */
@@ -184,8 +184,8 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-top: 7px solid #333333;
 }
 
-/* down arrow stroke colour on focus */
-.menu-item-has-children .menu-item-has-children:focus i.angle-down:before {
+/* down arrow stroke colour on a:focus */
+.menu-item-has-children .menu-item-has-children a:focus i.angle-down:before {
   border-top: 7px solid #333333;
 }
 
@@ -226,8 +226,8 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-bottom: 7px solid #333333;
 }
 
-/* up arrow stroke colour on focus */
-.menu-item-has-children .menu-item-has-children:hover i.angle-up:before {
+/* up arrow stroke colour on a:focus */
+.menu-item-has-children .menu-item-has-children a:focus i.angle-up:before {
   border-bottom: 7px solid #333333;
 }
 

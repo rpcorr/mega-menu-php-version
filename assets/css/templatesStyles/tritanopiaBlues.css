@@ -32,9 +32,12 @@ ul.menu li a:focus,
 }
 
 /* top menu list hover anchor and siteIdentity anchor colour */
-ul.menu li:hover a,
-#siteIdentity a {
+ul.menu li:hover a {
   color: #daf1f4;
+}
+
+#siteIdentity a {
+  color: #111111;
 }
 
 /* first submenu background colour */
