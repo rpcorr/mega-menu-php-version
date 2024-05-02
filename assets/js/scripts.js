@@ -526,7 +526,7 @@ function selectStylesheet(stylesheetName) {
     previousStylesheets.forEach(function (previousStylesheet) {
       document.head.removeChild(previousStylesheet);
     });
-  }, 1000);
+  }, 1);
 }
 
 // enable openMenu using the keyboard for accessibility
