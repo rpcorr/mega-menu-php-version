@@ -26,29 +26,6 @@ if ($menuItems === null) {
 
         $output .= createMenu($mI, $_SESSION['user']);
 
-        //$output .= '<li><a href="preferences.php">' . $_SESSION['user'] . 'Preferences</a></li>';
-
-        //$output += `<li><a href="logout.php">Logout ${user.username}</a></li>`;
-        
-        
-        // $name = $menuItem['name'];
-        // $link = $menuItem['link'];
-        // $availableFor = $menuItem['availableFor'];
-
-        // echo "Name: $name, Link: $link, Available For: ";
-        // echo implode(', ', $availableFor);
-        // echo "<br>";
-
-
-        //$name = $mI['name'];
-        //echo $name;
-
-
-        // define liClass
-        //$liClass = isset($mI['subMenuType']) ? 'class="menu-item-has-children"' : '';
-
-        //echo $liClass;
-        //echo $output;
     }
 
     $output .= '<li><a href="preferences.php">' . $_SESSION['user'] . "'s Preferences</a></li>";
@@ -61,7 +38,7 @@ if ($menuItems === null) {
 
 } else {
     // login link
-    echo '<li><a href="login.php">Login</a></li>';
+    //echo '<li><a href="login.php">Login</a></li>';
 }
 
 echo $output;
