@@ -71,6 +71,29 @@ require_once './assets/php_scripts/session_check.php';
       <div class="container">
         <h1>Preferences</h1>
         <form>
+          <!-- Counting Opinions-->
+          <div class="swatches-container">
+            <div class="column-1">
+              <div class="swatch" style="background-color: #60bd68"></div>
+              <div class="swatch" style="background-color: #1fb7f1"></div>
+              <div class="swatch" style="background-color: #7fd6f7"></div>
+              <div class="swatch" style="background-color: #4fc7f4"></div>
+              <div class="swatch" style="background-color: #337ab7"></div>
+            </div>
+            <div class="column-2">
+              <input
+                type="radio"
+                id="countingOpinions"
+                name="option"
+                value="Counting Opinions"
+                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "countingOpinions" ) { ?>
+                checked
+                <?php } ?>
+              />
+              <label for="countingOpinions">Counting Opinions</label>
+            </div>
+          </div>
+
           <!-- Protanopia-->
           <div class="swatches-container">
             <div class="column-1">
@@ -329,6 +352,6 @@ require_once './assets/php_scripts/session_check.php';
 
     <script src="./assets/js/jquery.min.js" defer></script>
     <script src="./assets/js/scripts.min.js" defer></script>
-    <script src="./assets/js/checkTimerInactivity.min.js" defer></script>
+    <!-- <script src="./assets/js/checkTimerInactivity.min.js" defer></script> -->
   </body>
 </html>
