@@ -42,7 +42,7 @@ if ($menuItems === null) {
 
 } else {
     // login link
-    //echo '<li><a href="login.php">Login</a></li>';
+    echo '<li><a href="login.php">Login</a></li>';
 }
 
 echo $output;
