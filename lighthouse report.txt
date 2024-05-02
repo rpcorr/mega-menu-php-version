@@ -1,0 +1,77 @@
+Desktop ----
+
+Initial
+-------
+
+/index.php (logged out)
+
+Performance - 100
+Accessibility - 100
+Best Practices - 100
+
+
+/login.php
+
+Performance - 100
+Accessibility - 100
+Best Practices - 100
+
+
+/index.php (logged in)
+
+protanopia
+----------------
+Performance - 99
+Accessibility - 100
+Best Practices - 100
+
+protanomaly
+----------------
+Performance - 99
+Accessibility - 94
+Best Practices - 100
+
+tritanopia Blues
+----------------
+Performance - 99
+Accessibility - 100
+Best Practices - 100
+
+/about.php 
+
+Performance - 99
+Accessibility - 100
+Best Practices - 96
+
+/an-admin-access-page.php
+
+Performance - 99
+Accessibility - 100
+Best Practices - 96
+
+/an-admin-or-premium-access-page.php
+
+Performance - 99
+Accessibility - 100
+Best Practices - 96
+
+
+
+afterwards
+----------
+
+
+/login.php
+
+Performance - 100
+Accessibility - 100
+Best Practices - 96
+
+
+
+
+
+
+
+
+
