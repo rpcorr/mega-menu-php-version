@@ -107,7 +107,7 @@ if (isset($_POST['username'])) {
           <section id="branding">
             <a href="#skipMenu" class="screen-reader-text">Skip to Content</a>
             <div id="siteIdentity">
-              <a href="index.php" rel="home"> [Logo Here] </a>
+              <a href="./index.php" rel="home"> <img src="./assets/imgs/CO_logo.svg" alt="Counting Opinions" height="60"> </a>
             </div>
           </section>
           <nav id="menu" aria-label="Menu will change once you log in">

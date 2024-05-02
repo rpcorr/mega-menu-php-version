@@ -24,24 +24,11 @@ a {
   color: #ffffff;
 }
 
-/* list item hover, focus, and siteIdentity background and font colours */
+/* list item hover, focus background and font colours */
 ul.menu li:hover,
 ul.menu li a:focus {
   background-color: #60bd68;
   color: #ffffff;
-}
-
-#branding {
-  background-color: #ffffff;
-  width: 11rem;
-  height: 5rem;
-}
-
-#siteIdentity {
-  background-color: #ffffff;
-  width: 9rem;
-  padding: 0;
-  margin-right: 0;
 }
 
 /* current page list item background colour */

@@ -24,10 +24,9 @@ a {
   color: #2d3043;
 }
 
-/* list item hover, focus, and siteIdentity background and font colours */
+/* list item hover, focus background and font colours */
 ul.menu li:hover,
-ul.menu li a:focus,
-#siteIdentity {
+ul.menu li a:focus {
   background-color: #a15229;
   color: #ffffff;
 }

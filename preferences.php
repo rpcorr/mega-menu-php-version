@@ -52,14 +52,7 @@ require_once './assets/php_scripts/session_check.php';
           <section id="branding">
             <a href="#skipMenu" class="screen-reader-text">Skip to Content</a>
             <div id="siteIdentity">
-
-            <?php if ($_SESSION['stylePreference'] === 'countingOpinions') { ?>
               <a href="./index.php" rel="home"> <img src="./assets/imgs/CO_logo.svg" alt="Counting Opinions" height="60"> </a>
-            <?php } else { ?>
-
-              <a href="./index.php" rel="home"> [Logo Here] </a>
-
-            <?php } ?>
             </div>
           </section>
           <nav id="menu" aria-label="Menu will change once you log in">

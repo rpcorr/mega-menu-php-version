@@ -9,10 +9,9 @@ a {
   color: #eee;
 }
 
-/* list item hover, focus, and siteIdentity background colour */
+/* list item hover, focus colour */
 ul.menu li:hover,
-ul.menu li a:focus,
-#siteIdentity {
+ul.menu li a:focus {
   background-color: #555;
 }
 
