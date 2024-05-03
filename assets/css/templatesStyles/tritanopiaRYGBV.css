@@ -26,8 +26,18 @@ ul#menu-main-menu a {
 
 /* link background colour on hover and focus */
 ul#menu-main-menu li a:hover,
-ul#menu-main-menu li a:focus {
+ul#menu-main-menu li a:focus,
+ul.menu li:hover,
+ul.menu li a:focus {
   background-color: #66004d;
+}
+
+/* maintain main menu text colour on hover when a sub menu item is selected */
+.menu-main-menu-container
+  > #menu-main-menu
+  > li.menu-item-has-children:hover
+  > a:link {
+  color: #ffe6f2;
 }
 
 /* first submenu background colour */
