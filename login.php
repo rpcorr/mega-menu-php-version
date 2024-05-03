@@ -72,19 +72,26 @@ if (isset($_POST['username'])) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Standard favicon -->
-    <link rel="icon" type="image/png" href="./assets/imgs/fav-icons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/imgs/fav-icons/favicon-16x16.png">
+     <link rel="icon" type="image/png" sizes="32x32" href="./assets/imgs/fav-icons/favicon-32x32.png">
 
-    <!-- For IE 11 or below -->
-    <link rel="icon" type="image/x-icon" href="./assets/imgs/fav-icons/favicon.ico">
+     <link rel="apple-touch-icon" href="./assets/imgs/fav-icons/apple-touch-icon.png">
 
     <!-- For Apple devices -->
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/imgs/fav-icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./assets/imgs/fav-icons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/imgs/fav-icons/apple-touch-icon-180x180.png">
 
     <!-- For Android Chrome -->
     <link rel="icon" type="image/png" sizes="192x192" href="./assets/imgs/fav-icons/android-chrome-192x192.png">
 
     <!-- For Android Chrome (for higher resolution screens) -->
     <link rel="icon" type="image/png" sizes="512x512" href="./assets/imgs/fav-icons/android-chrome-512x512.png">
+
+    <link rel="icon" type="image/png" sizes="194x194" href="./assets/imgs/favicon-194x194.png">
+
+    <link rel="icon" type="image/png" sizes="128x128" href="./assets/imgs/favicon-128x128.png">
+
+    <link rel="shortcut icon" type="image/png" sizes="196x196" href="./assets/imgs/favicon-196x196.png">
 
     <!-- For Android devices -->
     <!-- <link rel="manifest" href="./assets/imgs/fav-icons/site.webmanifest"> -->
