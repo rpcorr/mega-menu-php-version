@@ -200,7 +200,7 @@ nav {
 
 @media (max-width: 27em) {
   nav {
-    padding: 1.75rem 0 1.5rem;
+    /* padding: 1.75rem 0 1.5rem; */
   }
 }
 
