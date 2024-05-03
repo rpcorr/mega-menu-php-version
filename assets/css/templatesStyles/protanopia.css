@@ -21,12 +21,12 @@ header {
 
 /* link colour */
 ul#menu-main-menu a {
-  color: #000;
+  color: #000000;
 }
 
-/* list item hover and focus background and font colours */
-ul.menu li:hover,
-ul.menu li a:focus {
+/* link background and font colours on hover and focus */
+ul#menu-main-menu li a:hover,
+ul#menu-main-menu li a:focus {
   background-color: #235fa4;
   color: #ffffff;
 }

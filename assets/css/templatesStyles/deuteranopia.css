@@ -24,9 +24,9 @@ ul#menu-main-menu a {
   color: #2d3142;
 }
 
-/* list item hover, focus background colour */
-ul.menu li:hover,
-ul.menu li a:focus {
+/* link background colour on hover and focus */
+ul#menu-main-menu li a:hover,
+ul#menu-main-menu li a:focus {
   background-color: #ff934f;
 }
 
