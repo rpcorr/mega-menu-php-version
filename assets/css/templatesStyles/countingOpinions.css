@@ -36,12 +36,6 @@ li.current {
   background-color: #7fd6f7;
 }
 
-/* top menu list hover anchor and siteIdentity anchor colour */
-ul.menu li:hover a,
-#siteIdentity a {
-  color: #ffffff;
-}
-
 /* first submenu background colour */
 #menu-main-menu > li.menu-item-has-children > ul.sub-menu {
   background-color: rgba(127, 213, 247, 0.9);

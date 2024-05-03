@@ -30,12 +30,6 @@ ul#menu-main-menu li a:focus {
   background-color: #ff004d;
 }
 
-/* top menu list hover anchor and siteIdentity anchor colour */
-ul.menu li:hover a,
-#siteIdentity a {
-  color: #ffe4ed;
-}
-
 /* first submenu background colour */
 #menu-main-menu > li.menu-item-has-children > ul.sub-menu {
   background-color: rgba(255, 185, 188, 0.9);

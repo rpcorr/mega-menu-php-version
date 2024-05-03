@@ -28,11 +28,6 @@ ul#menu-main-menu a {
 ul#menu-main-menu li a:hover,
 ul#menu-main-menu li a:focus {
   background-color: #caa386;
-}
-
-/* top menu list hover anchor and siteIdentity anchor colour */
-ul.menu li:hover a,
-#siteIdentity a {
   color: #303136;
 }
 
