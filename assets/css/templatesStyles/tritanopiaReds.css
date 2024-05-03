@@ -20,7 +20,7 @@ header {
 }
 
 /* link colour */
-a {
+ul#menu-main-menu a {
   color: #ffb9bd;
 }
 
