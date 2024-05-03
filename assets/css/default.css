@@ -170,13 +170,18 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 }
 
 .login-form input[type='submit'] {
-  background-color: #004cff;
+  background-color: #1fb7f1;
   color: #eeeeee;
+  transition: background-color 0.3s ease;
+  -webkit-transition: background-color 0.3s ease;
+  -moz-transition: background-color 0.3s ease;
+  -ms-transition: background-color 0.3s ease;
+  -o-transition: background-color 0.3s ease;
 }
 
 .login-form input[type='submit']:hover,
 .login-form input[type='submit']:focus {
-  background-color: #0056b3;
+  background-color: #60bd68;
 }
 
 /***** Carets Styles *****/
