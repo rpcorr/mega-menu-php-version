@@ -47,7 +47,12 @@ require_once './assets/php_scripts/session_check.php';
           <section id="branding">
             <a href="#skipMenu" class="screen-reader-text">Skip to Content</a>
             <div id="siteIdentity">
-              <a href="./index.php" rel="home"> <img src="./assets/imgs/CO_logo.svg" alt="Counting Opinions" height="60"> </a>
+              <div class="logo">
+                <a href="./index.php" rel="home"> <img src="./assets/imgs/CO_logo.svg" alt="Counting Opinions" height="60"> </a>
+              </div>
+              <div class="simple-logo">
+                <a href="./index.php" rel="home"> <img src="./assets/imgs/CO_simple_logo.svg" alt="Counting Opinions" height="60"> </a>
+              </div>
             </div>
           </section>
           <nav id="menu">
