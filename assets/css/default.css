@@ -505,3 +505,20 @@ i.angle-up:after {
   i.angle-up:after {
   border-bottom: 4px solid #555555;
 }
+
+footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #1fb7f1;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 0;
+}
+
+footer p {
+  font-weight: bold;
+  font-size: 0.88em;
+}
