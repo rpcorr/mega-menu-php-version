@@ -128,6 +128,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-top: 4px solid #00aeef;
 }
 
+/* down arrow fill current page colour */
+.menu-item-has-children.current i.angle-down:after {
+  border-top: 4px solid #7fd6f7;
+}
+
 /* down arrow fill colour on hover */
 .menu-item-has-children:hover i.angle-down:after {
   border-top: 4px solid #60bd68;

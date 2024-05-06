@@ -58,15 +58,16 @@ function createMenu($mI, $user) {
     $currentClass = '';
     $menuItemHasChildren = '';
 
-    if (basename($_SERVER['PHP_SELF']) === 'index.php' && $mI['name'] === 'Home' || basename($_SERVER['PHP_SELF']) === 'about.php' && $mI['name'] === 'About Us'
+    if (basename($_SERVER['PHP_SELF']) === 'index.php' && $mI['name'] === 'Home' || basename($_SERVER['PHP_SELF']) === 'about.php' && $mI['name'] === 'About Us' || basename($_SERVER['PHP_SELF']) === 'an-admin-access-page.php' && $mI['name'] === 'Pages' || basename($_SERVER['PHP_SELF']) === 'an-admin-or-premium-access-page.php' && $mI['name'] === 'Pages'
     ) {
       $currentClass .= 'current';
     } 
 
-    // define liClass
-   // $liClass = isset($mI['subMenuType']) ? 'class="menu-item-has-children"' : '';
+    // define menuItemHasChildren
    $menuItemHasChildren .= isset($mI['subMenuType']) ? 'menu-item-has-children' : '';
 
+
+   // define liClass
    if ($menuItemHasChildren === '' && $currentClass !== '')
     $liClass = 'class="' . $currentClass . '"';;
 
