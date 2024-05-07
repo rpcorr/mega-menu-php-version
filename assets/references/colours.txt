@@ -13,6 +13,7 @@ tritanopiaRYGBV = [#ff0066, #ffe6f2, #00e6e6, #009999, #66004d];
 tritanopiaRainbow = [#ff0000, #ebffff, #00f9ff, #2b9f84, #ff90b7];
 tritanopiaReds = [#6d1129, #ff004d, #ffb9bd, #ffe4ed, #785f6d];
 tritanopiaBlues = [#0a556b, #218ab2, #00dfff, #a6ebff, #daf1f4];
+Counting Opinions = [#60bd68, #1fb7f1, #7fd6f7, #4fc7f4, #337ab7];
 
 
 the colours:

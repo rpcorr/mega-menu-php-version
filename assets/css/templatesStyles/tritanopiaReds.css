@@ -20,21 +20,24 @@ header {
 }
 
 /* link colour */
-a {
+ul#menu-main-menu a {
   color: #ffb9bd;
 }
 
-/* list item hover, focus, and siteIdentity background colour */
+/* link background colour on hover and focus */
+ul#menu-main-menu li a:hover,
+ul#menu-main-menu li a:focus,
 ul.menu li:hover,
-ul.menu li a:focus,
-#siteIdentity {
+ul.menu li a:focus {
   background-color: #ff004d;
 }
 
-/* top menu list hover anchor and siteIdentity anchor colour */
-ul.menu li:hover a,
-#siteIdentity a {
-  color: #ffe4ed;
+/* maintain main menu text colour on hover when a sub menu item is selected */
+.menu-main-menu-container
+  > #menu-main-menu
+  > li.menu-item-has-children:hover
+  > a:link {
+  color: #ffb9bd;
 }
 
 /* first submenu background colour */

@@ -28,7 +28,11 @@ if ($menuItems === null) {
 
     }
 
-    $output .= '<li><a href="preferences.php">' . $_SESSION['user'] . "'s Preferences</a></li>";
+    $current = '';
+    if (basename($_SERVER['PHP_SELF']) === 'preferences.php')
+      $current = ' class="current"';
+
+    $output .= '<li' . $current . '><a href="preferences.php">' . $_SESSION['user'] . "'s Preferences</a></li>";
 
     $output .= '<li><a href="logout.php">Logout ' . $_SESSION['user'] . '</a></li>';
 
@@ -50,9 +54,28 @@ function createMenu($mI, $user) {
 
     // initialize output
     $output = '';
+    $liClass = '';
+    $currentClass = '';
+    $menuItemHasChildren = '';
 
-    // define liClass
-    $liClass = isset($mI['subMenuType']) ? 'class="menu-item-has-children"' : '';
+    if (basename($_SERVER['PHP_SELF']) === 'index.php' && $mI['name'] === 'Home' || basename($_SERVER['PHP_SELF']) === 'about.php' && $mI['name'] === 'About Us' || basename($_SERVER['PHP_SELF']) === 'an-admin-access-page.php' && $mI['name'] === 'Pages' || basename($_SERVER['PHP_SELF']) === 'an-admin-or-premium-access-page.php' && $mI['name'] === 'Pages'
+    ) {
+      $currentClass .= 'current';
+    } 
+
+    // define menuItemHasChildren
+   $menuItemHasChildren .= isset($mI['subMenuType']) ? 'menu-item-has-children' : '';
+
+
+   // define liClass
+   if ($menuItemHasChildren === '' && $currentClass !== '')
+    $liClass = 'class="' . $currentClass . '"';;
+
+   if ($menuItemHasChildren !== '')
+    $liClass = 'class="' . $menuItemHasChildren . '"';
+
+    if ($menuItemHasChildren !== '' && $currentClass !== '')
+      $liClass = 'class="' . $currentClass . ' ' . $menuItemHasChildren . '"';
 
     // define if hRef has a submenu
     $hRef = $mI['link'];

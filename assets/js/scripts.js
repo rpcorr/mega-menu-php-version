@@ -159,7 +159,7 @@ $.urlParam = function (name) {
 let id;
 $(window).resize(function () {
   clearTimeout(id);
-  id = setTimeout(onResize, 500);
+  id = setTimeout(onResize, 10);
 });
 
 // close all open menus
@@ -526,7 +526,7 @@ function selectStylesheet(stylesheetName) {
     previousStylesheets.forEach(function (previousStylesheet) {
       document.head.removeChild(previousStylesheet);
     });
-  }, 1000);
+  }, 1);
 }
 
 // enable openMenu using the keyboard for accessibility

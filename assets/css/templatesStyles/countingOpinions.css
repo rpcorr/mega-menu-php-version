@@ -6,50 +6,45 @@ html {
 
 /* h1 text colour */
 h1 {
-  color: #929084;
+  color: #60bd68;
 }
 
 /* navigation background colour */
 #mainNavigation {
-  background-color: #a997df;
+  background-color: #00aeef;
 }
 
 /* navigation border bottom colour */
 header {
-  border-bottom: 0.15rem solid #ffc857;
+  border-bottom: 0.15rem solid #337ab7;
 }
 
 /* link colour */
 ul#menu-main-menu a {
-  color: #333333;
+  color: #ffffff;
 }
 
 /* link background and font colours on hover and focus */
 ul#menu-main-menu li a:hover,
-ul#menu-main-menu li a:focus,
-ul.menu li:hover,
-ul.menu li a:focus {
-  background-color: #ffc857;
-  color: #333333;
+ul#menu-main-menu li a:focus {
+  background-color: #60bd68;
+  color: #ffffff;
 }
 
-/* maintain main menu text colour on hover when a sub menu item is selected */
-.menu-main-menu-container
-  > #menu-main-menu
-  > li.menu-item-has-children:hover
-  > a:link {
-  color: #333333;
+/* current page list item background colour */
+li.current {
+  background-color: #7fd6f7;
 }
 
 /* first submenu background colour */
 #menu-main-menu > li.menu-item-has-children > ul.sub-menu {
-  background-color: rgba(189, 217, 191, 0.9);
+  background-color: rgba(127, 213, 247, 0.9);
 }
 
 /* first submenu text colour */
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a {
-  color: #333333;
+  color: #ffffff;
 }
 
 /* first submenu hover and focus background and font colours */
@@ -58,8 +53,8 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a:focus,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:hover,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:focus {
-  background-color: #ffc857;
-  color: #333333;
+  background-color: #60bd68;
+  color: #ffffff;
 }
 
 /* maintain submenu background colour on hover when another menu item is selected */
@@ -68,7 +63,7 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
   > li
   > .sub-menu
   > li.menu-item-has-children:hover {
-  background-color: #ffc857;
+  background-color: #7fd6f7;
 }
 
 /* maintain submenu text colour on hover when another menu item is selected */
@@ -78,35 +73,35 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
   > .sub-menu
   > li.menu-item-has-children:hover
   > a:link {
-  color: #333333;
+  color: #ffffff;
 }
 
-/* second submenu background and  font colours */
+/* second submenu background-colour */
 .menu-main-menu-container > #menu-main-menu > li li > .sub-menu a {
-  background-color: #929084;
-  color: #ffffff;
+  background-color: #4fc7f4;
 }
 
-/* third submenu background and font colours */
+/* third submenu background-colour */
 .menu-main-menu-container > #menu-main-menu > li li li > .sub-menu a {
-  background-color: #a997df;
+  background-color: #337ab7;
   color: #ffffff;
 }
 
-/* fourth submenu background and font colours */
+/* fourth submenu background-colour */
 .menu-main-menu-container > #menu-main-menu > li li li li > .sub-menu a {
-  background-color: #e5323b;
+  background-color: #00aeef;
   color: #ffffff;
 }
 
 /* mega menu background colour */
 header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
-  background-color: #bdd9bf;
+  background-color: rgba(127, 213, 247, 0.9);
+  color: #fff;
 }
 
 /* title within a mega menu font colour */
 header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
-  color: #e5323b; /* 8.32 */
+  color: #000; /* 5.42 */
 }
 
 /***** Carets *****/
@@ -115,148 +110,153 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 
 /* down arrow stroke colour */
 .menu-item-has-children i.angle-down:before {
-  border-top: 7px solid #333333;
+  border-top: 7px solid #ffffff;
 }
 
 /* down arrow stroke colour on hover */
 .menu-item-has-children:hover i.angle-down:before {
-  border-top: 7px solid #333333;
+  border-top: 7px solid #ffffff;
 }
 
 /* down arrow stroke colour on a:focus */
 .menu-item-has-children a:focus i.angle-down:before {
-  border-top: 7px solid #333333;
+  border-top: 7px solid #ffffff;
 }
 
 /* down arrow fill colour */
 .menu-item-has-children i.angle-down:after {
-  border-top: 4px solid #929084;
+  border-top: 4px solid #00aeef;
+}
+
+/* down arrow fill current page colour */
+.menu-item-has-children.current i.angle-down:after {
+  border-top: 4px solid #7fd6f7;
 }
 
 /* down arrow fill colour on hover */
 .menu-item-has-children:hover i.angle-down:after {
-  border-top: 4px solid #ffc857;
+  border-top: 4px solid #60bd68;
 }
 
 /* down arrow fill colour on a:focus */
 .menu-item-has-children a:focus i.angle-down:after {
-  border-top: 4px solid #ffc857;
+  border-top: 4px solid #60bd68;
 }
 
 /* ---- ---- */
 
 /* up arrow stroke colour */
 .menu-item-has-children i.angle-up:before {
-  border-bottom: 7px solid #333333;
+  border-bottom: 7px solid #ffffff;
 }
 
 /* up arrow stroke colour on hover */
 .menu-item-has-children:hover i.angle-up:before {
-  border-bottom: 7px solid #333333;
+  border-bottom: 7px solid #ffffff;
 }
 
 /* up arrow stroke colour on a:focus */
 .menu-item-has-children a:focus i.angle-up:before {
-  border-bottom: 7px solid #333333;
+  border-bottom: 7px solid #ffffff;
 }
 
 /* up arrow fill colour */
 .menu-item-has-children i.angle-up:after {
-  border-bottom: 4px solid #929084;
+  border-bottom: 4px solid #60bd68;
 }
 
 /* up arrow fill colour on hover */
 .menu-item-has-children:hover i.angle-up:after {
-  border-bottom: 4px solid #ffc857;
+  border-bottom: 4px solid #60bd68;
 }
 
 /* up arrow fill colour on a:focus */
 .menu-item-has-children a:focus i.angle-up:after {
-  border-bottom: 4px solid #ffc857;
+  border-bottom: 4px solid #60bd68;
 }
 
 /* -- second level -- */
 
 /* down arrow stroke colour */
 .menu-item-has-children .menu-item-has-children i.angle-down:before {
-  border-top: 7px solid #333333;
+  border-top: 7px solid #ffffff;
 }
 
 /* down arrow stroke colour on hover */
 .menu-item-has-children .menu-item-has-children:hover i.angle-down:before {
-  border-top: 7px solid #333333;
+  border-top: 7px solid #ffffff;
 }
 
 /* down arrow stroke colour on a:focus */
 .menu-item-has-children .menu-item-has-children a:focus i.angle-down:before {
-  border-top: 7px solid #333333;
+  border-top: 7px solid #ffffff;
 }
 
 /* down arrow fill colour */
 .menu-item-has-children .menu-item-has-children i.angle-down:after {
-  border-top: 4px solid rgba(189, 217, 191, 0.9);
+  border-top: 4px solid rgba(127, 213, 247, 0.9);
 }
 
 /* down arrow fill colour on hover */
 .menu-item-has-children .menu-item-has-children:hover i.angle-down:after {
-  border-top: 4px solid #ffc857;
+  border-top: 4px solid #60bd68;
 }
 
 /* down arrow fill colour on a:hover */
 .menu-item-has-children .menu-item-has-children a:hover i.angle-down:after {
-  border-top: 4px solid #ffc857;
+  border-top: 4px solid #60bd68;
 }
 
 /* down arrow fill colour on focus */
 .menu-item-has-children .menu-item-has-children:focus i.angle-down:after {
-  border-top: 4px solid #ffc857;
+  border-top: 4px solid #60bd68;
 }
 
 /* down arrow fill colour on a:focus */
 .menu-item-has-children .menu-item-has-children a:focus i.angle-down:after {
-  border-top: 4px solid #ffc857;
+  border-top: 4px solid #60bd68;
 }
 
 /*---- ---- */
 
 /* up arrow stroke colour */
 .menu-item-has-children .menu-item-has-children i.angle-up:before {
-  border-bottom: 7px solid #333333;
+  border-bottom: 7px solid #ffffff;
 }
 
 /* up arrow stroke colour on hover */
 .menu-item-has-children .menu-item-has-children:hover i.angle-up:before {
-  border-bottom: 7px solid #333333;
+  border-bottom: 7px solid #ffffff;
 }
 
 /* up arrow stroke colour on a:focus */
 .menu-item-has-children .menu-item-has-children a:focus i.angle-up:before {
-  border-bottom: 7px solid #333333;
+  border-bottom: 7px solid #ffffff;
 }
 
 /* up arrow fill colour */
 .menu-item-has-children .menu-item-has-children i.angle-up:after {
-  border-bottom: 4px solid rgba(189, 217, 191, 0.9);
+  border-bottom: 4px solid rgba(127, 213, 247, 0.9);
 }
 
 /* up arrow fill colour on hover */
 .menu-item-has-children .menu-item-has-children:hover i.angle-up:after {
-  border-bottom: 4px solid #ffc857;
+  border-bottom: 4px solid #60bd68;
 }
 
 /* up arrow fill colour on a:hover */
 .menu-item-has-children .menu-item-has-children a:hover i.angle-up:after {
-  border-bottom: 4px solid #ffc857;
+  border-bottom: 4px solid #60bd68;
 }
 
 /* up arrow fill colour on focus */
 .menu-item-has-children .menu-item-has-children:focus i.angle-up:after {
-  border-bottom: 4px solid #ffc857;
+  border-bottom: 4px solid #60bd68;
 }
 
 /* up arrow fill colour on a:focus */
 .menu-item-has-children .menu-item-has-children a:focus i.angle-up:after {
-  border-bottom: 4px solid #ffc857;
+  border-bottom: 4px solid #60bd68;
 }
 
 /* maintain background colour on the parent on hover */
@@ -266,7 +266,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   > .sub-menu
   > li.menu-item-has-children:hover
   i.angle-up:after {
-  border-bottom: 4px solid #ffc857;
+  border-bottom: 4px solid #60bd68;
 }
 
 /* --- Third-level --- */
@@ -284,7 +284,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   .menu-item-has-children:hover
   i.angle-down:before {
-  border-top: 7px solid #333333;
+  border-top: 7px solid #ffffff;
 }
 
 /* down arrow stroke colour on focus */
@@ -292,7 +292,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   .menu-item-has-children:focus
   i.angle-down:before {
-  border-top: 7px solid #333333;
+  border-top: 7px solid #ffffff;
 }
 
 /* down arrow fill colour */
@@ -300,7 +300,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   .menu-item-has-children
   i.angle-down:after {
-  border-top: 4px solid #929084;
+  border-top: 4px solid #4fc7f4;
 }
 
 /* down arrow fill colour on hover */
@@ -308,7 +308,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   .menu-item-has-children:hover
   i.angle-down:after {
-  border-top: 4px solid #ffc857;
+  border-top: 4px solid #60bd68;
 }
 
 /* down arrow fill colour on a:hover  */
@@ -317,7 +317,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   a:hover
   i.angle-down:after {
-  border-top: 4px solid #ffc857;
+  border-top: 4px solid #60bd68;
 }
 
 /* down arrow fill colour on focus */
@@ -325,7 +325,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   .menu-item-has-children:focus
   i.angle-down:after {
-  border-top: 4px solid #ffc857;
+  border-top: 4px solid #60bd68;
 }
 
 /* down arrow fill colour on a:focus */
@@ -334,7 +334,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   a:focus
   i.angle-down:after {
-  border-top: 4px solid #ffc857;
+  border-top: 4px solid #60bd68;
 }
 
 /*--- --- */
@@ -352,7 +352,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   .menu-item-has-children:hover
   i.angle-up:before {
-  border-bottom: 7px solid #333333;
+  border-bottom: 7px solid #ffffff;
 }
 
 /* up arrow stroke colour on focus */
@@ -360,7 +360,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   .menu-item-has-children:focus
   i.angle-up:before {
-  border-bottom: 7px solid #333333;
+  border-bottom: 7px solid #ffffff;
 }
 
 /* up arrow fill colour */
@@ -368,7 +368,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   .menu-item-has-children
   i.angle-up:after {
-  border-bottom: 4px solid #929084;
+  border-bottom: 4px solid #4fc7f4;
 }
 
 /* up arrow fill colour on hover */
@@ -376,7 +376,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   .menu-item-has-children:hover
   i.angle-up:after {
-  border-bottom: 4px solid #ffc857;
+  border-bottom: 4px solid #60bd68;
 }
 
 /* up arrow fill colour a:hover */
@@ -385,7 +385,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   a:hover
   i.angle-up:after {
-  border-bottom: 4px solid #ffc857;
+  border-bottom: 4px solid #60bd68;
 }
 
 /* up arrow fill colour on focus */
@@ -393,7 +393,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   .menu-item-has-children:focus
   i.angle-up:after {
-  border-bottom: 4px solid #ffc857;
+  border-bottom: 4px solid #60bd68;
 }
 
 /* up arrow fill colour on a:focus */
@@ -402,5 +402,25 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   a:focus
   i.angle-up:after {
-  border-bottom: 4px solid #ffc857;
+  border-bottom: 4px solid #60bd68;
+}
+
+/* --- Fourth-level --- */
+
+/* down arrow fill colour */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  i.angle-down:after {
+  border-top: 4px solid #337ab7;
+}
+
+/* up arrow fill colour */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  i.angle-up:after {
+  border-bottom: 4px solid #337ab7;
 }
