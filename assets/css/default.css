@@ -4,6 +4,28 @@ html {
   color: #333333;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+main {
+  min-height: 86.5vh;
+}
+
+@media (max-width: 27em) {
+  main {
+    min-height: 85vh;
+  }
+}
+
+@media (max-width: 20em) {
+  main {
+    min-height: 82vh;
+  }
+}
+
 /* link colour */
 a {
   color: #333333;
@@ -14,8 +36,16 @@ a {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin: auto;
-  margin-top: 2em;
+  margin: 2em;
+}
+
+.container p {
+  text-align: left;
+  margin-bottom: 2.5em;
+}
+
+.container p:last-child {
+  margin-bottom: 0;
 }
 
 h1 {
@@ -512,8 +542,6 @@ footer {
   justify-content: center;
   background-color: #1fb7f1;
   text-align: center;
-  position: fixed;
-  bottom: 0;
   width: 100%;
   padding: 10px 0;
 }
@@ -521,4 +549,10 @@ footer {
 footer p {
   font-weight: bold;
   font-size: 0.88em;
+}
+
+@media (max-width: 20em) {
+  footer p {
+    margin: 0 1em;
+  }
 }
