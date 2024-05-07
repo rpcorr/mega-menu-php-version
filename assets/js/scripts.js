@@ -159,7 +159,7 @@ $.urlParam = function (name) {
 let id;
 $(window).resize(function () {
   clearTimeout(id);
-  id = setTimeout(onResize, 500);
+  id = setTimeout(onResize, 10);
 });
 
 // close all open menus
