@@ -44,9 +44,20 @@ include_once('./assets/php_scripts/header.php');
           $page_title = $pages['pages'][0]['page_title'];
       }
 
-        $status = $_SESSION['loggedIn'] === 'Yes' ? ' in' : ' out';
-        echo '<p style="font-weight:bold;">You are currently logged' . $status . '</p>';
+          
+      if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === 'Yes') { ?>
+        <p><a href="index.php?type=loggedOut"><strong>Log out</strong></a></p>
+        <?php } else {?>
+          <p><a href="index.php?type=loggedIn"><strong>Log In</strong></a></p>
+      <?php } 
+      
+      
+      $status = $_SESSION['loggedIn'] === 'Yes' ? ' in' : ' out';
+      echo '<p style="font-weight:bold;">You are currently logged' . $status . '</p>';
+      
       ?>
+
+      
 
         <h1><?php echo $page_title ?></h1>
 
@@ -63,10 +74,7 @@ include_once('./assets/php_scripts/header.php');
             echo "<p>You were logged out due to interactivity.</p>";
           }
 
-          ?>
-
-          <h2>Menu examples</h2>
-          <p><a href="index.php?type=loggedOut"><strong>Pages (Logged out)</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="index.php?type=loggedIn"><strong>Pages (Logged In)</strong></a></p>
+          ?>          
 
           <h2>Section Title</h2>
           
