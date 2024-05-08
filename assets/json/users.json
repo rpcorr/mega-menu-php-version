@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "username": "user1",
+      "password": "pw123",
+      "userType": "admin",
+      "stylePreference": "countingOpinions"
+    },
+    {
+      "username": "user2",
+      "password": "pw123",
+      "userType": "premium",
+      "stylePreference": "protanomaly"
+    },
+    {
+      "username": "user3",
+      "password": "pw123",
+      "userType": "basic",
+      "stylePreference": "tritanopia"
+    }
+  ]
+}
