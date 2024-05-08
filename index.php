@@ -65,7 +65,7 @@ include_once('./assets/php_scripts/header.php');
 
           ?>
 
-          <h2>Menu example</h2>
+          <h2>Menu examples</h2>
           <p><a href="index.php?type=loggedOut"><strong>Pages (Logged out)</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="index.php?type=loggedIn"><strong>Pages (Logged In)</strong></a></p>
 
           <h2>Section Title</h2>
