@@ -563,3 +563,21 @@ footer p {
     margin: 0 1em;
   }
 }
+
+.log-status {
+  display: flex;
+  justify-content: start;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 20em) {
+  .log-status {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .log-status p {
+    margin-bottom: 5px;
+  }
+}

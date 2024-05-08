@@ -42,22 +42,30 @@ include_once('./assets/php_scripts/header.php');
       } else {
           // Get page_title of the first entry
           $page_title = $pages['pages'][0]['page_title'];
-      }
-
-          
-      if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === 'Yes') { ?>
-        <p><a href="index.php?type=loggedOut"><strong>Log out</strong></a></p>
-        <?php } else {?>
-          <p><a href="index.php?type=loggedIn"><strong>Log In</strong></a></p>
-      <?php } 
-      
-      
-      $status = $_SESSION['loggedIn'] === 'Yes' ? ' in' : ' out';
-      echo '<p style="font-weight:bold;">You are currently logged' . $status . '</p>';
+      }  
       
       ?>
 
-      
+      <div class="log-status">
+        
+            <?php
+              if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === 'Yes') { ?>
+                <p style="font-weight:bold;"><a href="index.php?type=loggedOut"><strong>Log out</strong></a></p>
+                <?php } else {?>
+                  <p style="font-weight:bold;"><a href="index.php?type=loggedIn"><strong>Log In</strong></a></p>
+              <?php } 
+              
+              
+              $status = $_SESSION['loggedIn'] === 'Yes' ? ' in' : ' out';
+              echo '<p>Currently logged' . $status . '</p>';
+              
+
+              if (isset($_GET['inactivity'])) {
+                echo "<p>You were logged out due to interactivity.</p>";
+              }
+              ?>
+
+      </div>
 
         <h1><?php echo $page_title ?></h1>
 
@@ -68,10 +76,6 @@ include_once('./assets/php_scripts/header.php');
             echo "<p>Current user:" . $_SESSION['user']  . "<br/>";
             echo "Current user type:" . $_SESSION['userType']  . "<br/>";
             echo "Style preference exists: " . $_SESSION['stylePreference'] . "</p>";
-          }
-
-          if (isset($_GET['inactivity'])) {
-            echo "<p>You were logged out due to interactivity.</p>";
           }
 
           ?>          
