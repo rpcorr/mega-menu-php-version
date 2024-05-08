@@ -581,3 +581,7 @@ footer p {
     margin-bottom: 5px;
   }
 }
+
+.center {
+  align-items: center;
+}
