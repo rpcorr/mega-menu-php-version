@@ -1,0 +1,28 @@
+{
+  "pages": [
+    {
+      "page_id": "0",
+      "page_title": "Portal Welcome Page",
+      "page_prompt": "Welcome",
+      "page_link": "index.php"
+    },
+    {
+      "page_id": "1",
+      "page_title": "About Us",
+      "page_prompt": "About Us",
+      "page_link": "about.php"
+    },
+    {
+      "page_id": "4",
+      "page_title": "Careers",
+      "page_prompt": "Careers",
+      "page_link": "careers.php"
+    },
+    {
+      "page_id": "5",
+      "page_title": "Contact",
+      "page_prompt": "Contact",
+      "page_link": "contact.php"
+    }
+  ]
+}
