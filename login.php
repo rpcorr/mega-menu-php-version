@@ -14,7 +14,7 @@ if (isset($_POST['username'])) {
 
 
   // Path to the JSON file
-  $json_file = './assets/json/menu.json';
+  $json_file = './assets/json/users.json';
 
   // Check if the file exists
   if (!file_exists($json_file)) {
@@ -72,7 +72,7 @@ include_once('./assets/php_scripts/header.php');
 
 
     <main>
-      <div class="container">
+      <div class="container center">
 
         <div class="login-form">
           <h1>Login</h1>
