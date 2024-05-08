@@ -45,7 +45,10 @@
     <?php } ?>
     <?php if(isset($_SESSION['stylePreference'])) { ?>
       <link rel="stylesheet" type="text/css" href="./assets/css/templatesStyles/<?php echo $_SESSION['stylePreference'];?>.css" />
-    <?php } ?>
+    <?php } else if ((isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === 'Yes'))  {
+      ?>
+      <link rel="stylesheet" type="text/css" href="./assets/css/templatesStyles/countingOpinions.css" />
+      <?php } ?>
     <title><?php echo $title ?></title>
   </head>
   <body>
