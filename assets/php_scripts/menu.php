@@ -3,11 +3,11 @@
 // start the session
 session_start();
 
-$filePath = 'https://dev.countingopinions.com/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=door';
+$filePath = './assets/json/co-pages.json';
 
 if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === 'Yes') {
 
-    $filePath = 'https://dev.countingopinions.com/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=door&ukey=b5e79c05b3f12219e725fc167edefdd1';
+    $filePath = './assets/json/co-pages-logged-in.json';
 }
 
 $output = '';
