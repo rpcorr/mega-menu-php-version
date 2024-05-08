@@ -1,0 +1,39 @@
+{
+  "pages": [
+    {
+      "page_id": "0",
+      "page_title": "Portal Welcome Page",
+      "page_prompt": "Welcome",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "1",
+      "page_title": "User Login",
+      "page_prompt": "Login",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "70",
+      "page_title": "Members (systems)",
+      "page_prompt": "Libraries",
+      "section_id": "9",
+      "section_prompt": "Directory"
+    },
+    {
+      "page_id": "71",
+      "page_title": "Locations (outlets)",
+      "page_prompt": "Locations",
+      "section_id": "9",
+      "section_prompt": "Directory"
+    },
+    {
+      "page_id": "72",
+      "page_title": "Location Maps",
+      "page_prompt": "Maps",
+      "section_id": "9",
+      "section_prompt": "Directory"
+    }
+  ]
+}

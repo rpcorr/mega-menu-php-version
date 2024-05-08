@@ -1,0 +1,186 @@
+{
+  "pages": [
+    {
+      "page_id": "0",
+      "page_title": "Portal Welcome Page",
+      "page_prompt": "Welcome",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "1",
+      "page_title": "User Login",
+      "page_prompt": "Login",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "2",
+      "page_title": "User Logout",
+      "page_prompt": "Logout",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "28",
+      "page_title": "Portal Administration",
+      "page_prompt": "Portal Administration",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "2",
+      "page_title": "LibSat Menu",
+      "page_prompt": "LibSat Menu",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "5",
+      "page_title": "All Cooks and Chefs",
+      "page_prompt": "Cooks and Chefs Page",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "6",
+      "page_title": "NO DEVELOPERS!",
+      "page_prompt": "All Members (not DEVELOPERS)",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "13",
+      "page_title": "List of Users",
+      "page_prompt": "Users Pages",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "14",
+      "page_title": "InformsUs Data Entry Users Only",
+      "page_prompt": "Data Entry Users",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "15",
+      "page_title": "All apps",
+      "page_prompt": "Apps page",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "16",
+      "page_title": "Programs & Events Data Entry",
+      "page_prompt": "Programs & Events Data Entry",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "17",
+      "page_title": "Test Placeholders",
+      "page_prompt": "Placeholders Listing",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "18",
+      "page_title": "Fields n Forms",
+      "page_prompt": "Forms and Fields",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "19",
+      "page_title": "Side Panel",
+      "page_prompt": "Side Panel",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "20",
+      "page_title": "Side Panels",
+      "page_prompt": "Side Panels",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "21",
+      "page_title": "Templates for Notifications",
+      "page_prompt": "Notification Templates",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "22",
+      "page_title": "Issue Tracker",
+      "page_prompt": "Issue Tracker",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "23",
+      "page_title": "File Uploader Widget",
+      "page_prompt": "File Uploader Widget",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "25",
+      "page_title": "Count Week",
+      "page_prompt": "Count Week",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "26",
+      "page_title": "LAPL Count Week",
+      "page_prompt": "LAPL Count Week",
+      "section_id": "0",
+      "section_prompt": null
+    },
+    {
+      "page_id": "21",
+      "page_title": "Survey Best Pratices",
+      "page_prompt": "Survey Best Practices",
+      "section_id": "1",
+      "section_prompt": "LibSat"
+    },
+    {
+      "page_id": "22",
+      "page_title": "SQUIRE index",
+      "page_prompt": "SQUIRE Index",
+      "section_id": "1",
+      "section_prompt": "LibSat"
+    },
+    {
+      "page_id": "23",
+      "page_title": "Marketing Best Practices",
+      "page_prompt": "Marketing Best Practices",
+      "section_id": "1",
+      "section_prompt": "LibSat"
+    },
+    {
+      "page_id": "70",
+      "page_title": "Members (systems)",
+      "page_prompt": "Libraries",
+      "section_id": "9",
+      "section_prompt": "Directory"
+    },
+    {
+      "page_id": "71",
+      "page_title": "Locations (outlets)",
+      "page_prompt": "Locations",
+      "section_id": "9",
+      "section_prompt": "Directory"
+    },
+    {
+      "page_id": "72",
+      "page_title": "Location Maps",
+      "page_prompt": "Maps",
+      "section_id": "9",
+      "section_prompt": "Directory"
+    }
+  ]
+}
