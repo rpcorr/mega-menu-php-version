@@ -46,27 +46,6 @@ include_once('./assets/php_scripts/header.php');
       
       ?>
 
-      <div class="log-status">
-        
-            <?php
-              if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === 'Yes') { ?>
-                <p style="font-weight:bold;"><a href="index.php?type=loggedOut"><strong>Log out</strong></a></p>
-                <?php } else {?>
-                  <p style="font-weight:bold;"><a href="index.php?type=loggedIn"><strong>Log In</strong></a></p>
-              <?php } 
-              
-              
-              $status = $_SESSION['loggedIn'] === 'Yes' ? ' in' : ' out';
-              echo '<p>Currently logged' . $status . '</p>';
-              
-
-              if (isset($_GET['inactivity'])) {
-                echo "<p>You were logged out due to interactivity.</p>";
-              }
-              ?>
-
-      </div>
-
         <h1><?php echo $page_title ?></h1>
 
         <?php 
