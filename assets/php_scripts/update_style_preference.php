@@ -6,14 +6,17 @@ session_start();
 //$_SESSION['newStylePreference'] = $_GET['stylePreference'];
 
 // Load the JSON file
-$jsonFile = '../json/menu.json';
+$jsonFile = '../json/users.json';
 $jsonData = file_get_contents($jsonFile);
 $menu = json_decode($jsonData, true);
 
 // Find the current logged in user and update the style preference
 foreach ($menu['users'] as &$user) {
 
+    // user found
     if ($user['username'] === $_SESSION['user']) {
+
+        // update stylepPreference value in users.json
         $user['stylePreference'] = $_GET['stylePreference'];
 
         // update stylePreference session variable with the new stylePreference
