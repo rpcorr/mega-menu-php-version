@@ -13,10 +13,9 @@ TABLE OF CONTENT
 
 - Added Features
   - General
-  - The JSON File
+  - The JSON Files
   - Accessing the Menu Items
   - Accessibility
-- TO DO
 
 ## Added Features
 
@@ -26,33 +25,35 @@ A. Menu items are read in through a JSON file. The menu items are endless as the
 
 B. A menu item can have as many sub-items as needed. The submenu container has a max height of 90vh and is scrollable if items go beyond the submenu's boundary
 
-C. Menu items are displayed based on the current user. There are currently three types of users:
+C. Menu items are displayed based on the current logged in user by the whereof the userType property.
 
-admin - has access to all menu items ( admin, premium, & basic)
-premium - has access to menu items assigned with premium & basic
-basic - has access to menu items assigned with basic
+### The JSON Files
 
-The navigation design shows all menu items and removes them if needed.
+There are three JSON files for the menu and one JSON file that contains the list of users.
 
-**ASSUMPTION**
-Access level works from the top down, meaning admin level access can view admin, premium, and basic levels; premium level access can view premium and basic; basic level access can only view menu items assigned to the basic level.
+The JSON files lives under assets/json/.
 
-### The JSON File
-
-The JSON file (menu.json) lives under assets/json/menu.json. It contains the Menu array and the users array to determine the menu items to display based on the logged in user.
+The current menu json file - either admin.json, premium.json, basic.json is use based on the current logged in user. The users are defined in users.json.
 
 There are three users - one for each types of user:
 
-- user1: admin pw: pw123
-- user2: premium pw: pw123
-- user3: basic pw: pw123
+- user type: admin
+  username: user1 pw: pw123
 
-The username and user type, and style preferece are stored as PHP session variables so the status of the user is presist when browsing from page to page. Upon clicking the logout link, the PHP session variables are destroyed and the user is directed back to the home page.
+- user type: premium
+  username: user2 pw: pw123
 
-When the page loads, the navigation menu is created from the menu.json file to build the navigation menu based on the logged in user. The structure of the file is as follows.
+- user type: basic
+  username: user3 pw: pw123
 
-A. name: menu item text to appear in the menu (string)
-B. link: the page where the menu item will direct users (string)
+The username, user type, and style preference are stored as PHP session variables so the status of the user is presist when browsing from page to page. Upon clicking the logout link, the PHP session variables are destroyed and the user is directed back to the home page. The user is also redirected back to the home page after 2 minutes of inactivity.
+
+When the page loads, the navigation menu is created (assets/php_scripts/menu.php) from the current logged in user's userType property --- one of either admin.json, premium.json, or basic.json --- to build the navigation menu. The structure of admin.json, premium.json, and basic.json files are based on Counting Opinions' JSON format with a few exceptions (determining the type of submenu, and their appearance). The structure is as follows.
+
+A. page_id: the page id
+B. page_title: menu item text to appear in the menu (string)
+C. page_prompt:
+D. page_link: the page where the menu item will direct users (string)
 
 - (#): no link is assigned as the menu item has a sub-menu (dropdown)
 - (#anchorName): a link that takes users to another section of the page
@@ -63,40 +64,42 @@ The target="\_blank" is programmatically determined based on the source. A link 
 - contains http
 - contains .pdf
 
-C. availableFor: an array containing string values of either ["basic", "premium", "admin"] that determines who has access to view the link. If a link doesn't have the availableFor property, then it is the default value of admin. Access level works from top down: Admin -> Premium -> Basic
-
-D. subMenuType: Along with the subMenuItems property, this property goes hand-in-hand with adding a sub-menu under a link.
-
-subMenuItems: an array of links or photos
-
-Note: Currently, the program can accept three levels of menus.
-
-- Top Level
-  - Second Level
-    - Third Level
+E. subMenuType: Along with the subMenuItems property, this property goes hand-in-hand with adding a sub-menu under a link.
 
 subMenuType can have one of three values: "regularLinks", "photoLinks", "categorizedLinks"
 
-D-1: regularLinks have name and link properties. Name is the link text, and the link is the destination value, e.g. [\<a href="[link]"\>\[name\]\</a\>]
+F. subMenuItems: array of links or photos
 
-D-2: photoLinks have name, link, and imgSrc properties. imgSrc is the name of the jpg file. There is no need to add the photo extension or the file path. Images are under assets/images/
+F-1: regularLinks have name and link properties. Name is the link text, and the link is the destination value, e.g. [\<a href="[page_link]"\>\[page_title\]\</a\>]
+
+F-2: photoLinks have name, link, and imgSrc properties. imgSrc is the name and extension of the image file, without the domain, is required for the images to display.
+E.g. assets/imgs/p2.jpg
 
 There are a maximum of four photos to a row.
 
-D-3: categorizedLinks have two parts: the heading and the links that fall under the heading. The heading has three properties:
+F-3: categorizedLinks have two parts: the heading and the links that fall under the heading. The heading has three properties:
 
 - contentType
-- titleId
+- section_id
 - title
 
-The content type determines whether a link or a photo should appear. The titleId is a code that allows screenreaders to reference the title (heading) as it announces the links under the heading. If contentType is a link, the content below is regular text links with name and link properties. If contentType is a photo, then an image will appear. There are two properties:
+The content type determines whether a link or a image should appear. The section_id is a code that allows screenreaders to reference the title (heading) as it announces the links under the heading. If contentType is a link, the content below is regular text links with name and link properties. If contentType is a photo, then an image will appear. There are two properties:
 
 - imgSrc
 - alt
 
-To set the photo file name, use the imgSrc property without the directory or the photo's extension. The photo SHOULD BE A JPG. The alt property is a short description of the photo to help screen readers describe the photo to blind and low-vision users.
+To set the photo file name, use the imgSrc property, where imgSrc is the name and extension of image file, without the domain, is required for the images to display.
+E.g. assets/imgs/p2.jpg
+
+The alt property is a short description of the photo to help screen readers describe the photo to blind and low-vision users.
 
 **NOTE:** the photos are not links
+
+**Note:** Currently, the program can accept three levels of menus.
+
+- Top Level
+  - Second Level
+    - Third Level
 
 ### Accessing the Menus Items
 
@@ -124,9 +127,3 @@ E. Screen reader users know how to use a keyboard when navigating the site. Belo
 - SHIFT + TAB: the reverse order of TAB
 - ENTER: activate a link (takes the user to the URL assigned in the HREF)/toggle the dropdown menu (open/close)
 - ESC: close sub-level dropdown menu
-
-## TODO
-
-- read user types from user object in the JSON file - DONE
-- add a login feature - DONE
-- add aria-current="page" to the current page
