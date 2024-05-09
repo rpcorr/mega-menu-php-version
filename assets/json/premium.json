@@ -13,6 +13,21 @@
       "page_link": "about.php"
     },
     {
+      "page_id": "2",
+      "page_title": "Pages",
+      "page_prompt": "Pages",
+      "page_link": "pages.php",
+      "subMenuType": "regularLinks",
+      "subMenuItems": [
+        {
+          "page_id": "2-2",
+          "page_title": "Admin or Premium Only",
+          "page_prompt": "Admin or Premium Only",
+          "page_link": "an-admin-or-premium-access-page.php"
+        }
+      ]
+    },
+    {
       "page_id": "4",
       "page_title": "Careers",
       "page_prompt": "Careers",
