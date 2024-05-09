@@ -3,7 +3,6 @@
 session_start();
 
 // The string to search within
-//$string = "Hello, world!";
 $string = $_SERVER['QUERY_STRING'];
 
 // The substring to search for
@@ -25,28 +24,7 @@ include_once('./assets/php_scripts/header.php');
     <main>
       <div class="container">
 
-        
-<?php 
-
-
-      if (isset($_GET['page_id'])) {
-
-        foreach ($pages['pages'] as $page) {
-          // Check if page_id matches that of current page
-          if ($page['page_id'] === $_GET['page_id']) {
-              // Get page_title
-              $page_title = $page['page_title'];
-              break; // Stop loop once page is found
-          }
-        }
-      } else {
-          // Get page_title of the first entry
-          $page_title = $pages['pages'][0]['page_title'];
-      }  
-      
-      ?>
-
-        <h1><?php echo $page_title ?></h1>
+        <h1>Welcome</h1>
 
         <?php 
 
