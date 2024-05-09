@@ -3,6 +3,7 @@
 // start the session
 session_start();
 
+// define output
 $output = '';
 
 if (isset($_SESSION['user'])) {
@@ -27,7 +28,6 @@ if (isset($_SESSION['user'])) {
       // JSON decoding failed
       echo "Error decoding JSON";
   } else {
-    // $output = '';
     // JSON decoding successful
     // Access the menu items
     foreach ($menuItems['pages'] as $mI) 
@@ -217,7 +217,7 @@ function createMenu($mI) {
         // create the individual list item container
         $output .= '<div class="list-item text-center">
             <a href="' . $submenu['page_link'] . '" ' . $hRefTarget . ' ' . $ariaCurrent . '>
-              <img src="assets/imgs/' . $submenu['imgSrc'] . '.jpg" alt="' . $submenu['page_title'] . '" />
+              <img src="' . $submenu['imgSrc'] . '" alt="' . $submenu['page_title'] . '" />
               <p>' . $submenu['page_title'] . '</p>
             </a>
           </div>';
@@ -292,7 +292,7 @@ function createMenu($mI) {
           $subMenuContainerInnerContent .= '<div class="list-item">';
 
           // create image
-          $columnValue = '<img src="assets/imgs/' . $submenu['imgSrc'] . '.jpg" alt="' . $submenu['alt'] . '" />';
+          $columnValue = '<img src="' . $submenu['imgSrc'] . '" alt="' . $submenu['alt'] . '" />';
 
           // add image to sub menu container inner content and close container
           $subMenuContainerInnerContent .= $columnValue . '</div>';

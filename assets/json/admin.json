@@ -45,28 +45,28 @@
           "page_title": "Rain Forest",
           "page_prompt": "Rain Forest",
           "page_link": "#rainForest",
-          "imgSrc": "p1"
+          "imgSrc": "assets/imgs/p1.jpg"
         },
         {
           "page_id": "3-2",
           "page_title": "Mountains",
           "page_prompt": "Mountains",
           "page_link": "#mountains",
-          "imgSrc": "p2"
+          "imgSrc": "assets/imgs/p2.jpg"
         },
         {
           "page_id": "3-3",
           "page_title": "Waterfall",
           "page_prompt": "Waterfall",
           "page_link": "#waterfall",
-          "imgSrc": "p3"
+          "imgSrc": "assets/imgs/p3.jpg"
         },
         {
           "page_id": "3-4",
           "page_title": "Owl",
           "page_prompt": "Owl",
           "page_link": "#owl",
-          "imgSrc": "p4"
+          "imgSrc": "assets/imgs/p4.jpg"
         }
       ]
     },
@@ -262,7 +262,11 @@
             }
           ]
         },
-        { "contentType": "photo", "imgSrc": "p5", "alt": "Mountain goats" }
+        {
+          "contentType": "photo",
+          "imgSrc": "assets/imgs/p5.jpg",
+          "alt": "Mountain goats"
+        }
       ]
     },
     {
