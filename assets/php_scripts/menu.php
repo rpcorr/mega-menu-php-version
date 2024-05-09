@@ -60,7 +60,7 @@ function createMenu($mI) {
     $menuItemHasChildren = '';
 
     // Determine which menu item is the current page - add current class
-    if (basename($_SERVER['PHP_SELF']) === 'index.php' && $mI['page_title'] === 'Home' || basename($_SERVER['PHP_SELF']) === 'about.php' && $mI['page_title'] === 'About Us' || basename($_SERVER['PHP_SELF']) === 'an-admin-access-page.php' && $mI['page_title'] === 'Pages' || basename($_SERVER['PHP_SELF']) === 'an-admin-or-premium-access-page.php' && $mI['page_title'] === 'Pages'
+    if (basename($_SERVER['PHP_SELF']) === 'index.php' && $mI['page_prompt'] === 'Welcome' || basename($_SERVER['PHP_SELF']) === 'about.php' && $mI['page_prompt'] === 'About Us' || basename($_SERVER['PHP_SELF']) === 'an-admin-access-page.php' && $mI['page_prompt'] === 'Pages' || basename($_SERVER['PHP_SELF']) === 'an-admin-or-premium-access-page.php' && $mI['page_prompt'] === 'Pages'
     ) {
       $currentClass .= 'current';
     } 
