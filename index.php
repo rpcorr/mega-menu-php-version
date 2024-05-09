@@ -25,21 +25,10 @@ include_once('./assets/php_scripts/header.php');
       <div class="container">
 
         <h1>Welcome</h1>
-
-        <?php 
-
-          // Check if a session variable exists
-          if(isset($_SESSION['stylePreference'])) {
-            echo "<p>Current user:" . $_SESSION['user']  . "<br/>";
-            echo "Current user type:" . $_SESSION['userType']  . "<br/>";
-            echo "Style preference exists: " . $_SESSION['stylePreference'] . "</p>";
-          }
-
-          ?>          
-
-          <h2>Section Title</h2>
+         
+        <h2>Section Title</h2>
           
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci minima laboriosam cupiditate nihil obcaecati aut eveniet inventore, vel natus repellat dicta quia recusandae id. Vitae enim dolorem maxime exercitationem libero rem repellendus nobis cum tempore, cupiditate aliquam, molestias numquam assumenda incidunt qui harum sed dolores saepe nostrum ut blanditiis. Incidunt harum et odio vel quidem doloremque consectetur doloribus, quis perferendis similique cumque natus. Eum voluptates impedit quis sit, a placeat eos ipsam explicabo, cum minus, soluta repudiandae tempore voluptatem? Vel cum exercitationem dolorum fugit, numquam sint perferendis, minima accusantium corrupti iure ea nesciunt rerum natus possimus necessitatibus cumque facilis facere. Earum, quo natus molestias pariatur maiores provident itaque magnam quia repellat. A sunt culpa reprehenderit at architecto laudantium ratione cum nostrum obcaecati reiciendis nam minima labore modi ex, quia vel iste, soluta ea porro aspernatur maiores aut accusamus. Expedita laudantium vel hic doloribus iure harum eligendi aperiam debitis eaque enim error, illum reiciendis suscipit ratione repellendus veniam rerum? Ad magnam deserunt excepturi labore, dolorum eum nulla vitae adipisci corrupti accusamus. Reiciendis eos id placeat velit in veritatis, inventore officia quibusdam aspernatur ut, sit non, mollitia esse expedita laborum iste. Non ducimus aliquid voluptate dicta possimus architecto quam ex distinctio ea.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci minima laboriosam cupiditate nihil obcaecati aut eveniet inventore, vel natus repellat dicta quia recusandae id. Vitae enim dolorem maxime exercitationem libero rem repellendus nobis cum tempore, cupiditate aliquam, molestias numquam assumenda incidunt qui harum sed dolores saepe nostrum ut blanditiis. Incidunt harum et odio vel quidem doloremque consectetur doloribus, quis perferendis similique cumque natus. Eum voluptates impedit quis sit, a placeat eos ipsam explicabo, cum minus, soluta repudiandae tempore voluptatem? Vel cum exercitationem dolorum fugit, numquam sint perferendis, minima accusantium corrupti iure ea nesciunt rerum natus possimus necessitatibus cumque facilis facere. Earum, quo natus molestias pariatur maiores provident itaque magnam quia repellat. A sunt culpa reprehenderit at architecto laudantium ratione cum nostrum obcaecati reiciendis nam minima labore modi ex, quia vel iste, soluta ea porro aspernatur maiores aut accusamus. Expedita laudantium vel hic doloribus iure harum eligendi aperiam debitis eaque enim error, illum reiciendis suscipit ratione repellendus veniam rerum? Ad magnam deserunt excepturi labore, dolorum eum nulla vitae adipisci corrupti accusamus. Reiciendis eos id placeat velit in veritatis, inventore officia quibusdam aspernatur ut, sit non, mollitia esse expedita laborum iste. Non ducimus aliquid voluptate dicta possimus architecto quam ex distinctio ea.</p>
 
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores placeat fugit culpa illo temporibus numquam quisquam, quia distinctio error necessitatibus voluptatem tempore! Similique ipsa ut veniam, cum quidem totam porro harum placeat voluptatem nesciunt id eos cumque suscipit tenetur quas quod voluptatibus sit molestias et quisquam, aut fugit quaerat facilis? Expedita, quae soluta maiores assumenda ipsa perferendis qui. Facilis excepturi magnam harum aspernatur possimus alias blanditiis ad non accusantium illo. Atque excepturi tempore eum alias maiores sunt a quisquam laudantium maxime tenetur. Natus distinctio aspernatur adipisci et eum saepe iusto blanditiis. Natus hic excepturi corrupti velit cum quidem delectus nesciunt.</p>
 
