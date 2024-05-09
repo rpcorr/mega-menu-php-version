@@ -9,13 +9,13 @@ if (isset($_SESSION['user'])) {
 
   // Determine which file to use
   if ($_SESSION['userType'] === 'admin') {
-    // Read JSON file
+    // Read admin JSON file
     $jsonData = file_get_contents('./assets/json/admin.json');
   } else if ($_SESSION['userType'] === 'premium') {
-    // Read JSON file
+    // Read premium JSON file
     $jsonData = file_get_contents('./assets/json/premium.json');
   } else if ($_SESSION['userType'] === 'basic') {
-    // Read JSON file
+    // Read basic JSON file
     $jsonData = file_get_contents('./assets/json/basic.json');
   }
   
@@ -35,6 +35,7 @@ if (isset($_SESSION['user'])) {
 
     }
 
+    // add Preferences and Log out links to the menu
     $current = '';
     if (basename($_SERVER['PHP_SELF']) === 'preferences.php')
       $current = ' class="current"';
@@ -44,7 +45,7 @@ if (isset($_SESSION['user'])) {
     $output .= '<li><a href="logout.php">Logout ' . $_SESSION['user'] . '</a></li>';
 
 } else {
-    // login link
+    // User is Logged out, show Login link
     echo '<li><a href="login.php">Login</a></li>';
 }
 
@@ -58,6 +59,7 @@ function createMenu($mI) {
     $currentClass = '';
     $menuItemHasChildren = '';
 
+    // Determine which menu item is the current page - add current class
     if (basename($_SERVER['PHP_SELF']) === 'index.php' && $mI['page_title'] === 'Home' || basename($_SERVER['PHP_SELF']) === 'about.php' && $mI['page_title'] === 'About Us' || basename($_SERVER['PHP_SELF']) === 'an-admin-access-page.php' && $mI['page_title'] === 'Pages' || basename($_SERVER['PHP_SELF']) === 'an-admin-or-premium-access-page.php' && $mI['page_title'] === 'Pages'
     ) {
       $currentClass .= 'current';
@@ -68,12 +70,15 @@ function createMenu($mI) {
 
 
    // define liClass
+   // add class current if present
    if ($menuItemHasChildren === '' && $currentClass !== '')
     $liClass = 'class="' . $currentClass . '"';;
 
+   // add class menuItemHasChildren if present
    if ($menuItemHasChildren !== '')
     $liClass = 'class="' . $menuItemHasChildren . '"';
 
+    // add class current and class menuItemHasChildren if present
     if ($menuItemHasChildren !== '' && $currentClass !== '')
       $liClass = 'class="' . $currentClass . ' ' . $menuItemHasChildren . '"';
 
@@ -97,15 +102,19 @@ function createMenu($mI) {
     // define ariaCurrent
     $ariaCurrent = '';
 
+    // add aria-current="page" to the current page
     if (isCurrentPage($mI['page_link'])) {
         $ariaCurrent = 'aria-current="page"';
     }
 
+    // start creating the link list item
     $output .= '<li ' . $liClass . '><a href="' . $hRef . '" ' . $ariaExpanded . ' ' . $ariaLabel . ' ' . $hRefTarget . ' ' . $ariaCurrent . '>' . $mI['page_prompt'] . ' ' . $downArrow . '</a>';
 
     // start of regular links
     if (isset($mI['subMenuItems']) && $mI['subMenuType'] === 'regularLinks') {
       $output .= '<ul class="sub-menu">';
+
+      // loop through second item links
       foreach ($mI['subMenuItems'] as $submenu) {
         // define hRefTarget
         $hRefTarget = determineHREFTarget($submenu);
@@ -125,19 +134,20 @@ function createMenu($mI) {
             <a href="' . $hRef . '" ' . $ariaCurrent . '>' . $submenu['page_title'] . ' <i class="caret angle-down"></i></a>';
             $secondLevel = '<ul class="sub-menu">';
 
+            // loop through second level links
             foreach ($submenu['subMenuItems'] as $secondLevelItem) {
               // define hRefTarget
               $hRefTarget = determineHREFTarget($secondLevelItem);
 
               // define if hRef has a submenu
               $hRef = isset($secondLevelItem['page_link']) ? $secondLevelItem['page_link'] : '#';
-
+                // check if a third level is present
                 if (isset($secondLevelItem['subMenuItems'])) {
                   // a third level is present
                   $secondLevel .= '<li class="menu-item-has-children"><a href="' . $hRef . '">' . $secondLevelItem['name'] . ' <i class="caret angle-down"></i></a>';
                   $thirdLevel = '<ul class="sub-menu">';
 
-                  // loop through the links
+                  // loop through third level links
                   foreach ($secondLevelItem['subMenuItems'] as $thirdLevelItem) {
                     // define hRefTarget
                     $hRefTarget = determineHREFTarget($thirdLevelItem);
@@ -145,48 +155,66 @@ function createMenu($mI) {
                     // define if hRef has a submenu
                     $hRef = isset($thirdLevelItem['page_link']) ? $thirdLevelItem['page_link'] : '#';
 
-                    // define ariaCurrent
+                    // reset ariaCurrent
                     $ariaCurrent = '';
 
+                    // add aria-current="page" to the current page
                     if (isCurrentPage($thirdLevelItem['page_link'])) {
                       $ariaCurrent = 'aria-current="page"';
                     }
 
-          
+                    // create third level menu item
                     $thirdLevel .= '<li><a href="' . $thirdLevelItem['page_link'] . '" ' . $hRefTarget . $ariaCurrent . '>' . $thirdLevelItem['name'] . '</a></li>';
                   
                   }
 
+                  // close third level unordered list
                   $thirdLevel .= '</ul>';
 
+                  // attach third level unordered list to second level
                   $secondLevel .= $thirdLevel . '</li>';
                 } else {
+
+                  // create second level menu item
                   $secondLevel .= '<li><a href="' . $secondLevelItem['page_link'] . '" ' . $hRefTarget . '>' . $secondLevelItem['name'] . '</a></li>';
                 }
             }
 
+            // attach second level unordered list to first level
             $output .= $secondLevel . '</ul></li>';
           } else {
+
+            // create first level menu item
             $output .= '<li><a href="' . $submenu['page_link'] . '" ' . $hRefTarget . '>' . $submenu['page_title'] . '</a></li>';
           }
       }
+
+      // close the outer unordered list
       $output .= '</ul>';
     }
     // end of regular links
 
     // start of photo links
     if (isset($mI['subMenuItems']) && $mI['subMenuType'] === 'photoLinks') {
+
+      // create the outer container
       $output .= '<div class="sub-menu-div mega-menu mega-menu-column-4">';
 
+      // loop through submenu item
       foreach ($mI['subMenuItems'] as $submenu) {
+        
+        // set the link target
         $hRefTarget = determineHREFTarget($submenu);
 
+        // reset ariaCurrent
         $ariaCurrent = '';
 
+        // add aria-current="page" to the current page
         if (isCurrentPage($submenu['page_link'])) {
           $ariaCurrent = 'aria-current="page"';
         }
 
+        // create the individual list item container
         $output .= '<div class="list-item text-center">
             <a href="' . $submenu['page_link'] . '" ' . $hRefTarget . ' ' . $ariaCurrent . '>
               <img src="assets/imgs/' . $submenu['imgSrc'] . '.jpg" alt="' . $submenu['page_title'] . '" />
@@ -195,67 +223,97 @@ function createMenu($mI) {
           </div>';
       }
 
+      // close the outer container
       $output .= '</div>';
     }
     // end of photo links
 
     // start of categorized links
     if (isset($mI['subMenuItems']) && $mI['subMenuType'] === 'categorizedLinks') {
+
+      // create the outer container
       $output .= '<div class="sub-menu-div mega-menu mega-menu-column-4">';
 
+      // define the sub menu container content
       $subMenuContainerContent = '';
-
+  
+      // loop through the subMenuContainerInnerContent
       foreach ($mI['subMenuItems'] as $submenu) {
+
+        // define the sub menu container inner content
         $subMenuContainerInnerContent = '';
 
+        // create the list item
         if ($submenu['contentType'] === 'link') {
           if ($submenu === $mI['subMenuItems'][0] || $submenu === $mI['subMenuItems'][2] || $submenu === $mI['subMenuItems'][4]) {
             $subMenuContainerInnerContent .= '<div class="list-item">';
           }
 
+          // add title to sub menu container inner content
           $subMenuContainerInnerContent .= '<h4 class="title" id="' . $submenu['section_id'] . '">' . $submenu['section_title'] . '</h4>';
 
+          // define an unordered list for the links
           $listItemValues = '<ul>';
+
+          // loop through the links
           foreach ($submenu['page_links'] as $link) {
+
             // define hRefTarget
             $hRefTarget = determineHREFTarget($link);
 
-            // define ariaCurrent
+            // reset ariaCurrent
             $ariaCurrent = '';
 
+            // add aria-current="page" to the current page
             if (isCurrentPage($mI['link'])) {
               $ariaCurrent = 'aria-current="page"';
             }
 
+            // define a list item for the current link
             $listItemValues .= '<li><a href="' . $link['page_link'] . '" ' . $hRefTarget . $ariaCurrent . '><span aria-labelledby="' . $submenu['section_id'] . '"></span>' . $link['page_title'] . '</a></li>';
           }
+
+          // close an unordered list for the links
           $listItemValues .= '</ul>';
 
+          // add list to inner content sub menu container
           $subMenuContainerInnerContent .= $listItemValues;
 
+          // close sub menu inner content container
           if ($submenu === $mI['subMenuItems'][1] || $submenu === $mI['subMenuItems'][3] || $submenu === $mI['subMenuItems'][4]) {
             $subMenuContainerInnerContent .= '</div>';
           }
         }
 
+        // check if current item is a photo
         if ($submenu['contentType'] === 'photo') {
+
+          //add list item container the sub menu container inner content
           $subMenuContainerInnerContent .= '<div class="list-item">';
 
+          // create image
           $columnValue = '<img src="assets/imgs/' . $submenu['imgSrc'] . '.jpg" alt="' . $submenu['alt'] . '" />';
 
+          // add image to sub menu container inner content and close container
           $subMenuContainerInnerContent .= $columnValue . '</div>';
         }
+
+        // add submenu inner content container to subMenuContainerContent
         $subMenuContainerContent .= $subMenuContainerInnerContent;
       }
 
+      // close subMenuContainerContent
       $output .= $subMenuContainerContent . '</div>';
     }
 
     // end of categorized links
 
+    // return the entire output string
     return $output;
 }
 
+// Determines Href target base on the target 
+// returns either an empty string or target="_blank"
 function determineHREFTarget($mI) {
 
     if (array_key_exists('target', $mI)) {
@@ -267,6 +325,7 @@ function determineHREFTarget($mI) {
     }
   }
 
+  // return true if page is the current page 
   function isCurrentPage($page) {
     $current_url = $_SERVER['REQUEST_URI'];
     if (strpos($current_url, $page) !== false || $page === 'index.php') {
