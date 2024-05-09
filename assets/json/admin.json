@@ -79,7 +79,7 @@
       "subMenuItems": [
         {
           "contentType": "link",
-          "section_Id": "na",
+          "section_id": "na",
           "section_title": "North America",
           "page_links": [
             {
@@ -116,7 +116,7 @@
         },
         {
           "contentType": "link",
-          "section_Id": "sa",
+          "section_id": "sa",
           "section_title": "South America",
           "page_links": [
             {
@@ -141,7 +141,7 @@
         },
         {
           "contentType": "link",
-          "section_Id": "au",
+          "section_id": "au",
           "section_title": "Australia",
           "page_links": [
             {
@@ -172,7 +172,7 @@
         },
         {
           "contentType": "link",
-          "section_Id": "af",
+          "section_id": "af",
           "section_title": "Africa",
           "page_links": [
             {
@@ -203,7 +203,7 @@
         },
         {
           "contentType": "link",
-          "section_Id": "eu",
+          "section_id": "eu",
           "section_title": "Europe",
           "page_links": [
             {
