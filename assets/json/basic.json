@@ -17,6 +17,24 @@
       "page_title": "Contact",
       "page_prompt": "Contact",
       "page_link": "contact.php"
+    },
+    {
+      "page_id": "8",
+      "page_title": "Contact",
+      "page_prompt": "Contact",
+      "page_link": "contact.php"
+    },
+    {
+      "page_id": "9",
+      "page_title": "Preferences",
+      "page_prompt": "Preferences",
+      "page_link": "preferences.php"
+    },
+    {
+      "page_id": "10",
+      "page_title": "Log out",
+      "page_prompt": "Log out",
+      "page_link": "logout.php"
     }
   ]
 }
