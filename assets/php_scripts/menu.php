@@ -19,34 +19,24 @@ if (isset($_SESSION['user'])) {
     // Read basic JSON file
     $jsonData = file_get_contents('./assets/json/basic.json');
   }
-  
-  // Decode JSON data into PHP array
-  $menuItems = json_decode($jsonData, true);
-
-  // Check if decoding was successful
-  if ($menuItems === null) {
-      // JSON decoding failed
-      echo "Error decoding JSON";
-  } else {
-    // JSON decoding successful
-    // Access the menu items
-    foreach ($menuItems['pages'] as $mI) 
-          $output .= createMenu($mI);
-
-    }
-
-    // add Preferences and Log out links to the menu
-    $current = '';
-    if (basename($_SERVER['PHP_SELF']) === 'preferences.php')
-      $current = ' class="current"';
-
-    $output .= '<li' . $current . '><a href="preferences.php">' . $_SESSION['user'] . "'s Preferences</a></li>";
-
-    $output .= '<li><a href="logout.php">Logout ' . $_SESSION['user'] . '</a></li>';
 
 } else {
-    // User is Logged out, show Login link
-    echo '<li><a href="login.php">Login</a></li>';
+  // User is Logged out, select public facing menu
+  $jsonData = file_get_contents('./assets/json/co-pages.json');
+}
+
+// Decode JSON data into PHP array
+$menuItems = json_decode($jsonData, true);
+
+// Check if decoding was successful
+if ($menuItems === null) {
+    // JSON decoding failed
+    echo "Error decoding JSON";
+} else {
+  // JSON decoding successful
+  // Access the menu items
+  foreach ($menuItems['pages'] as $mI) 
+        $output .= createMenu($mI);
 }
 
 echo $output;
