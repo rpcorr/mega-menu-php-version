@@ -187,8 +187,15 @@ function createMenu($mI) {
     // start of photo links
     if (isset($mI['subMenuItems']) && $mI['subMenuType'] === 'photoLinks') {
 
+      // default number of columns
+      $numberOfColumns = 4;
+
+      if (count($mI['subMenuItems']) < 4) {
+        $numberOfColumns = count($mI['subMenuItems']);
+      }
+
       // create the outer container
-      $output .= '<div class="sub-menu-div mega-menu mega-menu-column-4">';
+      $output .= '<div class="sub-menu-div mega-menu mega-menu-column-' . $numberOfColumns .'">';
 
       // loop through submenu item
       foreach ($mI['subMenuItems'] as $submenu) {

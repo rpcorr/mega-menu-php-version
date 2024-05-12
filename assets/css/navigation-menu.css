@@ -528,6 +528,24 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item {
   padding: 0 0.938rem;
 }
 
+header nav ul.menu > li > .mega-menu.mega-menu-column-1 {
+  /* max-width: 35rem; */
+  /* width: 15rem; */
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1.25rem 0;
+}
+
+header nav ul.menu > li > .mega-menu.mega-menu-column-1 > .list-item {
+  flex: 0 0 100%;
+  flex-grow: 0;
+  padding: 0 0.938rem;
+}
+
+header nav ul.menu > li > .mega-menu.mega-menu-column-1 > .list-item img {
+  width: 200px;
+}
+
 header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   font-size: 1rem;
   font-weight: 600;
