@@ -155,12 +155,6 @@ header {
   text-decoration: underline;
 }
 
-@media (max-width: 32em) {
-  #branding {
-    /* width: 50%; */
-  }
-}
-
 @media (min-width: 27rem) {
   .logo {
     display: block;
