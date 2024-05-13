@@ -2,21 +2,6 @@
 // start the session
 session_start();
 
-// The string to search within
-$string = $_SERVER['QUERY_STRING'];
-
-// The substring to search for
-$substring = "loggedIn";
-
-// Find the position of the substring in the string
-$position = strpos($_SERVER['QUERY_STRING'], "loggedIn");
-
-if ($position !== false) {
-  $_SESSION['loggedIn'] = 'Yes';
-} else {
-  $_SESSION['loggedIn'] = 'No';
-}
-
 $title = "Priority Mega Menu";
 
 include_once('./assets/php_scripts/header.php');
