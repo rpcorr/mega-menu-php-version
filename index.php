@@ -9,6 +9,12 @@ include_once('./assets/php_scripts/header.php');
     <main>
       <div class="container">
 
+      <?php
+        if (isset($_GET['inactivity'])) {
+          echo '<p style="text-align: center;">You were logged out due to interactivity.</p>';
+        }
+      ?>
+
         <h1>Welcome</h1>
          
         <h2>Section Title</h2>
