@@ -523,7 +523,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-1 > .list-item {
 }
 
 header nav ul.menu > li > .mega-menu.mega-menu-column-1 > .list-item img {
-  width: 200px;
+  width: 190px;
 }
 
 header nav ul.menu > li > .mega-menu.mega-menu-column-2 {
@@ -581,7 +581,5 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 }
 
 header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
-  max-width: 100%;
-  width: 100%;
-  vertical-align: middle;
+  width: 190px;
 }
