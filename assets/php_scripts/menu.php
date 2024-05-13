@@ -212,10 +212,10 @@ function createMenu($mI) {
         }
 
         // create the individual list item container
-        $output .= '<div class="list-item text-center">
+        $output .= '<div class="list-item">
             <a href="' . $submenu['page_link'] . '" ' . $hRefTarget . ' ' . $ariaCurrent . '>
               <img src="' . $submenu['imgSrc'] . '" alt="' . $submenu['page_title'] . '" />
-              <p>' . $submenu['page_title'] . '</p>
+              <p class="text-center">' . $submenu['page_title'] . '</p>
             </a>
           </div>';
       }
