@@ -62,7 +62,8 @@ ul#menu-main-menu li.menu-item-has-children.visible > ul ul.sub-menu {
   position: relative;
 }
 
-ul#menu-main-menu li > ul > li a {
+ul#menu-main-menu li > ul > li a,
+ul#menu-main-menu li > .sub-menu-div > a {
   text-decoration: none;
   padding: 0.5em 1em;
   display: block;
@@ -250,15 +251,6 @@ ul#menu-main-menu li.menu-item-has-children.visible > ul ul.sub-menu {
 .sub-menu > li {
   display: block;
   position: relative;
-}
-
-ul#menu-main-menu li > ul > li a,
-ul#menu-main-menu li > .sub-menu-div > a {
-  text-decoration: none;
-  padding: 0.5em 1em;
-  display: block;
-  max-width: 100%;
-  white-space: normal;
 }
 
 ul#menu-main-menu li.menu-item-has-children > a {
@@ -580,4 +572,9 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 
 header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
   width: 190px;
+}
+
+/* width of images on mega-menu when menu item is under More */
+#moreSubMenu > li > .sub-menu-div > .list-item img {
+  width: 240px;
 }
