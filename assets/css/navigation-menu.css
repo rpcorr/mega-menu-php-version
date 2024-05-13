@@ -509,8 +509,6 @@ header nav ul.menu > li > .mega-menu {
 }
 
 header nav ul.menu > li > .mega-menu.mega-menu-column-1 {
-  /* max-width: 35rem; */
-  /* width: 15rem; */
   display: flex;
   flex-wrap: wrap;
   padding: 1.25rem 0;
