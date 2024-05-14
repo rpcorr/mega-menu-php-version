@@ -6,12 +6,23 @@ session_start();
 // define output
 $output = '';
 
+// get current Host
+$current_host = $_SERVER['HTTP_HOST'];
+
 if (isset($_SESSION['user'])) {
 
   // Determine which file to use
   if ($_SESSION['userType'] === 'admin') {
+
     // Read admin JSON file
-    $jsonData = file_get_contents('./assets/json/admin.json');
+    if (strpos($current_host, 'localhost') !== false || strpos($current_host, 'ronancorr.com') !== false) {
+      // Localhost (development server)
+      $jsonData = file_get_contents('./assets/json/admin.json');
+    } else {
+      // Counting Opinions server
+      $jsonData = file_get_contents('https://dev.countingopinions.com/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=door&ukey=b5e79c05b3f12219e725fc167edefdd1');
+    }
+    
   } else if ($_SESSION['userType'] === 'premium') {
     // Read premium JSON file
     $jsonData = file_get_contents('./assets/json/premium.json');
