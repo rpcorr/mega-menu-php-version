@@ -33,7 +33,15 @@ if (isset($_SESSION['user'])) {
 
 } else {
   // User is Logged out, select public facing menu
-  $jsonData = file_get_contents('./assets/json/co-pages.json');
+
+  // Read admin JSON file
+  if (strpos($current_host, 'localhost') !== false || strpos($current_host, 'ronancorr.com') !== false) {
+    // Localhost (development server)
+    $jsonData = file_get_contents('./assets/json/co-pages.json');
+  } else {
+    // Counting Opinions server
+    $jsonData = file_get_contents('https://dev.countingopinions.com/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=door');
+  }
 }
 
 // Decode JSON data into PHP array
