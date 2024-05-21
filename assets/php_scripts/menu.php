@@ -211,6 +211,8 @@ function createMenu($mI) {
 
       if (count($mI['subMenuItems']) < 4) {
         $numberOfColumns = count($mI['subMenuItems']);
+      } else if (fmod(count($mI['subMenuItems']), 4) > 0  && fmod(count($mI['subMenuItems']), 4) < 2  ) {
+        $numberOfColumns = 3;
       }
 
       // create the outer container
