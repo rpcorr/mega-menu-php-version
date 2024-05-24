@@ -9,6 +9,7 @@ let moreWidth = 0;
 let winWidth = 0;
 let output = '';
 let megaMenuLinks = '';
+let initialColumns = '';
 
 $(document).ready(function () {
   // select all anchor tags
@@ -351,31 +352,37 @@ function toggleTopLevelMenu(menuLink) {
 
     // Determine if the submenu will fit on current viewport
 
-    // Get the width of the content of the entire document
-    const documentWidth = document.documentElement.scrollWidth;
+    // Select the parent element
+    const subMenuDiv = document.querySelector('.sub-menu-div');
+
+    // get the initial number of columns in photo submenu
+    if (initialColumns === '') {
+      initialColumns = subMenuDiv.classList[2];
+    }
+
+    // reset to the initial number of columns
+    subMenuDiv.classList.remove('mega-menu-column-2');
+    subMenuDiv.classList.add(initialColumns);
+
+    // get the width of the mega submenu
+    const megaSubMenuWidth = subMenuDiv.offsetWidth;
+
+    // get the number of pixels from the viewport left edge where the mega submenu starts
+    const divFromLeft = Math.round(
+      document.querySelector('.sub-menu-div').getBoundingClientRect().left
+    );
 
     // Get the width of the viewport
     const viewportWidth = document.documentElement.clientWidth;
 
-    // Select the parent element
-    const subMenuDiv = document.querySelector('.sub-menu-div');
-
-    // Check if a horizontal scrollbar is present
-    if (documentWidth > viewportWidth) {
+    // Check if megaSubMenu go beyond the viewport's width
+    if (megaSubMenuWidth + divFromLeft > viewportWidth) {
       if (subMenuDiv && subMenuDiv.classList.contains('mega-menu-column-4')) {
         // Remove the class 'mega-menu-column-4'
         subMenuDiv.classList.remove('mega-menu-column-4');
 
         // Add the class 'mega-menu-column-2'
         subMenuDiv.classList.add('mega-menu-column-2');
-      }
-    } else {
-      if (subMenuDiv && subMenuDiv.classList.contains('mega-menu-column-2')) {
-        // Remove the class 'mega-menu-column-2'
-        subMenuDiv.classList.remove('mega-menu-column-2');
-
-        // Add the class 'mega-menu-column-4'
-        subMenuDiv.classList.add('mega-menu-column-4');
       }
     }
 
