@@ -103,7 +103,7 @@ function createMenu($mI) {
     $downArrow = isset($mI['subMenuType']) ? '<i class="caret angle-down"></i>' : '';
 
     // define ariaLabel
-    $ariaLabel = isset($mI['subMenuType']) ? 'aria-label="' . $mI['name'] . ' has a sub menu. Click enter to open"' : '';
+    $ariaLabel = isset($mI['subMenuType']) ? 'aria-label="' . $mI['page_title'] . ' has a sub menu. Click enter to open"' : '';
 
     // define hRefTarget
     $hRefTarget = determineHREFTarget($mI);
@@ -153,7 +153,7 @@ function createMenu($mI) {
                 // check if a third level is present
                 if (isset($secondLevelItem['subMenuItems'])) {
                   // a third level is present
-                  $secondLevel .= '<li class="menu-item-has-children"><a href="' . $hRef . '">' . $secondLevelItem['name'] . ' <i class="caret angle-down"></i></a>';
+                  $secondLevel .= '<li class="menu-item-has-children"><a href="' . $hRef . '">' . $secondLevelItem['page_title'] . ' <i class="caret angle-down"></i></a>';
                   $thirdLevel = '<ul class="sub-menu">';
 
                   // loop through third level links
@@ -173,7 +173,7 @@ function createMenu($mI) {
                     }
 
                     // create third level menu item
-                    $thirdLevel .= '<li><a href="' . $thirdLevelItem['page_link'] . '" ' . $hRefTarget . $ariaCurrent . '>' . $thirdLevelItem['name'] . '</a></li>';
+                    $thirdLevel .= '<li><a href="' . $thirdLevelItem['page_link'] . '" ' . $hRefTarget . $ariaCurrent . '>' . $thirdLevelItem['page_title'] . '</a></li>';
                   
                   }
 
@@ -185,7 +185,7 @@ function createMenu($mI) {
                 } else {
 
                   // create second level menu item
-                  $secondLevel .= '<li><a href="' . $secondLevelItem['page_link'] . '" ' . $hRefTarget . '>' . $secondLevelItem['name'] . '</a></li>';
+                  $secondLevel .= '<li><a href="' . $secondLevelItem['page_link'] . '" ' . $hRefTarget . '>' . $secondLevelItem['page_title'] . '</a></li>';
                 }
             }
 

@@ -271,36 +271,99 @@
     },
     {
       "page_id": "5",
+      "page_title": "Products",
+      "page_prompt": "Products",
+      "page_link": "products.html",
+      "subMenuType": "regularLinks",
+      "subMenuItems": [
+        {
+          "page_id": "5-1",
+          "page_title": "Product 1",
+          "page_prompt": "Product 1",
+          "page_link": "#",
+          "subMenuItems": [
+            {
+              "page_id": "5-1a",
+              "page_title": "Product 1a",
+              "page_prompt": "Product 1a",
+              "page_link": "product1a.html"
+            },
+            {
+              "page_id": "5-1b",
+              "page_title": "Product 1b",
+              "page_prompt": "Product 1b",
+              "page_link": "#p1b",
+              "subMenuItems": [
+                {
+                  "page_id": "5-1b-a",
+                  "page_title": "Product 1b a",
+                  "page_prompt": "Product 1b a",
+                  "page_link": "https://www.ronancorr.com"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "page_id": "5-2",
+          "page_title": "Product 2",
+          "page_prompt": "Product 2",
+          "page_link": "#",
+          "subMenuItems": [
+            {
+              "page_id": "5-2a",
+              "page_title": "Test 1",
+              "page_prompt": "Test 1",
+              "page_link": "test1.html"
+            },
+            {
+              "page_id": "5-2b",
+              "page_title": "Test 2",
+              "page_prompt": "Test 2",
+              "page_link": "#test2"
+            }
+          ]
+        },
+        {
+          "page_id": "5-3",
+          "page_title": "Product 3",
+          "page_prompt": "Product 3",
+          "page_link": "product3.html"
+        }
+      ]
+    },
+    {
+      "page_id": "6",
       "page_title": "Portfolio",
       "page_prompt": "Portfolio",
       "page_link": "portfolio.php"
     },
     {
-      "page_id": "6",
+      "page_id": "7",
       "page_title": "Resources",
       "page_prompt": "Resources",
       "page_link": "resources.php"
     },
     {
-      "page_id": "7",
+      "page_id": "8",
       "page_title": "Careers",
       "page_prompt": "Careers",
       "page_link": "careers.php"
     },
     {
-      "page_id": "8",
+      "page_id": "9",
       "page_title": "Contact",
       "page_prompt": "Contact",
       "page_link": "contact.php"
     },
     {
-      "page_id": "9",
+      "page_id": "10",
       "page_title": "Preferences",
       "page_prompt": "Preferences",
       "page_link": "preferences.php"
     },
     {
-      "page_id": "10",
+      "page_id": "11",
       "page_title": "Log out",
       "page_prompt": "Log out",
       "page_link": "logout.php"
