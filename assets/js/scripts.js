@@ -349,6 +349,36 @@ function toggleTopLevelMenu(menuLink) {
     // 2-a. set visible class to menu's parent
     $(menuLink).parents('.menu-item-has-children').addClass('visible');
 
+    // Determine if the submenu will fit on current viewport
+
+    // Get the width of the content of the entire document
+    const documentWidth = document.documentElement.scrollWidth;
+
+    // Get the width of the viewport
+    const viewportWidth = document.documentElement.clientWidth;
+
+    // Select the parent element
+    const subMenuDiv = document.querySelector('.sub-menu-div');
+
+    // Check if a horizontal scrollbar is present
+    if (documentWidth > viewportWidth) {
+      if (subMenuDiv && subMenuDiv.classList.contains('mega-menu-column-4')) {
+        // Remove the class 'mega-menu-column-4'
+        subMenuDiv.classList.remove('mega-menu-column-4');
+
+        // Add the class 'mega-menu-column-2'
+        subMenuDiv.classList.add('mega-menu-column-2');
+      }
+    } else {
+      if (subMenuDiv && subMenuDiv.classList.contains('mega-menu-column-2')) {
+        // Remove the class 'mega-menu-column-2'
+        subMenuDiv.classList.remove('mega-menu-column-2');
+
+        // Add the class 'mega-menu-column-4'
+        subMenuDiv.classList.add('mega-menu-column-4');
+      }
+    }
+
     // 2-b. set the arrow to upwards position
     $(menuLink).children('i').removeClass('angle-down').addClass('angle-up');
 
