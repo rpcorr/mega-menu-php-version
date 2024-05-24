@@ -353,38 +353,46 @@ function toggleTopLevelMenu(menuLink) {
     // Determine if the submenu will fit on current viewport
 
     // Select the parent element
-    const subMenuDiv = document.querySelector('.sub-menu-div');
+    const subMenuDivs = document.querySelectorAll('.sub-menu-div');
 
-    // get the initial number of columns in photo submenu
-    if (initialColumns === '') {
-      initialColumns = subMenuDiv.classList[2];
-    }
+    subMenuDivs.forEach((div) => {
+      if (div.closest('li').classList.contains('visible')) {
+        const subMenuDiv = div.closest('.sub-menu-div');
 
-    // reset to the initial number of columns
-    subMenuDiv.classList.remove('mega-menu-column-2');
-    subMenuDiv.classList.add(initialColumns);
+        // get the initial number of columns in photo submenu
+        if (initialColumns === '') {
+          initialColumns = subMenuDiv.classList[2];
+        }
+        // reset to the initial number of columns
+        subMenuDiv.classList.remove('mega-menu-column-2');
+        subMenuDiv.classList.add(initialColumns);
 
-    // get the width of the mega submenu
-    const megaSubMenuWidth = subMenuDiv.offsetWidth;
+        // get the width of the mega submenu
+        const megaSubMenuWidth = subMenuDiv.offsetWidth;
 
-    // get the number of pixels from the viewport left edge where the mega submenu starts
-    const divFromLeft = Math.round(
-      document.querySelector('.sub-menu-div').getBoundingClientRect().left
-    );
+        // get the number of pixels from the viewport left edge where the mega submenu starts
+        const divFromLeft = Math.round(subMenuDiv.getBoundingClientRect().left);
 
-    // Get the width of the viewport
-    const viewportWidth = document.documentElement.clientWidth;
+        // Get the width of the viewport
+        const viewportWidth = document.documentElement.clientWidth;
 
-    // Check if megaSubMenu go beyond the viewport's width
-    if (megaSubMenuWidth + divFromLeft > viewportWidth) {
-      if (subMenuDiv && subMenuDiv.classList.contains('mega-menu-column-4')) {
-        // Remove the class 'mega-menu-column-4'
-        subMenuDiv.classList.remove('mega-menu-column-4');
+        console.log(megaSubMenuWidth, divFromLeft, viewportWidth);
 
-        // Add the class 'mega-menu-column-2'
-        subMenuDiv.classList.add('mega-menu-column-2');
+        // Check if megaSubMenu go beyond the viewport's width
+        if (megaSubMenuWidth + divFromLeft > viewportWidth) {
+          if (
+            subMenuDiv &&
+            subMenuDiv.classList.contains('mega-menu-column-4')
+          ) {
+            // Remove the class 'mega-menu-column-4'
+            subMenuDiv.classList.remove('mega-menu-column-4');
+
+            // Add the class 'mega-menu-column-2'
+            subMenuDiv.classList.add('mega-menu-column-2');
+          }
+        }
       }
-    }
+    });
 
     // 2-b. set the arrow to upwards position
     $(menuLink).children('i').removeClass('angle-down').addClass('angle-up');
