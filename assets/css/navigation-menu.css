@@ -578,3 +578,23 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
 #moreSubMenu > li > .sub-menu-div > .list-item img {
   width: 240px;
 }
+
+/* Basic CSS for breadcrumbs */
+.breadcrumb {
+  list-style: none;
+  display: flex;
+}
+.breadcrumb li {
+  margin-right: 5px;
+}
+.breadcrumb li a {
+  text-decoration: none;
+  color: blue;
+}
+.breadcrumb li::after {
+  content: '>';
+  margin-left: 5px;
+}
+.breadcrumb li:last-child::after {
+  content: '';
+}

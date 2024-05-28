@@ -596,3 +596,32 @@ function openMenu(bContainsSubMenuDiv) {
     element.style.opacity = '1';
   });
 }
+
+// JavaScript function to generate breadcrumbs
+function generateBreadcrumbs() {
+  const breadcrumbContainer = document.getElementById('breadcrumb');
+  const pathArray = window.location.pathname.split('/').filter(function (el) {
+    return el.length != 0;
+  });
+
+  let path = '';
+  pathArray.forEach((dir, index) => {
+    path += '/' + dir;
+    const isLast = index === pathArray.length - 1;
+
+    const listItem = document.createElement('li');
+    if (isLast) {
+      listItem.textContent = dir;
+    } else {
+      const link = document.createElement('a');
+      link.href = path;
+      link.textContent = dir;
+      listItem.appendChild(link);
+    }
+
+    breadcrumbContainer.appendChild(listItem);
+  });
+}
+
+// Call the function to generate breadcrumbs on page load
+window.onload = generateBreadcrumbs;

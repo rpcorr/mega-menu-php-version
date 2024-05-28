@@ -146,3 +146,8 @@ $relativePath = getRelativePath($from, $to);
         </div>
       </div>
     </header>
+    <nav>
+        <ul class="breadcrumb" id="breadcrumb">
+            <!-- Breadcrumbs will be dynamically inserted here -->
+        </ul>
+    </nav>
