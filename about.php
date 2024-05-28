@@ -15,6 +15,5 @@ include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque est totam saepe porro magni odio. Dolore culpa voluptate incidunt reprehenderit.</p>
       </div>
     </main>
-
-<?php //include_once( dirname(__FILE__) . '/..' . '/assets/php_scripts/footer.php'); ?>
+    
 <?php include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\footer.php'); ?>

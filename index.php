@@ -16,11 +16,6 @@ include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.
       ?>
 
         <h1>Welcome</h1>
-
-        <?php  //echo dirname(__FILE__) . '<br/>' . $menuPath .'<br/>';
-        
-        //echo $_SERVER['DOCUMENT_ROOT'];
-        ?>
          
         <h2>Section Title</h2>
           
