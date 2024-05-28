@@ -200,7 +200,7 @@ function createMenu($mI, $relativePath) {
           } else {
 
             // create first level menu item
-            $output .= '<li><a href="' . $submenu['page_link'] . '" ' . $hRefTarget . '>' . $submenu['page_title'] . '</a></li>';
+            $output .= '<li><a href="' . $relativePath . $submenu['page_link'] . '" ' . $hRefTarget . '>' . $submenu['page_title']  .  '</a></li>';
           }
       }
 
