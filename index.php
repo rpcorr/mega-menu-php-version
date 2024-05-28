@@ -4,7 +4,7 @@ session_start();
 
 $title = "Priority Mega Menu";
 
-include_once('./assets/php_scripts/header.php');
+include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.php');
 ?>
     <main>
       <div class="container">
@@ -16,6 +16,11 @@ include_once('./assets/php_scripts/header.php');
       ?>
 
         <h1>Welcome</h1>
+
+        <?php  //echo dirname(__FILE__) . '<br/>' . $menuPath .'<br/>';
+        
+        //echo $_SERVER['DOCUMENT_ROOT'];
+        ?>
          
         <h2>Section Title</h2>
           
@@ -29,4 +34,4 @@ include_once('./assets/php_scripts/header.php');
       </div>
     </main>
 
-<?php include_once('./assets/php_scripts/footer.php'); ?>
+<?php include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\footer.php'); ?>

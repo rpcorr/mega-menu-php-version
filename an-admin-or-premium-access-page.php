@@ -1,13 +1,17 @@
 <?php
+// start the session
+session_start();
+
 // level of access to view page; admin is a given
 $userTypes = array("premium");
 
 // Include the session check file
-require_once './assets/php_scripts/session_check.php';
+include_once ($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\session_check.php');
+
 
 $title = 'Admin or Premium Access Page - Priority Mega Menu';
 
-include_once('./assets/php_scripts/header.php');
+include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.php');
 
 ?>
 
@@ -20,4 +24,4 @@ include_once('./assets/php_scripts/header.php');
       </div>
     </main>
 
-<?php include_once('./assets/php_scripts/footer.php'); ?>
+    <?php include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\footer.php'); ?>

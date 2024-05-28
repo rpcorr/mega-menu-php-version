@@ -14,7 +14,8 @@ if (isset($_POST['username'])) {
 
 
   // Path to the JSON file
-  $json_file = './assets/json/users.json';
+  $json_file =  $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\users.json';
+ 
 
   // Check if the file exists
   if (!file_exists($json_file)) {
@@ -67,7 +68,7 @@ if (isset($_POST['username'])) {
 
 $title = 'Login - Priority Mega Menu';
 
-include_once('./assets/php_scripts/header.php');
+include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.php');
 ?>
 
 
@@ -91,5 +92,5 @@ include_once('./assets/php_scripts/header.php');
           </form>
         </div>
     </main>
-
-<?php include_once('./assets/php_scripts/footer.php'); ?>
+    
+<?php include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\footer.php'); ?>

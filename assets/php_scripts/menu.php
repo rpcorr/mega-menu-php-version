@@ -17,7 +17,7 @@ if (isset($_SESSION['user'])) {
     // Read admin JSON file
     if (strpos($current_host, 'localhost') !== false || strpos($current_host, 'ronancorr.com') !== false) {
       // Localhost (development server)
-      $jsonData = file_get_contents('./assets/json/admin.json');
+      $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\admin.json');
     } else {
       // Counting Opinions server
       $jsonData = file_get_contents('https://dev.countingopinions.com/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=door&ukey=b5e79c05b3f12219e725fc167edefdd1');
@@ -25,10 +25,10 @@ if (isset($_SESSION['user'])) {
     
   } else if ($_SESSION['userType'] === 'premium') {
     // Read premium JSON file
-    $jsonData = file_get_contents('./assets/json/premium.json');
+    $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\premium.json');
   } else if ($_SESSION['userType'] === 'basic') {
     // Read basic JSON file
-    $jsonData = file_get_contents('./assets/json/basic.json');
+    $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\basic.json');
   }
 
 } else {
@@ -37,7 +37,7 @@ if (isset($_SESSION['user'])) {
   // Read admin JSON file
   if (strpos($current_host, 'localhost') !== false || strpos($current_host, 'ronancorr.com') !== false) {
     // Localhost (development server)
-    $jsonData = file_get_contents('./assets/json/co-pages.json');
+    $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\co-pages.json');
   } else {
     // Counting Opinions server
     $jsonData = file_get_contents('https://dev.countingopinions.com/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=door');
@@ -55,12 +55,12 @@ if ($menuItems === null) {
   // JSON decoding successful
   // Access the menu items
   foreach ($menuItems['pages'] as $mI) 
-        $output .= createMenu($mI);
+        $output .= createMenu($mI, $relativePath);
 }
 
 echo $output;
 
-function createMenu($mI) {
+function createMenu($mI, $relativePath) {
 
     // initialize output
     $output = '';
@@ -92,7 +92,13 @@ function createMenu($mI) {
       $liClass = 'class="' . $currentClass . ' ' . $menuItemHasChildren . '"';
 
     // define if hRef has a submenu
-    $hRef = $mI['page_link'];
+    //if ($mI['page_link'] === 'logout.php' || $mI['page_link'] === 'preferences.php') {
+    if (determineHREFTarget($mI) === '') {
+      $hRef = $relativePath . $mI['page_link'];
+    } else {
+      $hRef = $mI['page_link'];
+    }
+
     $ariaExpanded = '';
     if (isset($mI['subMenuItems'])) {
         $hRef = '#';
@@ -235,7 +241,7 @@ function createMenu($mI) {
         // create the individual list item container
         $output .= '<div class="list-item">
             <a href="' . $submenu['page_link'] . '" ' . $hRefTarget . ' ' . $ariaCurrent . '>
-              <img src="' . $submenu['imgSrc'] . '" alt="' . $submenu['page_title'] . '" />
+              <img src="' . $relativePath . $submenu['imgSrc'] . '" alt="' . $submenu['page_title'] . '" />
               <p class="text-center">' . $submenu['page_title'] . '</p>
             </a>
           </div>';
@@ -310,7 +316,7 @@ function createMenu($mI) {
           $subMenuContainerInnerContent .= '<div class="list-item">';
 
           // create image
-          $columnValue = '<img src="' . $submenu['imgSrc'] . '" alt="' . $submenu['alt'] . '" />';
+          $columnValue = '<img src="' . $relativePath . $submenu['imgSrc'] . '" alt="' . $submenu['alt'] . '" />';
 
           // add image to sub menu container inner content and close container
           $subMenuContainerInnerContent .= $columnValue . '</div>';
