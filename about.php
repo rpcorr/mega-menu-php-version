@@ -8,7 +8,7 @@ include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.
 ?>
     <main>
       <div class="container">
-        <h1>About Page</h1>
+        <h1>About Us</h1>
 
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima facilis, ea, eius vitae molestias quaerat reiciendis quasi culpa natus veritatis repellat est laborum quis tempore?</p>
 
