@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', function () {
 function timerIncrement() {
   idleTime++;
 
-  if (idleTime === 2) {
+  if (idleTime === 1) {
     // 2 minutes of inactivity. Redirect to logout page.
-    window.location.href = 'logout.php?inactivity=1';
+    window.location.href = '/mega-menu/logout.php?inactivity=1';
   }
 }
