@@ -2,7 +2,7 @@
 // start the session
 session_start();
 
-$title = "Priority Mega Menu";
+$title = "Product 1 A - Priority Mega Menu";
 
 include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.php');
 ?>
