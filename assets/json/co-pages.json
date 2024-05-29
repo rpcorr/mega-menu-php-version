@@ -4,7 +4,7 @@
       "page_id": "0",
       "page_title": "Portal Welcome Page",
       "page_prompt": "Welcome",
-      "page_link": "/portals/main.php?page_id=0",
+      "page_link": "portals/main.php?page_id=0",
       "section_id": "0",
       "sequence": "0",
       "section_prompt": null
