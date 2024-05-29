@@ -11,9 +11,11 @@ include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.
 
         <h1>Products</h1>
          
-        <h2>Section Title</h2>
+        <h2>Breadcrumb example</h2>
+
+        <p>Click on the link below to see the dynamic breadcrumbs in action.</p>
           
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum obcaecati voluptates voluptatem facere adipisci aliquam culpa quae aperiam! Nam quis exercitationem dolore excepturi ratione vitae, quidem ipsum ad mollitia iure rem dolorem doloremque voluptate iusto eum vel, veritatis modi expedita dolores facere quos. Distinctio pariatur voluptatibus dolor, velit hic corrupti.</p>
+        <p><a href="product-1/">Product 1</a></p>
 
       </div>
     </main>
