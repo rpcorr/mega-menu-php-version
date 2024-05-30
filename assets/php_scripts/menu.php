@@ -15,9 +15,12 @@ if (isset($_SESSION['user'])) {
   if ($_SESSION['userType'] === 'admin') {
 
     // Read admin JSON file
-    if (strpos($current_host, 'localhost') !== false || strpos($current_host, 'ronancorr.com') !== false) {
+    if (strpos($current_host, 'localhost') !== false) {
       // Localhost (development server)
       $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\admin.json');
+    } else if (strpos($current_host, 'ronancorr.com') !== false) {
+      // ronancorr.com (staging server)
+      $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/admin.json');
     } else {
       // Counting Opinions server
       $jsonData = file_get_contents('https://dev.countingopinions.com/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=door&ukey=b5e79c05b3f12219e725fc167edefdd1');
@@ -35,9 +38,12 @@ if (isset($_SESSION['user'])) {
   // User is Logged out, select public facing menu
 
   // Read admin JSON file
-  if (strpos($current_host, 'localhost') !== false || strpos($current_host, 'ronancorr.com') !== false) {
+  if (strpos($current_host, 'localhost') !==false) {
     // Localhost (development server)
     $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\co-pages.json');
+  } else if (strpos($current_host, 'ronancorr.com') !==false) {
+    // ronancorr.com (staging server)
+    $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/co-pages.json');
   } else {
     // Counting Opinions server
     $jsonData = file_get_contents('https://dev.countingopinions.com/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=door');

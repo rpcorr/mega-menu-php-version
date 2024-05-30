@@ -4,7 +4,13 @@ session_start();
 
 $title = "Products - Priority Mega Menu";
 
-include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.php');
+if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
+  
+  include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.php');
+} else {
+  include_once( $_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/php_scripts/header.php');
+}
+
 ?>
     <main>
       <div class="container"> 
@@ -12,7 +18,7 @@ include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.
         <h1>Products</h1>
          
         <h2>Breadcrumb example</h2>
-
+        
         <p>Click on the link below to see the dynamic breadcrumbs in action.</p>
           
         <p><a href="product-1/">Product 1</a></p>
@@ -20,4 +26,12 @@ include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.
       </div>
     </main>
     
-<?php include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\footer.php'); ?>
+<?php 
+
+if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
+  include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\footer.php');
+} else {
+  include_once( $_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/php_scripts/footer.php');
+}
+
+?>

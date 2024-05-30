@@ -20,7 +20,10 @@ function generateBreadcrumbs() {
       listItem.textContent = dir;
 
       // if listItem.textContent equals to site root name then change it to Home
-      if (listItem.textContent === 'mega-menu') {
+      if (
+        listItem.textContent === 'mega-menu' ||
+        listItem.textContent === 'mmenu'
+      ) {
         listItem.textContent = 'Home > ' + pageTitle;
       }
 
@@ -37,7 +40,7 @@ function generateBreadcrumbs() {
       link.href = path;
       link.textContent = dir;
 
-      if (link.textContent === 'mega-menu') {
+      if (link.textContent === 'mega-menu' || link.textContent === 'mmenu') {
         link.textContent = 'Home';
       }
 

@@ -4,7 +4,13 @@ session_start();
 
 $title = "Product 1 - Priority Mega Menu";
 
-include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.php');
+if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
+  
+  include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.php');
+} else {
+  include_once( $_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/php_scripts/header.php');
+}
+
 ?>
     <main>
       <div class="container"> 
@@ -20,4 +26,12 @@ include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.
       </div>
     </main>
     
-<?php include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\footer.php'); ?>
+<?php 
+
+if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') { 
+  include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\footer.php');
+} else {
+  include_once( $_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/php_scripts/footer.php');
+}
+
+?>
