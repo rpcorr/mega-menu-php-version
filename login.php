@@ -14,7 +14,12 @@ if (isset($_POST['username'])) {
 
 
   // Path to the JSON file
-  $json_file =  $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\users.json';
+  
+  if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
+    $json_file =  $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\users.json';
+  } else {
+    $json_file = $_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/users.json';
+  }
  
 
   // Check if the file exists

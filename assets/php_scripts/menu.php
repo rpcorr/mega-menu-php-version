@@ -61,12 +61,12 @@ if ($menuItems === null) {
   // JSON decoding successful
   // Access the menu items
   foreach ($menuItems['pages'] as $mI) 
-        $output .= createMenu($mI, $relativePath);
+        $output .= createMenu($mI, $rootUrl);
 }
 
 echo $output;
 
-function createMenu($mI, $relativePath) {
+function createMenu($mI, $rootUrl) {
 
     // initialize output
     $output = '';
@@ -100,7 +100,7 @@ function createMenu($mI, $relativePath) {
     // define if hRef has a submenu
     //if ($mI['page_link'] === 'logout.php' || $mI['page_link'] === 'preferences.php') {
     if (determineHREFTarget($mI) === '') {
-      $hRef = $relativePath . $mI['page_link'];
+      $hRef = $rootUrl . $mI['page_link'];
     } else {
       $hRef = $mI['page_link'];
     }
@@ -149,65 +149,66 @@ function createMenu($mI, $relativePath) {
         if (isCurrentPage($submenu['page_link'])) {
           $ariaCurrent = 'aria-current="page"';
         }
-          if (isset($submenu['subMenuItems'])) {
-            // a second level menu is present
-            $output .= '<li class="menu-item-has-children">
-            <a href="' . $hRef . '" ' . $ariaCurrent . '>' . $submenu['page_title'] . ' <i class="caret angle-down"></i></a>';
-            $secondLevel = '<ul class="sub-menu">';
 
-            // loop through second level links
-            foreach ($submenu['subMenuItems'] as $secondLevelItem) {
-              // define hRefTarget
-              $hRefTarget = determineHREFTarget($secondLevelItem);
+        if (isset($submenu['subMenuItems'])) {
+          // a second level menu is present
+          $output .= '<li class="menu-item-has-children">
+          <a href="' . $hRef . '" ' . $ariaCurrent . '>' . $submenu['page_title'] . ' <i class="caret angle-down"></i></a>';
+          $secondLevel = '<ul class="sub-menu">';
 
-              // define if hRef has a submenu
-              $hRef = isset($secondLevelItem['page_link']) ? $secondLevelItem['page_link'] : '#';
-                // check if a third level is present
-                if (isset($secondLevelItem['subMenuItems'])) {
-                  // a third level is present
-                  $secondLevel .= '<li class="menu-item-has-children"><a href="' . $hRef . '">' . $secondLevelItem['page_title'] . ' <i class="caret angle-down"></i></a>';
-                  $thirdLevel = '<ul class="sub-menu">';
+          // loop through second level links
+          foreach ($submenu['subMenuItems'] as $secondLevelItem) {
+            // define hRefTarget
+            $hRefTarget = determineHREFTarget($secondLevelItem);
 
-                  // loop through third level links
-                  foreach ($secondLevelItem['subMenuItems'] as $thirdLevelItem) {
-                    // define hRefTarget
-                    $hRefTarget = determineHREFTarget($thirdLevelItem);
+            // define if hRef has a submenu
+            $hRef = isset($secondLevelItem['page_link']) ? $secondLevelItem['page_link'] : '#';
+              // check if a third level is present
+              if (isset($secondLevelItem['subMenuItems'])) {
+                // a third level is present
+                $secondLevel .= '<li class="menu-item-has-children"><a href="' . $hRef . '">' . $secondLevelItem['page_title'] . ' <i class="caret angle-down"></i></a>';
+                $thirdLevel = '<ul class="sub-menu">';
 
-                    // define if hRef has a submenu
-                    $hRef = isset($thirdLevelItem['page_link']) ? $thirdLevelItem['page_link'] : '#';
+                // loop through third level links
+                foreach ($secondLevelItem['subMenuItems'] as $thirdLevelItem) {
+                  // define hRefTarget
+                  $hRefTarget = determineHREFTarget($thirdLevelItem);
 
-                    // reset ariaCurrent
-                    $ariaCurrent = '';
+                  // define if hRef has a submenu
+                  $hRef = isset($thirdLevelItem['page_link']) ? $thirdLevelItem['page_link'] : '#';
 
-                    // add aria-current="page" to the current page
-                    if (isCurrentPage($thirdLevelItem['page_link'])) {
-                      $ariaCurrent = 'aria-current="page"';
-                    }
+                  // reset ariaCurrent
+                  $ariaCurrent = '';
 
-                    // create third level menu item
-                    $thirdLevel .= '<li><a href="' . $thirdLevelItem['page_link'] . '" ' . $hRefTarget . $ariaCurrent . '>' . $thirdLevelItem['page_title'] . '</a></li>';
-                  
+                  // add aria-current="page" to the current page
+                  if (isCurrentPage($thirdLevelItem['page_link'])) {
+                    $ariaCurrent = 'aria-current="page"';
                   }
 
-                  // close third level unordered list
-                  $thirdLevel .= '</ul>';
-
-                  // attach third level unordered list to second level
-                  $secondLevel .= $thirdLevel . '</li>';
-                } else {
-
-                  // create second level menu item
-                  $secondLevel .= '<li><a href="' . $secondLevelItem['page_link'] . '" ' . $hRefTarget . '>' . $secondLevelItem['page_title'] . '</a></li>';
+                  // create third level menu item
+                  $thirdLevel .= '<li><a href="' . $thirdLevelItem['page_link'] . '" ' . $hRefTarget . $ariaCurrent . '>' . $thirdLevelItem['page_title'] . '</a></li>';
+                
                 }
-            }
+
+                // close third level unordered list
+                $thirdLevel .= '</ul>';
+
+                // attach third level unordered list to second level
+                $secondLevel .= $thirdLevel . '</li>';
+              } else {
+
+                // create second level menu item
+                $secondLevel .= '<li><a href="' . $secondLevelItem['page_link'] . '" ' . $hRefTarget . '>' . $secondLevelItem['page_title'] . '</a></li>';
+              }
+          }
 
             // attach second level unordered list to first level
             $output .= $secondLevel . '</ul></li>';
-          } else {
+        } else {
 
             // create first level menu item
-            $output .= '<li><a href="' . $relativePath . $submenu['page_link'] . '" ' . $hRefTarget . '>' . $submenu['page_title']  .  '</a></li>';
-          }
+            $output .= '<li><a href="' . $rootUrl . $submenu['page_link'] . '" ' . $hRefTarget . '>' . $submenu['page_title']  .  '</a></li>';
+        }
       }
 
       // close the outer unordered list
@@ -247,7 +248,7 @@ function createMenu($mI, $relativePath) {
         // create the individual list item container
         $output .= '<div class="list-item">
             <a href="' . $submenu['page_link'] . '" ' . $hRefTarget . ' ' . $ariaCurrent . '>
-              <img src="' . $relativePath . $submenu['imgSrc'] . '" alt="' . $submenu['page_title'] . '" />
+              <img src="' . $rootUrl . $submenu['imgSrc'] . '" alt="' . $submenu['page_title'] . '" />
               <p class="text-center">' . $submenu['page_title'] . '</p>
             </a>
           </div>';
@@ -322,7 +323,7 @@ function createMenu($mI, $relativePath) {
           $subMenuContainerInnerContent .= '<div class="list-item">';
 
           // create image
-          $columnValue = '<img src="' . $relativePath . $submenu['imgSrc'] . '" alt="' . $submenu['alt'] . '" />';
+          $columnValue = '<img src="' . $rootUrl . $submenu['imgSrc'] . '" alt="' . $submenu['alt'] . '" />';
 
           // add image to sub menu container inner content and close container
           $subMenuContainerInnerContent .= $columnValue . '</div>';
@@ -357,9 +358,11 @@ function determineHREFTarget($mI) {
 
   // return true if page is the current page 
   function isCurrentPage($page) {
-    $current_url = $_SERVER['REQUEST_URI'];
-    if (strpos($current_url, $page) !== false || $page === 'index.php') {
-      return true;
+    $current_url = strval($_SERVER['REQUEST_URI']);
+    if (!empty($page)) {
+      if (strpos($current_url, strval($page)) !== false || strval($page) === 'index.php') {
+        return true;
+      }
     }
   }
 ?>
