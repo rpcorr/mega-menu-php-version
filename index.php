@@ -16,6 +16,12 @@ if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
       <div class="container">
 
         <h1>Welcome</h1>
+
+        <?php
+        if (isset($_GET['inactivity'])) {
+          echo '<p style="text-align: center;">You were logged out due to interactivity.</p>';
+        }
+      ?>
          
         <h2>Breadcrumb example</h2>
 
