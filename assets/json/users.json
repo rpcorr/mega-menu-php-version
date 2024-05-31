@@ -17,6 +17,12 @@
       "password": "pw123",
       "userType": "basic",
       "stylePreference": "tritanopia"
+    },
+    {
+      "username": "CO&DEMO",
+      "password": "CO&SUCC3$$",
+      "userType": "admin",
+      "stylePreference": "countingOpinions"
     }
   ]
 }

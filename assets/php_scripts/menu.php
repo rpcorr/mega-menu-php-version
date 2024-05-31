@@ -17,21 +17,58 @@ if (isset($_SESSION['user'])) {
     // Read admin JSON file
     if (strpos($current_host, 'localhost') !== false) {
       // Localhost (development server)
-      $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\admin.json');
+      if ($_SESSION['user'] === 'user1') {
+        $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\admin.json');
+      } else if ($_SESSION['user'] === 'CO&DEMO') {
+        $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\co-pages-logged-in.json');
+      }
+      
     } else if (strpos($current_host, 'ronancorr.com') !== false) {
       // ronancorr.com (staging server)
-      $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/admin.json');
+
+      if ($_SESSION['user'] === 'user1') {
+        $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/admin.json');
+      }
+      else if ($_SESSION['user'] === 'CO&DEMO') {
+        $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/co-pages-logged-in.json');
+      }
     } else {
       // Counting Opinions server
-      $jsonData = file_get_contents('https://dev.countingopinions.com/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=door&ukey=b5e79c05b3f12219e725fc167edefdd1');
+      if ($_SESSION['user'] === 'user1') {
+        $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/admin.json');
+      }
+      else if ($_SESSION['user'] === 'CO&DEMO') {
+        $jsonData = file_get_contents('https://dev.countingopinions.com/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=door&ukey=b5e79c05b3f12219e725fc167edefdd1');
+        
+      }
     }
     
   } else if ($_SESSION['userType'] === 'premium') {
     // Read premium JSON file
-    $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\premium.json');
+    if (strpos($current_host, 'localhost') !== false) {
+      // Localhost (development server)
+      $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\premium.json');
+    } else if (strpos($current_host, 'ronancorr.com') !== false) {
+      // ronancorr.com (staging server)
+      $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/premium.json');
+    } else {
+      // Counting Opinion Server
+      $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/premium.json');
+    }
+  
   } else if ($_SESSION['userType'] === 'basic') {
     // Read basic JSON file
-    $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\basic.json');
+    // Read premium JSON file
+    if (strpos($current_host, 'localhost') !== false) {
+      // Localhost (development server)
+      $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\basic.json');
+    } else if (strpos($current_host, 'ronancorr.com') !== false) {
+      // ronancorr.com (staging server)
+      $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/basic.json');
+    } else {
+      // Counting Opinion Server
+      $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/basic.json');
+    }
   }
 
 } else {
