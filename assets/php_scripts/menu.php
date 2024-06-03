@@ -44,6 +44,9 @@ if ($bUkeyFoundInQueryString) {
     } else if (strpos($current_host, 'ronancorr.com') !== false) {
       // ronancorr.com (staging server)
       $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/' . $_SESSION['userType'] . '.json');
+    } else {
+      // counting opinions server
+      $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/' . $_SESSION['userType'] . '.json');
     }
   } else {
     // user is logged out
