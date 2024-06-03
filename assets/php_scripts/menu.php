@@ -9,6 +9,74 @@ $output = '';
 // get current Host
 $current_host = $_SERVER['HTTP_HOST'];
 
+// get current query string
+$current_query_string = $_SERVER['QUERY_STRING'];
+
+
+// see if ukey in query_string 
+$bUkeyFoundInQueryString = strstr($current_query_string, 'ukey'); 
+
+if ($bUkeyFoundInQueryString) {
+  // ukey present
+  if (strpos($current_host, 'localhost') !== false) {
+    // Localhost (development server)
+    $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\co-pages-logged-in.json');
+  } else if (strpos($current_host, 'ronancorr.com') !== false) {
+    // ronancorr.com (staging server)
+    $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/co-pages-logged-in.json');
+  } else {
+    // production CountingOpinions.com
+    $jsonData = file_get_contents('https://dev.countingopinions.com/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=door&ukey=b5e79c05b3f12219e725fc167edefdd1');
+    $jsonData = file_get_contents('https://dev.countingopinions.com/ws/portal/get_pages.php?is_menu&portal=door&ukey=b5e79c05b3f12219e725fc167edefdd1');
+  }
+
+
+
+} else {
+  // ukey not present';
+  
+  if (isset($_SESSION['user']) && $_SESSION['user'] !== '') {
+    // user is logged in
+
+    if (strpos($current_host, 'localhost') !== false) {
+      // Localhost (development server)
+      $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\\' . $_SESSION['userType'] . '.json');
+    } else if (strpos($current_host, 'ronancorr.com') !== false) {
+      // ronancorr.com (staging server)
+      $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/' . $_SESSION['userType'] . '.json');
+    }
+  } else {
+    // user is logged out
+
+    if (strpos($current_host, 'localhost') !== false) {
+      // Localhost (development server)
+      $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\co-pages.json');
+    } else if (strpos($current_host, 'ronancorr.com') !== false) {
+      // ronancorr.com (staging server)
+      $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/co-pages.json');
+    } else {
+
+      // production CountingOpinions.com
+      $jsonData = file_get_contents('https://dev.countingopinions.com/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=door');
+
+    }
+}
+  
+}
+
+
+/*
+  if (strpos($current_host, 'localhost') !== false) {
+    // Localhost (development server)
+    $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\co-pages.json');
+  }
+
+}
+
+
+
+
+
 if (isset($_SESSION['user'])) {
 
   // Determine which file to use
@@ -86,6 +154,8 @@ if (isset($_SESSION['user'])) {
     $jsonData = file_get_contents('https://dev.countingopinions.com/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=door');
   }
 }
+
+*/
 
 // Decode JSON data into PHP array
 $menuItems = json_decode($jsonData, true);

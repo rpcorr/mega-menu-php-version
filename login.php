@@ -60,9 +60,15 @@ if (isset($_POST['username'])) {
           $_SESSION['user'] = $user->username;
           $_SESSION['userType'] = $user->userType;
           $_SESSION['stylePreference'] = $user->stylePreference;
-
+          
           // user is successfully logged in, redirect page to index.php
-          header('Location: index.php');
+          if ($user->username ==="user1" || $user->username ==="user2" || $user->username ==="user3" ) {
+            header('Location: index.php');  
+          } else {
+            header('Location: index.php?is_menu&portal=door&ukey=b5e79c05b3f12219e725fc167edefdd1');  
+          }
+
+            
         }
     }
 

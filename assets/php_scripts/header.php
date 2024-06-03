@@ -105,9 +105,21 @@ function get_base_url() {
         <link rel="stylesheet" type="text/css" href="<?php echo $rootUrl; ?>assets/css/colourswatch.min.css" />
 
     <?php } ?>
-    <?php if(isset($_SESSION['stylePreference'])) { ?>
+
+    <?php 
+    
+    // retreive the query string from the current URL
+    $current_query_string = $_SERVER['QUERY_STRING'];
+
+    // see if ukey in query_string 
+    $bUkeyFoundInQueryString = strstr($current_query_string, 'ukey'); 
+    
+    if ($bUkeyFoundInQueryString) {
+      // ukey present ?>
+      <link rel="stylesheet" type="text/css" href="<?php echo $rootUrl; ?>assets/css/templatesStyles/countingOpinions.css" />
+<?php } else { ?>
       <link rel="stylesheet" type="text/css" href="<?php echo $rootUrl; ?>assets/css/templatesStyles/<?php echo $_SESSION['stylePreference'];?>.css" />
-    <?php } ?>
+<?php } ?>
     <title><?php echo $title ?></title>
   </head>
   <body>
