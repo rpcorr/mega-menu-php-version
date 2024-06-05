@@ -25,12 +25,17 @@ if ($bUkeyFoundInQueryString) {
     // ronancorr.com (staging server)
     $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/co-pages-logged-in.json');
   } else {
+
+  ?>
+
+    <script>
+      console.log('The json file being use: https://<?php echo $_SERVER['HTTP_HOST'] ?>/ws/portal/get_pages.php?is_menu&portal=demo&ukey=b5e79c05b3f12219e725fc167edefdd1&is_menu');
+    </script>
+
+  <?php
     // production CountingOpinions.com
-    $jsonData = file_get_contents('https://dev.countingopinions.com/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=door&ukey=b5e79c05b3f12219e725fc167edefdd1');
-    $jsonData = file_get_contents('https://dev.countingopinions.com/ws/portal/get_pages.php?is_menu&portal=door&ukey=b5e79c05b3f12219e725fc167edefdd1');
+    $jsonData = file_get_contents('https://'. $_SERVER['HTTP_HOST'] .'/ws/portal/get_pages.php?is_menu&portal=demo&ukey=b5e79c05b3f12219e725fc167edefdd1&is_menu');
   }
-
-
 
 } else {
   // ukey not present';
@@ -77,8 +82,122 @@ if ($menuItems === null) {
 } else {
   // JSON decoding successful
   // Access the menu items
-  foreach ($menuItems['pages'] as $mI) 
+
+  if ($bUkeyFoundInQueryString) {
+    // Decode the JSON data
+    $data = json_decode($jsonData, true);
+
+    
+    // Group the pages by section_id and sequence
+    $grouped_data = [];
+
+    foreach ($data['pages'] as $page) {
+      $section_id = $page['section_id'];
+      $sequence = $page['sequence'];
+      
+      if (!isset($grouped_data[$section_id])) {
+          $grouped_data[$section_id] = [];
+      }
+      
+      if (!isset($grouped_data[$section_id][$sequence])) {
+          $grouped_data[$section_id][$sequence] = [];
+      }
+      
+      $grouped_data[$section_id][$sequence][] = $page;
+    }
+
+    // Sort the grouped data by section_id
+    ksort($grouped_data);
+
+    // Optionally, you can sort the sequences within each section_id if needed
+    foreach ($grouped_data as $section_id => &$sequences) {
+      ksort($sequences);
+    }
+
+    // Output the grouped data in JSON format
+    //echo json_encode($grouped_data, JSON_PRETTY_PRINT);
+
+    foreach ($grouped_data as $outerKey => $sections) {
+      //echo "Outer Key: $outerKey\n";
+      if (!isset($_GET['sec']) || $outerKey == $_GET['sec']) {
+
+        //echo 'outerKey: ' . $outerKey;
+        $section_id = $outerKey;
+        $innerKey = 0;
+
+        if ($section_id === 5) {
+          $innerKey = 2;
+        }
+
+        if ($section_id === 8) {
+          $innerKey = 5;
+        }
+
+        // $grouped_data["0"]["0"][0]["section_id"] . "<br/>";
+        echo '<li style="border-bottom: 1px solid blue;">'. $grouped_data[$section_id][$innerKey]["0"]["section_prompt"] . '</li>';
+        
+        foreach ($sections as $innerKey => $pages) {
+          //echo "  Inner Key: $innerKey\n";
+          foreach ($pages as $page) {
+            echo "<li><a href='#'>" . $page['page_prompt'] .  "</a></li>";
+
+            /*
+              echo "    Page ID: " . $page['page_id'] . "\n";
+              echo "    Page Title: " . $page['page_title'] . "\n";
+              echo "    Page Prompt: " . $page['page_prompt'] . "\n";
+              //echo "    Page Link: " . $page['page_link'] . "\n";
+              echo "    Section ID: " . $page['section_id'] . "\n";
+              echo "    Sequence: " . $page['sequence'] . "\n";
+            // echo "    Menu Tag: " . $page['menu_tag'] . "\n";
+            // echo "    Show Tag: " . $page['show_tag'] . "\n";
+            // echo "    Menu Image: " . $page['menu_img'] . "\n";
+            // echo "    PKey: " . $page['pkey'] . "\n";
+            // echo "    Page Icon Class: " . $page['page_icon_class'] . "\n";
+            // echo "    Page Menu Class: " . $page['page_menu_class'] . "\n";
+            // echo "    Keycode: " . $page['keycode'] . "\n";
+            // echo "    Page Prompt Code: " . $page['page_prompt_code'] . "\n";
+            // echo "    Section Sequence: " . $page['section_sequence'] . "\n";
+            // echo "    Parent Section ID: " . $page['parent_section_id'] . "\n";
+            // echo "    Section Prompt: " . $page['section_prompt'] . "\n";
+              echo "\n";
+            echo "<br/><br/>";
+            */
+          }
+              
+        }
+      }  
+    }
+
+    //echo $grouped_data["0"]["0"][0]["section_id"] . "<br/>";
+    //echo $grouped_data["0"]["0"][0]["page_title"] . "<br/>";
+    
+    // Function to recursively count entries
+    function countEntries($array) {
+      $count = 0;
+      foreach ($array as $value) {
+          if (is_array($value)) {
+              $count += countEntries($value);
+          } else {
+              $count++;
+          }
+      }
+      return $count;
+    }
+
+    // Get the number of entries
+    //$num_entries = countEntries($data);
+    //$num_entries = count($data);
+
+    // Output the number of entries
+    //echo "Number of entries: " . $num_entries . "\n";
+
+    // foreach ($data['pages'] as $mI)
+    // $output .= createCOMenu($mI, $rootUrl);
+
+  } else {
+    foreach ($menuItems['pages'] as $mI) 
         $output .= createMenu($mI, $rootUrl);
+  }
 }
 
 echo $output;
