@@ -58,6 +58,42 @@ function get_base_url() {
   return $base_url;
 }
 
+// Function to get the full URL
+function get_full_url() {
+  $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+  $host = $_SERVER['HTTP_HOST'];
+  $uri = $_SERVER['REQUEST_URI'];
+  
+  return $protocol . $host . $uri;
+}
+
+// Remove &sec= from URL params
+function remove_last_instance_of_param($url, $param) {
+  // Parse the URL and query string
+  $parsed_url = parse_url($url);
+  parse_str($parsed_url['query'], $query_array);
+
+  // Find all keys that match the param
+  $keys = array_keys($query_array, $query_array[$param], true);
+
+  // Remove the last instance
+  if (!empty($keys)) {
+      $last_key = end($keys);
+      unset($query_array[$last_key]);
+  }
+
+  // Rebuild the query string
+  $new_query_string = http_build_query($query_array);
+
+  // Rebuild the URL
+  $new_url = $parsed_url['scheme'] . '://' . $parsed_url['host'] . $parsed_url['path'];
+  if (!empty($new_query_string)) {
+      $new_url .= '?' . $new_query_string;
+  }
+
+  return $new_url;
+}
+
 ?>
 
 <!DOCTYPE html>
