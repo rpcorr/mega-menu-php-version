@@ -400,7 +400,7 @@ function toggleTopLevelMenu(menuLink) {
     // 2-c. update aria label to close sub menu
     $(menuLink).attr(
       'aria-label',
-      `Click Enter to close ${$(menuLink).text()}sub menu`
+      `Click Enter to close ${$(menuLink).text()} sub menu`
     );
 
     // 2-d. set aria-expanded to true
@@ -428,7 +428,7 @@ function toggleTopLevelMenu(menuLink) {
         // 3-c. set the aria-label to close sub menu
         $(menuLink).attr(
           'aria-label',
-          `Click Enter to close ${$(menuLink).text()}sub menu`
+          `Click Enter to close ${$(menuLink).text()} sub menu`
         );
 
         // 3-d. set aria-expanded to true
