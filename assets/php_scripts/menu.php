@@ -21,6 +21,7 @@ if ($bUkeyFoundInQueryString) {
   if (strpos($current_host, 'localhost') !== false) {
     // Localhost (development server)
 
+    $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\co-pages-logged-in.json');
     ?>
 
     <script>
@@ -29,33 +30,26 @@ if ($bUkeyFoundInQueryString) {
 
   <?php
 
-
-
-    $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\co-pages-logged-in.json');
   } else if (strpos($current_host, 'ronancorr.com') !== false) {
     // ronancorr.com (staging server)
     $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/co-pages-logged-in.json');
 
     ?>
 
-    <script>
-      console.log('The json file being use: http://<?php echo $_SERVER['HTTP_HOST'] ?>/mmenu/assets/json/co-pages-logged-in.json');
-    </script>
-
   <?php
   } else {
 
-  ?>
-
-    <script>
-      console.log('The json file being use: https://<?php echo $_SERVER['HTTP_HOST'] ?>/ws/portal/get_pages.php?is_menu&portal=demo&ukey=b5e79c05b3f12219e725fc167edefdd1&is_menu');
-    </script>
-
-  <?php
     // production CountingOpinions.com
-    $jsonData = file_get_contents('https://'. $_SERVER['HTTP_HOST'] .'/ws/portal/get_pages.php?is_menu&portal=demo&ukey=b5e79c05b3f12219e725fc167edefdd1&is_menu');
+    $jsonData = file_get_contents('https://'. $_SERVER['HTTP_HOST'] .'/ws/portal/get_pages.php?is_menu&portal=' . $_GET['portal'] . '&ukey='. $_GET['ukey']);
   }
 
+  ?>
+
+  <script>
+      console.log('The json file being use: https://<?php echo $_SERVER['HTTP_HOST']?>/ws/portal/get_pages.php?is_menu&portal=<?php echo $_GET['portal'] ?>&ukey=<?php echo $_GET['ukey'] ?>');
+    </script>
+
+<?php 
 } else {
   // ukey not present';
   
@@ -82,10 +76,8 @@ if ($bUkeyFoundInQueryString) {
       // ronancorr.com (staging server)
       $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/co-pages.json');
     } else {
-
       // production CountingOpinions.com
-      $jsonData = file_get_contents('https://dev.countingopinions.com/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=door');
-
+      $jsonData = file_get_contents('https://'. $_SERVER['HTTP_HOST'] .'/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=' . $_GET['portal']);
     }
 }
   
