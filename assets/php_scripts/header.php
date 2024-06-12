@@ -153,7 +153,7 @@ function remove_last_instance_of_param($url, $param) {
     if ($bUkeyFoundInQueryString) {
       // ukey present ?>
       <link rel="stylesheet" type="text/css" href="<?php echo $rootUrl; ?>assets/css/templatesStyles/countingOpinions.css" />
-<?php } else { ?>
+<?php } else if (isset($_SESSION['stylePreference'])) { ?>
       <link rel="stylesheet" type="text/css" href="<?php echo $rootUrl; ?>assets/css/templatesStyles/<?php echo $_SESSION['stylePreference'];?>.css" />
 <?php } ?>
     <title><?php echo $title ?></title>
