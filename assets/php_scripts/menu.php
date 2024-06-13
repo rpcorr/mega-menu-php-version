@@ -40,13 +40,13 @@ if ($bUkeyFoundInQueryString) {
   } else {
 
     // production CountingOpinions.com
-    $jsonData = file_get_contents('https://'. $_SERVER['HTTP_HOST'] .'/ws/portal/get_pages.php?is_menu&portal=' . $_GET['portal'] . '&ukey='. $_GET['ukey']);
+    $jsonData = file_get_contents('https://'. $_SERVER['HTTP_HOST'] .'/ws/portal/get_pages.php?is_menu&portal=' . $_REQUEST['portal'] . '&ukey='. $_REQUEST['ukey']);
   }
 
   ?>
 
   <script>
-      console.log('The json file being use: https://<?php echo $_SERVER['HTTP_HOST']?>/ws/portal/get_pages.php?is_menu&portal=<?php echo $_GET['portal'] ?>&ukey=<?php echo $_GET['ukey'] ?>');
+      console.log('The json file being use: https://<?php echo $_SERVER['HTTP_HOST']?>/ws/portal/get_pages.php?is_menu&portal=<?php echo $_REQUEST['portal'] ?>&ukey=<?php echo $_REQUEST['ukey'] ?>');
     </script>
 
 <?php 
@@ -77,7 +77,7 @@ if ($bUkeyFoundInQueryString) {
       $jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/co-pages.json');
     } else {
       // production CountingOpinions.com
-      $jsonData = file_get_contents('https://'. $_SERVER['HTTP_HOST'] .'/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=' . $_GET['portal']);
+      $jsonData = file_get_contents('https://'. $_SERVER['HTTP_HOST'] .'/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=' . $_REQUEST['portal']);
     }
 }
   
@@ -134,7 +134,7 @@ if ($menuItems === null) {
 
       foreach ($grouped_data as $outerKey => $sections) {
         //echo "Outer Key: $outerKey\n";
-        if (!isset($_GET['sec']) || $outerKey == $_GET['sec']) {
+        if (!isset($_REQUEST['sec']) || $outerKey == $_REQUEST['sec']) {
 
           //echo 'outerKey: ' . $outerKey;
           $section_id = $outerKey;
