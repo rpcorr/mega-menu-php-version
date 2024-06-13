@@ -3,15 +3,14 @@
 session_start();
 
 // check if form has been submitted
-if (isset($_POST['username'])) {
+if (isset($_REQUEST['username'])) {
 
   // variable to determine if user is found
   $bFound = false;
 
   //assign username and password to PHP variables
-  $username = trim($_POST['username']);
-  $password = $_POST['password'];
-
+  $username = trim($_REQUEST['username']);
+  $password = $_REQUEST['password'];
 
   // Path to the JSON file
   
@@ -96,7 +95,7 @@ if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
           <h1>Login</h1>
 
           <?php
-            if (isset($_POST['username']) && !$bFound) { ?>
+            if (isset($_REQUEST['username']) && !$bFound) { ?>
                <p style="color:red;">Username and/or password is incorrect.<br/>Please try again.</p> 
            <?php } ?>
         
