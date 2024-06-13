@@ -64,7 +64,7 @@ if (isset($_REQUEST['username'])) {
           if ($user->username ==="user1" || $user->username ==="user2" || $user->username ==="user3" ) {
             header('Location: index.php');  
           } else {
-            header('Location: index.php?is_menu&portal=door&ukey=b5e79c05b3f12219e725fc167edefdd1');  
+            header('Location: index.php?is_menu&portal=demo&ukey=b5e79c05b3f12219e725fc167edefdd1');  
           }
 
             
