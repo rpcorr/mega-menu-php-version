@@ -5,25 +5,12 @@ session_start();
 // Destroy the session varibles
 session_destroy();
 
-function getRelativePath($targetPath) {
-    // Get the current script's directory
-    $currentDir = dirname($_SERVER['SCRIPT_NAME']);
-    
-    // Split the directories into an array
-    $currentDirParts = explode('/', trim($currentDir, '/'));
-    
-    // Count the number of directories
-    $depth = count($currentDirParts);
-    
-    // Generate the relative path prefix
-    $relativePath = str_repeat('../', $depth-1);
-    
-    // Concatenate the target path
-    $relativePath = rtrim($relativePath, '/') . '/' . ltrim($targetPath, '/');
-    
-    if ($relativePath === '/') $relativePath = '';
-    return $relativePath;
-  }
+// include all the functions so site can access them wherever
+if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
+    include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\functions.php');
+} else {
+    include_once( $_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/php_scripts/functions.php');
+}
 
 if (isset($_GET['inactivity'])) { 
   // direct user to index page indicating the user was logged out due to inactivity

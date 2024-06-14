@@ -79,16 +79,7 @@
             <div class="menu-main-menu-container">
               <ul id="menu-main-menu" class="menu">
 
-              <?php  
-              
-              if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
-  
-                $menuPath = include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\menu.php');
-              } else {
-                $menuPath = include_once( $_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/php_scripts/menu.php');
-              }
-              
-              ?>
+              <?php  include_once(getRelativePath('') . 'assets/php_scripts/menu.php');?>
 
               </ul>
               
