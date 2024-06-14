@@ -18,8 +18,8 @@ $bUkeyFoundInQueryString = strstr($current_query_string, 'ukey');
 
 if ($bUkeyFoundInQueryString) {
   // ukey present
-  if (strpos($current_host, 'localhost') !== false) {
-    // Localhost (development server)
+  if (strpos($current_host, 'localhost') !== false  || strpos($current_host, 'ronancorr.com') !== false ) {
+    // Development server (localhost) or Staging server (ronancorr)
     $jsonData = file_get_contents(getRelativePath('')  . 'assets/json/co-pages-logged-in.json');
     ?>
 
@@ -29,19 +29,7 @@ if ($bUkeyFoundInQueryString) {
 
   <?php
 
-  } else if (strpos($current_host, 'ronancorr.com') !== false) {
-    // ronancorr.com (staging server)
-    $jsonData = file_get_contents(getRelativePath('')  .  'assets/json/co-pages-logged-in.json');
-
-    ?>
-
-    <script>
-      console.log('The json file being use: <?php echo getRelativePath(''); ?>assets/json/co-pages-logged-in.json');
-    </script>
-
-  <?php
   } else {
-
     // production CountingOpinions.com
     //$jsonData = file_get_contents('https://'. $_SERVER['HTTP_HOST'] .'/ws/portal/get_pages.php?is_menu&portal=' . $_REQUEST['portal'] . '&ukey='. $_REQUEST['ukey']);
     $jsonData = file_get_contents(getRelativePath('')  . 'ws/portal/get_pages.php?is_menu&portal=' . $_REQUEST['portal'] . '&ukey='. $_REQUEST['ukey']);
@@ -53,9 +41,8 @@ if ($bUkeyFoundInQueryString) {
   if (isset($_SESSION['user']) && $_SESSION['user'] !== '') {
     // user is logged in
 
-    if (strpos($current_host, 'localhost') !== false) {
-      // Localhost (development server)
-    
+    if (strpos($current_host, 'localhost') !== false || strpos($current_host, 'ronancorr.com') !== false) {
+      // Development server (localhost) or Staging server (ronancorr)
       //$jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\\' . $_SESSION['userType'] . '.json');
       $jsonData = file_get_contents(getRelativePath('')  .  'assets/json/' . $_SESSION['userType'] . '.json');
 
@@ -65,12 +52,8 @@ if ($bUkeyFoundInQueryString) {
         console.log('The json file being use: <?php echo getRelativePath(''); ?>assets/json/<?php echo $_SESSION['userType']?>.json');
       </script>
   
-        <?php
-      
-    } else if (strpos($current_host, 'ronancorr.com') !== false) {
-      // ronancorr.com (staging server)
-      //$jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/' . $_SESSION['userType'] . '.json');
-      $jsonData = file_get_contents(getRelativePath('')  .  'assets/json/' . $_SESSION['userType'] . '.json');
+    <?php
+
     } else {
       // counting opinions server
       //$jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/' . $_SESSION['userType'] . '.json');
@@ -79,28 +62,22 @@ if ($bUkeyFoundInQueryString) {
   } else {
     // user is logged out
 
-    if (strpos($current_host, 'localhost') !== false) {
-      // Localhost (development server)
+    if (strpos($current_host, 'localhost') !== false || strpos($current_host, 'ronancorr.com') !== false) {
+      // Development server (localhost) or Staging server (ronancorr)
       $jsonData = file_get_contents(getRelativePath('')  . 'assets/json/co-pages.json');
-
       ?>
 
     <script>
       console.log('The json file being use: <?php echo getRelativePath(''); ?>assets/json/co-pages.json');
     </script>
 
-      <?php
-    } else if (strpos($current_host, 'ronancorr.com') !== false) {
-      // ronancorr.com (staging server)
-      //$jsonData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/co-pages.json');
-      $jsonData = file_get_contents(getRelativePath('')  . 'assets/json/co-pages.json');
+    <?php
     } else {
       // production CountingOpinions.com
       //$jsonData = file_get_contents('https://'. $_SERVER['HTTP_HOST'] .'/ws/portal/get_pages.php?ls_id=99995&is_menu&portal=' . $_REQUEST['portal']);
       $jsonData = file_get_contents(getRelativePath('')  . 'ws/portal/get_pages.php?ls_id=99995&is_menu&portal=' . $_REQUEST['portal']);
     }
-}
-  
+  }  
 }
 
 // Decode JSON data into PHP array
