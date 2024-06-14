@@ -1,8 +1,5 @@
 <?php
 
-// get relativePath -- soon to be name basedPath
-$rootUrl = get_base_url();
-
 function get_base_url() {
   // Determine if the request is over HTTPS
   $is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443;
@@ -122,29 +119,29 @@ function getRelativePath($targetPath) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
      <!-- Standard favicon -->
-     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo $rootUrl; ?>assets/imgs/fav-icons/favicon-16x16.png">
-     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo $rootUrl; ?>assets/imgs/fav-icons/favicon-32x32.png">
+     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo getRelativePath(''); ?>assets/imgs/fav-icons/favicon-16x16.png">
+     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo getRelativePath(''); ?>assets/imgs/fav-icons/favicon-32x32.png">
 
-     <link rel="apple-touch-icon" href="<?php echo $rootUrl; ?>assets/imgs/fav-icons/apple-touch-icon.png">
+     <link rel="apple-touch-icon" href="<?php echo getRelativePath(''); ?>assets/imgs/fav-icons/apple-touch-icon.png">
 
     <!-- For Apple devices -->
-    <link rel="apple-touch-icon" sizes="152x152" href="<?php echo $rootUrl; ?>assets/imgs/fav-icons/apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $rootUrl; ?>assets/imgs/fav-icons/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="<?php echo getRelativePath(''); ?>assets/imgs/fav-icons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo getRelativePath(''); ?>assets/imgs/fav-icons/apple-touch-icon-180x180.png">
 
     <!-- For Android Chrome -->
-    <link rel="icon" type="image/png" sizes="192x192" href="<?php echo $rootUrl; ?>assets/imgs/fav-icons/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="<?php echo getRelativePath(''); ?>assets/imgs/fav-icons/android-chrome-192x192.png">
 
     <!-- For Android Chrome (for higher resolution screens) -->
-    <link rel="icon" type="image/png" sizes="512x512" href="<?php echo $rootUrl; ?>assets/imgs/fav-icons/android-chrome-512x512.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="<?php echo getRelativePath(''); ?>assets/imgs/fav-icons/android-chrome-512x512.png">
 
-    <link rel="icon" type="image/png" sizes="194x194" href="<?php echo $rootUrl; ?>assets/imgs/favicon-194x194.png">
+    <link rel="icon" type="image/png" sizes="194x194" href="<?php echo getRelativePath(''); ?>assets/imgs/favicon-194x194.png">
 
-    <link rel="icon" type="image/png" sizes="128x128" href="<?php echo $rootUrl; ?>assets/imgs/favicon-128x128.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="<?php echo getRelativePath(''); ?>assets/imgs/favicon-128x128.png">
 
-    <link rel="shortcut icon" type="image/png" sizes="196x196" href="<?php echo $rootUrl; ?>assets/imgs/favicon-196x196.png">
+    <link rel="shortcut icon" type="image/png" sizes="196x196" href="<?php echo getRelativePath(''); ?>assets/imgs/favicon-196x196.png">
 
     <!-- For Android devices -->
-    <!-- <link rel="manifest" href="<?php echo $rootUrl; ?>assets/imgs/fav-icons/site.webmanifest"> -->
+    <!-- <link rel="manifest" href="<?php echo getRelativePath(''); ?>assets/imgs/fav-icons/site.webmanifest"> -->
 
     <!-- For Windows -->
     <meta name="msapplication-TileColor" content="#ffffff">
@@ -152,12 +149,12 @@ function getRelativePath($targetPath) {
     <meta name="msapplication-config" content="browserconfig.xml">
 
     <!-- stylesheets -->
-    <link rel="stylesheet" type="text/css" href="<?php echo $rootUrl; ?>assets/css/reset.min.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo $rootUrl; ?>assets/css/navigation-menu.min.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo $rootUrl; ?>assets/css/default.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/reset.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-menu.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/default.min.css" />
     <?php if (basename($_SERVER['PHP_SELF']) === 'preferences.php') { ?>
 
-        <link rel="stylesheet" type="text/css" href="<?php echo $rootUrl; ?>assets/css/colourswatch.min.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/colourswatch.min.css" />
 
     <?php } ?>
 
@@ -171,9 +168,9 @@ function getRelativePath($targetPath) {
     
     if ($bUkeyFoundInQueryString) {
       // ukey present ?>
-      <link rel="stylesheet" type="text/css" href="<?php echo $rootUrl; ?>assets/css/templatesStyles/countingOpinions.css" />
+      <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/countingOpinions.css" />
 <?php } else if (isset($_SESSION['stylePreference'])) { ?>
-      <link rel="stylesheet" type="text/css" href="<?php echo $rootUrl; ?>assets/css/templatesStyles/<?php echo $_SESSION['stylePreference'];?>.css" />
+      <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php echo $_SESSION['stylePreference'];?>.css" />
 <?php } ?>
     <title><?php echo $title ?></title>
   </head>
@@ -185,10 +182,10 @@ function getRelativePath($targetPath) {
             <a href="#skipMenu" class="screen-reader-text">Skip to Content</a>
             <div id="siteIdentity">
               <div class="logo">
-                <a href="<?php echo $rootUrl ?>index.php" rel="home"> <img src="<?php echo $rootUrl; ?>assets/imgs/CO_logo.svg" alt="Counting Opinions" height="60"> </a>
+                <a href="<?php echo getRelativePath(''); ?>index.php" rel="home"> <img src="<?php echo getRelativePath(''); ?>assets/imgs/CO_logo.svg" alt="Counting Opinions" height="60"> </a>
               </div>
               <div class="simple-logo">
-                <a href="<?php echo $rootUrl ?>index.php" rel="home"> <img src="<?php echo $rootUrl; ?>assets/imgs/CO_simple_logo.svg" alt="Counting Opinions" height="60"> </a>
+                <a href="<?php echo getRelativePath(''); ?>index.php" rel="home"> <img src="<?php echo getRelativePath(''); ?>assets/imgs/CO_simple_logo.svg" alt="Counting Opinions" height="60"> </a>
               </div>
             </div>
           </section>

@@ -209,13 +209,13 @@ if ($menuItems === null) {
     
   } else {
     foreach ($menuItems['pages'] as $mI) 
-        $output .= createMenu($mI, $rootUrl);
+        $output .= createMenu($mI, getRelativePath(''));
   }
 }
 
 echo $output;
 
-function createMenu($mI, $rootUrl) {
+function createMenu($mI, $relativeURL) {
 
     // initialize output
     $output = '';
@@ -249,7 +249,7 @@ function createMenu($mI, $rootUrl) {
     // define if hRef has a submenu
     //if ($mI['page_link'] === 'logout.php' || $mI['page_link'] === 'preferences.php') {
     if (determineHREFTarget($mI) === '') {
-      $hRef = $rootUrl . $mI['page_link'];
+      $hRef = $relativeURL . $mI['page_link'];
     } else {
       $hRef = $mI['page_link'];
     }
@@ -356,7 +356,7 @@ function createMenu($mI, $rootUrl) {
         } else {
 
             // create first level menu item
-            $output .= '<li><a href="' . $rootUrl . $submenu['page_link'] . '" ' . $hRefTarget . '>' . $submenu['page_title']  .  '</a></li>';
+            $output .= '<li><a href="' . $relativeURL . $submenu['page_link'] . '" ' . $hRefTarget . '>' . $submenu['page_title']  .  '</a></li>';
         }
       }
 
@@ -397,7 +397,7 @@ function createMenu($mI, $rootUrl) {
         // create the individual list item container
         $output .= '<div class="list-item">
             <a href="' . $submenu['page_link'] . '" ' . $hRefTarget . ' ' . $ariaCurrent . '>
-              <img src="' . $rootUrl . $submenu['imgSrc'] . '" alt="' . $submenu['page_title'] . '" />
+              <img src="' . $relativeURL . $submenu['imgSrc'] . '" alt="' . $submenu['page_title'] . '" />
               <p class="text-center">' . $submenu['page_title'] . '</p>
             </a>
           </div>';
@@ -472,7 +472,7 @@ function createMenu($mI, $rootUrl) {
           $subMenuContainerInnerContent .= '<div class="list-item">';
 
           // create image
-          $columnValue = '<img src="' . $rootUrl . $submenu['imgSrc'] . '" alt="' . $submenu['alt'] . '" />';
+          $columnValue = '<img src="' . $relativeURL . $submenu['imgSrc'] . '" alt="' . $submenu['alt'] . '" />';
 
           // add image to sub menu container inner content and close container
           $subMenuContainerInnerContent .= $columnValue . '</div>';
