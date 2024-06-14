@@ -94,6 +94,25 @@ function remove_last_instance_of_param($url, $param) {
   return $new_url;
 }
 
+function getRelativePath($targetPath) {
+  // Get the current script's directory
+  $currentDir = dirname($_SERVER['SCRIPT_NAME']);
+  
+  // Split the directories into an array
+  $currentDirParts = explode('/', trim($currentDir, '/'));
+  
+  // Count the number of directories
+  $depth = count($currentDirParts);
+  
+  // Generate the relative path prefix
+  $relativePath = str_repeat('../', $depth-1);
+  
+  // Concatenate the target path
+  $relativePath = rtrim($relativePath, '/') . '/' . ltrim($targetPath, '/');
+  
+  if ($relativePath === '/') $relativePath = '';
+  return $relativePath;
+}
 ?>
 
 <!DOCTYPE html>
