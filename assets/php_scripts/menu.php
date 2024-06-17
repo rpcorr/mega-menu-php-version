@@ -9,8 +9,9 @@ $output = '';
 // get current Host
 $current_host = $_SERVER['HTTP_HOST'];
 
-if (isset($_COOKIE['ukey'])) {
-  // ukey present
+if ($_REQUEST['ukey'] || $_COOKIE['ukey']) {
+  // ukey or cookie present
+
   if (strpos($current_host, 'localhost') !== false  || strpos($current_host, 'ronancorr.com') !== false ) {
     // Development server (localhost) or Staging server (ronancorr)
     $jsonData = file_get_contents(getRelativePath('')  . 'assets/json/co-pages-logged-in.json');

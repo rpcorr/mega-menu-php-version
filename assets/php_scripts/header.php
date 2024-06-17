@@ -42,22 +42,20 @@
 
         <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/colourswatch.min.css" />
 
-    <?php } ?>
-
-    <?php 
-    
-    // retreive the query string from the current URL
-    $current_query_string = $_SERVER['QUERY_STRING'];
-
-    // see if ukey in query_string 
-    $bUkeyFoundInQueryString = strstr($current_query_string, 'ukey'); 
-    
-    if ($bUkeyFoundInQueryString) {
-      // ukey present ?>
+    <?php }  
+  
+      if (isset($_COOKIE['ukey'])) { ?>
+        <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/countingOpinions.css" />
+  <?php }
+    else if ($_REQUEST['ukey']) {
+      // ukey present 
+      setcookie('ukey', $_REQUEST['ukey'] );
+      ?>
       <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/countingOpinions.css" />
-<?php } else if (isset($_SESSION['stylePreference'])) { ?>
-      <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php echo $_SESSION['stylePreference'];?>.css" />
-<?php } ?>
+      <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/countingOpinions.css" />
+<?php } //else if (isset($_COOKIE['ukey'])) { ?>
+      <!-- <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php //echo $_SESSION['stylePreference'];?>.css" /> -->
+<?php //} ?>
     <title><?php echo $title ?></title>
   </head>
   <body>

@@ -5,6 +5,9 @@ session_start();
 // Destroy the session varibles
 session_destroy();
 
+// remove ukey cookie
+setcookie("ukey", "", time() - 3600);
+
 // include all the functions so site can access them wherever
 if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
     include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\functions.php');
