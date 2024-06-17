@@ -30,13 +30,8 @@ include_once(getRelativePath('') . 'assets/php_scripts/header.php');
         if( isset($_SESSION['user']) && $_SESSION['user'] == "CO&DEMO") {
 
           $currentURL = remove_last_instance_of_param(get_full_url(), 'sec');
-        ?>
-
-          <h2>Sections</h2>
-
-          <p><a href="<?php echo $currentURL ?>">All</a> &nbsp;&nbsp; <a href="<?php echo $currentURL ?>&sec=0">null</a> &nbsp;&nbsp; <a href="<?php echo $currentURL ?>&sec=1">LibSat</a> &nbsp;&nbsp; <a href="<?php echo $currentURL ?>&sec=2">LibPAS</a> &nbsp;&nbsp; <a href="<?php echo $currentURL ?>&sec=5">Inform Us</a>  &nbsp;&nbsp; <a href="<?php echo $currentURL ?>&sec=8">Admin</a></p>
-
-        <?php } ?>
+        } 
+       ?>
          
         <h2>Breadcrumb example</h2>
 
