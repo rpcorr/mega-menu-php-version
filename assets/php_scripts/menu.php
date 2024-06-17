@@ -9,14 +9,7 @@ $output = '';
 // get current Host
 $current_host = $_SERVER['HTTP_HOST'];
 
-// get current query string
-$current_query_string = $_SERVER['QUERY_STRING'];
-
-
-// see if ukey in query_string 
-$bUkeyFoundInQueryString = strstr($current_query_string, 'ukey'); 
-
-if ($bUkeyFoundInQueryString) {
+if (isset($_COOKIE['ukey'])) {
   // ukey present
   if (strpos($current_host, 'localhost') !== false  || strpos($current_host, 'ronancorr.com') !== false ) {
     // Development server (localhost) or Staging server (ronancorr)

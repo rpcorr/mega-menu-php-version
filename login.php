@@ -65,6 +65,17 @@ if (isset($_REQUEST['username'])) {
           if ($user->username ==="user1" || $user->username ==="user2" || $user->username ==="user3" ) {
             header('Location: index.php');  
           } else {
+
+            // set cookie
+            $value = 'b5e79c05b3f12219e725fc167edefdd1';
+            $expiration = time() + (86400 * 30); // 86400 seconds = 1 day
+            $path = "/";
+            $domain = "localhost"; // Change to your domain
+            $secure = isset($_SERVER['HTTPS']); // Ensure it is sent over HTTPS if applicable
+            $httponly = true; // Prevents JavaScript access to the cookie
+
+            setcookie('ukey', $value, $expiration, $path, $domain, $secure, $httponly);
+
             header('Location: index.php?is_menu&portal=demo&ukey=b5e79c05b3f12219e725fc167edefdd1');  
           }
 
