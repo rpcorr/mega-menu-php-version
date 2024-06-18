@@ -52,16 +52,9 @@
 
     <?php }  
   
-      if (isset($_COOKIE['ukey'])) { ?>
+      if (isset($_COOKIE['ukey']) || $_REQUEST['ukey']) { ?>
         <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/countingOpinions.css" />
-  <?php }
-    else if ($_REQUEST['ukey']) {
-      ?>
-      <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/countingOpinions.css" />
-      <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/countingOpinions.css" />
-<?php } //else if (isset($_COOKIE['ukey'])) { ?>
-      <!-- <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php //echo $_SESSION['stylePreference'];?>.css" /> -->
-<?php //} ?>
+  <?php } ?>
     <title><?php echo $title ?></title>
   </head>
   <body>
