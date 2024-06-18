@@ -13,12 +13,17 @@ if ($_REQUEST['ukey'] || $_COOKIE['ukey']) {
   // ukey or cookie present
 
   if (strpos($current_host, 'localhost') !== false  || strpos($current_host, 'ronancorr.com') !== false ) {
+    if ($_REQUEST['portal'] === "pa") {
+      $file='co-pages-logged-in-pa';
+    } else {
+      $file='co-pages-logged-in-demo';
+    }
     // Development server (localhost) or Staging server (ronancorr)
-    $jsonData = file_get_contents(getRelativePath('')  . 'assets/json/co-pages-logged-in.json');
+    $jsonData = file_get_contents(getRelativePath('')  . 'assets/json/' . $file . '.json');
     ?>
 
     <script>
-      console.log('The json file being use: <?php echo getRelativePath(''); ?>assets/json/co-pages-logged-in.json');
+      console.log('The json file being use: <?php echo getRelativePath(''); ?>assets/json/<?php echo $file; ?>.json');
     </script>
 
   <?php
