@@ -5,8 +5,9 @@ session_start();
 // Destroy the session varibles
 session_destroy();
 
-// remove ukey cookie
+// remove ukey and portal cookies
 setcookie("ukey", "", time() - 3600);
+setcookie("portal", "", time() - 3600);
 
 // include all the functions so site can access them wherever
 if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
