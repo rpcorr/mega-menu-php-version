@@ -1,14 +1,4 @@
-    <?php 
-    
-    if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
-  
-      include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\footer.php');
-    } else {
-      include_once( $_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/php_scripts/footer.php');
-    }
-    
-    ?>
-    
+
     <footer>
         <p>Copyright © <?php echo date('Y') ?> Counting Opinions (SQUIRE) Ltd.</p>
     </footer>
