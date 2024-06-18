@@ -1,3 +1,11 @@
+<?php 
+  if ($_REQUEST['ukey']) {
+    // ukey present 
+    setcookie('ukey', $_REQUEST['ukey'] );
+    setcookie('portal', $_REQUEST['portal']);
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -48,8 +56,6 @@
         <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/countingOpinions.css" />
   <?php }
     else if ($_REQUEST['ukey']) {
-      // ukey present 
-      setcookie('ukey', $_REQUEST['ukey'] );
       ?>
       <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/countingOpinions.css" />
       <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/countingOpinions.css" />
