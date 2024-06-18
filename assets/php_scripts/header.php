@@ -54,7 +54,11 @@
   
       if (isset($_COOKIE['ukey']) || $_REQUEST['ukey']) { ?>
         <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/countingOpinions.css" />
-  <?php } ?>
+  <?php } else if (isset($_SESSION['stylePreference'])) { ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php echo $_SESSION['stylePreference']  ?>.css" />
+    <?php
+
+  } ?>
     <title><?php echo $title ?></title>
   </head>
   <body>
