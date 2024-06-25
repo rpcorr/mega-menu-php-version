@@ -13,11 +13,28 @@ if ($_REQUEST['ukey'] || $_COOKIE['ukey']) {
   // ukey or cookie present
 
   if (strpos($current_host, 'localhost') !== false  || strpos($current_host, 'ronancorr.com') !== false ) {
-    if ($_REQUEST['portal'] === "pa") {
-      $file='co-pages-logged-in-pa';
+
+    if (strpos($current_host, 'ronancorr.com') !==false ) {
+
+      if (isset($_GET['portal']) && $_GET['portal'] == "pa") {
+        $file='co-pages-logged-in-pa';
+      } else if ($_COOKIE['portal'] == "pa" ){
+        $file='co-pages-logged-in-pa';
+      } else if ($_REQUEST['portal'] == "pa" ){
+        $file='co-pages-logged-in-pa';
+      } else {
+        $file='co-pages-logged-in-demo';
+      }
     } else {
-      $file='co-pages-logged-in-demo';
+      echo "there";
+      if ($_REQUEST['portal'] == "pa"){
+        $file='co-pages-logged-in-pa';
+      } else {
+        $file='co-pages-logged-in-demo';
+      }
     }
+
+    
     // Development server (localhost) or Staging server (ronancorr)
     $jsonData = file_get_contents(getRelativePath('')  . 'assets/json/' . $file . '.json');
     ?>

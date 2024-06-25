@@ -1,8 +1,26 @@
 <?php 
+
   if ($_REQUEST['ukey']) {
-    // ukey present 
-    setcookie('ukey', $_REQUEST['ukey'] );
-    setcookie('portal', $_REQUEST['portal']);
+
+    // assign ukey and portal values to cookies
+    if($_REQUEST['portal'] !== $_GET['portal']) {
+      // remove ukey and portal cookies
+      setcookie("ukey", "", time() - 3600);
+      setcookie("portal", "", time() - 3600);
+      setcookie('ukey', $_GET['ukey']);
+      setcookie('portal', $_GET['portal']);
+    } else {
+      setcookie('portal', $_REQUEST['portal']);
+      setcookie('ukey', $_REQUEST['ukey'] );
+    }
+
+    if (!isset($_COOKIE['refresh'])) {
+      setcookie('refresh', "true");
+      header('Refresh:0');
+    }
+
+    // setcookie('portal', $_REQUEST['portal']);
+    // setcookie('ukey', $_REQUEST['ukey'] );
   }
 ?>
 
