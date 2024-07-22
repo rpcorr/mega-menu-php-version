@@ -537,19 +537,23 @@ function isCurrentPage(page) {
 var radioButtons = document.querySelectorAll('input[name="option"]');
 radioButtons.forEach(function (radioButton) {
   radioButton.addEventListener('click', function () {
+    console.log(this.id);
     selectStylesheet(this.id);
 
-    // update user preference in JSON file
-    var xhr = new XMLHttpRequest();
-    xhr.open(
-      'GET',
-      'assets/php_scripts/update_style_preference.php?stylePreference=' +
-        this.id,
-      true
-    );
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    var data = 'stylePreference=' + encodeURIComponent(this.id);
-    xhr.send(data);
+    // // update user preference in JSON file
+    // var xhr = new XMLHttpRequest();
+    // xhr.open(
+    //   'GET',
+    //   'assets/php_scripts/update_style_preference.php?stylePreference=' +
+    //     this.id,
+    //   true
+    // );
+    // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    // var data = 'stylePreference=' + encodeURIComponent(this.id);
+    // xhr.send(data);
+
+    // set or update preference cookie
+    setPreferenceCookie('stylePreference', this.id, 0);
   });
 });
 
@@ -595,4 +599,18 @@ function openMenu(bContainsSubMenuDiv) {
   elements.forEach(function (element) {
     element.style.opacity = '1';
   });
+}
+
+function setPreferenceCookie(name, value, days, domain) {
+  console.log('here');
+  let expires = '';
+  if (days) {
+    const date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    expires = '; expires=' + date.toUTCString();
+  }
+
+  var cookieDomain = domain ? '; domain=' + domain : '';
+  document.cookie =
+    name + '=' + (value || '') + expires + '; path=/' + cookieDomain;
 }

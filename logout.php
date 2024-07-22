@@ -5,6 +5,11 @@ session_start();
 // Destroy the session varibles
 session_destroy();
 
+// Delete cookie variables by setting the expiration date to a past time
+setcookie('portal', '', time() - 3600, '/'); 
+setcookie('ukey', '', time() - 3600, '/');
+setcookie('stylePreference', '', time() - 3600, '/');
+
 function get_base_url() {
   // Determine if the request is over HTTPS
   $is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443;
@@ -60,7 +65,7 @@ function get_base_url() {
   return $base_url;
 }
 
-$rootUrl = get_base_url() . 'index.php';
+$rootUrl = get_base_url() . 'counting-opinions-wrapper.php';
 
 if (isset($_GET['inactivity'])) { 
   // direct user to index page indicating the user was logged out due to inactivity

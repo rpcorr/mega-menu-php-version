@@ -1,296 +1,311 @@
 <?php 
-// level of access to view page; admin is a given
-$userTypes = array("premium","basic");
 
-// Include the session check file
-include_once ($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\session_check.php');
+$title = 'Preferences - Counting Opinions';
 
-$title = 'Preferences - Priority Mega Menu';
+include('assets/php_scripts/header.php');?>
 
-include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.php');
-?>
+<main>
+  <div class="container">
+    <h1>Preferences</h1>
 
-    <main>
-      <div class="container">
-        <h1>Preferences</h1>
-        <form>
-          <!-- Counting Opinions-->
-          <div class="swatches-container">
-            <div class="column-1">
-              <div class="swatch" style="background-color: #60bd68"></div>
-              <div class="swatch" style="background-color: #1fb7f1"></div>
-              <div class="swatch" style="background-color: #7fd6f7"></div>
-              <div class="swatch" style="background-color: #4fc7f4"></div>
-              <div class="swatch" style="background-color: #337ab7"></div>
-            </div>
-            <div class="column-2">
-              <input
-                type="radio"
-                id="countingOpinions"
-                name="option"
-                value="Counting Opinions"
-                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "countingOpinions" ) { ?>
-                checked
-                <?php } ?>
-              />
-              <label for="countingOpinions">Counting Opinions</label>
-            </div>
+    <?php
+
+        echo '<p><a href="counting-opinions-wrapper.php">Back</a><br/><br/>';
+        echo '<a href="logout.php">Logout</a></p>';
+        echo '<p>Path of menu json file:<br/>';
+        echo  $_SERVER['SERVER_NAME'] . '/'. getRelativePath('')  . 'ws/portal/get_pages.php?is_menu&portal=' . $portal . '&ukey='. $ukey . '</p>'; 
+
+      if ($_COOKIE['ukey']) {
+
+          // set default $_COOKIE['stylePreference'] if not set
+          if (!isset($_COOKIE['stylePreference'])) {
+            setcookie("stylePreference", 'countingOpinions', time() + (86400 * 30), "/");
+          }
+          echo '<p>Cookies:<br/>';
+          echo 'Ukey: ' . $_COOKIE['ukey'] . '<br/>';
+          echo 'Portal: ' . $_COOKIE['portal'] . '<br/>';
+          echo 'StylePreference: ' . $_COOKIE['stylePreference'] . '</p>';  
+        } 
+
+    ?>
+    
+    <form>
+        <!-- Counting Opinions-->
+        <div class="swatches-container">
+          <div class="column-1">
+            <div class="swatch" style="background-color: #60bd68"></div>
+            <div class="swatch" style="background-color: #1fb7f1"></div>
+            <div class="swatch" style="background-color: #7fd6f7"></div>
+            <div class="swatch" style="background-color: #4fc7f4"></div>
+            <div class="swatch" style="background-color: #337ab7"></div>
           </div>
-
-          <!-- Protanopia-->
-          <div class="swatches-container">
-            <div class="column-1">
-              <div class="swatch" style="background-color: #e8f086"></div>
-              <div class="swatch" style="background-color: #6fde6e"></div>
-              <div class="swatch" style="background-color: #ff4242"></div>
-              <div class="swatch" style="background-color: #a691ae"></div>
-              <div class="swatch" style="background-color: #235fa4"></div>
-            </div>
-            <div class="column-2">
-              <input
-                type="radio"
-                id="protanopia"
-                name="option"
-                value="Protanopia"
-                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "protanopia" ) { ?>
-                checked
-                <?php } ?>
-              />
-              <label for="protanopia">Protanopia</label>
-            </div>
+          <div class="column-2">
+            <input
+              type="radio"
+              id="countingOpinions"
+              name="option"
+              value="Counting Opinions"
+              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "countingOpinions" ) { ?>
+              checked
+              <?php } ?>
+            />
+            <label for="countingOpinions">Counting Opinions</label>
           </div>
+        </div>
 
-          <!-- Protanomaly-->
-          <div class="swatches-container">
-            <div class="column-1">
-              <div class="swatch" style="background-color: #bdd9bf"></div>
-              <div class="swatch" style="background-color: #929084"></div>
-              <div class="swatch" style="background-color: #ffc857"></div>
-              <div class="swatch" style="background-color: #a997df"></div>
-              <div class="swatch" style="background-color: #e5323b"></div>
-            </div>
-            <div class="column-2">
-              <input
-                type="radio"
-                id="protanomaly"
-                name="option"
-                value="Protanomaly"
-                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "protanomaly" ) { ?>
-                checked
-                <?php } ?>
-              />
-              <label for="protanomaly">Protanomaly</label>
-            </div>
+        <!-- Protanopia-->
+        <div class="swatches-container">
+          <div class="column-1">
+            <div class="swatch" style="background-color: #e8f086"></div>
+            <div class="swatch" style="background-color: #6fde6e"></div>
+            <div class="swatch" style="background-color: #ff4242"></div>
+            <div class="swatch" style="background-color: #a691ae"></div>
+            <div class="swatch" style="background-color: #235fa4"></div>
           </div>
-
-          <!-- Deuteranopia-->
-          <div class="swatches-container">
-            <div class="column-1">
-              <div class="swatch" style="background-color: #e1daae"></div>
-              <div class="swatch" style="background-color: #ff934f"></div>
-              <div class="swatch" style="background-color: #cc2d35"></div>
-              <div class="swatch" style="background-color: #058ed9"></div>
-              <div class="swatch" style="background-color: #2d3142"></div>
-            </div>
-            <div class="column-2">
-              <input
-                type="radio"
-                id="deuteranopia"
-                name="option"
-                value="Deuteranopia"
-                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "deuteranopia" ) { ?>
-                checked
-                <?php } ?>
-              />
-              <label for="deuteranopia">Deuteranopia</label>
-            </div>
+          <div class="column-2">
+            <input
+              type="radio"
+              id="protanopia"
+              name="option"
+              value="Protanopia"
+              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "protanopia" ) { ?>
+              checked
+              <?php } ?>
+            />
+            <label for="protanopia">Protanopia</label>
           </div>
+        </div>
 
-          <!-- Deuteranomaly-->
-          <div class="swatches-container">
-            <div class="column-1">
-              <div class="swatch" style="background-color: #f4d4ad"></div>
-              <div class="swatch" style="background-color: #e89f43"></div>
-              <div class="swatch" style="background-color: #a15229"></div>
-              <div class="swatch" style="background-color: #2f88dc"></div>
-              <div class="swatch" style="background-color: #2d3043"></div>
-            </div>
-            <div class="column-2">
-              <input
-                type="radio"
-                id="deuteranomaly"
-                name="option"
-                value="Deuteranomaly"
-                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "deuteranomaly" ) { ?>
-                checked
-                <?php } ?>
-              />
-              <label for="deuteranomaly">Deuteranomaly</label>
-            </div>
+        <!-- Protanomaly-->
+        <div class="swatches-container">
+          <div class="column-1">
+            <div class="swatch" style="background-color: #bdd9bf"></div>
+            <div class="swatch" style="background-color: #929084"></div>
+            <div class="swatch" style="background-color: #ffc857"></div>
+            <div class="swatch" style="background-color: #a997df"></div>
+            <div class="swatch" style="background-color: #e5323b"></div>
           </div>
-
-          <!-- Achromatomaly -->
-          <div class="swatches-container">
-            <div class="column-1">
-              <div class="swatch" style="background-color: #dbd8c7"></div>
-              <div class="swatch" style="background-color: #caa386"></div>
-              <div class="swatch" style="background-color: #854a4c"></div>
-              <div class="swatch" style="background-color: #447794"></div>
-              <div class="swatch" style="background-color: #303136"></div>
-            </div>
-            <div class="column-2">
-              <input
-                type="radio"
-                id="achromatomaly"
-                name="option"
-                value="Achromatomaly"
-                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "achromatomaly" ) { ?>
-                checked
-                <?php } ?>
-              />
-              <label for="achromatomaly">Achromatomaly</label>
-            </div>
+          <div class="column-2">
+            <input
+              type="radio"
+              id="protanomaly"
+              name="option"
+              value="Protanomaly"
+              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "protanomaly" ) { ?>
+              checked
+              <?php } ?>
+            />
+            <label for="protanomaly">Protanomaly</label>
           </div>
+        </div>
 
-          <!-- Tritanopia -->
-          <div class="swatches-container">
-            <div class="column-1">
-              <div class="swatch" style="background-color: #dd4444"></div>
-              <div class="swatch" style="background-color: #f48080"></div>
-              <div class="swatch" style="background-color: #ffdcdc"></div>
-              <div class="swatch" style="background-color: #2d676f"></div>
-              <div class="swatch" style="background-color: #194b4f"></div>
-            </div>
-            <div class="column-2">
-              <input
-                type="radio"
-                id="tritanopia"
-                name="option"
-                value="Tritanopia"
-                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "tritanopia" ) { ?>
-                checked
-                <?php } ?>
-              />
-              <label for="tritanopia">Tritanopia</label>
-            </div>
+        <!-- Deuteranopia-->
+        <div class="swatches-container">
+          <div class="column-1">
+            <div class="swatch" style="background-color: #e1daae"></div>
+            <div class="swatch" style="background-color: #ff934f"></div>
+            <div class="swatch" style="background-color: #cc2d35"></div>
+            <div class="swatch" style="background-color: #058ed9"></div>
+            <div class="swatch" style="background-color: #2d3142"></div>
           </div>
-
-          <!-- Tritanopia2 -->
-          <div class="swatches-container">
-            <div class="column-1">
-              <div class="swatch" style="background-color: #e8d3e4"></div>
-              <div class="swatch" style="background-color: #ff8d97"></div>
-              <div class="swatch" style="background-color: #ce2b2c"></div>
-              <div class="swatch" style="background-color: #01959f"></div>
-              <div class="swatch" style="background-color: #2a3338"></div>
-            </div>
-            <div class="column-2">
-              <input
-                type="radio"
-                id="tritanopia2"
-                name="option"
-                value="Tritanopia2"
-                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "tritanopia2" ) { ?>
-                checked
-                <?php } ?>
-              />
-              <label for="tritanopia2">Tritanopia2</label>
-            </div>
+          <div class="column-2">
+            <input
+              type="radio"
+              id="deuteranopia"
+              name="option"
+              value="Deuteranopia"
+              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "deuteranopia" ) { ?>
+              checked
+              <?php } ?>
+            />
+            <label for="deuteranopia">Deuteranopia</label>
           </div>
+        </div>
 
-          <!-- tritanopiaRYGBV -->
-          <div class="swatches-container">
-            <div class="column-1">
-              <div class="swatch" style="background-color: #ff0066"></div>
-              <div class="swatch" style="background-color: #ffe6f2"></div>
-              <div class="swatch" style="background-color: #00e6e6"></div>
-              <div class="swatch" style="background-color: #009999"></div>
-              <div class="swatch" style="background-color: #66004d"></div>
-            </div>
-            <div class="column-2">
-              <input
-                type="radio"
-                id="tritanopiaRYGBV"
-                name="option"
-                value="TritanopiaRYGBV"
-                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "tritanopiaRYGBV" ) { ?>
-                checked
-                <?php } ?>
-              />
-              <label for="tritanopiaRYGBV">TritanopiaRYGBV</label>
-            </div>
+        <!-- Deuteranomaly-->
+        <div class="swatches-container">
+          <div class="column-1">
+            <div class="swatch" style="background-color: #f4d4ad"></div>
+            <div class="swatch" style="background-color: #e89f43"></div>
+            <div class="swatch" style="background-color: #a15229"></div>
+            <div class="swatch" style="background-color: #2f88dc"></div>
+            <div class="swatch" style="background-color: #2d3043"></div>
           </div>
-
-          <!-- tritanopiaRainbow -->
-          <div class="swatches-container">
-            <div class="column-1">
-              <div class="swatch" style="background-color: #ff0000"></div>
-              <div class="swatch" style="background-color: #ebffff"></div>
-              <div class="swatch" style="background-color: #00f9ff"></div>
-              <div class="swatch" style="background-color: #2b9f84"></div>
-              <div class="swatch" style="background-color: #ff90b7"></div>
-            </div>
-            <div class="column-2">
-              <input
-                type="radio"
-                id="tritanopiaRainbow"
-                name="option"
-                value="TritanopiaRainbow"
-                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "tritanopiaRainbow" ) { ?>
-                checked
-                <?php } ?>
-              />
-              <label for="tritanopiaRainbow">TritanopiaRainbow</label>
-            </div>
+          <div class="column-2">
+            <input
+              type="radio"
+              id="deuteranomaly"
+              name="option"
+              value="Deuteranomaly"
+              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "deuteranomaly" ) { ?>
+              checked
+              <?php } ?>
+            />
+            <label for="deuteranomaly">Deuteranomaly</label>
           </div>
+        </div>
 
-          <!-- tritanopiaReds -->
-          <div class="swatches-container">
-            <div class="column-1">
-              <div class="swatch" style="background-color: #6d1129"></div>
-              <div class="swatch" style="background-color: #ff004d"></div>
-              <div class="swatch" style="background-color: #ffb9bd"></div>
-              <div class="swatch" style="background-color: #ffe4ed"></div>
-              <div class="swatch" style="background-color: #785f6d"></div>
-            </div>
-            <div class="column-2">
-              <input
-                type="radio"
-                id="tritanopiaReds"
-                name="option"
-                value="TritanopiaReds"
-                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "tritanopiaReds" ) { ?>
-                checked
-                <?php } ?>
-              />
-              <label for="tritanopiaReds">TritanopiaReds</label>
-            </div>
+        <!-- Achromatomaly -->
+        <div class="swatches-container">
+          <div class="column-1">
+            <div class="swatch" style="background-color: #dbd8c7"></div>
+            <div class="swatch" style="background-color: #caa386"></div>
+            <div class="swatch" style="background-color: #854a4c"></div>
+            <div class="swatch" style="background-color: #447794"></div>
+            <div class="swatch" style="background-color: #303136"></div>
           </div>
-
-          <!-- tritanopiaBlues -->
-          <div class="swatches-container">
-            <div class="column-1">
-              <div class="swatch" style="background-color: #0a556b"></div>
-              <div class="swatch" style="background-color: #218ab2"></div>
-              <div class="swatch" style="background-color: #00dfff"></div>
-              <div class="swatch" style="background-color: #a6ebff"></div>
-              <div class="swatch" style="background-color: #daf1f4"></div>
-            </div>
-            <div class="column-2">
-              <input
-                type="radio"
-                id="tritanopiaBlues"
-                name="option"
-                value="TritanopiaBlues"
-                <?php if(isset($_SESSION['stylePreference']) && $_SESSION['stylePreference'] === "tritanopiaBlues" ) { ?>
-                checked
-                <?php } ?>
-              />
-              <label for="tritanopiaBlues">TritanopiaBlues</label>
-            </div>
+          <div class="column-2">
+            <input
+              type="radio"
+              id="achromatomaly"
+              name="option"
+              value="Achromatomaly"
+              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "achromatomaly" ) { ?>
+              checked
+              <?php } ?>
+            />
+            <label for="achromatomaly">Achromatomaly</label>
           </div>
-        </form>
-      </div>
-    </main>
+        </div>
 
-<?php include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\footer.php'); ?>
+        <!-- Tritanopia -->
+        <div class="swatches-container">
+          <div class="column-1">
+            <div class="swatch" style="background-color: #dd4444"></div>
+            <div class="swatch" style="background-color: #f48080"></div>
+            <div class="swatch" style="background-color: #ffdcdc"></div>
+            <div class="swatch" style="background-color: #2d676f"></div>
+            <div class="swatch" style="background-color: #194b4f"></div>
+          </div>
+          <div class="column-2">
+            <input
+              type="radio"
+              id="tritanopia"
+              name="option"
+              value="Tritanopia"
+              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "tritanopia" ) { ?>
+              checked
+              <?php } ?>
+            />
+            <label for="tritanopia">Tritanopia</label>
+          </div>
+        </div>
+
+        <!-- Tritanopia2 -->
+        <div class="swatches-container">
+          <div class="column-1">
+            <div class="swatch" style="background-color: #e8d3e4"></div>
+            <div class="swatch" style="background-color: #ff8d97"></div>
+            <div class="swatch" style="background-color: #ce2b2c"></div>
+            <div class="swatch" style="background-color: #01959f"></div>
+            <div class="swatch" style="background-color: #2a3338"></div>
+          </div>
+          <div class="column-2">
+            <input
+              type="radio"
+              id="tritanopia2"
+              name="option"
+              value="Tritanopia2"
+              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "tritanopia2" ) { ?>
+              checked
+              <?php } ?>
+            />
+            <label for="tritanopia2">Tritanopia2</label>
+          </div>
+        </div>
+
+        <!-- tritanopiaRYGBV -->
+        <div class="swatches-container">
+          <div class="column-1">
+            <div class="swatch" style="background-color: #ff0066"></div>
+            <div class="swatch" style="background-color: #ffe6f2"></div>
+            <div class="swatch" style="background-color: #00e6e6"></div>
+            <div class="swatch" style="background-color: #009999"></div>
+            <div class="swatch" style="background-color: #66004d"></div>
+          </div>
+          <div class="column-2">
+            <input
+              type="radio"
+              id="tritanopiaRYGBV"
+              name="option"
+              value="TritanopiaRYGBV"
+              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "tritanopiaRYGBV" ) { ?>
+              checked
+              <?php } ?>
+            />
+            <label for="tritanopiaRYGBV">TritanopiaRYGBV</label>
+          </div>
+        </div>
+
+        <!-- tritanopiaRainbow -->
+        <div class="swatches-container">
+          <div class="column-1">
+            <div class="swatch" style="background-color: #ff0000"></div>
+            <div class="swatch" style="background-color: #ebffff"></div>
+            <div class="swatch" style="background-color: #00f9ff"></div>
+            <div class="swatch" style="background-color: #2b9f84"></div>
+            <div class="swatch" style="background-color: #ff90b7"></div>
+          </div>
+          <div class="column-2">
+            <input
+              type="radio"
+              id="tritanopiaRainbow"
+              name="option"
+              value="TritanopiaRainbow"
+              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "tritanopiaRainbow" ) { ?>
+              checked
+              <?php } ?>
+            />
+            <label for="tritanopiaRainbow">TritanopiaRainbow</label>
+          </div>
+        </div>
+
+        <!-- tritanopiaReds -->
+        <div class="swatches-container">
+          <div class="column-1">
+            <div class="swatch" style="background-color: #6d1129"></div>
+            <div class="swatch" style="background-color: #ff004d"></div>
+            <div class="swatch" style="background-color: #ffb9bd"></div>
+            <div class="swatch" style="background-color: #ffe4ed"></div>
+            <div class="swatch" style="background-color: #785f6d"></div>
+          </div>
+          <div class="column-2">
+            <input
+              type="radio"
+              id="tritanopiaReds"
+              name="option"
+              value="TritanopiaReds"
+              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "tritanopiaReds" ) { ?>
+              checked
+              <?php } ?>
+            />
+            <label for="tritanopiaReds">TritanopiaReds</label>
+          </div>
+        </div>
+
+        <!-- tritanopiaBlues -->
+        <div class="swatches-container">
+          <div class="column-1">
+            <div class="swatch" style="background-color: #0a556b"></div>
+            <div class="swatch" style="background-color: #218ab2"></div>
+            <div class="swatch" style="background-color: #00dfff"></div>
+            <div class="swatch" style="background-color: #a6ebff"></div>
+            <div class="swatch" style="background-color: #daf1f4"></div>
+          </div>
+          <div class="column-2">
+            <input
+              type="radio"
+              id="tritanopiaBlues"
+              name="option"
+              value="TritanopiaBlues"
+              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "tritanopiaBlues" ) { ?>
+              checked
+              <?php } ?>
+            />
+            <label for="tritanopiaBlues">TritanopiaBlues</label>
+          </div>
+        </div>
+      </form>
+  </div>
+</main>
+<?php include('assets/php_scripts/footer.php');?>
