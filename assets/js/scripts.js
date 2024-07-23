@@ -11,127 +11,176 @@ let output = '';
 let megaMenuLinks = '';
 let initialColumns = '';
 
-$(document).ready(function () {
-  // select all anchor tags
-  megaMenuLinks = document.querySelectorAll('nav a[href^="#"]');
+// Ensure this code runs after the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+  // Fetch the menu items
 
-  // add handleLinkClick to eventListener
-  for (let i = 0; i < megaMenuLinks.length; i++) {
-    megaMenuLinks[i].addEventListener('click', handleLinkClick);
-    megaMenuLinks[i].addEventListener('keyup', function (e) {
-      // open current menu when enter key is pressed
-      if (e.keyCode === 13) {
-        // open menu - determine the type of menu
-        const bContainsSubMenuDiv =
-          this.nextElementSibling.classList.contains('sub-menu-div');
-        openMenu(bContainsSubMenuDiv);
-      }
-    });
+  const url = window.location.href;
+
+  // Create a URL object
+  const urlObject = new URL(url);
+
+  // Use URLSearchParams to parse the query string
+  const params = new URLSearchParams(urlObject.search);
+
+  // Check if 'ukey' is present in the query string
+  const hasUkey = params.has('ukey');
+
+  let JSONfile = '';
+
+  // Determine which file to use
+  if (!hasUkey && !isCookiePresent('ukey')) {
+    JSONfile = 'assets/json/co-pages.json';
+  } else {
+    JSONfile = 'assets/json/co-pages-logged-in.json';
   }
 
-  winWidth = $(window).width();
+  fetch(JSONfile)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const pages = data.pages;
+      let output = '';
+      pages.forEach((page) => {
+        output += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
+      });
 
-  $('#menu-main-menu').on('keydown', function (e) {
-    if (e.key == 'Escape') {
-      closeAllMenus('esc');
-    }
-  });
+      // print out JSON content
+      document.getElementById('menu-main-menu').innerHTML = output;
 
-  navItems = $('#menu-main-menu > li');
+      navItems = document.querySelectorAll('#menu-main-menu > li');
 
-  // add hover class to those with class menu-item-has-children
-  navItems.each(function () {
-    if ($(this).hasClass('menu-item-has-children')) {
-      $(this).addClass('hover');
-    }
-  });
+      megaMenuLinks = document.querySelectorAll('nav a');
 
-  // get width of each item, and list each as visible
-  navItems.each(function () {
-    navItemWidth.push($(this).outerWidth());
-    navItemVisible.push(true);
-  });
+      for (let i = 0; i < megaMenuLinks.length; i++) {
+        megaMenuLinks[i].addEventListener('click', handleLinkClick);
+        megaMenuLinks[i].addEventListener('keyup', function (e) {
+          // open current menu when enter key is pressed
+          if (e.keyCode === 13) {
+            // open menu - determine the type of menu
+            const bContainsSubMenuDiv =
+              this.nextElementSibling.classList.contains('sub-menu-div');
+            openMenu(bContainsSubMenuDiv);
+          }
+        });
+      }
 
-  // add more link
-  $('#menu-main-menu').append(
-    '<li id="menu-more" class="menu-item menu-item-has-children" style="display: none;"><a id="menuMoreLink" href="#" aria-label="More has a sub menu. Click enter to open" aria-expanded="false"></a><ul id="moreSubMenu" class="sub-menu"></ul></li>'
-  );
-  moreWidth = $('#menu-more').outerWidth();
+      winWidth = $(window).width();
 
-  // toggle sub-menu on click
-  $('#menuMoreLink').click(function (event) {
-    event.preventDefault();
-    $('.menu-item-has-children:not(#menu-more)').removeClass('visible');
+      $('#menu-main-menu').on('keydown', function (e) {
+        if (e.key == 'Escape') {
+          closeAllMenus('esc');
+        }
+      });
 
-    $(this).parent('.menu-item-has-children').toggleClass('visible');
+      navItems = $('#menu-main-menu > li');
 
-    if ($(this).parent('.menu-item-has-children').hasClass('visible')) {
-      // set the arrow to the up position (open)
-      $(this).children('i').removeClass('angle-down').addClass('angle-up');
+      // add hover class to those with class menu-item-has-children
+      navItems.each(function () {
+        if ($(this).hasClass('menu-item-has-children')) {
+          $(this).addClass('hover');
+        }
+      });
 
-      // update aria-label to close menu
-      $(this).attr('aria-label', 'Click Enter to close More sub menu');
+      // get width of each item, and list each as visible
+      navItems.each(function () {
+        navItemWidth.push($(this).outerWidth());
+        navItemVisible.push(true);
+      });
 
-      // set the More sub menu aria-expanded attr to true
-      $(this).attr('aria-expanded', true);
-    } else {
-      // set the arrow to the down position (close)
-      $(this).children('i').removeClass('angle-up').addClass('angle-down');
+      // add more link
+      $('#menu-main-menu').append(
+        '<li id="menu-more" class="menu-item menu-item-has-children" style="display: none;"><a id="menuMoreLink" href="#" aria-label="More has a sub menu. Click enter to open" aria-expanded="false"></a><ul id="moreSubMenu" class="sub-menu"></ul></li>'
+      );
+      moreWidth = $('#menu-more').outerWidth();
 
-      // update aria-label to open menu
-      $(this).attr('aria-label', 'More has a sub menu. Click enter to open');
+      // toggle sub-menu on click
+      $('#menuMoreLink').click(function (event) {
+        event.preventDefault();
+        $('.menu-item-has-children:not(#menu-more)').removeClass('visible');
 
-      // set the More link aria-expanded attr to false
-      $(this).attr('aria-expanded', false);
-    }
-  });
+        $(this).parent('.menu-item-has-children').toggleClass('visible');
 
-  // toggle sub-menu on key up
-  $('#menuMoreLink').keyup(function (event) {
-    // open "More" menu when enter key is pressed
-    if (event.keyCode === 13) {
-      // open current regular menu, there param is false
-      openMenu(false);
-    }
-  });
+        if ($(this).parent('.menu-item-has-children').hasClass('visible')) {
+          // set the arrow to the up position (open)
+          $(this).children('i').removeClass('angle-down').addClass('angle-up');
 
-  // collapse all sub-menus when user clicks off
-  $('body').click(function (event) {
-    if (!$(event.target).closest('li').length) {
-      $('.menu-item-has-children').removeClass('visible');
-    }
+          // update aria-label to close menu
+          $(this).attr('aria-label', 'Click Enter to close More sub menu');
 
-    // reset arrows to down position
-    resetArrows();
+          // set the More sub menu aria-expanded attr to true
+          $(this).attr('aria-expanded', true);
+        } else {
+          // set the arrow to the down position (close)
+          $(this).children('i').removeClass('angle-up').addClass('angle-down');
 
-    //  reset aria-labels to Click enter to open
-    $('.menu-item-has-children > a').each(function () {
-      $(this)
-        .attr(
-          'aria-label',
-          `${$(this).text()}has a sub menu. Click enter to open`
-        )
-        .attr('aria-expanded', 'false');
+          // update aria-label to open menu
+          $(this).attr(
+            'aria-label',
+            'More has a sub menu. Click enter to open'
+          );
+
+          // set the More link aria-expanded attr to false
+          $(this).attr('aria-expanded', false);
+        }
+      });
+
+      // toggle sub-menu on key up
+      $('#menuMoreLink').keyup(function (event) {
+        // open "More" menu when enter key is pressed
+        if (event.keyCode === 13) {
+          // open current regular menu, there param is false
+          openMenu(false);
+        }
+      });
+
+      // collapse all sub-menus when user clicks off
+      $('body').click(function (event) {
+        if (!$(event.target).closest('li').length) {
+          $('.menu-item-has-children').removeClass('visible');
+        }
+
+        // reset arrows to down position
+        resetArrows();
+
+        //  reset aria-labels to Click enter to open
+        $('.menu-item-has-children > a').each(function () {
+          $(this)
+            .attr(
+              'aria-label',
+              `${$(this).text()}has a sub menu. Click enter to open`
+            )
+            .attr('aria-expanded', 'false');
+        });
+      });
+
+      $('.menu-item-has-children a').click(function (e) {
+        e.stopPropagation();
+      });
+
+      $('.menu-item-has-children ul').click(function (e) {
+        e.stopPropagation();
+      });
+
+      $('.menu-item-has-children li').click(function (e) {
+        e.stopPropagation();
+      });
+
+      // format navigation on page load
+      formatNav();
+
+      // watch for difference between touchscreen and mouse
+      watchForHover();
+    })
+    .catch((error) => {
+      console.error('There was a problem with the fetch operation:', error);
     });
-  });
 
-  $('.menu-item-has-children a').click(function (e) {
-    e.stopPropagation();
-  });
-
-  $('.menu-item-has-children ul').click(function (e) {
-    e.stopPropagation();
-  });
-
-  $('.menu-item-has-children li').click(function (e) {
-    e.stopPropagation();
-  });
-
-  // format navigation on page load
-  formatNav();
-
-  // watch for difference between touchscreen and mouse
-  watchForHover();
+  moreWidth = document.getElementById('menu-main-menu').offsetWidth;
 });
 
 function handleLinkClick(e) {
@@ -221,7 +270,8 @@ function formatNav() {
   let totalWidth = 0;
   const containerWidth = $('.menu-main-menu-container').innerWidth();
   const navPadding = 5; // for spacing around items
-  const numItems = navItems.length - 1;
+  //const numItems = navItems.length - 1;
+  const numItems = 5;
 
   // for each menu item
   navItems.each(function () {
@@ -245,7 +295,7 @@ function formatNav() {
         navItemVisible[count] = true;
 
         // if all are visible, hide More
-        if (count == numItems) {
+        if (count == numItems - 1) {
           $('#menu-more').hide();
         }
       }
@@ -375,8 +425,6 @@ function toggleTopLevelMenu(menuLink) {
 
         // Get the width of the viewport
         const viewportWidth = document.documentElement.clientWidth;
-
-        console.log(megaSubMenuWidth, divFromLeft, viewportWidth);
 
         // Check if megaSubMenu go beyond the viewport's width
         if (megaSubMenuWidth + divFromLeft > viewportWidth) {
@@ -537,7 +585,6 @@ function isCurrentPage(page) {
 var radioButtons = document.querySelectorAll('input[name="option"]');
 radioButtons.forEach(function (radioButton) {
   radioButton.addEventListener('click', function () {
-    console.log(this.id);
     selectStylesheet(this.id);
 
     // // update user preference in JSON file
@@ -602,7 +649,6 @@ function openMenu(bContainsSubMenuDiv) {
 }
 
 function setPreferenceCookie(name, value, days, domain) {
-  console.log('here');
   let expires = '';
   if (days) {
     const date = new Date();
@@ -613,4 +659,17 @@ function setPreferenceCookie(name, value, days, domain) {
   var cookieDomain = domain ? '; domain=' + domain : '';
   document.cookie =
     name + '=' + (value || '') + expires + '; path=/' + cookieDomain;
+}
+
+// Function to check if a specific cookie is present
+function isCookiePresent(cookieName) {
+  // Get all cookies as a single string
+  const cookies = document.cookie;
+
+  // Check if the cookie is present
+  const cookieExists = cookies.split(';').some((cookie) => {
+    return cookie.trim().startsWith(`${cookieName}=`);
+  });
+
+  return cookieExists;
 }
