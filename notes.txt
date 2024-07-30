@@ -1,0 +1,8 @@
+After having difficulty how the mega menu should be on Counting Opinions server, I think I finally got it.
+
+the wrapper file is mmenu.php - main file
+
+the url is http://localhost/mega-menu/mmenu.php (logged out)
+
+http://localhost/mega-menu/mmenu.php?is_menu&portal=pa&ukey=b5e79c05b3f12219e725fc167edefdd1 (logged in)
+

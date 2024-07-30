@@ -12,12 +12,20 @@ let megaMenuLinks = '';
 let initialColumns = '';
 let JSONfile = '';
 
-console.log(`I am inside mmenu.js.  uKey value is ${ukey}`);
+console.log(`I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}`);
 
+// Counting Opinions server
 if (!ukey) {
-  JSONfile = 'assets/json/co-pages.json';
+  JSONfile = 'https://dev.countingopinions.com/ws/portal/get_pages.php?is_menu';
 } else {
-  JSONfile = 'assets/json/co-pages-logged-in.json';
+  JSONfile = `https://dev.countingopinions.com/ws/portal/get_pages.php?is_menu&portal=${portal}&ukey=${ukey}`;
+}
+
+// Local host
+if (!ukey) {
+  JSONfile = 'http://localhost/mega-menu/assets/json/co-pages.json';
+} else {
+  JSONfile = 'http://localhost/mega-menu/assets/json/co-pages-logged-in.json';
 }
 
 console.log(JSONfile);
@@ -578,7 +586,13 @@ radioButtons.forEach(function (radioButton) {
     selectStylesheet(this.id);
 
     // set or update preference cookie
-    setPreferenceCookie('stylePreference', this.id, 0);
+    setPreferenceCookie(
+      'stylePreference',
+      this.id,
+      0,
+      '.countingopinions.com',
+      '/'
+    );
   });
 });
 
@@ -626,15 +640,14 @@ function openMenu(bContainsSubMenuDiv) {
   });
 }
 
-function setPreferenceCookie(name, value, days, domain) {
+function setPreferenceCookie(name, value, days, domain, path) {
   let expires = '';
   if (days) {
     const date = new Date();
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
     expires = '; expires=' + date.toUTCString();
   }
-
-  var cookieDomain = domain ? '; domain=' + domain : '';
-  document.cookie =
-    name + '=' + (value || '') + expires + '; path=/' + cookieDomain;
+  const domainStr = domain ? '; domain=' + domain : '';
+  const pathStr = path ? '; path=' + path : '; path=/';
+  document.cookie = name + '=' + (value || '') + expires + domainStr + pathStr;
 }

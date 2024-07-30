@@ -1,10 +1,12 @@
 function generateBreadcrumbs() {
-  const breadcrumbContainer = document.getElementById('breadcrumb');
+  const breadcrumbContainer = document.getElementById('breadcrumbs');
   let pathArray = window.location.pathname.split('/').filter(function (el) {
     return el.length != 0;
   });
 
   let path = '';
+
+  console.log(`I an inside of breadcrumbs.js. Querystring is ${queryString}`);
 
   const pageTitle = document.querySelector('h1').textContent;
 
@@ -20,10 +22,7 @@ function generateBreadcrumbs() {
       listItem.textContent = dir;
 
       // if listItem.textContent equals to site root name then change it to Home
-      if (
-        listItem.textContent === 'mega-menu' ||
-        listItem.textContent === 'mmenu'
-      ) {
+      if (listItem.textContent === 'mmenu') {
         listItem.textContent = 'Home > ' + pageTitle;
       }
 
@@ -40,7 +39,16 @@ function generateBreadcrumbs() {
       link.href = path;
       link.textContent = dir;
 
-      if (link.textContent === 'mega-menu' || link.textContent === 'mmenu') {
+      //set the starting point to /mmenu.php
+      if (index === 0) {
+        link.href += '/mmenu.php';
+      }
+
+      if (queryString !== null) {
+        link.href += `?${queryString}`;
+      }
+
+      if (link.textContent === 'mmenu') {
         link.textContent = 'Home';
       }
 

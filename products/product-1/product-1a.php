@@ -1,17 +1,8 @@
 <?php 
-// start the session
-session_start();
 
-$title = "Product 1 A - Priority Mega Menu";
+$title = 'Products - Counting Opinions';
 
-if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
-  
-  include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.php');
-} else {
-  include_once( $_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/php_scripts/header.php');
-}
-
-?>
+include('./../../assets/php_scripts/header.php');?>
     <main>
       <div class="container"> 
 
@@ -25,12 +16,4 @@ if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
       </div>
     </main>
     
-<?php 
-
-if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
-  include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\footer.php');
-} else {
-  include_once( $_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/php_scripts/footer.php');
-}
-
-?>
+<?php include('./../../assets/php_scripts/footer.php');?>

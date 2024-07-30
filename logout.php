@@ -6,9 +6,25 @@ session_start();
 session_destroy();
 
 // Delete cookie variables by setting the expiration date to a past time
-setcookie('portal', '', time() - 3600, '/'); 
-setcookie('ukey', '', time() - 3600, '/');
-setcookie('stylePreference', '', time() - 3600, '/');
+setcookie(
+    "ukey",  // Cookie name
+    "",  // Cookie value (empty to delete)
+    time() - 3600,  // Expiration time (in the past)
+    "/",  // Path
+    "localhost",  // Domain
+    true,  // Secure (only send over HTTPS)
+    true   // HttpOnly (only accessible through HTTP, not JavaScript)
+);
+
+setcookie("stylePreference",  // Cookie name
+    "",  // Cookie value (empty to delete)
+    time() - 3600,  // Expiration time (in the past)
+    "/",  // Path
+    "localhost",  // Domain
+    true,  // Secure (only send over HTTPS)
+    true   // HttpOnly (only accessible through HTTP, not JavaScript)
+);
+
 
 function get_base_url() {
   // Determine if the request is over HTTPS
@@ -65,7 +81,7 @@ function get_base_url() {
   return $base_url;
 }
 
-$rootUrl = get_base_url() . 'counting-opinions-wrapper.php';
+$rootUrl = get_base_url() . 'mmenu.php';
 
 if (isset($_GET['inactivity'])) { 
   // direct user to index page indicating the user was logged out due to inactivity

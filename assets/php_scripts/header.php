@@ -1,79 +1,73 @@
-<?php
-// start the session
-session_start();
-
-function getRelativePath($targetPath) {
-  // Get the current script's directory
-  $currentDir = dirname($_SERVER['SCRIPT_NAME']);
-  
-  // Split the directories into an array
-  $currentDirParts = explode('/', trim($currentDir, '/'));
-  
-  // Count the number of directories
-  $depth = count($currentDirParts);
-  
-  // Generate the relative path prefix
-  $relativePath = str_repeat('../', $depth-1);
-  
-  // Concatenate the target path
-  $relativePath = rtrim($relativePath, '/') . '/' . ltrim($targetPath, '/');
-  
-  if ($relativePath === '/') $relativePath = '';
-  return $relativePath;
-}
-
-// determine which variable to use: Request or Cookie
-$ukey = '';
-$portal = '';
-
-if ($_REQUEST['ukey']) {
-  setcookie('ukey', $_REQUEST['ukey'], 0, '/');
-  setcookie('portal', $_REQUEST['portal'], 0, '/');  
-  $portal = $_REQUEST['portal'];
-  $ukey = $_REQUEST['ukey'];
-
-} else if ($_COOKIE['ukey'])  {
-  $portal = $_COOKIE['portal'];
-  $ukey = $_COOKIE['ukey']; 
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $title ?></title>
+    <?php
 
-     <!-- Standard favicon -->
-     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo getRelativePath(''); ?>assets/imgs/fav-icons/favicon-16x16.png">
-     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo getRelativePath(''); ?>assets/imgs/fav-icons/favicon-32x32.png">
+    // determine which variable to use: Request or Cookie
+    $ukey = '';
+    $portal = '';
 
-     <link rel="apple-touch-icon" href="<?php echo getRelativePath(''); ?>assets/imgs/fav-icons/apple-touch-icon.png">
+    // assign $_SESSION['portal_name'] to $portal if present
+    if ($_SESSION['portal_name'] !== '') {
+        $portal = $_SESSION['portal_name'];
+    }
 
-    <!-- For Apple devices -->
-    <link rel="apple-touch-icon" sizes="152x152" href="<?php echo getRelativePath(''); ?>assets/imgs/fav-icons/apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo getRelativePath(''); ?>assets/imgs/fav-icons/apple-touch-icon-180x180.png">
+    // assign $_COOKIE['ukey'] to $ukey if present
+    if ($_COOKIE['ukey']) {
+        $ukey = $_COOKIE['ukey'];
+    }
 
-    <!-- For Android Chrome -->
-    <link rel="icon" type="image/png" sizes="192x192" href="<?php echo getRelativePath(''); ?>assets/imgs/fav-icons/android-chrome-192x192.png">
+    // assign $_REQUEST['ukey'] to $ukey and $_REQUEST['portal'] to $portal if present
+    if ($_REQUEST['ukey'] && $_REQUEST['portal'] ) {
+        $ukey = $_REQUEST['ukey'];
+        $portal = $_REQUEST['portal'];
+    }
 
-    <!-- For Android Chrome (for higher resolution screens) -->
-    <link rel="icon" type="image/png" sizes="512x512" href="<?php echo getRelativePath(''); ?>assets/imgs/fav-icons/android-chrome-512x512.png">
 
-    <link rel="icon" type="image/png" sizes="194x194" href="<?php echo getRelativePath(''); ?>assets/imgs/favicon-194x194.png">
+    // Determine if querystring is present.  If so, attached to Preference.php link
+            
+    // Function to get the full URL of the current page
+    function getFullUrl() {
+      $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+      $host = $_SERVER['HTTP_HOST'];
+      $uri = $_SERVER['REQUEST_URI'];
+      return $protocol . $host . $uri;
+    }
+    
+    // Get the full URL
+    $fullUrl = getFullUrl();
 
-    <link rel="icon" type="image/png" sizes="128x128" href="<?php echo getRelativePath(''); ?>assets/imgs/favicon-128x128.png">
+    // Parse the URL and get the query string
+    $parsed_url = parse_url($fullUrl);
 
-    <link rel="shortcut icon" type="image/png" sizes="196x196" href="<?php echo getRelativePath(''); ?>assets/imgs/favicon-196x196.png">
+    // retrieve the query string
+    $queryString = $parsed_url['query'];
+    
+    
+    function getRelativePath($targetPath) {
+      // Get the current script's directory
+      $currentDir = dirname($_SERVER['SCRIPT_NAME']);
+      
+      // Split the directories into an array
+      $currentDirParts = explode('/', trim($currentDir, '/'));
+      
+      // Count the number of directories
+      $depth = count($currentDirParts);
+      
+      // Generate the relative path prefix
+      $relativePath = str_repeat('../', $depth-1);
+      
+      // Concatenate the target path
+      $relativePath = rtrim($relativePath, '/') . '/' . ltrim($targetPath, '/');
+      
+      if ($relativePath === '/') $relativePath = '';
+      return $relativePath;
+    }
 
-    <!-- For Android devices -->
-    <!-- <link rel="manifest" href="<?php echo getRelativePath(''); ?>assets/imgs/fav-icons/site.webmanifest"> -->
-
-    <!-- For Windows -->
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="mstile-144x144.png">
-    <meta name="msapplication-config" content="browserconfig.xml">
+    ?>
 
     <!-- stylesheets -->
     <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/reset.min.css" />
@@ -87,13 +81,38 @@ if ($_REQUEST['ukey']) {
   
     if ($ukey) {  ?>
       <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/countingOpinions.css" />
-      <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php echo $_COOKIE['stylePreference']?>.css  " />
-      <?php 
-    } 
+    <?php } ?>
     
-    ?>
-    <title><?php echo $title ?></title>
-  </head>
-  <body>
+    <?php if (isset($_COOKIE['stylePreference'])) { ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php echo $_COOKIE['stylePreference']?>.css  " />
+    <?php } ?>
+</head>
+<body>
+
+    <header id="header" role="banner">
+      <div id="mainNavigation" class="group">
+        <div class="max-width">
+            <section id="branding">
+                <a href="#skipMenu" class="screen-reader-text">Skip to Content</a>
+                <div id="siteIdentity">
+                <div class="logo">
+                    <a href="index.php" rel="home"> <img src="<?php echo getRelativePath(''); ?>assets/imgs/CO_logo.svg" alt="Counting Opinions" height="60"> </a>
+                </div>
+                <div class="simple-logo">
+                    <a href="index.php" rel="home"> <img src="<?php echo getRelativePath(''); ?>assets/imgs/CO_simple_logo.svg" alt="Counting Opinions" height="60"> </a>
+                </div>
+                </div>
+            </section>
+          <nav id="menu" aria-label="Menu will change once you log in">
+            <div class="menu-main-menu-container">
+              <ul id="menu-main-menu" class="menu"></ul>  
+            </div>
+          </nav>
+          <a id="skipMenu" class="screen-reader-text"></a>
+        </div>
+      </div>
+    </header>
+    <nav>
+      <ul class="breadcrumbs" id="breadcrumbs"></ul>
+    </nav>
     
-    <?php include(getRelativePath('') . 'counting-opinions-menu.php');    ?>

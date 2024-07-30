@@ -580,22 +580,22 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
 }
 
 /* Basic CSS for breadcrumbs */
-.breadcrumb {
+.breadcrumbs {
   list-style: none;
   display: flex;
   margin: 1em 0 0 2em;
 }
-.breadcrumb li {
+.breadcrumbs li {
   margin-right: 5px;
 }
-.breadcrumb li a {
+.breadcrumbs li a {
   text-decoration: none;
   color: blue;
 }
-.breadcrumb li::after {
+.breadcrumbs li::after {
   content: '>';
   margin-left: 5px;
 }
-.breadcrumb li:last-child::after {
+.breadcrumbs li:last-child::after {
   content: '';
 }

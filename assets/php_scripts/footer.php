@@ -1,23 +1,19 @@
-    <?php 
-    
-    if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
-  
-      include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\footer.php');
-    } else {
-      include_once( $_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/php_scripts/footer.php');
-    }
-    
-    ?>
-    
-    <footer>
-        <p>Copyright © <?php echo date('Y') ?> Counting Opinions (SQUIRE) Ltd.</p>
-    </footer>
-    <script src="<?php echo $rootUrl; ?>assets/js/jquery.min.js" defer></script>
-    <!--<script src="<?php echo $rootUrl; ?>assets/js/generateBreadcrumbs.min.js" defer></script>-->
-    <script src="<?php echo $rootUrl; ?>assets/js/scripts.min.js" defer></script>
+<script>
+      // create js variables from the PHP variables
+      // Assign PHP session variable to JavaScript variable
+      const ukey = '<?php echo $ukey; ?>'; 
+      const portal = <?php echo json_encode($portal); ?>;
+      const queryString = <?php echo json_encode($queryString); ?>;
 
-    <?php if (isset($_COOKIE['ukey']) && isset($_COOKIE['portal'])) { ?>
-      <script src="<?php echo $rootUrl; ?>assets/js/checkTimerInactivity.min.js" defer></script>
+      console.log(`I am outside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}`);
+      console.log(`I an outside of breadcrumbs.js. Querystring is ${queryString}`);
+      
+    </script>
+    <script src='<?php echo getRelativePath(''); ?>assets/js/jquery.min.js' defer></script>
+    <script src='<?php echo getRelativePath(''); ?>assets/js/menu.js'></script>
+    <script src='<?php echo getRelativePath(''); ?>assets/js/generateBreadcrumbs.js' defer></script>
+    <?php if ($_COOKIE['ukey'] || $_REQUEST['ukey']) { ?>
+    <script src='<?php echo getRelativePath(''); ?>assets/js/checkTimerInactivity.min.js' defer></script>
     <?php } ?>
   </body>
 </html>

@@ -1,35 +1,30 @@
-<?php 
+<?php
+// Start the session
+session_start();
 
-$title = 'Preferences - Counting Opinions';
+$title = "Preferences - Counting Opinions";
 
-include('assets/php_scripts/header.php');?>
+include('assets/php_scripts/header.php');
+?>
+  <main>
+    <div class="container">
+      <h1>Preferences</h1>
 
-<main>
-  <div class="container">
-    <h1>Preferences</h1>
+      <?php 
+      
+      // if ukey is present, display preference link
+      if ($_COOKIE['ukey'] || $_REQUEST['ukey']) { 
+        
+        if ($queryString !== null) {
 
-    <?php
+            echo '<p><a href="mmenu.php?'. $queryString . '">Back</a></p>';
+        } else {
+            echo '<p><a href="mmenu.php">Back</a></p>';
+        }
+        
+      } ?>
 
-        echo '<p><a href="counting-opinions-wrapper.php">Back</a><br/><br/>';
-        echo '<a href="logout.php">Logout</a></p>';
-        echo '<p>Path of menu json file:<br/>';
-        echo  $_SERVER['SERVER_NAME'] . '/'. getRelativePath('')  . 'ws/portal/get_pages.php?is_menu&portal=' . $portal . '&ukey='. $ukey . '</p>'; 
-
-      if ($_COOKIE['ukey']) {
-
-          // set default $_COOKIE['stylePreference'] if not set
-          if (!isset($_COOKIE['stylePreference'])) {
-            setcookie("stylePreference", 'countingOpinions', time() + (86400 * 30), "/");
-          }
-          echo '<p>Cookies:<br/>';
-          echo 'Ukey: ' . $_COOKIE['ukey'] . '<br/>';
-          echo 'Portal: ' . $_COOKIE['portal'] . '<br/>';
-          echo 'StylePreference: ' . $_COOKIE['stylePreference'] . '</p>';  
-        } 
-
-    ?>
-    
-    <form>
+      <form>
         <!-- Counting Opinions-->
         <div class="swatches-container">
           <div class="column-1">
@@ -45,7 +40,7 @@ include('assets/php_scripts/header.php');?>
               id="countingOpinions"
               name="option"
               value="Counting Opinions"
-              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "countingOpinions" ) { ?>
+              <?php if((isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "countingOpinions") || !isset($_COOKIE['stylePreference'])) { ?>
               checked
               <?php } ?>
             />
@@ -305,7 +300,8 @@ include('assets/php_scripts/header.php');?>
             <label for="tritanopiaBlues">TritanopiaBlues</label>
           </div>
         </div>
-      </form>
+    </form>
   </div>
 </main>
-<?php include('assets/php_scripts/footer.php');?>
+    
+<?php include('assets/php_scripts/footer.php'); ?>
