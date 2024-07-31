@@ -21,7 +21,7 @@ function timerIncrement() {
 
   if (idleTime === 1) {
     // 2 minutes of inactivity. Redirect to logout page.
-    window.location.href = rootUrl + 'logout.php?inactivity=1';
+    window.location.href = rootUrl + 'logout.php?inactivity';
   }
 }
 

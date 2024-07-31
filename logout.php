@@ -85,7 +85,7 @@ $rootUrl = get_base_url() . 'mmenu.php';
 
 if (isset($_GET['inactivity'])) { 
   // direct user to index page indicating the user was logged out due to inactivity
-  header("Location: " . $rootUrl . "?inactivity=1");
+  header("Location: " . $rootUrl . "?inactivity");
   die();
 } 
 
