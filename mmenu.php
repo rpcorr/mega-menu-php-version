@@ -35,7 +35,7 @@ include('assets/php_scripts/header.php');
             <p>Click on the link below to see the dynamic breadcrumbs in action.</p>
 
             <?php   
-                if ($queryString !== null) { 
+                if ($queryString !== null && $queryString !== 'inactivity') { 
                     echo '<p><a href="products/index.php?'. $queryString . '">Products</a></p>';
                 } else {
                        echo '<p><a href="products/index.php">Products</a></p>';

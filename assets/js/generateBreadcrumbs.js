@@ -44,7 +44,8 @@ function generateBreadcrumbs() {
         link.href += '/mmenu.php';
       }
 
-      if (queryString !== null) {
+      // check if queryString does not have inactivity to include querystring
+      if (queryString !== null && queryString !== 'inactivity') {
         link.href += `?${queryString}`;
       }
 
