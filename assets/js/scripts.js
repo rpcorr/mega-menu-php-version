@@ -28,7 +28,8 @@ $(document).ready(function () {
     });
   }
 
-  winWidth = $(window).width();
+  // assign window width to winWidth
+  winWidth = window.innerWidth;
 
   $('#menu-main-menu').on('keydown', function (e) {
     if (e.key == 'Escape') {
@@ -311,7 +312,7 @@ function onResize() {
 
     formatNav();
 
-    winWidth = $(window).width();
+    winWidth = window.innerWidth;
   }
 }
 
