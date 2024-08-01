@@ -31,11 +31,14 @@ $(document).ready(function () {
   // assign window width to winWidth
   winWidth = window.innerWidth;
 
-  $('#menu-main-menu').on('keydown', function (e) {
-    if (e.key == 'Escape') {
-      closeAllMenus('esc');
-    }
-  });
+  // close All Menus when the esc is pressed
+  document
+    .getElementById('menu-main-menu')
+    .addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        closeAllMenus('esc');
+      }
+    });
 
   navItems = $('#menu-main-menu > li');
 
