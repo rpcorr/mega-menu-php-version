@@ -163,7 +163,7 @@ $.urlParam = function (name) {
 
 // format navigation on page resize
 let id;
-$(window).resize(function () {
+window.addEventListener('resize', function () {
   clearTimeout(id);
   id = setTimeout(onResize, 10);
 });
