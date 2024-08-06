@@ -297,7 +297,7 @@ function resetArrows() {
 }
 
 function onResize() {
-  if (winWidth != $(window).width()) {
+  if (winWidth != window.innerWidth) {
     // get width of each item, and list each as visible
     let count = 0;
     navItems.each(function () {
