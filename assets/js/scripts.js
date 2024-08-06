@@ -306,7 +306,7 @@ function onResize() {
         $(this).addClass('hover');
       }
 
-      let itemWidth = $(this).outerWidth();
+      let itemWidth = this.offsetWidth;
       if (itemWidth > 0) {
         navItemWidth[count] = itemWidth;
       }
