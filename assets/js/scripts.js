@@ -143,8 +143,9 @@ function handleLinkClick(e) {
   e.preventDefault();
 
   // link has sub menu
-  if ($(this).parents().hasClass('menu-item-has-children'))
-    toggleTopLevelMenu($(this));
+  if (this.closest('.menu-item-has-children')) {
+    toggleTopLevelMenu(this);
+  }
 }
 
 // get params for determining the current user
@@ -175,46 +176,57 @@ function closeAllMenus(menuItem) {
   // run if the esc key was pressed
   if (menuItem === 'esc') {
     //1.  close all submenus
-    $('li').removeClass('visible');
+    document.querySelectorAll('li').forEach(function (element) {
+      element.classList.remove('visible');
+    });
 
     //2. reset arrows to down position
     resetArrows();
 
     //3.  reset aria-labels to Click enter to open
-    $('.menu-item-has-children > a').each(function () {
-      $(this).attr(
-        'aria-label',
-        `${$(this).text()}has a sub menu. Click enter to open`
-      );
+    document
+      .querySelectorAll('.menu-item-has-children > a')
+      .forEach(function (element) {
+        element.setAttribute(
+          'aria-label',
+          `${element.textContent} has a sub menu. Click enter to open`
+        );
 
-      //4. reset aria-expanded attribute to false
-      $(this).attr('aria-expanded', false);
-    });
+        // 4. Reset aria-expanded attribute to false
+        element.setAttribute('aria-expanded', 'false');
+      });
 
     // exit function early to avoid crash with menuLink.attr('id')
     return;
   }
 
   // handle case if link is NOT the More link
-  if (menuItem.attr('id') === undefined) {
+  if (menuItem.id === undefined) {
     //1. close all submenus
-    $('li').removeClass('visible');
+    console.log('close all submenus');
+    document.querySelectorAll('li').forEach(function (element) {
+      element.classList.remove('visible');
+    });
   }
 
   //2.  reset arrows to down position
   resetArrows();
 
   //3.  reset aria-labels to Click enter to open
-  $('.menu-item-has-children > a').each(function () {
-    $(this).attr(
-      'aria-label',
-      `${$(this).text()}has a sub menu. Click enter to open`
-    );
+  document
+    .querySelectorAll('.menu-item-has-children > a')
+    .forEach(function (element) {
+      element.setAttribute(
+        'aria-label',
+        `${element.textContent} has a sub menu. Click enter to open`
+      );
 
-    //4. reset aria-expanded attribute to false
-    $(this).attr('aria-expanded', false);
-    $(this).attr('aria-expanded', false);
-  });
+      // Reset aria-expanded attribute to false
+      element.setAttribute('aria-expanded', 'false');
+    });
+
+  // remove class visible
+  menuItem.closest('li').classList.remove('visible');
 }
 
 function formatNav() {
@@ -332,97 +344,132 @@ function onResize() {
 
 function toggleTopLevelMenu(menuLink) {
   // CLOSE ALL MENUS EXCEPT FOR THE CURRENT IF OPEN
-  if (!$(menuLink).parents('.menu-item-has-children').hasClass('visible')) {
-    // 1-a. remove visible class from all menus items except the current
-    $('li.menu-item-has-children')
-      .not(menuLink.closest('li'))
-      .removeClass('visible');
+  if (
+    !menuLink.closest('.menu-item-has-children').classList.contains('visible')
+  ) {
+    document
+      .querySelectorAll('li.menu-item-has-children')
+      .forEach(function (element) {
+        if (element !== menuLink.closest('li')) {
+          element.classList.remove('visible');
+        }
+      });
 
     // 1-b. reset arrows
     resetArrows();
 
     // 1-c. update aria label to close menu
-    let focusedLink = $('li.menu-item-has-children > a:focus');
+    let focusedLink = document.querySelector(
+      'li.menu-item-has-children > a:focus'
+    );
 
-    $('li.menu-item-has-children > a')
-      .not(focusedLink)
-      .each(function () {
-        $(this).attr(
-          'aria-label',
-          `${$(this).text()}has a sub menu. Click enter to open`
-        );
+    document
+      .querySelectorAll('li.menu-item-has-children > a')
+      .forEach(function (element) {
+        if (element !== focusedLink) {
+          element.setAttribute(
+            'aria-label',
+            `${element.textContent} has a sub menu. Click enter to open`
+          );
+        }
       });
 
     // 1-d. reset sub-menu aria-expanded to false
-    $('li.menu-item-has-children > a')
-      .not(focusedLink)
-      .attr('aria-expanded', false);
+    document
+      .querySelectorAll('li.menu-item-has-children > a')
+      .forEach(function (element) {
+        if (element !== focusedLink) {
+          element.setAttribute('aria-expanded', 'false');
+        }
+      });
 
     //-------------------------------------------------------------
 
     // 2. OPEN CURRENT MENU
-    // 2-a. set visible class to menu's parent
-    $(menuLink).parents('.menu-item-has-children').addClass('visible');
 
-    // 2-b. set the arrow to upwards position
-    $(menuLink).children('i').removeClass('angle-down').addClass('angle-up');
+    let parents = [];
+    let element = menuLink;
 
-    // 2-c. update aria label to close sub menu
-    $(menuLink).attr(
-      'aria-label',
-      `Click Enter to close ${$(menuLink).text()}sub menu`
-    );
+    while (element) {
+      if (element.matches('.menu-item-has-children')) {
+        parents.push(element);
+      }
+      element = element.parentElement;
+    }
 
-    // 2-d. set aria-expanded to true
-    $(menuLink).attr('aria-expanded', true);
+    parents.forEach(function (parent) {
+      // 2-a. set visible class to menu's parent
+      parent.classList.add('visible');
+
+      // 2-b. set the arrow to upwards position
+      const iconsInMenuItem = parent.querySelector('i');
+      iconsInMenuItem.classList.remove('angle-down');
+      iconsInMenuItem.classList.add('angle-up');
+
+      // 2-c. update aria label to close sub menu
+      const anchorTag = parent.querySelector('a');
+      anchorTag.setAttribute(
+        'aria-label',
+        `Click Enter to close ${anchorTag.textContent} sub menu`
+      );
+
+      // 2-d set aria-expanded to true
+      anchorTag.setAttribute('aria-expanded', 'true');
+    });
   } else {
     // BEFORE CLOSING MENU - CHECK IF LINK HAS A SUB MENU
-    if ($(menuLink).parent().parent().is('ul#menu-main-menu.menu')) {
+    if (
+      menuLink.parentElement.parentElement.matches('ul#menu-main-menu.menu')
+    ) {
       // link is the top menu, so do close
       // menu item is the top menu
-      closeAllMenus($(menuLink));
+      closeAllMenus(menuLink);
     } else {
       // menu item is NOT the top item
 
       // 3. OPEN secondary menu
-      if (!$(menuLink).parent().hasClass('visible')) {
+      if (!menuLink.parentElement.classList.contains('visible')) {
         // 3-a. set visible class to menu's parent
-        $(menuLink).parents('.menu-item-has-children').addClass('visible');
+        menuLink.closest('.menu-item-has-children').classList.add('visible');
 
         // 3-b. set the arrow to upwards position
-        $(menuLink)
-          .children('i')
-          .removeClass('angle-down')
-          .addClass('angle-up');
+        menuLink.querySelectorAll('i').forEach(function (icon) {
+          icon.classList.remove('angle-down');
+          icon.classList.add('angle-up');
+        });
 
         // 3-c. set the aria-label to close sub menu
-        $(menuLink).attr(
+        menuLink.setAttribute(
           'aria-label',
-          `Click Enter to close ${$(menuLink).text()}sub menu`
+          `Click Enter to close ${menuLink.textContent} sub menu`
         );
 
         // 3-d. set aria-expanded to true
-        $(menuLink).attr('aria-expanded', true);
+        menuLink.setAttribute('aria-expanded', 'true');
       } else {
         // 4. CLOSE secondary menu
 
         // 4-a. remove visible class from sub menu
-        $(menuLink).parent('.menu-item-has-children').removeClass('visible');
+        if (
+          menuLink.parentElement.classList.contains('menu-item-has-children')
+        ) {
+          menuLink.parentElement.classList.remove('visible');
+        }
 
         // 4-b. set the arrow to downwards position
-        $(menuLink)
-          .children('i')
-          .removeClass('angle-up')
-          .addClass('angle-down');
+        menuLink.querySelectorAll('i').forEach(function (icon) {
+          icon.classList.remove('angle-up');
+          icon.classList.add('angle-down');
+        });
 
         // 4-c. set the aria label to open menu
-        $(menuLink).attr(
+        menuLink.setAttribute(
           'aria-label',
-          `${$(menuLink).text()}has a sub menu. Click enter to open`
+          `${menuLink.textContent} has a sub menu. Click enter to open`
         );
 
         // 4-d. reset aria-expanded to false
-        $(menuLink).attr('aria-expanded', false);
+        menuLink.setAttribute('aria-expanded', 'false');
 
         // 4-e. reset sibiling submenus attributes as well
         closeSiblingSubMenus(menuLink);
