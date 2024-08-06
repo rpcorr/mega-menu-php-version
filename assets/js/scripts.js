@@ -312,7 +312,7 @@ function onResize() {
       }
     });
 
-    moreWidth = $('#menu-more').outerWidth();
+    moreWidth = document.getElementById('menu-more').offsetWidth;
 
     // hide all submenus
     $('.menu-item-has-children').removeClass('visible');
