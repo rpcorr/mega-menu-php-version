@@ -44,14 +44,14 @@ $(document).ready(function () {
 
   // add hover class to those with class menu-item-has-children
   navItems.each(function () {
-    if ($(this).hasClass('menu-item-has-children')) {
-      $(this).addClass('hover');
+    if (this.classList.contains('menu-item-has-children')) {
+      this.classList.add('hover');
     }
   });
 
   // get width of each item, and list each as visible
   navItems.each(function () {
-    navItemWidth.push($(this).outerWidth());
+    navItemWidth.push(this.offsetWidth);
     navItemVisible.push(true);
   });
 
@@ -371,7 +371,6 @@ function formatNav() {
       }
 
       // remove hover class for items under "More"
-      console.log('here I am');
       this.classList.remove('hover');
 
       // move menu item to More dropdown
