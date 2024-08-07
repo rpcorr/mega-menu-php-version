@@ -125,17 +125,29 @@ $(document).ready(function () {
       });
   });
 
-  $('.menu-item-has-children a').click(function (e) {
-    e.stopPropagation();
-  });
+  document
+    .querySelectorAll('.menu-item-has-children a')
+    .forEach(function (element) {
+      element.addEventListener('click', function (e) {
+        e.stopPropagation();
+      });
+    });
 
-  $('.menu-item-has-children ul').click(function (e) {
-    e.stopPropagation();
-  });
+  document
+    .querySelectorAll('.menu-item-has-children ul')
+    .forEach(function (element) {
+      element.addEventListener('click', function (e) {
+        e.stopPropagation();
+      });
+    });
 
-  $('.menu-item-has-children li').click(function (e) {
-    e.stopPropagation();
-  });
+  document
+    .querySelectorAll('.menu-item-has-children ul')
+    .forEach(function (element) {
+      element.addEventListener('click', function (e) {
+        e.stopPropagation();
+      });
+    });
 
   // format navigation on page load
   formatNav();
