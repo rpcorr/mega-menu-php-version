@@ -27,7 +27,11 @@ if (!ukey) {
 if (!ukey && !user) {
   JSONfile = 'http://localhost/mega-menu/assets/json/co-pages.json';
 } else {
-  JSONfile = 'http://localhost/mega-menu/assets/json/co-pages-logged-in.json';
+  if (ukey) {
+    JSONfile = 'http://localhost/mega-menu/assets/json/co-pages-logged-in.json';
+  } else if (user) {
+    JSONfile = 'http://localhost/mega-menu/assets/json/admin.json';
+  }
 }
 
 console.log(JSONfile);

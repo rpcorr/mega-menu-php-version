@@ -1,0 +1,309 @@
+{
+  "pages": [
+    {
+      "page_id": "0",
+      "page_title": "Portal Welcome Page",
+      "page_prompt": "Welcome",
+      "page_link": "index.php"
+    },
+    {
+      "page_id": "1",
+      "page_title": "About Us",
+      "page_prompt": "About Us",
+      "page_link": "about.php"
+    },
+    {
+      "page_id": "2",
+      "page_title": "Pages",
+      "page_prompt": "Pages",
+      "page_link": "pages.php",
+      "subMenuType": "regularLinks",
+      "subMenuItems": [
+        {
+          "page_id": "2-1",
+          "page_title": "Admin Only",
+          "page_prompt": "Admin Only",
+          "page_link": "an-admin-access-page.php"
+        },
+        {
+          "page_id": "2-2",
+          "page_title": "Admin or Premium Only",
+          "page_prompt": "Admin or Premium Only",
+          "page_link": "an-admin-or-premium-access-page.php"
+        }
+      ]
+    },
+    {
+      "page_id": "3",
+      "page_title": "New",
+      "page_prompt": "New",
+      "page_link": "new.php",
+      "subMenuType": "photoLinks",
+      "subMenuItems": [
+        {
+          "page_id": "3-1",
+          "page_title": "Rain Forest",
+          "page_prompt": "Rain Forest",
+          "page_link": "#rainForest",
+          "imgSrc": "assets/imgs/p1.jpg"
+        },
+        {
+          "page_id": "3-2",
+          "page_title": "Mountains",
+          "page_prompt": "Mountains",
+          "page_link": "#mountains",
+          "imgSrc": "assets/imgs/p2.jpg"
+        },
+        {
+          "page_id": "3-3",
+          "page_title": "Waterfall",
+          "page_prompt": "Waterfall",
+          "page_link": "#waterfall",
+          "imgSrc": "assets/imgs/p3.jpg"
+        },
+        {
+          "page_id": "3-4",
+          "page_title": "Owl",
+          "page_prompt": "Owl",
+          "page_link": "#owl",
+          "imgSrc": "assets/imgs/p4.jpg"
+        }
+      ]
+    },
+    {
+      "page_id": "4",
+      "page_title": "Shop",
+      "page_prompt": "Shop",
+      "page_link": "shop.php",
+      "subMenuType": "categorizedLinks",
+      "subMenuItems": [
+        {
+          "contentType": "link",
+          "section_id": "na",
+          "section_title": "North America",
+          "page_links": [
+            {
+              "page_id": "4-1",
+              "page_title": "Package 1",
+              "page_prompt": "Package 1",
+              "page_link": "napackage1.html"
+            },
+            {
+              "page_id": "4-2",
+              "page_title": "Package 2",
+              "page_prompt": "Package 2",
+              "page_link": "napackage2.html"
+            },
+            {
+              "page_id": "4-3",
+              "page_title": "Package 3",
+              "page_prompt": "Package 3",
+              "page_link": "napackage3.html"
+            },
+            {
+              "page_id": "4-4",
+              "page_title": "Package 4",
+              "page_prompt": "Package 4",
+              "page_link": "napackage4.html"
+            },
+            {
+              "page_id": "4-5",
+              "page_title": "Package 5",
+              "page_prompt": "Package 5",
+              "page_link": "napackage5.html"
+            }
+          ]
+        },
+        {
+          "contentType": "link",
+          "section_id": "sa",
+          "section_title": "South America",
+          "page_links": [
+            {
+              "page_id": "4-6",
+              "page_title": "Package 1",
+              "page_prompt": "Package 1",
+              "page_link": "sapackage1.html"
+            },
+            {
+              "page_id": "4-7",
+              "page_title": "Package 2",
+              "page_prompt": "Package 2",
+              "page_link": "sapackage2.html"
+            },
+            {
+              "page_id": "4-8",
+              "page_title": "Package 3",
+              "page_prompt": "Package 3",
+              "page_link": "sapackage3.html"
+            }
+          ]
+        },
+        {
+          "contentType": "link",
+          "section_id": "au",
+          "section_title": "Australia",
+          "page_links": [
+            {
+              "page_id": "4-9",
+              "page_title": "Package 1",
+              "page_prompt": "Package 1",
+              "page_link": "aupackage1.html"
+            },
+            {
+              "page_id": "4-10",
+              "page_title": "Package 2",
+              "page_prompt": "Package 2",
+              "page_link": "aupackage2.html"
+            },
+            {
+              "page_id": "4-11",
+              "page_title": "Package 3",
+              "page_prompt": "Package 3",
+              "page_link": "aupackage3.html"
+            },
+            {
+              "page_id": "4-12",
+              "page_title": "Package 4",
+              "page_prompt": "Package 4",
+              "page_link": "aupackage4.html"
+            }
+          ]
+        },
+        {
+          "contentType": "link",
+          "section_id": "af",
+          "section_title": "Africa",
+          "page_links": [
+            {
+              "page_id": "4-13",
+              "page_title": "Package 1",
+              "page_prompt": "Package 1",
+              "page_link": "afpackage1.html"
+            },
+            {
+              "page_id": "4-14",
+              "page_title": "Package 2",
+              "page_prompt": "Package 2",
+              "page_link": "afpackage2.html"
+            },
+            {
+              "page_id": "4-15",
+              "page_title": "Package 3",
+              "page_prompt": "Package 3",
+              "page_link": "afpackage3.html"
+            },
+            {
+              "page_id": "4-16",
+              "page_title": "Package 4",
+              "page_prompt": "Package 4",
+              "page_link": "afpackage4.html"
+            }
+          ]
+        },
+        {
+          "contentType": "link",
+          "section_id": "eu",
+          "section_title": "Europe",
+          "page_links": [
+            {
+              "page_id": "4-17",
+              "page_title": "Package 1",
+              "page_prompt": "Package 1",
+              "page_link": "eupackage1.html"
+            },
+            {
+              "page_id": "4-18",
+              "page_title": "Package 2",
+              "page_prompt": "Package 2",
+              "page_link": "eupackage2.html"
+            },
+            {
+              "page_id": "4-19",
+              "page_title": "Package 3",
+              "page_prompt": "Package 3",
+              "page_link": "eupackage3.html"
+            },
+            {
+              "page_id": "4-20",
+              "page_title": "Package 4",
+              "page_prompt": "Package 4",
+              "page_link": "eupackage4.html"
+            },
+            {
+              "page_id": "4-21",
+              "page_title": "Package 5",
+              "page_prompt": "Package 5",
+              "page_link": "eupackage5.html"
+            },
+            {
+              "page_id": "4-22",
+              "page_title": "Package 6",
+              "page_prompt": "Package 6",
+              "page_link": "eupackage6.html"
+            },
+            {
+              "page_id": "4-23",
+              "page_title": "Package 7",
+              "page_prompt": "Package 7",
+              "page_link": "eupackage7.html"
+            },
+            {
+              "page_id": "4-24",
+              "page_title": "Package 8",
+              "page_prompt": "Package 8",
+              "page_link": "eupackage8.html"
+            },
+            {
+              "page_id": "4-25",
+              "page_title": "Package 9",
+              "page_prompt": "Package 9",
+              "page_link": "eupackage9.html"
+            }
+          ]
+        },
+        {
+          "contentType": "photo",
+          "imgSrc": "assets/imgs/p5.jpg",
+          "alt": "Mountain goats"
+        }
+      ]
+    },
+    {
+      "page_id": "5",
+      "page_title": "Portfolio",
+      "page_prompt": "Portfolio",
+      "page_link": "portfolio.php"
+    },
+    {
+      "page_id": "6",
+      "page_title": "Resources",
+      "page_prompt": "Resources",
+      "page_link": "resources.php"
+    },
+    {
+      "page_id": "7",
+      "page_title": "Careers",
+      "page_prompt": "Careers",
+      "page_link": "careers.php"
+    },
+    {
+      "page_id": "8",
+      "page_title": "Contact",
+      "page_prompt": "Contact",
+      "page_link": "contact.php"
+    },
+    {
+      "page_id": "9",
+      "page_title": "Preferences",
+      "page_prompt": "Preferences",
+      "page_link": "preferences.php"
+    },
+    {
+      "page_id": "10",
+      "page_title": "Log out",
+      "page_prompt": "Log out",
+      "page_link": "logout.php"
+    }
+  ]
+}
