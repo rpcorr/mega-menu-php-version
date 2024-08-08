@@ -10,7 +10,7 @@ let winWidth = 0;
 let output = '';
 let megaMenuLinks = '';
 
-$(document).ready(function () {
+document.addEventListener('DOMContentLoaded', function () {
   // select all anchor tags
   megaMenuLinks = document.querySelectorAll('nav a[href^="#"]');
 
@@ -220,8 +220,8 @@ function handleLinkClick(e) {
 // get params for determining the current user
 // input: userType
 // returns: userType value (string)
-$.urlParam = function (name) {
-  var results = new RegExp('[?&]' + name + '=([^&#]*)').exec(
+function getUrlParam(name) {
+  const results = new RegExp('[?&]' + name + '=([^&#]*)').exec(
     window.location.href
   );
 
@@ -229,7 +229,7 @@ $.urlParam = function (name) {
     return null;
   }
   return decodeURI(results[1]) || 0;
-};
+}
 
 // format navigation on page resize
 let id;
