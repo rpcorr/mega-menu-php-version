@@ -63,9 +63,9 @@ if (isset($_POST['username'])) {
           
           // user is successfully logged in, redirect page to index.php
           if ($user->username ==="user1" || $user->username ==="user2" || $user->username ==="user3" ) {
-            header('Location: index.php');  
+            header('Location: mmenu.php?user=' . $user->username);  
           } else {
-            header('Location: index.php?is_menu&portal=door&ukey=b5e79c05b3f12219e725fc167edefdd1');  
+            header('Location: mmenu.php?is_menu&portal=door&ukey=b5e79c05b3f12219e725fc167edefdd1');  
           }
 
             

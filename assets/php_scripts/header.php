@@ -26,6 +26,10 @@
         $portal = $_REQUEST['portal'];
     }
 
+    if ($_REQUEST['user']) {
+      $user = $_REQUEST['user'];
+    }
+
 
     // Determine if querystring is present.  If so, attached to Preference.php link
             
@@ -79,7 +83,7 @@
 
     <?php }  
   
-    if ($ukey) {  ?>
+    if ($ukey || $user) {  ?>
       <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/countingOpinions.css" />
     <?php } ?>
     

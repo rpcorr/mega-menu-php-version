@@ -12,7 +12,9 @@ let megaMenuLinks = '';
 let initialColumns = '';
 let JSONfile = '';
 
-console.log(`I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}`);
+console.log(
+  `I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}. User is ${user}`
+);
 
 // Counting Opinions server
 if (!ukey) {
@@ -22,7 +24,7 @@ if (!ukey) {
 }
 
 // Local host
-if (!ukey) {
+if (!ukey && !user) {
   JSONfile = 'http://localhost/mega-menu/assets/json/co-pages.json';
 } else {
   JSONfile = 'http://localhost/mega-menu/assets/json/co-pages-logged-in.json';
