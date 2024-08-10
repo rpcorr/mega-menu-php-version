@@ -10,7 +10,6 @@
       console.log(`I an outside of breadcrumbs.js. Querystring is ${queryString}`);
       
     </script>
-    <script src='<?php echo getRelativePath(''); ?>assets/js/jquery.min.js' defer></script>
     <script src='<?php echo getRelativePath(''); ?>assets/js/menu.js'></script>
     <script src='<?php echo getRelativePath(''); ?>assets/js/generateBreadcrumbs.js' defer></script>
     <?php if ($_COOKIE['ukey'] || $_REQUEST['ukey']) { ?>
