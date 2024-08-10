@@ -270,6 +270,69 @@
       ]
     },
     {
+      "page_id": "88",
+      "page_title": "Products",
+      "page_prompt": "Products",
+      "page_link": "products.html",
+      "subMenuType": "regularLinks",
+      "subMenuItems": [
+        {
+          "page_id": "88-1",
+          "page_title": "Product 1",
+          "page_prompt": "Product 1",
+          "page_link": "#",
+          "subMenuItems": [
+            {
+              "page_id": "88-11",
+              "page_title": "Product 1a",
+              "page_prompt": "Product 1a",
+              "page_link": "product1a.html"
+            },
+            {
+              "page_id": "88-12",
+              "page_title": "Product 1b",
+              "page_prompt": "Product 1b",
+              "page_link": "#p1b",
+              "subMenuItems": [
+                {
+                  "page_id": "88-12-1",
+                  "page_title": "Product 1b a",
+                  "page_prompt": "Product 1b a",
+                  "page_link": "https://www.ronancorr.com"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "page_id": "89",
+          "page_title": "Product 2",
+          "page_prompt": "Product 2",
+          "page_link": "#",
+          "subMenuItems": [
+            {
+              "page_id": "89-1",
+              "page_title": "Test 1",
+              "page_prompt": "Test 1",
+              "page_link": "test1.html"
+            },
+            {
+              "page_id": "89-2",
+              "page_title": "Test 2",
+              "page_prompt": "Test 2",
+              "page_link": "#test2"
+            }
+          ]
+        },
+        {
+          "page_id": "90",
+          "page_title": "Product 3",
+          "page_prompt": "Product 3",
+          "page_link": "product3.html"
+        }
+      ]
+    },
+    {
       "page_id": "5",
       "page_title": "Portfolio",
       "page_prompt": "Portfolio",
