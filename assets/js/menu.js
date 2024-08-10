@@ -416,7 +416,6 @@ function closeAllMenus(menuItem) {
 
     //4. reset aria-expanded attribute to false
     $(this).attr('aria-expanded', false);
-    $(this).attr('aria-expanded', false);
   });
 }
 
@@ -426,7 +425,10 @@ function formatNav() {
   let count = 0;
   let tempWidth = 0;
   let totalWidth = 0;
-  const containerWidth = $('.menu-main-menu-container').innerWidth();
+  const containerWidth = Math.round(
+    document.querySelector('.menu-main-menu-container').getBoundingClientRect()
+      .width
+  );
   const navPadding = 5; // for spacing around items
   //const numItems = navItems.length - 1;
   const numItems = 5;
