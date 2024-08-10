@@ -518,7 +518,12 @@ function onResize() {
     moreWidth = document.getElementById('menu-more').offsetWidth;
 
     // hide all submenus
-    $('.menu-item-has-children').removeClass('visible');
+    document
+      .querySelectorAll('.menu-item-has-children')
+      .forEach(function (element) {
+        console.log('here');
+        element.classList.remove('visible');
+      });
 
     // reset arrows to down position
     resetArrows();
