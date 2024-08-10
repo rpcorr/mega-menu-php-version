@@ -231,18 +231,18 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
 
-      navItems = $('#menu-main-menu > li');
+      navItems = document.querySelectorAll('#menu-main-menu > li');
 
       // add hover class to those with class menu-item-has-children
-      navItems.each(function () {
-        if (this.classList.contains('menu-item-has-children')) {
-          this.classList.add('hover');
+      navItems.forEach(function (item) {
+        if (item.classList.contains('menu-item-has-children')) {
+          item.classList.add('hover');
         }
       });
 
       // get width of each item, and list each as visible
-      navItems.each(function () {
-        navItemWidth.push(this.offsetWidth);
+      navItems.forEach(function (item) {
+        navItemWidth.push(item.offsetWidth);
         navItemVisible.push(true);
       });
 
@@ -512,7 +512,7 @@ function formatNav() {
   const numItems = 5;
 
   // for each menu item
-  navItems.each(function () {
+  navItems.forEach(function (item) {
     // get width of menu with that item
     tempWidth = totalWidth + navItemWidth[count] + navPadding;
 
@@ -572,11 +572,11 @@ function formatNav() {
       }
 
       // remove hover class for items under "More"
-      this.classList.remove('hover');
+      item.classList.remove('hover');
 
       // move menu item to More dropdown
       const moreSubMenu = document.getElementById('moreSubMenu');
-      moreSubMenu.appendChild(this);
+      moreSubMenu.appendChild(item);
 
       navItemVisible[count] = false;
     }
@@ -597,13 +597,14 @@ function onResize() {
   if (winWidth != window.innerWidth) {
     // get width of each item, and list each as visible
     let count = 0;
-    navItems.each(function () {
+    navItems.forEach(function (item) {
       // add hover class to those with class menu-item-has-children
-      if (this.classList.contains('menu-item-has-children')) {
-        this.classList.add('hover');
+      if (item.classList.contains('menu-item-has-children')) {
+        item.classList.add('hover');
       }
 
-      let itemWidth = this.offsetWidth;
+      let itemWidth = item.offsetWidth;
+
       if (itemWidth > 0) {
         navItemWidth[count] = itemWidth;
       }
