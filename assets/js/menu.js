@@ -681,14 +681,14 @@ function watchForHover() {
     if (new Date() - lastTouchTime < 500) return;
     if (hasHoverClass) return;
 
-    $('body').addClass('has-hover');
+    document.body.classList.add('has-hover');
     hasHoverClass = true;
   }
 
   function disableHover() {
     if (!hasHoverClass) return;
 
-    $('body').removeClass('has-hover');
+    document.body.classList.remove('has-hover');
     hasHoverClass = false;
   }
 
