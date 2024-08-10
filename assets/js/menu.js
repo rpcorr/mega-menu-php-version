@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
       $('#menu-main-menu').append(
         '<li id="menu-more" class="menu-item menu-item-has-children" style="display: none;"><a id="menuMoreLink" href="#" aria-label="More has a sub menu. Click enter to open" aria-expanded="false"></a><ul id="moreSubMenu" class="sub-menu"></ul></li>'
       );
-      moreWidth = $('#menu-more').outerWidth();
+      moreWidth = document.getElementById('menu-more').offsetWidth;
 
       // toggle sub-menu on click
       $('#menuMoreLink').click(function (event) {
@@ -515,7 +515,7 @@ function onResize() {
       }
     });
 
-    moreWidth = $('#menu-more').outerWidth();
+    moreWidth = document.getElementById('menu-more').offsetWidth;
 
     // hide all submenus
     $('.menu-item-has-children').removeClass('visible');
