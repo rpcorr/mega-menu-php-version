@@ -319,17 +319,32 @@ document.addEventListener('DOMContentLoaded', () => {
           });
       });
 
-      $('.menu-item-has-children a').click(function (e) {
-        e.stopPropagation();
-      });
+      // stop propagation for .menu-item-has-children a
+      document
+        .querySelectorAll('.menu-item-has-children a')
+        .forEach(function (element) {
+          element.addEventListener('click', function (e) {
+            e.stopPropagation();
+          });
+        });
 
-      $('.menu-item-has-children ul').click(function (e) {
-        e.stopPropagation();
-      });
+      // stop propagation for .menu-item-has-children ul
+      document
+        .querySelectorAll('.menu-item-has-children ul')
+        .forEach(function (element) {
+          element.addEventListener('click', function (e) {
+            e.stopPropagation();
+          });
+        });
 
-      $('.menu-item-has-children li').click(function (e) {
-        e.stopPropagation();
-      });
+      // stop propagation for .menu-item-has-children li
+      document
+        .querySelectorAll('.menu-item-has-children li')
+        .forEach(function (element) {
+          element.addEventListener('click', function (e) {
+            e.stopPropagation();
+          });
+        });
 
       // format navigation on page load
       formatNav();
