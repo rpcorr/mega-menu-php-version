@@ -295,23 +295,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
       // collapse all sub-menus when user clicks off
-      $('body').click(function (event) {
-        if (!$(event.target).closest('li').length) {
-          $('.menu-item-has-children').removeClass('visible');
+      document.body.addEventListener('click', function (event) {
+        if (!event.target.closest('li')) {
+          document
+            .querySelectorAll('.menu-item-has-children')
+            .forEach(function (element) {
+              element.classList.remove('visible');
+            });
         }
 
         // reset arrows to down position
         resetArrows();
 
         //  reset aria-labels to Click enter to open
-        $('.menu-item-has-children > a').each(function () {
-          $(this)
-            .attr(
+        document
+          .querySelectorAll('.menu-item-has-children > a')
+          .forEach(function (element) {
+            element.setAttribute(
               'aria-label',
-              `${$(this).text()}has a sub menu. Click enter to open`
-            )
-            .attr('aria-expanded', 'false');
-        });
+              `${element.textContent} has a sub menu. Click enter to open`
+            );
+            element.setAttribute('aria-expanded', 'false');
+          });
       });
 
       $('.menu-item-has-children a').click(function (e) {
