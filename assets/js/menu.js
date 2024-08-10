@@ -247,41 +247,88 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       // add more link
-      $('#menu-main-menu').append(
-        '<li id="menu-more" class="menu-item menu-item-has-children" style="display: none;"><a id="menuMoreLink" href="#" aria-label="More has a sub menu. Click enter to open" aria-expanded="false"></a><ul id="moreSubMenu" class="sub-menu"></ul></li>'
+      const menuMainMenu = document.getElementById('menu-main-menu');
+      const newMenuItem = document.createElement('li');
+
+      newMenuItem.id = 'menu-more';
+      newMenuItem.className = 'menu-item menu-item-has-children';
+      newMenuItem.style.display = 'none';
+
+      const newMenuLink = document.createElement('a');
+      newMenuLink.id = 'menuMoreLink';
+      newMenuLink.href = '#';
+      newMenuLink.setAttribute(
+        'aria-label',
+        'More has a sub menu. Click enter to open'
       );
+      newMenuLink.setAttribute('aria-expanded', 'false');
+
+      const newSubMenu = document.createElement('ul');
+      newSubMenu.id = 'moreSubMenu';
+      newSubMenu.className = 'sub-menu';
+
+      newMenuItem.appendChild(newMenuLink);
+      newMenuItem.appendChild(newSubMenu);
+      menuMainMenu.appendChild(newMenuItem);
+
       moreWidth = document.getElementById('menu-more').offsetWidth;
 
       // toggle sub-menu on click
-      $('#menuMoreLink').click(function (event) {
-        event.preventDefault();
-        $('.menu-item-has-children:not(#menu-more)').removeClass('visible');
+      document
+        .getElementById('menuMoreLink')
+        .addEventListener('click', function (event) {
+          event.preventDefault();
 
-        $(this).parent('.menu-item-has-children').toggleClass('visible');
+          // close all other open menus
+          document
+            .querySelectorAll('.menu-item-has-children:not(#menu-more)')
+            .forEach(function (element) {
+              element.classList.remove('visible');
+            });
 
-        if ($(this).parent('.menu-item-has-children').hasClass('visible')) {
-          // set the arrow to the up position (open)
-          $(this).children('i').removeClass('angle-down').addClass('angle-up');
+          // display the More menu
+          this.closest('.menu-item-has-children').classList.toggle('visible');
 
-          // update aria-label to close menu
-          $(this).attr('aria-label', 'Click Enter to close More sub menu');
+          if (
+            this.closest('.menu-item-has-children').classList.contains(
+              'visible'
+            )
+          ) {
+            // set the arrow to the up position (open)
+            const icon = this.querySelector('i');
+            if (icon) {
+              icon.classList.remove('angle-down');
+              icon.classList.add('angle-up');
+            }
 
-          // set the More sub menu aria-expanded attr to true
-          $(this).attr('aria-expanded', true);
-        } else {
-          // set the arrow to the down position (close)
-          $(this).children('i').removeClass('angle-up').addClass('angle-down');
+            // update aria-label to close menu
+            this.setAttribute(
+              'aria-label',
+              'Click Enter to close More sub menu'
+            );
 
-          // update aria-label to open menu
-          $(this).attr(
-            'aria-label',
-            'More has a sub menu. Click enter to open'
-          );
+            // set the More sub menu aria-expanded attr to true
+            this.setAttribute('aria-expanded', true);
+          } else {
+            // set the arrow to the down position (close)
+            resetArrows();
 
-          // set the More link aria-expanded attr to false
-          $(this).attr('aria-expanded', false);
-        }
-      });
+            const anchors = document.querySelectorAll('#moreSubMenu a');
+
+            anchors.forEach(function (anchor) {
+              // set aria-expanded to false
+              anchor.setAttribute('aria-expanded', false);
+              // set aria label to open open menu
+              anchor.setAttribute(
+                'aria-label',
+                `${anchor.textContent} has a sub menu. Click enter to open`
+              );
+            });
+
+            // set the More link aria-expanded attr to false
+            this.setAttribute('aria-expanded', false);
+          }
+        });
 
       // toggle More menu sub-menu on key up
       document
@@ -481,13 +528,19 @@ function formatNav() {
       // show menu item
       if (navItemVisible[count] != true) {
         // move back to main menu
-        $('#menu-more').before($('#moreSubMenu').children().first());
+        const menuMore = document.getElementById('menu-more');
+        const moreSubMenu = document.getElementById('moreSubMenu');
+        const firstChild = moreSubMenu.firstElementChild;
+
+        if (firstChild) {
+          menuMore.parentNode.insertBefore(firstChild, menuMore);
+        }
 
         navItemVisible[count] = true;
 
         // if all are visible, hide More
         if (count == numItems - 1) {
-          $('#menu-more').hide();
+          document.getElementById('menu-more').style.display = 'none';
         }
       }
     }
@@ -499,21 +552,31 @@ function formatNav() {
 
         // change text to "Menu" if no links are showing
         if (count == 0) {
-          $('nav').addClass('all-hidden');
-          $('#menuMoreLink').html('Menu <i class="caret angle-down"></i>');
+          // Add the 'all-hidden' class to the <nav> element
+          document.querySelector('nav').classList.add('all-hidden');
+
+          // Set the HTML content of the element with the ID 'menuMoreLink'
+          document.getElementById('menuMoreLink').innerHTML =
+            'Menu <i class="caret angle-down"></i>';
         } else {
-          $('nav').removeClass('all-hidden');
-          $('#menuMoreLink').html('More <i class="caret angle-down"></i>');
+          // Remove the 'all-hidden' class from the <nav> element
+          document.querySelector('nav').classList.remove('all-hidden');
+
+          // Set the HTML content of the element with the ID 'menuMoreLink'
+          document.getElementById('menuMoreLink').innerHTML =
+            'More <i class="caret angle-down"></i>';
         }
 
-        $('#menu-more').show();
+        // show more menu
+        document.getElementById('menu-more').style.display = 'block';
       }
 
       // remove hover class for items under "More"
-      $(this).removeClass('hover');
+      this.classList.remove('hover');
 
       // move menu item to More dropdown
-      $(this).appendTo($('#moreSubMenu'));
+      const moreSubMenu = document.getElementById('moreSubMenu');
+      moreSubMenu.appendChild(this);
 
       navItemVisible[count] = false;
     }
