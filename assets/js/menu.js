@@ -671,9 +671,6 @@ function toggleTopLevelMenu(menuLink) {
 
         // 4-d. reset aria-expanded to false
         menuLink.setAttribute('aria-expanded', 'false');
-
-        // 4-e. reset sibiling submenus attributes as well
-        closeSiblingSubMenus(menuLink);
       }
     }
   }
@@ -708,31 +705,6 @@ function watchForHover() {
   document.addEventListener('mousemove', enableHover, true);
 
   enableHover();
-}
-
-function closeSiblingSubMenus(menuLink) {
-  // 1. remove visible class from sub menu
-  $(menuLink).parent().find('li.menu-item-has-children').removeClass('visible');
-
-  // 2. set the arrow to downwards position
-  $(menuLink)
-    .parent()
-    .find('li.menu-item-has-children > a > i')
-    .removeClass('angle-up')
-    .addClass('angle-down');
-
-  // 3. update links aria-label and aria-expanded to false
-  $(menuLink)
-    .parent()
-    .find('li.menu-item-has-children > a')
-    .each(function () {
-      $(this)
-        .attr(
-          'aria-label',
-          `${$(this).text()}has a sub menu. Click enter to open`
-        )
-        .attr('aria-expanded', false);
-    });
 }
 
 function determineHREFTarget(mI) {
