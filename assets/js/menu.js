@@ -219,7 +219,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      winWidth = $(window).width();
+      // assign window width to winWidth
+      winWidth = window.innerWidth;
 
       // close All Menus when the esc is pressed
       document
@@ -517,7 +518,7 @@ function onResize() {
 
     formatNav();
 
-    winWidth = $(window).width();
+    winWidth = window.innerWidth;
   }
 }
 
