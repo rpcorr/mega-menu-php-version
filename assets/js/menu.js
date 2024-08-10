@@ -283,14 +283,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      // toggle sub-menu on key up
-      $('#menuMoreLink').keyup(function (event) {
-        // open "More" menu when enter key is pressed
-        if (event.keyCode === 13) {
-          // open current regular menu, there param is false
-          openMenu(false);
-        }
-      });
+      // toggle More menu sub-menu on key up
+      document
+        .getElementById('menuMoreLink')
+        .addEventListener('keyup', function (event) {
+          // open "More" menu when enter key is pressed
+          if (event.key === 'Enter') {
+            // open current regular menu, there param is false
+            openMenu(false);
+          }
+        });
 
       // collapse all sub-menus when user clicks off
       $('body').click(function (event) {
