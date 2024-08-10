@@ -45,13 +45,161 @@ document.addEventListener('DOMContentLoaded', () => {
       return response.json();
     })
     .then((data) => {
+      // initialize output
       const pages = data.pages;
+
       let output = '';
       pages.forEach((page) => {
-        output += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
+        let liClass = '';
+        let currentClass = '';
+        let menuItemHasChildren = '';
+
+        // define menuItemHasChildren
+        menuItemHasChildren += page.subMenuItems
+          ? 'menu-item-has-children'
+          : '';
+
+        // define liClass
+        if (menuItemHasChildren !== '')
+          liClass = `class="${menuItemHasChildren}"`;
+
+        // define if hRef has a submenu and define ariaExpanded
+        let hRef = page.page_link;
+        let ariaExpanded = '';
+        if (page.subMenuItems) {
+          // define ariaExpaned
+          hRef = '#';
+          ariaExpanded = 'aria-expanded="false"';
+        }
+
+        // define downArrow
+        const downArrow = page.subMenuItems
+          ? '<i class="caret angle-down"></i>'
+          : '';
+
+        // define ariaLabel
+        const ariaLabel = page.subMenuItems
+          ? `aria-label="${page.page_prompt} has a sub menu. Click enter to open"`
+          : '';
+
+        // define hRefTarget
+        //const hRefTarget = determineHREFTarget(page);
+
+        output += `<li ${liClass}><a href="${hRef}" ${ariaExpanded} ${ariaLabel}>${page.page_prompt} ${downArrow}</a>`;
+
+        // start of regular links
+        if (page.subMenuItems && page.subMenuType === 'regularLinks') {
+          output += '<ul class="sub-menu">';
+
+          // loop through the menu items
+          page.subMenuItems.forEach((item) => {
+            // define if hRef has a submenu
+            const hRef = item.page_link ? item.page_link : '#';
+
+            let liClass = '';
+
+            // second level is present
+            if (item.subMenuItems) {
+              liClass = 'class="menu-item-has-children"';
+            }
+
+            output += `<li ${liClass}><a href="${hRef}">${item.page_prompt}</a></li>`;
+          });
+          // end loop through the menu items
+
+          output += '</ul>';
+        }
+        // end of regular links
+
+        // start of photo
+        if (page.subMenuItems && page.subMenuType === 'photoLinks') {
+          output += '<div class="sub-menu-div mega-menu mega-menu-column-4">';
+
+          // loop through the menu items
+          page.subMenuItems.forEach((item) => {
+            output += `<div class="list-item text-center">
+                        <a href="#">
+                          <img src="${item.imgSrc}" alt="${item.page_title}" />
+                          <p>${item.page_title}</p>
+                        </a>
+                      </div>`;
+          });
+          // end loop through the menu items
+
+          output += '</div>';
+        }
+        // end of photo links
+
+        // start of categorized links
+        if (page.subMenuItems && page.subMenuType === 'categorizedLinks') {
+          output += '<div class="sub-menu-div mega-menu mega-menu-column-4">';
+
+          // define sub menu container content
+          let subMenuContainerContent = '';
+
+          // define sub menu container inner content
+          let subMenuContainerInnerContent;
+
+          // loop through the menu items
+          page.subMenuItems.forEach((submenu) => {
+            // define the sub menu container inner content
+            subMenuContainerInnerContent = '';
+
+            //content is a link
+            if (submenu.contentType === 'link') {
+              // start of sub menu container inner content
+              if (
+                submenu.section_title === page.subMenuItems[0].section_title ||
+                submenu.section_title === page.subMenuItems[2].section_title ||
+                submenu.section_title === page.subMenuItems[4].section_title
+              ) {
+                subMenuContainerInnerContent += '<div class="list-item">';
+              }
+
+              // section header
+              subMenuContainerInnerContent += `<h4 class="title" id="${submenu.section_id}">${submenu.section_title}</h4>`;
+
+              // start of list
+              let listItemValues = '<ul>';
+              submenu.page_links.forEach((link) => {
+                listItemValues += `<li><a href="${link.page_link}"><span aria-labelledby="${submenu.section_id}"></span>${link.page_prompt}</a></li>`;
+              });
+
+              // end of list
+              listItemValues += '</ul>';
+
+              // attach the list values to subMenuContainerInnerContent
+              subMenuContainerInnerContent += listItemValues;
+
+              // end of sub menu container inner content
+              if (
+                submenu.section_title === page.subMenuItems[1].section_title ||
+                submenu.section_title === page.subMenuItems[3].section_title ||
+                submenu.section_title === page.subMenuItems[4].section_title
+              ) {
+                subMenuContainerInnerContent += '</div>';
+              }
+            }
+
+            if (submenu.contentType === 'photo') {
+              subMenuContainerInnerContent += '<div class="list-item">';
+
+              let columnValue = `<img src="${submenu.imgSrc}" alt="${submenu.alt}" />`;
+
+              subMenuContainerInnerContent += columnValue + '</div>';
+            }
+
+            // append sub menu container inner content to sub menu container content
+            subMenuContainerContent += subMenuContainerInnerContent;
+          });
+          output += `${subMenuContainerContent}</div>`;
+        }
+        // end of categorized links
+
+        output += '</li>';
       });
 
-      // print out JSON content
+      // print out menu JSON content
       document.getElementById('menu-main-menu').innerHTML = output;
 
       navItems = document.querySelectorAll('#menu-main-menu > li');
@@ -573,10 +721,11 @@ function determineHREFTarget(mI) {
   if (mI.hasOwnProperty('target')) {
     return `target="${mI.target}"`;
   } else {
-    return mI.link.charAt(0) !== '#' &&
-      (mI.link.indexOf('http') !== -1 || mI.link.indexOf('.pdf') !== -1)
-      ? 'target="_blank"'
-      : '';
+    console.log('in determineHREFTarget else block');
+    // return mI.link.charAt(0) !== '#' &&
+    //   (mI.link.indexOf('http') !== -1 || mI.link.indexOf('.pdf') !== -1)
+    //   ? 'target="_blank"'
+    //   : '';
   }
 }
 
