@@ -493,7 +493,10 @@ function formatNav() {
 }
 
 function resetArrows() {
-  $('.caret').removeClass('angle-up').addClass('angle-down');
+  document.querySelectorAll('.caret').forEach(function (element) {
+    element.classList.remove('angle-up');
+    element.classList.add('angle-down');
+  });
 }
 
 function onResize() {
