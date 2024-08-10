@@ -505,8 +505,8 @@ function onResize() {
     let count = 0;
     navItems.each(function () {
       // add hover class to those with class menu-item-has-children
-      if ($(this).hasClass('menu-item-has-children')) {
-        $(this).addClass('hover');
+      if (this.classList.contains('menu-item-has-children')) {
+        this.classList.add('hover');
       }
 
       let itemWidth = this.offsetWidth;
