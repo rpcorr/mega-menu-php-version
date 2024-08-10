@@ -509,7 +509,8 @@ function onResize() {
         $(this).addClass('hover');
       }
 
-      let itemWidth = $(this).outerWidth();
+      let itemWidth = this.offsetWidth;
+      console.log(itemWidth);
       if (itemWidth > 0) {
         navItemWidth[count] = itemWidth;
       }
@@ -521,7 +522,6 @@ function onResize() {
     document
       .querySelectorAll('.menu-item-has-children')
       .forEach(function (element) {
-        console.log('here');
         element.classList.remove('visible');
       });
 
