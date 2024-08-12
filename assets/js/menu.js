@@ -408,8 +408,6 @@ document.addEventListener('DOMContentLoaded', () => {
 ///// FUNCTIONS /////
 
 function handleLinkClick(e) {
-  e.preventDefault();
-
   // link has sub menu
   if (this.closest('.menu-item-has-children')) {
     toggleTopLevelMenu(this);
