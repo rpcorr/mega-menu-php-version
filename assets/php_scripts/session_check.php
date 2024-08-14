@@ -1,42 +1,41 @@
 <?php
 session_start();
 
-// Check if $_SESSION['user'] is not defined or empty
-if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
+// Get the current page URL
+$currentUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$redirectUrl;
 
-    // redirect user back to previous page
-    redirectTo();
-
+// prevent updating $redirectUrl value if page is refreshed
+if ($_SESSION['previousUrl'] !== $currentUrl) {
+    $redirectUrl = $_SESSION['previousUrl'];
 } else {
-
-    // check if $_SESSION['userType'] is NOT admin; determine action
-    if ( $_SESSION['userType'] !== 'admin') {
-        if (isset($userTypes)) {
-
-            // determine if user cannot access page
-            if (!in_array($_SESSION['userType'], $userTypes)) {
-                // redirect user back to previous page
-                redirectTo();
-            }
-
-        } else {
-            // userType array is not defined nor is the user an admin, redirect user to last page
-
-            // redirect user back to previous page
-            redirectTo();
-        }
-    }
+    $redirectUrl = $_SESSION['redirectUrl'];
 }
 
-function redirectTo() {
-    // $_SESSION['user'] is not valid, redirect user to last page
-    if(isset($_SERVER['HTTP_REFERER'])) {
-        header("Location: " . $_SERVER['HTTP_REFERER']);
-    } else {
-        // If HTTP_REFERER is not set, redirect to a default page
-        header("Location: index.php");
+if (!isset($_SESSION['previousUrl'])) {
+    // set $_SESSION['previousUrl']
+    $_SESSION['previousUrl'] = $currentUrl;
+
+}
+
+if ($currentUrl !== $_SESSION['previousUrl']) {
+    // update session variable
+    $_SESSION['redirectUrl'] = $_SESSION['previousUrl'];
+    $_SESSION['previousUrl'] = $currentUrl;
+}
+
+// check if there is a ukey or user query param and page is protected.
+if (($ukey == "" && $_REQUEST['user'] == "") && $protected) {
+
+    // Check if the URL contains '?user='
+    if (strpos($_SESSION['previousUrl'], '?user=') !== false) {
+
+        // Remove query parameters
+        $_SESSION['previousUrl'] = strtok($_SESSION['previousUrl'], '?');
     }
 
+    // redirect to previous logged out page
+    header("Location:" . $redirectUrl);
     exit; // Make sure to exit after redirection to prevent further execution
 }
 

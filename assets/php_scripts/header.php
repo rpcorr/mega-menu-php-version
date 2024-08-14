@@ -30,8 +30,7 @@
       $user = $_REQUEST['user'];
     }
 
-
-    // Determine if querystring is present.  If so, attached to Preference.php link
+    include('session_check.php');
             
     // Function to get the full URL of the current page
     function getFullUrl() {

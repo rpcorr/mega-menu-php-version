@@ -2,6 +2,8 @@
 // Start the session
 session_start();
 
+$protected = true;
+
 $title = "Preferences - Counting Opinions";
 
 include('assets/php_scripts/header.php');
