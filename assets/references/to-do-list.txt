@@ -1,6 +1,22 @@
-1.
-
- like that the menu hangs around when clicking -- but it should eventually disappear to reveal the underlying page content when no longer hovered -- we don't want that to be immediate -- nor do we want it to be forever 
+1.like that the menu hangs around when clicking -- but it should eventually disappear to reveal the underlying page content when no longer hovered -- we don't want that to be immediate -- nor do we want it to be forever 
 
 Maybe a 1s transition?
+
+
+2. Fix menu structure into top level and sub menu items
+3. On hover and move mouse off the menu - reset  dropdown menu to inactive (collapse menu)
+4. Assign preference - theme colour -  value to user profile
+5. “Drill down” menu into another section depending on what menu item the user clicks
+
+
+
+when user log into to page and each page make have additional filter
+
+sub-set of LibSat
+
+drilldown
+
+sessionData is empty when the user is not loggged in
+
+& app=Libpass
 
