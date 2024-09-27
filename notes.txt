@@ -1,8 +1,87 @@
-After having difficulty how the mega menu should be on Counting Opinions server, I think I finally got it.
+Mega Menu Breakdown and Walkthrough
 
-the wrapper file is mmenu.php - main file
 
-the url is http://localhost/mega-menu/mmenu.php (logged out)
+1. Starting part: https://dev.countingopinions.com/mmenu/mmenu.php
 
-http://localhost/mega-menu/mmenu.php?is_menu&portal=pa&ukey=b5e79c05b3f12219e725fc167edefdd1 (logged in)
+This file contains an include header.php file and an include footer.php file
 
+A: mmenu/assets/php_scripts/header.php
+
+Using PHP, I am determining if $portal and $ukey are present
+
+I check in the following order:
+
+    1. if $_SESSION['portal_name'] is present, assign to $portal
+
+    2. if $_COOKIE['ukey'] is present, assign to $ukey
+
+    3. Using $REQUEST to cover both $_POST and $_GET, I check if $portal and $ukey are still not defined; if this statement is true I assign the values to $ukey and $portal respectively.
+
+    4. Assign the query string to $querystring
+
+
+    NOTE: query string is needed if the starting URL is:
+
+    https://dev.countingopinions.com/mmenu/mmenu.php?is_menu&portal=pa&ukey=b5e79c05b3f12219e725fc167edefdd1
+
+    Let's say the user clicks on Preferences. Knowing the query string value allows me to attached the query string at the end of preferences.php keeping the user in the logged in state and the menu intact. 
+
+
+
+B: mmenu/assets/php_scripts/footer.php
+
+    1. In footer.php file, I assign $ukey, $portal, $querystring php values to javaScript values.
+    2. This is where the menu script is located (assets/js/menu.js);
+
+    The javaScript values assigned in footer.php are accessible with assets/js/menu.js.  
+
+    I confirmed this by console.log ukey, portal, querystring outside menu.js as well as console.log within menu.js.
+
+    If you open up the Dev Tools and see the Console log panel, you will see the output.
+
+C: mmenu/assets/js/menu.js
+
+    It is in this file where the menu gets generated.  I performed another console.log to ensure the values for ukey, portal, and querystring remains intact.
+
+    The menu is fetch using the following url,
+
+    Logout state:
+
+    https://dev.countingopinions.com/ws/portal/get_pages.php?is_menu
+
+    Login state:
+
+    https://dev.countingopinions.com/ws/portal/get_pages.php?is_menu&portal=${portal}&ukey=${ukey}
+
+
+
+2. I login from https://dev.countingopinions.com/admin/index.php using the Demo credentials - which are the only credentials I know.
+
+3.  In a different tab, I visit https://dev.countingopinions.com/mmenu/mmenu.php.  If I am not logged in, I should get the green banner and five menu items.  If I am logged in, I should get the blue banner and all the menu items.
+
+The console window within Google Chrome Dev Tools, displays the values for:
+
+ukey
+portal
+query string
+and the URL of get_pages with all the querystring elements (2 at the moment - portal and ukey)
+
+
+4.  To test using PA, I do not know the credentials, but if I include it in the URL, I am logged in as PA.
+
+https://dev.countingopinions.com/mmenu/mmenu.php?is_menu&portal=pa&ukey=b5e79c05b3f12219e725fc167edefdd1
+
+Checking the console window, the portal and ukey values reflects the values in the query string.
+
+
+
+
+
+FILES NO LONGER NEEDED (I don't have the permission delete in RONAN (Workspace))
+
+counting_opinions-wrapper.php
+counting_opinions-menu.php
+group-by-section_id-sequence-json-output.php
+index.php
+menu-reference.php
+original-json-output.php
