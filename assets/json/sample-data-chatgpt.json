@@ -1,0 +1,229 @@
+{
+  "pages": [
+    {
+      "page_id": "0",
+      "page_prompt": "Welcome",
+      "page_link": "/portals/main.php?page_id=0",
+      "section_id": "0",
+      "sequence": "0",
+      "section_sequence": null,
+      "section_prompt": null
+    },
+    {
+      "page_id": "70",
+      "page_prompt": "Libraries",
+      "page_link": "memberlist.php?l=[portal_id]",
+      "section_id": "0",
+      "sequence": "1",
+      "section_sequence": null,
+      "section_prompt": null
+    },
+    {
+      "page_id": "2",
+      "page_prompt": "Logout",
+      "page_link": "logout.php",
+      "section_id": "0",
+      "sequence": "1",
+      "section_sequence": null,
+      "section_prompt": null
+    },
+    {
+      "page_id": "28",
+      "page_prompt": "Portal Administration",
+      "page_link": "/portals/main.php?page_id=28",
+      "section_id": "0",
+      "sequence": "1",
+      "section_sequence": null,
+      "section_prompt": null
+    },
+    {
+      "page_id": "2",
+      "page_prompt": "LibSat Menu",
+      "page_link": "/portals/main.php?page_id=2",
+      "section_id": "0",
+      "sequence": "2",
+      "section_sequence": null,
+      "section_prompt": null
+    },
+    {
+      "page_id": "71",
+      "page_prompt": "Locations",
+      "page_link": "memberlist_details.php?l=[portal_id]",
+      "section_id": "0",
+      "sequence": "2",
+      "section_sequence": null,
+      "section_prompt": null
+    },
+    {
+      "page_id": "72",
+      "page_prompt": "Maps",
+      "page_link": "locations.php?l=[portal_id]",
+      "section_id": "0",
+      "sequence": "3",
+      "section_sequence": null,
+      "section_prompt": null
+    },
+    {
+      "page_id": "5",
+      "page_prompt": "Cooks and Chefs Page",
+      "page_link": "/portals/main.php?page_id=5",
+      "section_id": "0",
+      "sequence": "5",
+      "section_sequence": null,
+      "section_prompt": null
+    },
+    {
+      "page_id": "13",
+      "page_prompt": "Accounts Help",
+      "page_link": "/admin/helpAccounts.php",
+      "section_id": "8",
+      "sequence": "5",
+      "section_sequence": "0",
+      "section_prompt": "Admin"
+    },
+    {
+      "page_id": "12",
+      "page_prompt": "Help",
+      "page_link": "/admin/help.php",
+      "section_id": "8",
+      "sequence": "9",
+      "section_sequence": "0",
+      "section_prompt": "Admin"
+    },
+    {
+      "page_id": "170",
+      "page_prompt": "LibPAS",
+      "page_link": "",
+      "section_id": "2",
+      "sequence": "0",
+      "section_sequence": "1",
+      "section_prompt": "LibPAS"
+    },
+    {
+      "page_id": "16",
+      "page_prompt": "Data Input",
+      "page_link": "/pireports/pidata_input.php",
+      "section_id": "2",
+      "sequence": "2",
+      "section_sequence": "1",
+      "section_prompt": "LibPAS"
+    },
+    {
+      "page_id": "17",
+      "page_prompt": "Manage Reports",
+      "page_link": "/pireports/pireport.php",
+      "section_id": "2",
+      "sequence": "3",
+      "section_sequence": "1",
+      "section_prompt": "LibPAS"
+    },
+    {
+      "page_id": "181",
+      "page_prompt": "Reports",
+      "page_link": "/pireports/pireport.php",
+      "section_id": "2",
+      "sequence": "5",
+      "section_sequence": "1",
+      "section_prompt": "LibPAS"
+    },
+    {
+      "page_id": "182",
+      "page_prompt": "Message Templates",
+      "page_link": "/pireports/etemplate.php",
+      "section_id": "2",
+      "sequence": "6",
+      "section_sequence": "1",
+      "section_prompt": "LibPAS"
+    },
+    {
+      "page_id": "183",
+      "page_prompt": "Match Elements",
+      "page_link": "/pireports/matchup.php",
+      "section_id": "2",
+      "sequence": "7",
+      "section_sequence": "1",
+      "section_prompt": "LibPAS"
+    },
+    {
+      "page_id": "184",
+      "page_prompt": "Copy",
+      "page_link": "/pireports/pidata_copy.php",
+      "section_id": "2",
+      "sequence": "8",
+      "section_sequence": "1",
+      "section_prompt": "LibPAS"
+    },
+    {
+      "page_id": "185",
+      "page_prompt": "Import Settings",
+      "page_link": "/pireports/pis_import.php",
+      "section_id": "2",
+      "sequence": "9",
+      "section_sequence": "1",
+      "section_prompt": "LibPAS"
+    },
+    {
+      "page_id": "186",
+      "page_prompt": "Import Data",
+      "page_link": "/pireports/import.php",
+      "section_id": "2",
+      "sequence": "10",
+      "section_sequence": "1",
+      "section_prompt": "LibPAS"
+    },
+    {
+      "page_id": "187",
+      "page_prompt": "Export",
+      "page_link": "/pireports/export.php",
+      "section_id": "2",
+      "sequence": "11",
+      "section_sequence": "1",
+      "section_prompt": "LibPAS"
+    },
+    {
+      "page_id": "188",
+      "page_prompt": "Trend Report",
+      "page_link": "/pireports/pi_collection_report.php",
+      "section_id": "2",
+      "sequence": "12",
+      "section_sequence": "1",
+      "section_prompt": "LibPAS"
+    },
+    {
+      "page_id": "189",
+      "page_prompt": "Ranking Report",
+      "page_link": "/pireports/pi_ranking_report.php",
+      "section_id": "2",
+      "sequence": "13",
+      "section_sequence": "1",
+      "section_prompt": "LibPAS"
+    },
+    {
+      "page_id": "190",
+      "page_prompt": "Print",
+      "page_link": "/pireports/piprint_pdf.php?fkey=[fkey]&ftype=libpas&ukey=[ukey]&period_id=[period_id]&subperiod_id=[subperiod_id]",
+      "section_id": "2",
+      "sequence": "14",
+      "section_sequence": "1",
+      "section_prompt": "LibPAS"
+    },
+    {
+      "page_id": "200",
+      "page_prompt": "Report/Repurpose",
+      "page_link": "",
+      "section_id": "5",
+      "sequence": "2",
+      "section_sequence": "3",
+      "section_prompt": "InformsUs"
+    },
+    {
+      "page_id": "201",
+      "page_prompt": "Reports ",
+      "page_link": "/rpt2/index.php?portal=[portal]",
+      "section_id": "5",
+      "sequence": "3",
+      "section_sequence": "3",
+      "section_prompt": "InformsUs"
+    }
+  ]
+}
