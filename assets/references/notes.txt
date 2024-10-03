@@ -4,3 +4,38 @@ counting-opinions-wrapper.php?is_menu&portal=demo&ukey=b5e79c05b3f12219e725fc167
 
 CO&DEMO
 CO&SUCC3$$
+
+
+                        
+BarryHillSystem_SU_CM: Admin menu is showing when it shouldn't be
+BarryHillCentral_CM: LibSat menu is not showing
+BarryHillCentral_DA: InformsUs menu is not showing
+BarryHillCentral_DE: InformsUs menu is not showing
+BarryHillCentral_DM: Menu appears to be correct
+BarryHillCentral_EM: InformsUs menu is not showing; Admin menu is showing when it shouldn't be
+BarryHillCentral_LM: InformsUs menu is not showing
+BarryHillCentral_RM: Menu appears to be correct
+BarryHillCentral_RV: Menu appears to be correct
+BelleviewSystem_SU_CM: LibSat menu is not showing; Admin menu is showing when it shouldn't be
+BelleView_InformsUs_DE_RM: Menu appears to be correct
+Belleview_LibPAS_DM_RV:  InformsUs is showing when is shouldn't be
+Belleview_LibSat_DE_DA_RM: InformsUs is showing when is shouldn't be
+
+
+
+Username	            Ukey	                            Services	                User Role(s)
+BarryHillSystem_SU_CM	23dd36999727c42c207a0445304f44e7	LibPAS, LibSat & InformsUs	SU & CM
+BarryHillCentral_CM	dcbe3c8f358ec7e3e082544cd379a5d6	LibPAS, LibSat & InformsUs	CM
+BarryHillCentral_DA	8b608f21a5f4d8e3ce66a6a74f1e7419	LibPAS & InformsUs	DA
+BarryHillCentral_DE	63a5c03a3135a36c54b5a7dcd65bd3f2	LibPAS & InformsUs	DE
+BarryHillCentral_DM	3a8a2b2cb83baa1d39117771446beae9	LibPAS & InformsUs	DM
+BarryHillCentral_EM	aa6ac353aef93145142cdb34e62fabab	LibPAS & InformsUs	EM
+BarryHillCentral_LM	130d58f57067ec3fc9669d7075b122ca	LibPAS & InformsUs	LM
+BarryHillCentral_RM	f3447c09021898f7f22b88b2d729b3d1	LibPAS, LibSat & InformsUs	RM
+BarryHillCentral_RV	a0e5eee003ae07cd6f9bf508b860fc19	LibPAS & InformsUs	RV
+BelleviewSystem_SU_CM	b7aa6d97e31cbff74509626b4c6581af	LibPAS, LibSat & InformsUs	SU & CM
+BelleView_InformsUs_DE_RM	d47e87449b72a5affca017ad90c314c0	InformsUs	DE & RM
+Belleview_LibPAS_DM_RV	452d5aa940f209f0018444f14204a714	LibPAS	DM & RV
+Belleview_LibSat_DE_DA_RM	b0b95b071bc61c3a524984d8c2810d0f	LibSat	DE & DA & RM
+
+
