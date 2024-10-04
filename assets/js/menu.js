@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Function to group pages by section_id
       const groupPagesBySection = (data) => {
-        return data.pages.reduce((acc, page) => {
+        return pages.reduce((acc, page) => {
           const sectionKey = page.section_id;
 
           if (!acc[sectionKey]) {
@@ -160,12 +160,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         groupedArray.forEach((section) => {
           section.pages.forEach((page) => {
-            // Top-level menu items when section_id is "0" and section_prompt is null
             if (section.section_id === '0' && page.section_prompt === null) {
-              menuHtml += `
+              // Top-level menu items when section_id is "0" and section_prompt is null
+
+              // Only show Login in when user is not logged in
+              if (ukey == '' || (ukey != '' && page.page_prompt !== 'Login')) {
+                menuHtml += `
           <li><a href="${page.page_link}">${page.page_prompt}</a></li>
         `;
-              prevSectionId = '0';
+                prevSectionId = '0';
+              }
             } else if (
               section.section_id !== prevSectionId &&
               page.section_prompt !== null
