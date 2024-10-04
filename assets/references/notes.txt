@@ -39,3 +39,42 @@ Belleview_LibPAS_DM_RV	452d5aa940f209f0018444f14204a714	LibPAS	DM & RV
 Belleview_LibSat_DE_DA_RM	b0b95b071bc61c3a524984d8c2810d0f	LibSat	DE & DA & RM
 
 
+
+
+entries: 131
+
+entries showing on menu: 121
+
+entries missing: 10 because of section id = 1 and section prompt is null
+
+
+0
+: 
+{page_id: '36', page_prompt: 'NPS', page_link: '', sequence: '15', section_sequence: null, …}
+1
+: 
+{page_id: '37', page_prompt: 'NPS', page_link: '/reports2/nps.php', sequence: '16', section_sequence: null, …}
+2
+: 
+{page_id: '38', page_prompt: 'NPS Help', page_link: '/portals/main.php?page_id=38', sequence: '17', section_sequence: null, …}
+3
+: 
+{page_id: '41', page_prompt: 'OI Help', page_link: '/portals/main.php?page_id=41', sequence: '22', section_sequence: null, …}
+4
+: 
+{page_id: '121', page_prompt: 'MAPHAT', page_link: '', sequence: '101', section_sequence: null, …}
+5
+: 
+{page_id: '122', page_prompt: 'MAPHAT', page_link: '/reports2/maphat/dashboard.php', sequence: '102', section_sequence: null, …}
+6
+: 
+{page_id: '123', page_prompt: 'MAPHAT Help', page_link: '/portals/main.php?page_id=123', sequence: '103', section_sequence: null, …}
+7
+: 
+{page_id: '124', page_prompt: 'MAPHAT Responses', page_link: '/reports2/maphat/dashboard_responses.php', sequence: '104', section_sequence: null, …}
+8
+: 
+{page_id: '125', page_prompt: 'MAPHAT Trends', page_link: '', sequence: '105', section_sequence: null, …}
+9
+: 
+{page_id: '140', page_prompt: 'MAPHAT Rankings', page_link: '', sequence: '116', section_sequence: null, …}
