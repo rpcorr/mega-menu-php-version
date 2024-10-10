@@ -59,7 +59,7 @@ if (isset($_POST['username'])) {
           // set the session variables
           $_SESSION['user'] = $user->username;
           $_SESSION['userType'] = $user->userType;
-          $_SESSION['stylePreference'] = $user->stylePreference;
+          $_SESSION['theme'] = $user->theme;
           
           // user is successfully logged in, redirect page to index.php
           if ($user->username ==="user1" || $user->username ==="user2" || $user->username ==="user3" ) {

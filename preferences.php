@@ -39,14 +39,14 @@ include('assets/php_scripts/header.php');
           <div class="column-2">
             <input
               type="radio"
-              id="countingOpinions"
+              id="base"
               name="option"
               value="Counting Opinions"
-              <?php if((isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "countingOpinions") || !isset($_COOKIE['stylePreference'])) { ?>
+              <?php if((isset($_SESSION['theme']) && $_SESSION['theme'] === "base") || !isset($_SESSION['theme'])) { ?>
               checked
               <?php } ?>
             />
-            <label for="countingOpinions">Counting Opinions</label>
+            <label for="base">Counting Opinions</label>
           </div>
         </div>
 
@@ -65,7 +65,7 @@ include('assets/php_scripts/header.php');
               id="protanopia"
               name="option"
               value="Protanopia"
-              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "protanopia" ) { ?>
+              <?php if(isset($_SESSION['theme']) && $_SESSION['theme'] === "protanopia" ) { ?>
               checked
               <?php } ?>
             />
@@ -88,7 +88,7 @@ include('assets/php_scripts/header.php');
               id="protanomaly"
               name="option"
               value="Protanomaly"
-              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "protanomaly" ) { ?>
+              <?php if(isset($_SESSION['theme']) && $_SESSION['theme'] === "protanomaly" ) { ?>
               checked
               <?php } ?>
             />
@@ -111,7 +111,7 @@ include('assets/php_scripts/header.php');
               id="deuteranopia"
               name="option"
               value="Deuteranopia"
-              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "deuteranopia" ) { ?>
+              <?php if(isset($_SESSION['theme']) && $_SESSION['theme'] === "deuteranopia" ) { ?>
               checked
               <?php } ?>
             />
@@ -134,7 +134,7 @@ include('assets/php_scripts/header.php');
               id="deuteranomaly"
               name="option"
               value="Deuteranomaly"
-              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "deuteranomaly" ) { ?>
+              <?php if(isset($_SESSION['theme']) && $_SESSION['theme'] === "deuteranomaly" ) { ?>
               checked
               <?php } ?>
             />
@@ -157,7 +157,7 @@ include('assets/php_scripts/header.php');
               id="achromatomaly"
               name="option"
               value="Achromatomaly"
-              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "achromatomaly" ) { ?>
+              <?php if(isset($_SESSION['theme']) && $_SESSION['theme'] === "achromatomaly" ) { ?>
               checked
               <?php } ?>
             />
@@ -180,7 +180,7 @@ include('assets/php_scripts/header.php');
               id="tritanopia"
               name="option"
               value="Tritanopia"
-              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "tritanopia" ) { ?>
+              <?php if(isset($_SESSION['theme']) && $_SESSION['theme'] === "tritanopia" ) { ?>
               checked
               <?php } ?>
             />
@@ -203,7 +203,7 @@ include('assets/php_scripts/header.php');
               id="tritanopia2"
               name="option"
               value="Tritanopia2"
-              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "tritanopia2" ) { ?>
+              <?php if(isset($_SESSION['theme']) && $_SESSION['theme'] === "tritanopia2" ) { ?>
               checked
               <?php } ?>
             />
@@ -226,7 +226,7 @@ include('assets/php_scripts/header.php');
               id="tritanopiaRYGBV"
               name="option"
               value="TritanopiaRYGBV"
-              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "tritanopiaRYGBV" ) { ?>
+              <?php if(isset($_SESSION['theme']) && $_SESSION['theme'] === "tritanopiaRYGBV" ) { ?>
               checked
               <?php } ?>
             />
@@ -249,7 +249,7 @@ include('assets/php_scripts/header.php');
               id="tritanopiaRainbow"
               name="option"
               value="TritanopiaRainbow"
-              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "tritanopiaRainbow" ) { ?>
+              <?php if(isset($_SESSION['theme']) && $_SESSION['theme'] === "tritanopiaRainbow" ) { ?>
               checked
               <?php } ?>
             />
@@ -272,7 +272,7 @@ include('assets/php_scripts/header.php');
               id="tritanopiaReds"
               name="option"
               value="TritanopiaReds"
-              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "tritanopiaReds" ) { ?>
+              <?php if(isset($_SESSION['theme']) && $_SESSION['theme'] === "tritanopiaReds" ) { ?>
               checked
               <?php } ?>
             />
@@ -295,7 +295,7 @@ include('assets/php_scripts/header.php');
               id="tritanopiaBlues"
               name="option"
               value="TritanopiaBlues"
-              <?php if(isset($_COOKIE['stylePreference']) && $_COOKIE['stylePreference'] === "tritanopiaBlues" ) { ?>
+              <?php if(isset($_SESSION['theme']) && $_SESSION['theme'] === "tritanopiaBlues" ) { ?>
               checked
               <?php } ?>
             />

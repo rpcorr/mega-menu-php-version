@@ -82,13 +82,20 @@
 
     <?php }  
   
-    if ($ukey || $user) {  ?>
-      <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/countingOpinions.css" />
-    <?php } ?>
+    if ($ukey || $user) {  
+      
+      if (isset($_SESSION['theme'])) { ?>
+        <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php echo $_SESSION['theme'] ?>.css" />
+      <?php 
+      } else { ?>
+        <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/countingOpinions.css" />
+      <?php 
+      }
+    }
     
-    <?php if (isset($_COOKIE['stylePreference'])) { ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php echo $_COOKIE['stylePreference']?>.css  " />
-    <?php } ?>
+    if (isset($_COOKIE['theme'])) { ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php echo $_COOKIE['theme']?>.css" />
+     <?php } ?>
 </head>
 <body>
 

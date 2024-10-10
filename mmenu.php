@@ -27,7 +27,11 @@ include('assets/php_scripts/header.php');
                    echo '<p><a href="preferences.php">Preferences</a></p>';
                 }
                 
-             } ?>
+             } 
+             
+             echo '<p>Cookie style preference is: '. $_COOKIE['theme'] . '<br/>';
+             
+             ?>
 
 
             <h2>Breadcrumb example</h2>

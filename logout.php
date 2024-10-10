@@ -16,7 +16,7 @@ setcookie(
     true   // HttpOnly (only accessible through HTTP, not JavaScript)
 );
 
-setcookie("stylePreference",  // Cookie name
+setcookie("theme",  // Cookie name
     "",  // Cookie value (empty to delete)
     time() - 3600,  // Expiration time (in the past)
     "/",  // Path
