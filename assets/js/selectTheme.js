@@ -35,11 +35,11 @@ function selectStylesheet(stylesheetName) {
     'link[rel="stylesheet"][href^="assets/css/templatesStyles"]:not(:last-of-type)'
   );
 
-  setTimeout(() => {
-    previousStylesheets.forEach(function (previousStylesheet) {
-      document.head.removeChild(previousStylesheet);
-    });
-  }, 1);
+  // setTimeout(() => {
+  //   previousStylesheets.forEach(function (previousStylesheet) {
+  //     document.head.removeChild(previousStylesheet);
+  //   });
+  // }, 1);
 }
 
 function setPreferenceCookie(name, value, days, domain, path) {
