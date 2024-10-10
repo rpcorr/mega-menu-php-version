@@ -88,14 +88,10 @@
         <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php echo $_SESSION['theme'] ?>.css" />
       <?php 
       } else { ?>
-        <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/countingOpinions.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/base.css" />
       <?php 
       }
-    }
-    
-    if (isset($_COOKIE['theme'])) { ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php echo $_COOKIE['theme']?>.css" />
-     <?php } ?>
+    } ?>
 </head>
 <body>
 
