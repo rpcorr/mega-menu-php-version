@@ -48,165 +48,86 @@ document.addEventListener('DOMContentLoaded', () => {
       // initialize output
       const pages = data.pages;
 
-      // Function to group pages by section_id
-      const groupPagesBySection = (data) => {
-        return pages.reduce((acc, page) => {
-          const sectionKey = page.section_id;
+      // Initialize an empty object to hold grouped pages
+      const groupedSections = {};
 
-          if (!acc[sectionKey]) {
-            acc[sectionKey] = {
-              section_id: page.section_id,
-              pages: [],
-            };
-          }
+      // Loop through each page in the data
+      data.pages.forEach((page) => {
+        const { section_id, section_prompt } = page;
 
-          acc[sectionKey].pages.push({
-            page_id: page.page_id,
-            page_prompt: page.page_prompt,
-            page_link: page.page_link,
-            sequence: page.sequence,
-            section_sequence: page.section_sequence,
-            section_prompt: page.section_prompt,
-          });
+        // Ensure the section_id exists in the groupedSections object
+        if (!groupedSections[section_id]) {
+          groupedSections[section_id] = {
+            nonNull: [],
+            null: [],
+          };
+        }
 
-          return acc;
-        }, {});
-      };
+        // Push the page to the appropriate array based on section_prompt
+        if (section_prompt === null) {
+          groupedSections[section_id].null.push(page);
+        } else {
+          groupedSections[section_id].nonNull.push(page);
+        }
+      });
 
-      // Order array for the section_ids
-      const sectionOrder = ['0', '8', '2', '5', '1'];
+      // Create a final array of grouped results with section_prompt
+      const finalGroupedArray = Object.entries(groupedSections).map(
+        ([section_id, { nonNull, null: nullPages }]) => {
+          // Get the section_prompt from the first non-null page (if exists) or use null
+          const section_prompt =
+            nonNull.length > 0 ? nonNull[0].section_prompt : null;
 
-      // Group the pages by section_id
-      let groupedPagesBySection = groupPagesBySection(data);
+          return {
+            section_id,
+            section_prompt, // Add the section_prompt
+            pages: [...nonNull, ...nullPages], // Combine non-null pages with null pages at the end
+          };
+        }
+      );
 
-      // Convert the object to an array
-      let groupedArray = Object.values(groupedPagesBySection);
+      // Define the custom order for section_ids
+      const customOrder = ['0', '8', '2', '5', '1'];
 
-      // Sort the grouped array based on the predefined sectionOrder
-      groupedArray = groupedArray.sort((a, b) => {
-        const indexA = sectionOrder.indexOf(a.section_id);
-        const indexB = sectionOrder.indexOf(b.section_id);
-
-        // Handle section_ids that are not in the sectionOrder array
+      // Sort the finalGroupedArray based on the custom order
+      finalGroupedArray.sort((a, b) => {
         return (
-          (indexA === -1 ? Infinity : indexA) -
-          (indexB === -1 ? Infinity : indexB)
+          customOrder.indexOf(a.section_id) - customOrder.indexOf(b.section_id)
         );
       });
 
-      console.log(groupedArray);
+      console.log(finalGroupedArray);
 
-      // merge pages into one object
-      const mergedPages = groupedArray.reduce(
-        (acc, section) => acc.concat(section.pages),
-        []
-      );
+      function createMenu(menuData) {
+        let menuHTML = '';
 
-      // Initialize empty arrays to store pages based on `section_prompt`
-      const nullSection = [];
-      const directorySection = [];
-      const adminSection = [];
-      const libPASSSection = [];
-      const informsUsSection = [];
-      const libSatSection = [];
+        menuData.forEach((section) => {
+          // If section_id is 0, create top-level menu items
+          if (section.section_id === '0') {
+            section.pages.forEach((page) => {
+              menuHTML += '<li>';
+              menuHTML += `<a href="${page.page_link}">${page.page_prompt}</a>`;
+              menuHTML += '</li>';
+            });
+          } else {
+            // Create submenus for other sections
+            if (section.section_prompt) {
+              menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="${section.section_prompt} has a sub menu. Click enter to open">${section.section_prompt} <i class="caret angle-down"></i></a>`;
 
-      // Group pages based on their `section_prompt`
-      mergedPages.forEach((page) => {
-        if (page.section_prompt === null) {
-          nullSection.push(page);
-        }
+              menuHTML += '<ul class="sub-menu">';
 
-        if (page.section_prompt === 'Directory') {
-          directorySection.push(page);
-        }
-
-        if (page.section_prompt === 'Admin') {
-          adminSection.push(page);
-        }
-
-        if (page.section_prompt === 'LibPAS') {
-          libPASSSection.push(page);
-        }
-
-        if (page.section_prompt === 'InformsUs') {
-          informsUsSection.push(page);
-        }
-
-        if (page.section_prompt === 'LibSat') {
-          libSatSection.push(page);
-        }
-      });
-
-      console.log('Null Section:', nullSection);
-      console.log('Directory Section:', directorySection);
-      console.log('Admin Section:', adminSection);
-      console.log('LibPASS Section:', libPASSSection);
-      console.log('InformsUs Section:', informsUsSection);
-      console.log('LibSat Section:', libSatSection);
-
-      // Function to create HTML menu from groupedArray
-      const buildHTMLMenu = (groupedArray) => {
-        let menuHtml = '';
-        let prevSectionId = '';
-
-        // Map section prompts to their corresponding arrays
-        const sectionMapping = {
-          Directory: directorySection,
-          Admin: adminSection,
-          LibPAS: libPASSSection,
-          InformsUs: informsUsSection,
-          LibSat: libSatSection,
-        };
-
-        groupedArray.forEach((section) => {
-          section.pages.forEach((page) => {
-            if (section.section_id === '0' && page.section_prompt === null) {
-              // Top-level menu items when section_id is "0" and section_prompt is null
-
-              // Only show Login in when user is not logged in
-              if (ukey == '' || (ukey != '' && page.page_prompt !== 'Login')) {
-                menuHtml += `
-          <li><a href="${page.page_link}">${page.page_prompt}</a></li>
-        `;
-                prevSectionId = '0';
-              }
-            } else if (
-              section.section_id !== prevSectionId &&
-              page.section_prompt !== null
-            ) {
-              // Check if the section_prompt matches the ones in sectionMapping
-              const sectionMenu = sectionMapping[page.section_prompt] || [];
-
-              // Add menu item for the section with sub-menu if applicable
-              menuHtml += `
-          <li class="menu-item-has-children hover">
-            <a href="#" aria-expanded="false">${page.section_prompt} <i class="caret angle-down"></i></a>
-            <ul class="sub-menu">
-        `;
-
-              // Loop through pages in the mapped sectionMenu and add them to the sub-menu
-              sectionMenu.forEach((subPage) => {
-                menuHtml += `<li><a href="${subPage.page_link}">${subPage.page_prompt}</a></li>`;
+              section.pages.forEach((page) => {
+                menuHTML += `<li><a href="${page.page_link}" aria-expand="false" aria-label="${page.page_prompt} has a sub menu. Click enter to open">${page.page_prompt}</a></li>`;
               });
-
-              // Close sub-menu and section item
-              menuHtml += `
-            </ul>
-          </li>
-        `;
-
-              prevSectionId = section.section_id;
+              menuHTML += '</ul></li>';
             }
-          });
+          }
         });
+        return menuHTML;
+      }
 
-        return menuHtml;
-      };
-
-      // Generate the HTML menu
-      const menuHTML = buildHTMLMenu(groupedArray);
-
-      // Insert the menu into your webpage
+      // Call the function to create the menu
+      const menuHTML = createMenu(finalGroupedArray);
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
 
       navItems = document.querySelectorAll('#menu-main-menu > li');
