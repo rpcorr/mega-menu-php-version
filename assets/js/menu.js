@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
               menuHTML += '<ul class="sub-menu">';
 
               section.pages.forEach((page) => {
-                menuHTML += `<li><a href="${page.page_link}" aria-expand="false" aria-label="${page.page_prompt} has a sub menu. Click enter to open">${page.page_prompt}</a></li>`;
+                menuHTML += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
               });
               menuHTML += '</ul></li>';
             }
