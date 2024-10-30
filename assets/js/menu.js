@@ -45,9 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return response.json();
     })
     .then((data) => {
-      // initialize output
-      const pages = data.pages;
-
       // Initialize an empty object to hold grouped pages
       const groupedSections = {};
 
@@ -96,7 +93,250 @@ document.addEventListener('DOMContentLoaded', () => {
         );
       });
 
-      console.log(finalGroupedArray);
+      // set strLibSatMenuStructure outside if statement so program will
+      // not break when user is logged out.
+      let strLibSatMenuStructure;
+
+      if (finalGroupedArray.length > 1) {
+        // Create a deep clone and modify it
+        const cloneGroupedArray = JSON.parse(JSON.stringify(finalGroupedArray)); // Deep clone
+
+        // Modify the cloned array
+        cloneGroupedArray.forEach((section) => {
+          if (section.section_id !== '1') {
+            // If you want to keep the pages, uncomment the next line
+            delete section.pages;
+          }
+          delete section.section_id; // Remove from section
+          delete section.section_prompt; // Remove from section
+        });
+
+        // Find the first object with 'pages' and set it as the new key 0
+        const libSatPages = {
+          0: Object.values(cloneGroupedArray).find((value) => value.pages),
+        };
+
+        // filter out all entries that has maphat in it's page.prompt and store in variable maphatEntries; and all the others in a variable named libSatPagesNoMAPHAT
+        const regex = /maphat/i;
+
+        const maphatEntries = libSatPages[0].pages.filter((page) =>
+          regex.test(page.page_prompt)
+        );
+
+        const libSatPagesNoMAPHAT = libSatPages[0].pages.filter(
+          (page) => !regex.test(page.page_prompt)
+        );
+
+        //let strLibSatMenuStructure;
+        let strDoubleMenu = '';
+
+        if (libSatPagesNoMAPHAT.length !== 0) {
+          // Start libSatMenu top <li>
+          strLibSatMenuStructure =
+            '<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="LibSat has a sub menu. Click enter to open">LibSat<i class="caret angle-down"></i></a><ul class="sub-menu">';
+
+          let iSubMenuLevels = 0;
+          let bDoubleMenu = false;
+
+          // loop through LibSat Pages
+          for (let i = 0; i <= libSatPagesNoMAPHAT.length; i++) {
+            if (i < libSatPagesNoMAPHAT.length) {
+              // omit if page equals libSat
+              if (
+                libSatPagesNoMAPHAT[i].page_prompt.toLowerCase() !==
+                'LibSat'.toLowerCase()
+              ) {
+                // determine if menu item is a submenu
+                if (libSatPagesNoMAPHAT[i].page_link === '') {
+                  iSubMenuLevels++;
+
+                  if (
+                    i + 1 < libSatPagesNoMAPHAT.length &&
+                    libSatPagesNoMAPHAT[i + 1].page_link === ''
+                  ) {
+                    // enter double menu
+                    bDoubleMenu = true;
+                  }
+
+                  if (!bDoubleMenu)
+                    strLibSatMenuStructure += openLibSatSubMenu(
+                      libSatPagesNoMAPHAT,
+                      i
+                    );
+
+                  if (bDoubleMenu) {
+                    strDoubleMenu += `
+                    <li class="menu-item-has-children">
+                        <a href="#" aria-expanded="false" aria-label="${
+                          libSatPages[0].pages[i].page_prompt
+                        }  has a sub menu. Click enter to open">${
+                      libSatPages[0].pages[i].page_prompt
+                    } <i class="caret angle-down"></i></a>
+                        <ul class="sub-menu">
+                          <li class="menu-item-has-children">
+                            <a href="#" aria-expanded="false" aria-label="${
+                              libSatPages[0].pages[i + 1].page_prompt
+                            } has a sub menu. Click enter to open">${
+                      libSatPages[0].pages[i + 1].page_prompt
+                    }<i class="caret angle-down"></i></a>
+                            <ul class="sub-menu">`;
+
+                    const iHowManyItems = howManyItems(
+                      libSatPagesNoMAPHAT,
+                      i + 2
+                    );
+
+                    // loop index to maintain in spot of array
+                    let menuIndex = i + 2;
+
+                    // loop through menu items
+                    for (let j = 1; j <= iHowManyItems; j++) {
+                      strDoubleMenu += addMenuItems(
+                        libSatPagesNoMAPHAT,
+                        menuIndex
+                      );
+
+                      menuIndex++;
+                    }
+
+                    // update i
+                    i = i + iHowManyItems + 2 - 1;
+
+                    strDoubleMenu += `</ul>
+                          </li>
+                        </ul>
+                      </li>
+                  `;
+                  }
+                } else {
+                  if (!bDoubleMenu) {
+                    // add menu item
+                    //  1: determine if strLibSatMenuStructure has <ul  class="sub-menu"></ul></li>
+
+                    const endString = '<ul class="sub-menu"></ul></li>';
+
+                    if (strLibSatMenuStructure.endsWith(endString)) {
+                      strLibSatMenuStructure = strLibSatMenuStructure.slice(
+                        0,
+                        -10
+                      );
+                    }
+
+                    // 2: loop index to maintain in spot of array
+                    let menuIndex = i;
+
+                    // 3: get number of items in current "section"
+                    const iHowManyItems = howManyItems(libSatPagesNoMAPHAT, i);
+
+                    // 4: loop through menu items
+                    for (let j = 1; j <= iHowManyItems; j++) {
+                      strLibSatMenuStructure += addMenuItems(
+                        libSatPagesNoMAPHAT,
+                        menuIndex
+                      );
+
+                      menuIndex++;
+                    }
+
+                    // 5: update i
+                    i = i + iHowManyItems - 1;
+                  }
+                }
+
+                if (iSubMenuLevels > 0 && !bDoubleMenu)
+                  strLibSatMenuStructure += '</ul></li>';
+
+                if (bDoubleMenu && strDoubleMenu !== '') {
+                  strLibSatMenuStructure += strDoubleMenu;
+                }
+
+                if (bDoubleMenu) {
+                  bDoubleMenu = false;
+                  iSubMenuLevels = 0;
+                }
+              }
+            }
+          }
+
+          // add MAPHAT entries
+          let strMapHatMenuStructure = '';
+          if (maphatEntries.length !== 0) {
+            for (let i = 0; i <= maphatEntries.length; i++) {
+              if (i === 0) {
+                strMapHatMenuStructure += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="${maphatEntries[0].page_prompt} has a sub menu. Click enter to open">${maphatEntries[0].page_prompt} <i class="caret angle-down"></i></a>`;
+              }
+
+              strMapHatMenuStructure += '<ul class="sub-menu">';
+
+              // 1. get number of items in current MAPHAT "section"
+              const iHowManyItems = howManyItems(maphatEntries, i + 1);
+
+              // 2: loop index to maintain in spot of array
+              let menuIndex = i + 1;
+
+              // 3: loop through menu items
+              for (let j = 1; j <= iHowManyItems; j++) {
+                strMapHatMenuStructure += addMenuItems(
+                  maphatEntries,
+                  menuIndex
+                );
+
+                menuIndex++;
+              }
+
+              for (let j = menuIndex; j < maphatEntries.length; j++) {
+                strMapHatMenuStructure += `<li><a href="${maphatEntries[j].page_link}">${maphatEntries[j].page_prompt}</a></li>`;
+              }
+
+              i = maphatEntries.length + 1;
+              strMapHatMenuStructure += '</ul>';
+            }
+
+            // close MAPHAT menu
+            strMapHatMenuStructure += '</li>';
+
+            // add MAPHAT menu to bottom of LibSat Menu
+            strLibSatMenuStructure += strMapHatMenuStructure;
+          }
+
+          // Close libSatMenu top </li>
+          strLibSatMenuStructure += '</ul></li>';
+        }
+      }
+
+      function howManyItems(libSatPagesNoMAPHAT, i) {
+        let iMenuItems = 0;
+
+        for (let idx = i; idx <= libSatPagesNoMAPHAT.length - 1; idx++) {
+          if (libSatPagesNoMAPHAT[idx].page_link !== '') {
+            iMenuItems++;
+          } else {
+            break;
+          }
+        }
+
+        return iMenuItems;
+      }
+
+      function openLibSatSubMenu(menuArray, i) {
+        return `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="${menuArray[i].page_prompt} has a sub menu. Click enter to open">${menuArray[i].page_prompt}<i class="caret angle-down"></i></a><ul class="sub-menu">`;
+      }
+
+      function addMenuItems(libSatPagesNoMAPHAT, currentMenuItem) {
+        return `<li><a href="${libSatPagesNoMAPHAT[currentMenuItem].page_link}">${libSatPagesNoMAPHAT[currentMenuItem].page_prompt}</a></li>`;
+      }
+
+      // Find Libsat section and remove from array
+      const index = finalGroupedArray.findIndex(
+        (section) =>
+          section.section_prompt &&
+          section.section_prompt.toLowerCase() === 'libsat'
+      );
+
+      // If found, remove it from the array
+      if (index !== -1) {
+        finalGroupedArray.splice(index, 1);
+      }
 
       function createMenu(menuData) {
         let menuHTML = '';
@@ -110,24 +350,45 @@ document.addEventListener('DOMContentLoaded', () => {
               menuHTML += '</li>';
             });
           } else {
+            let openSubmenu = false;
             // Create submenus for other sections
             if (section.section_prompt) {
               menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="${section.section_prompt} has a sub menu. Click enter to open">${section.section_prompt} <i class="caret angle-down"></i></a>`;
 
               menuHTML += '<ul class="sub-menu">';
 
-              section.pages.forEach((page) => {
-                menuHTML += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
+              section.pages.forEach((page, index) => {
+                if (
+                  page.page_prompt.toLowerCase() !==
+                  section.section_prompt.toLowerCase()
+                )
+                  if (page.page_link === '') {
+                    menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="${page.page_prompt} has a sub menu. Click enter to open">${page.page_prompt} <i class="caret angle-down"></i></a>`;
+                    menuHTML += '<ul class="sub-menu">';
+                    openSubmenu = true;
+                  } else {
+                    menuHTML += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
+                  }
+
+                // close sub menu if index is at the end of section and openSubmenu is true
+                if (index === section.pages.length - 1 && openSubmenu) {
+                  menuHTML += '</ul></li>';
+                }
               });
               menuHTML += '</ul></li>';
             }
           }
         });
+
         return menuHTML;
       }
 
       // Call the function to create the menu
-      const menuHTML = createMenu(finalGroupedArray);
+      let menuHTML = createMenu(finalGroupedArray);
+
+      if (strLibSatMenuStructure !== '' && strLibSatMenuStructure !== undefined)
+        menuHTML += strLibSatMenuStructure;
+
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
 
       navItems = document.querySelectorAll('#menu-main-menu > li');
