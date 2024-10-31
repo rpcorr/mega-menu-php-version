@@ -23,8 +23,11 @@ include('assets/php_scripts/header.php');
                    
                 if ($queryString !== null) {
                    echo '<p><a href="preferences.php?'. $queryString . '">Preferences</a></p>';
+
+                   echo '<p><a href="menu-users.php?'. $queryString . '">Users</a></p>';
                 } else {
                    echo '<p><a href="preferences.php">Preferences</a></p>';
+                   echo '<p><a href="menu-users.php">Users</a></p>';
                 }
                 
              } 
