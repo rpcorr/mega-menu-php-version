@@ -28,7 +28,12 @@ if (!ukey && !user) {
   JSONfile = 'http://localhost/mega-menu/assets/json/co-pages.json';
 } else {
   if (ukey) {
-    JSONfile = 'http://localhost/mega-menu/assets/json/co-pages-logged-in.json';
+    if (ukey === 'b5e79c05b3f12219e725fc167edefdd1')
+      JSONfile =
+        'http://localhost/mega-menu/assets/json/co-pages-logged-in.json';
+    else
+      JSONfile =
+        'http://localhost/mega-menu/assets/json/barry-hill-central-CM.json';
   } else if (user) {
     JSONfile = 'http://localhost/mega-menu/assets/json/admin.json';
   }
