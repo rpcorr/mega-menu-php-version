@@ -364,8 +364,8 @@ document.addEventListener('DOMContentLoaded', () => {
               strLibSatMenuStructure += strMapHatMenuStructure;
             }
 
-            // Close libSatMenu top </li>
-            strLibSatMenuStructure += '</ul></li>';
+            // Close libSatMenu top </li> only if user is Admin as it causes invalid syntax if not
+            if (user === 'Admin') strLibSatMenuStructure += '</ul></li>';
           }
         }
       }
@@ -454,8 +454,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (strLibSatMenuStructure !== '' && strLibSatMenuStructure !== undefined)
         menuHTML += strLibSatMenuStructure;
-
-      console.log(menuHTML);
 
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
 
