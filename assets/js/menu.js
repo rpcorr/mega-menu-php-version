@@ -11,9 +11,7 @@ let output = '';
 let megaMenuLinks = '';
 let initialColumns = '';
 
-console.log(
-  `I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}. User is ${user}`
-);
+console.log(`I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}.`);
 
 console.log(JSONfile);
 // Ensure this code runs after the DOM is fully loaded
