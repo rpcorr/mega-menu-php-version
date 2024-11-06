@@ -32,7 +32,7 @@ include('assets/php_scripts/header.php');
                 
              } 
              
-             echo '<p>Cookie style preference is: '. $_COOKIE['theme'] . '<br/>';
+             if (isset($_COOKIE['theme'])) echo '<p>Cookie style preference is: '. $_COOKIE['theme'] . '<br/>';
              
              ?>
 
