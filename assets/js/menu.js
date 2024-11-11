@@ -335,11 +335,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      function howManyItems(libSatPagesNoMAPHAT, i) {
+      function howManyItems(menuArray, i) {
         let iMenuItems = 0;
 
-        for (let idx = i; idx <= libSatPagesNoMAPHAT.length - 1; idx++) {
-          if (libSatPagesNoMAPHAT[idx].page_link !== '') {
+        for (let idx = i; idx <= menuArray.length - 1; idx++) {
+          if (menuArray[idx].page_link !== '') {
             iMenuItems++;
           } else {
             break;
@@ -419,6 +419,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (strLibSatMenuStructure !== '' && strLibSatMenuStructure !== undefined)
         menuHTML += strLibSatMenuStructure;
+
+      console.log(strLibSatMenuStructure);
 
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
 
