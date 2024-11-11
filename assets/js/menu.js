@@ -134,9 +134,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let bDoubleMenu = false;
             let bDoubleMenuRemainsOpen = false;
             let bNPSPresent = false;
+            let bFlag = false;
 
             // loop through LibSat Pages
             for (let i = 0; i <= libSatPagesNoMAPHAT.length; i++) {
+              bFlag = false;
               if (i < libSatPagesNoMAPHAT.length) {
                 // omit if page equals libSat
                 if (
@@ -227,6 +229,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         );
                       }
 
+                      if (
+                        libSatPagesNoMAPHAT[i].page_prompt === 'Custom Report'
+                      ) {
+                        bFlag = true;
+                      }
+
                       // 2: loop index to maintain in spot of array
                       let menuIndex = i;
 
@@ -272,7 +280,8 @@ document.addEventListener('DOMContentLoaded', () => {
                   if (
                     iSubMenuLevels > 0 &&
                     !bDoubleMenu &&
-                    !bDoubleMenuRemainsOpen
+                    !bDoubleMenuRemainsOpen &&
+                    !bFlag
                   )
                     strLibSatMenuStructure += '</ul></li>';
 
@@ -286,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // if NPS menu is not present include closing </ul></li>
-            if (!bNPSPresent) strLibSatMenuStructure += '</ul></li>';
+            if (!bNPSPresent) strLibSatMenuStructure += '</ul></li></ul></li>';
 
             // add MAPHAT entries
             let strMapHatMenuStructure = '';
@@ -329,8 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
               strLibSatMenuStructure += strMapHatMenuStructure;
             }
 
-            // Close libSatMenu top </li> only if user is Admin as it causes invalid syntax if not
-            if (user === 'Admin') strLibSatMenuStructure += '</ul></li>';
+            strLibSatMenuStructure += '</ul></li>';
           }
         }
       }
