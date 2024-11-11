@@ -62,6 +62,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       );
 
+      // Check if there's no entry with section_id equal to zero
+      const hasSectionZero = finalGroupedArray.some(
+        (section) => section.section_id === '0'
+      );
+
+      if (!hasSectionZero) {
+        // Add an entry for section_id = 0 with an empty pages array
+        finalGroupedArray.push({
+          section_id: '0',
+          section_prompt: null,
+          pages: [],
+        });
+      }
+
       // Define the custom order for section_ids
       const customOrder = ['0', '8', '2', '5', '1'];
 
