@@ -357,8 +357,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="${menuArray[i].page_prompt} has a sub menu. Click enter to open">${menuArray[i].page_prompt}<i class="caret angle-down"></i></a><ul class="sub-menu">`;
       }
 
-      function addMenuItems(libSatPagesNoMAPHAT, currentMenuItem) {
-        return `<li><a href="${libSatPagesNoMAPHAT[currentMenuItem].page_link}">${libSatPagesNoMAPHAT[currentMenuItem].page_prompt}</a></li>`;
+      function addMenuItems(menuArray, currentMenuItem) {
+        return `<li><a href="${menuArray[currentMenuItem].page_link}">${menuArray[currentMenuItem].page_prompt}</a></li>`;
       }
 
       // Find Libsat section and remove from array
@@ -368,7 +368,6 @@ document.addEventListener('DOMContentLoaded', () => {
           section.section_prompt.toLowerCase() === 'libsat'
       );
 
-      // If found, remove it from the array
       if (index !== -1) {
         finalGroupedArray.splice(index, 1);
       }
