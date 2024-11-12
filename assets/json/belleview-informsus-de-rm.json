@@ -39,6 +39,25 @@
       "section_prompt": null
     },
     {
+      "page_id": "2",
+      "page_title": "User Logout",
+      "page_prompt": "Logout",
+      "page_link": "logout.php",
+      "section_id": "0",
+      "sequence": "1",
+      "menu_tag": null,
+      "show_tag": null,
+      "menu_img": null,
+      "pkey": "80001030b266d5787344c056c623d6b8",
+      "page_icon_class": null,
+      "page_menu_class": "",
+      "keycode": null,
+      "page_prompt_code": "",
+      "section_sequence": null,
+      "parent_section_id": null,
+      "section_prompt": null
+    },
+    {
       "page_id": "71",
       "page_title": "Locations (outlets)",
       "page_prompt": "Locations",
@@ -94,6 +113,44 @@
       "section_sequence": null,
       "parent_section_id": null,
       "section_prompt": null
+    },
+    {
+      "page_id": "200",
+      "page_title": "Create/Manage various data views and associated outputs",
+      "page_prompt": "Report/Repurpose",
+      "page_link": "",
+      "section_id": "5",
+      "sequence": "2",
+      "menu_tag": null,
+      "show_tag": null,
+      "menu_img": null,
+      "pkey": "fc7f27115b39c75cd3f9b626a36e8f49",
+      "page_icon_class": null,
+      "page_menu_class": "",
+      "keycode": null,
+      "page_prompt_code": "",
+      "section_sequence": "3",
+      "parent_section_id": null,
+      "section_prompt": "InformsUs"
+    },
+    {
+      "page_id": "201",
+      "page_title": "Report / Repurpose data",
+      "page_prompt": "Reports ",
+      "page_link": "/rpt2/index.php?portal=portal",
+      "section_id": "5",
+      "sequence": "3",
+      "menu_tag": null,
+      "show_tag": null,
+      "menu_img": null,
+      "pkey": "cf56952a01610a88fe504facb88f2e78",
+      "page_icon_class": null,
+      "page_menu_class": "",
+      "keycode": null,
+      "page_prompt_code": "",
+      "section_sequence": "3",
+      "parent_section_id": null,
+      "section_prompt": "InformsUs"
     }
   ]
 }

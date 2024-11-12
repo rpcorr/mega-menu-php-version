@@ -39,6 +39,25 @@
       "section_prompt": null
     },
     {
+      "page_id": "2",
+      "page_title": "User Logout",
+      "page_prompt": "Logout",
+      "page_link": "logout.php",
+      "section_id": "0",
+      "sequence": "1",
+      "menu_tag": null,
+      "show_tag": null,
+      "menu_img": null,
+      "pkey": "80001030b266d5787344c056c623d6b8",
+      "page_icon_class": null,
+      "page_menu_class": "",
+      "keycode": null,
+      "page_prompt_code": "",
+      "section_sequence": null,
+      "parent_section_id": null,
+      "section_prompt": null
+    },
+    {
       "page_id": "71",
       "page_title": "Locations (outlets)",
       "page_prompt": "Locations",
@@ -94,6 +113,25 @@
       "section_sequence": null,
       "parent_section_id": null,
       "section_prompt": null
+    },
+    {
+      "page_id": "170",
+      "page_title": "LibPAS",
+      "page_prompt": "LibPAS",
+      "page_link": "",
+      "section_id": "2",
+      "sequence": "0",
+      "menu_tag": null,
+      "show_tag": null,
+      "menu_img": null,
+      "pkey": "76bf5bc3d690591a30b7cfe32f612594",
+      "page_icon_class": null,
+      "page_menu_class": "",
+      "keycode": null,
+      "page_prompt_code": "",
+      "section_sequence": "1",
+      "parent_section_id": null,
+      "section_prompt": "LibPAS"
     }
   ]
 }
