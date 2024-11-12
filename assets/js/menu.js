@@ -357,7 +357,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       function addMenuItems(menuArray, currentMenuItem) {
-        return `<li><a href="${menuArray[currentMenuItem].page_link}">${menuArray[currentMenuItem].page_prompt}</a></li>`;
+        // if page is Custom Report, place an dash border bottom
+        let strBorderBottomStyle = '';
+        if (menuArray[currentMenuItem].page_prompt === 'Custom Report') {
+          strBorderBottomStyle = 'class="underline-item"';
+        }
+
+        return `<li ${strBorderBottomStyle}><a href="${menuArray[currentMenuItem].page_link}">${menuArray[currentMenuItem].page_prompt}</a></li>`;
       }
 
       // Find Libsat section and remove from array
