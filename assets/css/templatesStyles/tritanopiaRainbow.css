@@ -394,4 +394,16 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-bottom: 4px solid #ff90b7;
 }
 
+/* --- divider --- */
+.underline-item {
+  position: relative;
+}
 
+.underline-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 5%; /* Centering the line */
+  width: 90%; /* Span 80% of the width */
+  border-bottom: 2px solid #ff90b7;
+}
