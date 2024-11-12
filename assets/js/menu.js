@@ -133,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let iSubMenuLevels = 0;
             let bDoubleMenu = false;
             let bDoubleMenuRemainsOpen = false;
-            let bNPSPresent = false;
             let bFlag = false;
 
             // loop through LibSat Pages
