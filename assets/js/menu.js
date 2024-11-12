@@ -161,7 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
                       // close custom Reports menu
                       if (libSatPagesNoMAPHAT[i].page_prompt === 'NPS') {
                         strLibSatMenuStructure += '</ul></li>';
-                        bNPSPresent = true;
                       }
 
                       strLibSatMenuStructure += openLibSatSubMenu(
@@ -294,9 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
               }
             }
 
-            // if NPS menu is not present include closing </ul></li>
-            if (!bNPSPresent) strLibSatMenuStructure += '</ul></li></ul></li>';
-
             // add MAPHAT entries
             let strMapHatMenuStructure = '';
             if (maphatEntries.length !== 0) {
@@ -427,8 +423,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (strLibSatMenuStructure !== '' && strLibSatMenuStructure !== undefined)
         menuHTML += strLibSatMenuStructure;
-
-      console.log(strLibSatMenuStructure);
 
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
 
