@@ -600,6 +600,18 @@ document.addEventListener('DOMContentLoaded', () => {
           });
       });
 
+      document
+        .getElementById('menu-more')
+        .addEventListener('mouseenter', () => {
+          document.getElementById('menuMoreLink').classList.add('active');
+        });
+
+      document
+        .getElementById('menu-more')
+        .addEventListener('mouseleave', () => {
+          document.getElementById('menuMoreLink').classList.remove('active');
+        });
+
       // stop propagation for .menu-item-has-children a
       document
         .querySelectorAll('.menu-item-has-children a')
@@ -990,6 +1002,17 @@ function toggleTopLevelMenu(menuLink) {
       }
     }
   }
+
+  // Get the element with the ID "menuMoreLink"
+  const menuMoreLink = document.getElementById('menuMoreLink');
+
+  // Check if the element exists
+  if (menuMoreLink) {
+    console.log('kkkkk');
+
+    // Toggle the "active" class
+    menuMoreLink.classList.add('active');
+  }
 }
 
 function watchForHover() {
@@ -1044,14 +1067,18 @@ function isCurrentPage(page) {
 function openMenu(bContainsSubMenuDiv) {
   // handle downdown menus
 
+  console.log('here');
+
   let elements;
 
   // Select the elements matching the CSS selector
   if (!bContainsSubMenuDiv) {
+    console.log('Ronan');
     elements = document.querySelectorAll(
       'ul#menu-main-menu li.menu-item-has-children.visible>ul:not(:hover)'
     );
   } else {
+    console.log('Freya');
     elements = document.querySelectorAll(
       'ul#menu-main-menu li.menu-item-has-children.visible > div:not(:hover)'
     );
@@ -1062,3 +1089,22 @@ function openMenu(bContainsSubMenuDiv) {
     element.style.opacity = '1';
   });
 }
+
+// document.querySelectorAll('.menu-item-has-children > a').forEach((item) => {
+//   console.log('hey, here I am');
+//   item.addEventListener('click', function (event) {
+//     console.log('hey');
+//     event.preventDefault(); // Prevent default link behavior
+
+//     // Toggle the 'open' class on the parent <li>
+//     const parentLi = this.parentElement;
+//     parentLi.classList.toggle('open');
+
+//     // Close other open submenus (optional)
+//     document.querySelectorAll('.menu-item-has-children').forEach((li) => {
+//       if (li !== parentLi) {
+//         li.classList.remove('open');
+//       }
+//     });
+//   });
+// });

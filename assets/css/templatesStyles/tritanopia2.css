@@ -419,3 +419,8 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   width: 90%; /* Span 80% of the width */
   border-bottom: 2px solid #ce2b2c;
 }
+
+/* preserve top level menu item colour when a secondary menu item is clicked */
+.active {
+  color: #e8d3e4 !important;
+}
