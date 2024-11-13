@@ -384,9 +384,15 @@ document.addEventListener('DOMContentLoaded', () => {
           // If section_id is 0, create top-level menu items
           if (section.section_id === '0') {
             section.pages.forEach((page) => {
-              menuHTML += '<li>';
-              menuHTML += `<a href="${page.page_link}">${page.page_prompt}</a>`;
-              menuHTML += '</li>';
+              // Only show Login in when user is not logged in
+              if (
+                ukey === '' ||
+                (ukey !== '' && page.page_prompt.toLowerCase() !== 'login')
+              ) {
+                menuHTML += '<li>';
+                menuHTML += `<a href="${page.page_link}">${page.page_prompt}</a>`;
+                menuHTML += '</li>';
+              }
             });
           } else {
             let openSubmenu = false;
