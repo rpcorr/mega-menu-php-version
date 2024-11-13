@@ -223,7 +223,6 @@ ul#menu-main-menu li.menu-item-has-children.visible > ul {
 
 ul#menu-main-menu li.menu-item-has-children.visible > ul,
 ul#menu-main-menu li.menu-item-has-children.visible > div {
-  opacity: 1;
   transition: opacity 1s ease-in-out;
   -webkit-transition: opacity 1s ease-in-out;
   -moz-transition: opacity 1s ease-in-out;
@@ -233,7 +232,7 @@ ul#menu-main-menu li.menu-item-has-children.visible > div {
 
 ul#menu-main-menu li.menu-item-has-children.visible:hover ul,
 ul#menu-main-menu li.menu-item-has-children.visible:hover div {
-  opacity: 1 !important;
+  opacity: 1;
 }
 
 ul#menu-main-menu li.menu-item-has-children.visible > ul:not(:hover),
