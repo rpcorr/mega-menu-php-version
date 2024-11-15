@@ -161,6 +161,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-bottom: 7px solid #e8d3e4;
 }
 
+/* up arrow stroke colour when menuMoreLink has active class */
+#menuMoreLink.active > i.angle-up:before {
+  border-bottom: 7px solid #e8d3e4;
+}
+
 /* up arrow fill colour */
 .menu-item-has-children i.angle-up:after {
   border-bottom: 4px solid #e8d3e4;
@@ -173,6 +178,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 
 /* up arrow fill colour on a:focus */
 .menu-item-has-children a:focus i.angle-up:after {
+  border-bottom: 4px solid #2a3338;
+}
+
+/* up arrow fill colour when menu is open and hover */
+#menuMoreLink.active > i.angle-up:after {
   border-bottom: 4px solid #2a3338;
 }
 
@@ -422,5 +432,6 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 
 /* preserve top level menu item colour when a secondary menu item is clicked */
 .active {
+  background-color: #2a3338;
   color: #e8d3e4 !important;
 }

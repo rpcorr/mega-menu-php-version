@@ -137,6 +137,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-top: 4px solid #66004d;
 }
 
+/* up arrow fill colour when menu is open and hover */
+#menuMoreLink.active > i.angle-up:after {
+  border-bottom: 4px solid #66004d;
+}
+
 /*---- ---- */
 
 /* up arrow stroke colour */
@@ -410,5 +415,5 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 
 /* preserve top level menu item colour when a secondary menu item is clicked */
 .active {
-  color: #ffe6f2 !important;
+  background-color: #66004d;
 }

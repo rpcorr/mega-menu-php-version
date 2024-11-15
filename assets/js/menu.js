@@ -448,7 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // open menu - determine the type of menu
             const bContainsSubMenuDiv =
               this.nextElementSibling.classList.contains('sub-menu-div');
-            openMenu(bContainsSubMenuDiv);
+            openMenu(bContainsSubMenuDiv, null);
           }
         });
       }
@@ -571,7 +571,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // open "More" menu when enter key is pressed
           if (event.key === 'Enter') {
             // open current regular menu, there param is false
-            openMenu(false);
+            openMenu(false, this);
           }
         });
 
@@ -600,17 +600,7 @@ document.addEventListener('DOMContentLoaded', () => {
           });
       });
 
-      document
-        .getElementById('menu-more')
-        .addEventListener('mouseenter', () => {
-          document.getElementById('menuMoreLink').classList.add('active');
-        });
-
-      document
-        .getElementById('menu-more')
-        .addEventListener('mouseleave', () => {
-          document.getElementById('menuMoreLink').classList.remove('active');
-        });
+      perserveMenuColour();
 
       // stop propagation for .menu-item-has-children a
       document
@@ -1008,8 +998,6 @@ function toggleTopLevelMenu(menuLink) {
 
   // Check if the element exists
   if (menuMoreLink) {
-    console.log('kkkkk');
-
     // Toggle the "active" class
     menuMoreLink.classList.add('active');
   }
@@ -1064,10 +1052,18 @@ function isCurrentPage(page) {
 }
 
 // enable openMenu using the keyboard for accessibility
-function openMenu(bContainsSubMenuDiv) {
-  // handle downdown menus
+function openMenu(bContainsSubMenuDiv, targetElement) {
+  // handle downdown
 
-  console.log('here');
+  // add active class to "More" link to keep background colour when menu is open
+  if (targetElement && targetElement.getAttribute('aria-expanded') === 'true') {
+    document.getElementById('menuMoreLink').classList.add('active');
+  }
+
+  // remove active class from "More" to remove the background colour on close
+  if (targetElement && targetElement.getAttribute('aria-expanded') !== 'true') {
+    document.getElementById('menuMoreLink').classList.remove('active');
+  }
 
   let elements;
 
@@ -1090,21 +1086,14 @@ function openMenu(bContainsSubMenuDiv) {
   });
 }
 
-// document.querySelectorAll('.menu-item-has-children > a').forEach((item) => {
-//   console.log('hey, here I am');
-//   item.addEventListener('click', function (event) {
-//     console.log('hey');
-//     event.preventDefault(); // Prevent default link behavior
+function perserveMenuColour() {
+  //document.getElementById('menuMoreLink').classList.add('active');
 
-//     // Toggle the 'open' class on the parent <li>
-//     const parentLi = this.parentElement;
-//     parentLi.classList.toggle('open');
+  document.getElementById('menu-more').addEventListener('mouseenter', () => {
+    document.getElementById('menuMoreLink').classList.add('active');
+  });
 
-//     // Close other open submenus (optional)
-//     document.querySelectorAll('.menu-item-has-children').forEach((li) => {
-//       if (li !== parentLi) {
-//         li.classList.remove('open');
-//       }
-//     });
-//   });
-// });
+  document.getElementById('menu-more').addEventListener('mouseleave', () => {
+    document.getElementById('menuMoreLink').classList.remove('active');
+  });
+}
