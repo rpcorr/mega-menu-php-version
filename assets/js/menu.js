@@ -1069,12 +1069,10 @@ function openMenu(bContainsSubMenuDiv, targetElement) {
 
   // Select the elements matching the CSS selector
   if (!bContainsSubMenuDiv) {
-    console.log('Ronan');
     elements = document.querySelectorAll(
       'ul#menu-main-menu li.menu-item-has-children.visible>ul:not(:hover)'
     );
   } else {
-    console.log('Freya');
     elements = document.querySelectorAll(
       'ul#menu-main-menu li.menu-item-has-children.visible > div:not(:hover)'
     );
