@@ -543,6 +543,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // set the More sub menu aria-expanded attr to true
             this.setAttribute('aria-expanded', true);
+
+            // set active class
+            this.classList.add('active');
           } else {
             // set the arrow to the down position (close)
             resetArrows();
