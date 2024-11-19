@@ -130,7 +130,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 
 /* down arrow fill colour */
 .menu-item-has-children i.angle-down:after {
-  border-top: 4px solid #929084;
+  border-top: 4px solid #a997df;
 }
 
 /* down arrow fill colour on hover */
@@ -162,7 +162,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 
 /* up arrow fill colour */
 .menu-item-has-children i.angle-up:after {
-  border-bottom: 4px solid #929084;
+  border-bottom: 4px solid #a997df;
 }
 
 /* up arrow fill colour on hover */

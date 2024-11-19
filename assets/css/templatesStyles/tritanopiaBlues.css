@@ -39,6 +39,9 @@ ul.menu li a:focus {
   > a:link {
   color: #daf1f4;
 }
+#menuMoreLink:not(:active):focus {
+  color: #daf1f4;
+}
 
 #siteIdentity a {
   color: #111111;

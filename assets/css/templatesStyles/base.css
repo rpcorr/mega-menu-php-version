@@ -182,6 +182,10 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-bottom: 4px solid #60bd68;
 }
 
+#menuMoreLink:not(.active):not(:focus) > i.angle-up:after {
+  border-bottom: 4px solid #00aeef;
+}
+
 /* -- second level -- */
 
 /* down arrow stroke colour */
