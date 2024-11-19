@@ -561,6 +561,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // set the More link aria-expanded attr to false
             this.setAttribute('aria-expanded', false);
+
+            // remove active class
+            this.classList.remove('active');
           }
         });
 
