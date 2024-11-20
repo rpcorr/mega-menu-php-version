@@ -567,6 +567,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // remove active class
             this.classList.remove('active');
+            if (this && this.className.trim() === '')
+              this.removeAttribute('class');
           }
         });
 
@@ -941,6 +943,9 @@ function toggleTopLevelMenu(menuLink) {
 
       // 2-d set aria-expanded to true
       anchorTag.setAttribute('aria-expanded', 'true');
+
+      // 2-e set class to active
+      anchorTag.classList.add('active');
     });
   } else {
     // BEFORE CLOSING MENU - CHECK IF LINK HAS A SUB MENU
@@ -995,6 +1000,11 @@ function toggleTopLevelMenu(menuLink) {
 
         // 4-d. reset aria-expanded to false
         menuLink.setAttribute('aria-expanded', 'false');
+
+        // 4-e. remove active class
+        menuLink.classList.remove('active');
+        if (menuLink && menuLink.className.trim() === '')
+          menuLink.removeAttribute('class');
       }
     }
   }
@@ -1004,7 +1014,7 @@ function toggleTopLevelMenu(menuLink) {
 
   // Check if the element exists
   if (menuMoreLink) {
-    // Toggle the "active" class
+    // Add the "active" class
     menuMoreLink.classList.add('active');
   }
 }
@@ -1069,6 +1079,11 @@ function openMenu(bContainsSubMenuDiv, targetElement) {
   // remove active class from "More" to remove the background colour on close
   if (targetElement && targetElement.getAttribute('aria-expanded') !== 'true') {
     document.getElementById('menuMoreLink').classList.remove('active');
+    if (
+      document.getElementById('menuMoreLink') &&
+      document.getElementById('menuMoreLink').className.trim() === ''
+    )
+      document.getElementById('menuMoreLink').removeAttribute('class');
   }
 
   let elements;
@@ -1099,5 +1114,10 @@ function perserveMenuColour() {
 
   document.getElementById('menu-more').addEventListener('mouseleave', () => {
     document.getElementById('menuMoreLink').classList.remove('active');
+    if (
+      document.getElementById('menuMoreLink') &&
+      document.getElementById('menuMoreLink').className.trim() === ''
+    )
+      document.getElementById('menuMoreLink').removeAttribute('class');
   });
 }
