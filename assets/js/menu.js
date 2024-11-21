@@ -944,8 +944,15 @@ function toggleTopLevelMenu(menuLink) {
       // 2-d set aria-expanded to true
       anchorTag.setAttribute('aria-expanded', 'true');
 
-      // 2-e set class to active
-      anchorTag.classList.add('active');
+      // 2-e set class to active or active-2
+      if (menuLink.parentElement.parentElement.hasAttribute('id')) {
+        anchorTag.classList.add('active');
+      } else if (
+        !menuLink.parentElement.parentElement.parentElement.hasAttribute('id')
+      ) {
+        if (!anchorTag.classList.contains('active'))
+          anchorTag.classList.add('active-two');
+      }
     });
   } else {
     // BEFORE CLOSING MENU - CHECK IF LINK HAS A SUB MENU
@@ -1005,6 +1012,19 @@ function toggleTopLevelMenu(menuLink) {
         menuLink.classList.remove('active');
         if (menuLink && menuLink.className.trim() === '')
           menuLink.removeAttribute('class');
+
+        if (menuLink.parentElement.parentElement.hasAttribute('id')) {
+          menuLink.classList.remove('active');
+          if (menuLink && menuLink.className.trim() === '')
+            menuLink.removeAttribute('class');
+        } else if (
+          !menuLink.parentElement.parentElement.parentElement.hasAttribute('id')
+        ) {
+          if (!menuLink.classList.contains('active'))
+            menuLink.classList.remove('active-two');
+          if (menuLink && menuLink.className.trim() === '')
+            menuLink.removeAttribute('class');
+        }
       }
     }
   }
