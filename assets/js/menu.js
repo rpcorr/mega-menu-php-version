@@ -705,6 +705,12 @@ function closeAllMenus(menuItem) {
 
         //4. Reset aria-expanded attribute to false
         element.setAttribute('aria-expanded', 'false');
+
+        //5. Remove active and active-2 classes
+        element.classList.remove('active');
+        element.classList.remove('active-two');
+        if (element && element.className.trim() === '')
+          element.removeAttribute('class');
       });
 
     // exit function early to avoid crash with menuLink.attr('id')
