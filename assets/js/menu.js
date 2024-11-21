@@ -915,6 +915,13 @@ function toggleTopLevelMenu(menuLink) {
       .forEach(function (element) {
         if (element !== focusedLink) {
           element.setAttribute('aria-expanded', 'false');
+
+          // 1-e. remove active and active-two classes;
+          // then remove class attrib if empty
+          element.classList.remove('active');
+          element.classList.remove('active-two');
+          if (element && element.className.trim() === '')
+            element.removeAttribute('class');
         }
       });
 
