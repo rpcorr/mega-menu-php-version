@@ -523,6 +523,18 @@ document.addEventListener('DOMContentLoaded', () => {
           // display the More menu
           this.closest('.menu-item-has-children').classList.toggle('visible');
 
+          // remove active class from anchor elements
+          if (
+            !this.closest('.menu-item-has-children').classList.contains(
+              'visible'
+            )
+          ) {
+            // More menu is closed
+
+            // call removeActiveClass
+            removeActiveClass();
+          }
+
           if (
             this.closest('.menu-item-has-children').classList.contains(
               'visible'
@@ -606,6 +618,9 @@ document.addEventListener('DOMContentLoaded', () => {
             );
             element.setAttribute('aria-expanded', 'false');
           });
+
+        // call removeActiveClass
+        removeActiveClass();
       });
 
       perserveMenuColour();
@@ -706,9 +721,8 @@ function closeAllMenus(menuItem) {
         //4. Reset aria-expanded attribute to false
         element.setAttribute('aria-expanded', 'false');
 
-        //5. Remove active and active-2 classes
+        //5. Remove active class
         element.classList.remove('active');
-        element.classList.remove('active-two');
         if (element && element.className.trim() === '')
           element.removeAttribute('class');
       });
@@ -915,11 +929,16 @@ function toggleTopLevelMenu(menuLink) {
       .forEach(function (element) {
         if (element !== focusedLink) {
           element.setAttribute('aria-expanded', 'false');
+        }
+      });
 
-          // 1-e. remove active and active-two classes;
+    // 1-e. remove active class
+    document
+      .querySelectorAll('li.menu-item-has-children > a')
+      .forEach(function (element) {
+        if (element !== focusedLink) {
           // then remove class attrib if empty
           element.classList.remove('active');
-          element.classList.remove('active-two');
           if (element && element.className.trim() === '')
             element.removeAttribute('class');
         }
@@ -963,8 +982,8 @@ function toggleTopLevelMenu(menuLink) {
       } else if (
         !menuLink.parentElement.parentElement.parentElement.hasAttribute('id')
       ) {
-        if (!anchorTag.classList.contains('active'))
-          anchorTag.classList.add('active-two');
+        // check to see if anchor doesn't have a class
+        if (anchorTag.classList.length === 0) anchorTag.classList.add('active');
       }
     });
   } else {
@@ -1028,13 +1047,6 @@ function toggleTopLevelMenu(menuLink) {
 
         if (menuLink.parentElement.parentElement.hasAttribute('id')) {
           menuLink.classList.remove('active');
-          if (menuLink && menuLink.className.trim() === '')
-            menuLink.removeAttribute('class');
-        } else if (
-          !menuLink.parentElement.parentElement.parentElement.hasAttribute('id')
-        ) {
-          if (!menuLink.classList.contains('active'))
-            menuLink.classList.remove('active-two');
           if (menuLink && menuLink.className.trim() === '')
             menuLink.removeAttribute('class');
         }
@@ -1152,5 +1164,15 @@ function perserveMenuColour() {
       document.getElementById('menuMoreLink').className.trim() === ''
     )
       document.getElementById('menuMoreLink').removeAttribute('class');
+  });
+}
+
+function removeActiveClass() {
+  // Select all anchor elements within the Menu more
+  const moreAnchorLinks = document.querySelectorAll('#menu-more a');
+
+  // Remove 'active' class from each element
+  moreAnchorLinks.forEach((link) => {
+    link.classList.remove('active');
   });
 }
