@@ -90,7 +90,7 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
 /* third submenu background and font colours */
 .menu-main-menu-container > #menu-main-menu > li li li > .sub-menu a {
   background-color: #a997df;
-  color: #ffffff;
+  color: #333333;
 }
 
 /* fourth submenu background and font colours */
@@ -160,6 +160,14 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-bottom: 7px solid #333333;
 }
 
+/* up arrow stroke colour when a has active class and not :focus */
+.menu-item-has-children
+  .menu-item-has-children
+  a.active:not(:focus)
+  i.angle-up:before {
+  border-bottom: 7px solid #333333;
+}
+
 /* up arrow fill colour */
 .menu-item-has-children i.angle-up:after {
   border-bottom: 4px solid #a997df;
@@ -177,6 +185,14 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 
 /* up arrow fill colour when menu is open and hover */
 #menuMoreLink.active > i.angle-up:after {
+  border-bottom: 4px solid #ffc857;
+}
+
+/* up arrow fill colour when a has active class and not :focus */
+.menu-item-has-children
+  .menu-item-has-children
+  a.active:not(:focus)
+  i.angle-up:after {
   border-bottom: 4px solid #ffc857;
 }
 
@@ -410,6 +426,26 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-bottom: 4px solid #ffc857;
 }
 
+/* -- Fourth-level  --- */
+
+/* down arrow stroke colour */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  i.angle-down:before {
+  border-top: 7px solid #333333;
+}
+
+/* down arrow fill colour */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  i.angle-down:after {
+  border-top: 4px solid #a997df;
+}
+
 /* --- divider --- */
 .underline-item {
   position: relative;
@@ -425,6 +461,13 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 }
 
 /* preserve top level menu item colour when a secondary menu item is clicked */
-.active {
+li > .active,
+li > li > .active {
   background-color: #ffc857;
+  color: #333333 !important;
+}
+
+/* preserve secondary level menu item colour when a third menu item is clicked */
+.menu-item-has-children > ul.sub-menu > .menu-item-has-children > .active {
+  background-color: #ffc857 !important;
 }
