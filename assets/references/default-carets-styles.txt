@@ -44,7 +44,7 @@
   border-bottom: 4px solid #555555;
 }
 
-/* second-level */
+/* second level */
 
 /* down arrow stroke colour */
 .menu-item-has-children .menu-item-has-children i.angle-down:before {
