@@ -52,7 +52,17 @@ h2 {
   font-weight: bold;
 }
 
+h3 {
+  font-size: 1em;
+  font-weight: bold;
+  color: #60bd68;
+}
+
 .container h2,
+.container h3,
+.container h4,
+.container h5,
+.container h6,
 .container p {
   text-align: left;
   margin-bottom: 0.5em;
