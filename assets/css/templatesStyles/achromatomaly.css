@@ -24,7 +24,7 @@ ul#menu-main-menu a {
   color: #303136;
 }
 
-/* link background colour on hover and focus */
+/* link background and font colours on hover and focus */
 ul#menu-main-menu li a:hover,
 ul#menu-main-menu li a:focus,
 ul.menu li:hover,
@@ -49,7 +49,7 @@ ul.menu li a:focus {
 /* first submenu text colour */
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a {
-  color: #ffffff;
+  color: #fff;
 }
 
 /* first submenu hover and focus background and font colours */
@@ -81,28 +81,28 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
   color: #303136;
 }
 
-/* second submenu background-colour and font colour */
+/* second submenu background and font colours */
 .menu-main-menu-container > #menu-main-menu > li li > .sub-menu a {
   background-color: #447794;
   color: #fff;
 }
 
-/* third submenu background-colour and font colour */
+/* third submenu background and font colours */
 .menu-main-menu-container > #menu-main-menu > li li li > .sub-menu a {
   background-color: #dbd8c7;
   color: #303136;
 }
 
-/* fourth submenu background colour and font colour */
+/* fourth submenu background and font colours */
 .menu-main-menu-container > #menu-main-menu > li li li li > .sub-menu a {
   background-color: #303136;
   color: #fff;
 }
 
-/* mega menu background colour and font colour */
+/* mega menu background and font colours */
 header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   background-color: rgba(133, 74, 76, 0.9);
-  color: #000000;
+  color: #000;
 }
 
 /* title within a mega menu font colour */
@@ -124,6 +124,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-top: 7px solid #303136;
 }
 
+/* down arrow stroke colour on a:focus */
+.menu-item-has-children a:focus i.angle-down:before {
+  border-top: 7px solid #303136;
+}
+
 /* down arrow fill colour */
 .menu-item-has-children i.angle-down:after {
   border-top: 4px solid #dbd8c7;
@@ -139,7 +144,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-top: 4px solid #caa386;
 }
 
-/*---- ---- */
+/* ---- ---- */
 
 /* up arrow stroke colour */
 .menu-item-has-children i.angle-up:before {
@@ -148,6 +153,16 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 
 /* up arrow stroke colour on hover */
 .menu-item-has-children:hover i.angle-up:before {
+  border-bottom: 7px solid #303136;
+}
+
+/* up arrow stroke colour on a:focus */
+.menu-item-has-children a:focus i.angle-up:before {
+  border-bottom: 7px solid #303136;
+}
+
+/* up arrow stroke colour when menuMoreLink has active class */
+#menuMoreLink.active > i.angle-up:before {
   border-bottom: 7px solid #303136;
 }
 
@@ -175,7 +190,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 
 /* down arrow stroke colour */
 .menu-item-has-children .menu-item-has-children i.angle-down:before {
-  border-top: 7px solid #ffffff;
+  border-top: 7px solid #fff;
 }
 
 /* down arrow stroke colour on hover */
@@ -213,11 +228,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-top: 4px solid #caa386;
 }
 
-/*---- ---- */
+/* ---- ---- */
 
 /* up arrow stroke colour */
 .menu-item-has-children .menu-item-has-children i.angle-up:before {
-  border-bottom: 7px solid #ffffff;
+  border-bottom: 7px solid #fff;
 }
 
 /* up arrow stroke colour on hover */
@@ -234,6 +249,14 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 .menu-item-has-children
   .menu-item-has-children
   a.active:not(:focus)
+  i.angle-up:before {
+  border-bottom: 7px solid #303136;
+}
+
+/* up arrow stroke colour when a has active class and :focus */
+.menu-item-has-children
+  .menu-item-has-children
+  a.active:focus
   i.angle-up:before {
   border-bottom: 7px solid #303136;
 }
@@ -281,14 +304,14 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-bottom: 4px solid #caa386;
 }
 
-/* --- Third-level --- */
+/* --- Third level --- */
 
 /* down arrow stroke colour */
 .menu-item-has-children
   .menu-item-has-children
   .menu-item-has-children
   i.angle-down:before {
-  border-top: 7px solid #ffffff;
+  border-top: 7px solid #fff;
 }
 
 /* down arrow stroke colour on hover */
@@ -303,6 +326,15 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 .menu-item-has-children
   .menu-item-has-children
   .menu-item-has-children:focus
+  i.angle-down:before {
+  border-top: 7px solid #303136;
+}
+
+/* down arrow stroke colour when a has focus */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  a:focus
   i.angle-down:before {
   border-top: 7px solid #303136;
 }
@@ -349,14 +381,14 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-top: 4px solid #caa386;
 }
 
-/*--- --- */
+/* ---- ---- */
 
 /* up arrow stroke colour */
 .menu-item-has-children
   .menu-item-has-children
   .menu-item-has-children
   i.angle-up:before {
-  border-bottom: 7px solid #ffffff;
+  border-bottom: 7px solid #fff;
 }
 
 /* up arrow stroke colour on hover */
@@ -417,7 +449,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-bottom: 4px solid #caa386;
 }
 
-/* -- Fourth-level  --- */
+/* --- Fourth level  --- */
 
 /* down arrow stroke colour */
 .menu-item-has-children
@@ -426,6 +458,26 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   i.angle-down:before {
   border-top: 7px solid #303136;
+}
+
+/* down arrow stroke colour a:hover */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  a:hover
+  i.angle-down:before {
+  border-top: 7px solid #303136 !important;
+}
+
+/* down arrow stroke colour a:focus */
+.menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  .menu-item-has-children
+  a:focus
+  i.angle-down:before {
+  border-top: 7px solid #303136 !important;
 }
 
 /* down arrow fill colour */
