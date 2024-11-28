@@ -24,11 +24,13 @@ ul#menu-main-menu a {
   color: #333;
 }
 
-/* link background and font colours on hover and focus */
+/* link background and font colours on hover, focus and active */
 ul#menu-main-menu li a:hover,
 ul#menu-main-menu li a:focus,
+ul#menu-main-menu a.active,
 ul.menu li:hover,
-ul.menu li a:focus {
+ul.menu li a:focus,
+ul.menu li a:active {
   background-color: #ffc857;
   color: #333;
 }
@@ -467,7 +469,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   a:hover
   i.angle-down:before {
-  border-top: 7px solid #333 !important;
+  border-top: 7px solid #333;
 }
 
 /* down arrow stroke colour a:focus */
@@ -477,7 +479,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   a:focus
   i.angle-down:before {
-  border-top: 7px solid #333 !important;
+  border-top: 7px solid #333;
 }
 
 /* down arrow fill colour */
@@ -507,7 +509,6 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 li > .active,
 li > li > .active {
   background-color: #ffc857;
-  color: #333 !important;
 }
 
 /* preserve secondary level menu item colour when a third menu item is clicked */

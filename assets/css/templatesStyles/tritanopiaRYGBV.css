@@ -24,11 +24,13 @@ ul#menu-main-menu a {
   color: #ffe6f2;
 }
 
-/* link background and font colours on hover and focus */
+/* link background and font colours on hover, focus and active */
 ul#menu-main-menu li a:hover,
 ul#menu-main-menu li a:focus,
+ul#menu-main-menu a.active,
 ul.menu li:hover,
-ul.menu li a:focus {
+ul.menu li a:focus,
+ul.menu li a:active {
   background-color: #66004d;
   color: #ffe6f2;
 }
@@ -352,7 +354,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   .menu-item-has-children:hover
   i.angle-down:after {
-  border-top: 4px solid #009999;
+  border-top: 4px solid #66004d;
 }
 
 /* down arrow fill colour on a:hover */
@@ -361,7 +363,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   a:hover
   i.angle-down:after {
-  border-top: 4px solid #009999;
+  border-top: 4px solid #66004d;
 }
 
 /* down arrow fill colour on focus */
@@ -369,7 +371,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   .menu-item-has-children:focus
   i.angle-down:after {
-  border-top: 4px solid #009999;
+  border-top: 4px solid #66004d;
 }
 
 /* down arrow fill colour on a:focus */
@@ -378,7 +380,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   a:focus
   i.angle-down:after {
-  border-top: 4px solid #009999;
+  border-top: 4px solid #66004d;
 }
 
 /* ---- ---- */
@@ -420,7 +422,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   .menu-item-has-children:hover
   i.angle-up:after {
-  border-bottom: 4px solid #009999;
+  border-bottom: 4px solid #66004d;
 }
 
 /* up arrow fill colour a:hover */
@@ -429,7 +431,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   a:hover
   i.angle-up:after {
-  border-bottom: 4px solid #009999;
+  border-bottom: 4px solid #66004d;
 }
 
 /* up arrow fill colour on focus */
@@ -437,7 +439,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   .menu-item-has-children:focus
   i.angle-up:after {
-  border-bottom: 4px solid #009999;
+  border-bottom: 4px solid #66004d;
 }
 
 /* up arrow fill colour on a:focus */
@@ -446,7 +448,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   a:focus
   i.angle-up:after {
-  border-bottom: 4px solid #009999;
+  border-bottom: 4px solid #66004d;
 }
 
 /* --- Fourth level  --- */
@@ -467,7 +469,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   a:hover
   i.angle-down:before {
-  border-top: 7px solid #ffe6f2 !important;
+  border-top: 7px solid #ffe6f2;
 }
 
 /* down arrow stroke colour a:focus */
@@ -477,7 +479,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   .menu-item-has-children
   a:focus
   i.angle-down:before {
-  border-top: 7px solid #ffe6f2 !important;
+  border-top: 7px solid #ffe6f2;
 }
 
 /* down arrow fill colour */
@@ -507,7 +509,6 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
 li > .active,
 li > li > .active {
   background-color: #66004d;
-  color: #ffe6f2 !important;
 }
 
 /* preserve secondary level menu item colour when a third menu item is clicked */
