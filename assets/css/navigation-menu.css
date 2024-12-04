@@ -44,7 +44,7 @@ ul#menu-main-menu li > ul {
   padding: 0;
 }
 
-ul#menu-main-menu li.menu-item-has-children:not(.visible) > ul {
+ul#menu-main-menu li.menu-item-has-children > ul {
   display: none;
 }
 
@@ -212,8 +212,8 @@ ul#menu-main-menu li > ul {
   padding: 0;
 }
 
-ul#menu-main-menu li.menu-item-has-children:not(.visible) > ul,
-ul#menu-main-menu li.menu-item-has-children:not(.visible) > div {
+ul#menu-main-menu li.menu-item-has-children > ul,
+ul#menu-main-menu li.menu-item-has-children > div {
   display: none;
 }
 
