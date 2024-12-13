@@ -486,7 +486,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       newMenuItem.id = 'menu-more';
       newMenuItem.className = 'menu-item menu-item-has-children';
-      newMenuItem.style.display = 'none';
 
       const newMenuLink = document.createElement('a');
       newMenuLink.id = 'menuMoreLink';
@@ -512,6 +511,33 @@ document.addEventListener('DOMContentLoaded', () => {
         .getElementById('menuMoreLink')
         .addEventListener('click', function (event) {
           event.preventDefault();
+
+          // Select the container by its ID
+          const container = document.getElementById('moreSubMenu');
+
+          // open moreSubmenu
+          if (!this.classList.contains('active')) {
+            // replace all rpc tags under moreSubMenu with a so the
+            // link in the submenu are clickable when moreSubmenu is open
+            replaceTagName(container, 'rpc', 'a', addAnchorListeners);
+          }
+
+          // close moreSubmenu
+          if (this.classList.contains('active')) {
+            // remove opacity inline style
+            setTimeout(() => {
+              // Remove the specific inline style property
+              document
+                .getElementById('moreSubMenu')
+                .style.removeProperty('opacity');
+            }, 100);
+
+            setTimeout(() => {
+              // replace all a tags under moreSubMenu with rpc so the hand is
+              // not visible when menu is close
+              replaceTagName(container, 'a', 'rpc', null);
+            }, 950);
+          }
 
           // close all other open menus
           document
@@ -676,6 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function handleLinkClick(e) {
   // link has sub menu
   if (this.closest('.menu-item-has-children')) {
+    console.log('kkk');
     toggleTopLevelMenu(this);
   }
 }
@@ -806,11 +833,6 @@ function formatNav() {
         }
 
         navItemVisible[count] = true;
-
-        // if all are visible, hide More
-        if (count == numItems - 1) {
-          document.getElementById('menu-more').style.display = 'none';
-        }
       }
     }
     // if the menu item will not fit
@@ -835,9 +857,6 @@ function formatNav() {
           document.getElementById('menuMoreLink').innerHTML =
             'More <i class="caret angle-down"></i>';
         }
-
-        // show more menu
-        document.getElementById('menu-more').style.display = 'block';
       }
 
       // remove hover class for items under "More"
@@ -853,6 +872,14 @@ function formatNav() {
     // update count
     count += 1;
   });
+
+  // Select the container by its ID
+  const container = document.getElementById('moreSubMenu');
+
+  // replace all anchor tags under moreSubMenu with rpc
+  // so the pointer (hand) doesn't show when hover over a
+  // submenu with an opacity of 0
+  replaceTagName(container, 'a', 'rpc', null);
 }
 
 function resetArrows() {
@@ -1158,10 +1185,14 @@ function openMenu(bContainsSubMenuDiv, targetElement) {
 }
 
 function perserveMenuColour() {
-  //document.getElementById('menuMoreLink').classList.add('active');
-
   document.getElementById('menu-more').addEventListener('mouseenter', () => {
-    document.getElementById('menuMoreLink').classList.add('active');
+    // Get the anchor element by its ID
+    const menuMoreLink = document.getElementById('menuMoreLink');
+
+    // Check if the element exists and if it has aria-expanded set to "true"
+    if (menuMoreLink && menuMoreLink.getAttribute('aria-expanded') === 'true') {
+      document.getElementById('menuMoreLink').classList.add('active');
+    }
   });
 
   document.getElementById('menu-more').addEventListener('mouseleave', () => {
@@ -1182,4 +1213,44 @@ function removeActiveClass() {
   moreAnchorLinks.forEach((link) => {
     link.classList.remove('active');
   });
+}
+
+// a hack way to disable links that are under the More menu when it is no open
+// and activating the links when More menu is open.
+function replaceTagName(container, fromTag, toTag, callback) {
+  // Select all elements matching the `fromTag`
+  const elements = container.querySelectorAll(fromTag);
+
+  elements.forEach((originalElement) => {
+    // Create a new element with the desired `toTag`
+    const newElement = document.createElement(toTag);
+
+    // Copy all attributes, including optional ones like `aria-expanded`
+    Array.from(originalElement.attributes).forEach((attr) => {
+      newElement.setAttribute(attr.name, attr.value);
+    });
+
+    // Copy the inner content (including nested elements)
+    newElement.innerHTML = originalElement.innerHTML;
+
+    // Replace the original element with the new one
+    originalElement.replaceWith(newElement);
+
+    // Run the callback function, if provided
+    if (typeof callback === 'function') {
+      callback(newElement);
+    }
+  });
+}
+
+// Callback to add event listeners for <a>
+function addAnchorListeners(element) {
+  if (element.tagName.toLowerCase() === 'a') {
+    element.addEventListener('click', (event) => {
+      event.preventDefault(); // Prevent default link behavior
+
+      // open or close submenu
+      toggleTopLevelMenu(element);
+    });
+  }
 }
