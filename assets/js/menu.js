@@ -565,13 +565,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const anchors = document.querySelectorAll('#moreSubMenu a');
 
             anchors.forEach(function (anchor) {
-              // set aria-expanded to false
-              anchor.setAttribute('aria-expanded', false);
-              // set aria label to open open menu
-              anchor.setAttribute(
-                'aria-label',
-                `${anchor.textContent} has a sub menu. Click enter to open`
-              );
+              // check if anchor has aria-expaneded
+              if (anchor.hasAttribute('aria-expanded')) {
+                // set aria-expanded to false
+                anchor.setAttribute('aria-expanded', false);
+              }
+
+              // check if anchor has aria-label
+              if (anchor.hasAttribute('aria-label')) {
+                // set aria label to open open menu
+                anchor.setAttribute(
+                  'aria-label',
+                  `${anchor.textContent} has a sub menu. Click enter to open`
+                );
+              }
             });
 
             // set the More link aria-expanded attr to false
