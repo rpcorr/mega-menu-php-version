@@ -24,6 +24,11 @@ ul#menu-main-menu a {
   color: #ffb9bd;
 }
 
+/* link colour active */
+ul#menu-main-menu a:active {
+  color: #333;
+}
+
 /* link background and font colours on hover, focus and active */
 ul#menu-main-menu li a:hover,
 ul#menu-main-menu li a:focus,
@@ -31,8 +36,8 @@ ul#menu-main-menu a.active,
 ul.menu li:hover,
 ul.menu li a:focus,
 ul.menu li a:active {
-  background-color: #ff004d;
-  color: #ffb9bd;
+  background-color: #ffb9bd;
+  color: #333;
 }
 
 /* maintain main menu text colour on hover when a sub menu item is selected */
@@ -59,9 +64,10 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a:hover,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a:focus,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:hover,
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu a:focus {
+.menu-main-menu-container > #menu-main-menu > li > .sub-menu a:focus,
+.menu-main-menu-container > #menu-main-menu > li > .sub-menu a:active {
   background-color: #ff004d;
-  color: #ffb9bd;
+  color: #111;
 }
 
 /* second submenu background and font colours */
@@ -90,7 +96,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
 /* title within a mega menu font colour */
 header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
-  color: #6d1129; /* 7.65 */
+  color: #6d1129;
 }
 
 /***** Carets *****/
@@ -102,10 +108,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-top: 7px solid #ffb9bd;
 }
 
-/* down arrow stroke colour on hover, a:focus */
-.menu-item-has-children:hover i.angle-down:before,
+/* down arrow stroke colour on a:hover, a:active, a:focus */
+.menu-item-has-children a:hover i.angle-down:before,
+.menu-item-has-children a:active i.angle-down:before,
 .menu-item-has-children a:focus i.angle-down:before {
-  border-top: 7px solid #ffb9bd;
+  border-top: 7px solid #333;
 }
 
 /* down arrow fill colour */
@@ -113,10 +120,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
   border-top: 4px solid #6d1129;
 }
 
-/* down arrow fill colour on hover, a:focus */
-.menu-item-has-children:hover i.angle-down:after,
+/* down arrow fill colour on a:hover, a:active, a:focus */
+.menu-item-has-children a:hover i.angle-down:after,
+.menu-item-has-children a:active i.angle-down:after,
 .menu-item-has-children a:focus i.angle-down:after {
-  border-top: 4px solid #ff004d;
+  border-top: 4px solid #ffb9bd;
 }
 
 /* ---- ---- */
