@@ -702,7 +702,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function handleLinkClick(e) {
   // link has sub menu
   if (this.closest('.menu-item-has-children')) {
-    console.log('kkk');
     toggleTopLevelMenu(this);
   }
 }
@@ -917,6 +916,13 @@ function onResize() {
 
     // reset arrows to down position
     resetArrows();
+
+    replaceTagName(
+      document.getElementById('moreSubMenu'),
+      'rpc',
+      'a',
+      addAnchorListeners
+    );
 
     formatNav();
 
