@@ -44,6 +44,17 @@ ul#menu-main-menu li > ul {
   padding: 0;
 }
 
+a[aria-expanded='true'] + ul.sub-menu {
+  /* Add your desired styles here */
+  opacity: 1 !important;
+  display: block; /* Example: Make the submenu visible */
+}
+
+a[aria-expanded='false'] + ul.sub-menu {
+  opacity: 0;
+  display: none; /* Example: Hide the submenu */
+}
+
 /* initially hide sub menus */
 ul#menu-main-menu li > ul > li > ul {
   opacity: 1;
