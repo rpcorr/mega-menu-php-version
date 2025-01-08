@@ -434,6 +434,36 @@ document.addEventListener('DOMContentLoaded', () => {
       if (strLibSatMenuStructure !== '' && strLibSatMenuStructure !== undefined)
         menuHTML += strLibSatMenuStructure;
 
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Test <i class="caret angle-down"></i></a>
+            <div class="sub-menu-div mega-menu mega-menu-column-4">
+    <div class="list-item text-center">
+        <a href="#rainForest">
+        <img src="assets/imgs/p1.jpg" alt="Rain Forest">
+        <p>Rain Forest</p>
+        </a>
+    </div>
+    <div class="list-item text-center">
+        <a href="#mountains">
+        <img src="assets/imgs/p2.jpg" alt="Mountains">
+        <p>Mountains</p>
+        </a>
+    </div>
+    <div class="list-item text-center">
+        <a href="#waterfall">
+        <img src="assets/imgs/p3.jpg" alt="Waterfall">
+        <p>Waterfall</p>
+        </a>
+    </div>
+    <div class="list-item text-center">
+        <a href="#owl">
+        <img src="assets/imgs/p4.jpg" alt="Owl">
+        <p>Owl</p>
+        </a>
+    </div>
+</div>
+
+            </li>`;
+
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
 
       navItems = document.querySelectorAll('#menu-main-menu > li');
@@ -696,6 +726,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
   moreWidth = document.getElementById('menu-main-menu').offsetWidth;
+
+  // Select moreSubMenu
+  const container = document.getElementById('moreSubMenu');
+  //const container = document.querySelectorAll('moreSubMenu');
+
+  const menuMore = document.getElementById('menu-more');
+  //const menuMore = document.querySelectorAll('menu-more');
+
+  const anchors = document.querySelectorAll('#moreSubMenu a');
+
+  console.log(container);
+  console.log(menuMore);
+  console.log(anchors);
+
+  if (!container === null) {
+    console.log('here');
+  }
+  //console.log(container.children.length);
+
+  // if (document.getElementById('moreSubMenu').length > 1) {
+  //   console.log('has links');
+  // }
+
+  // if (!document.getElementById('moreSubMenu').length > 1) {
+  //   console.log('has no links');
+  // }
+
+  // if (document.getElementById('moreSubMenu').length > 1) {
+  //   console.log('has links');
+  // }
 });
 ///// FUNCTIONS /////
 
@@ -830,6 +890,18 @@ function formatNav() {
         if (firstChild) {
           menuMore.parentNode.insertBefore(firstChild, menuMore);
         }
+
+        // clear the inner text
+        if (menuMore.children[1].children.length === 0) {
+          document.getElementById('menuMoreLink').innerHTML = '';
+          document
+            .getElementById('menuMoreLink')
+            .setAttribute('tabindex', '-1');
+        }
+
+        // if (!document.getElementById('moreSubMenu').length > 1) {
+        //   console.log('has no links');
+        // }
 
         navItemVisible[count] = true;
       }
@@ -1001,6 +1073,8 @@ function toggleTopLevelMenu(menuLink) {
       // 2-a. set visible class to menu's parent
       parent.classList.add('visible');
 
+      console.log('there you are');
+
       // 2-b. set the arrow to upwards position
       const iconsInMenuItem = parent.querySelector('i');
       iconsInMenuItem.classList.remove('angle-down');
@@ -1016,7 +1090,7 @@ function toggleTopLevelMenu(menuLink) {
       // 2-d set aria-expanded to true
       anchorTag.setAttribute('aria-expanded', 'true');
 
-      // 2-e set class to active or active-2
+      // 2-e set class to active
       if (menuLink.parentElement.parentElement.hasAttribute('id')) {
         anchorTag.classList.add('active');
       } else if (
@@ -1040,6 +1114,8 @@ function toggleTopLevelMenu(menuLink) {
       if (!menuLink.parentElement.classList.contains('visible')) {
         // 3-a. set visible class to menu's parent
         menuLink.closest('.menu-item-has-children').classList.add('visible');
+
+        console.log('here I am');
 
         // 3-b. set the arrow to upwards position
         menuLink.querySelectorAll('i').forEach(function (icon) {

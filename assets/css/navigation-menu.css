@@ -458,7 +458,11 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   max-height: 85vh;
 }
 
-header nav ul.menu > li.menu-item-has-children:hover .sub-menu-div,
+header
+  nav
+  ul.menu
+  > li.menu-item-has-children:hover
+  .sub-menu-div-hover-disabled,
 header nav ul.menu > li.menu-item-has-children.visible .sub-menu-div {
   visibility: visible;
   opacity: 1;
@@ -564,6 +568,36 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
   justify-content: space-evenly;
   flex-wrap: wrap;
   padding: 1.25rem 0;
+}
+
+@media (max-width: 1800px) {
+  header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
+    width: 40rem;
+  }
+}
+
+@media (max-width: 1680px) {
+  header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
+    width: 35rem;
+  }
+}
+
+@media (max-width: 1340px) {
+  header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
+    width: 30rem;
+  }
+}
+
+@media (max-width: 930px) {
+  header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
+    width: 28rem;
+  }
+}
+
+@media (max-width: 780px) {
+  header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
+    width: 25rem;
+  }
 }
 
 header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item {
