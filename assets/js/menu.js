@@ -546,12 +546,6 @@ document.addEventListener('DOMContentLoaded', () => {
           const container = document.getElementById('moreSubMenu');
 
           // open moreSubmenu
-          if (!this.classList.contains('active')) {
-            // replace all rpc tags under moreSubMenu with a so the
-            // link in the submenu are clickable when moreSubmenu is open
-            replaceTagName(container, 'rpc', 'a', addAnchorListeners);
-          }
-
           // close moreSubmenu
           if (this.classList.contains('active')) {
             // remove opacity inline style
@@ -561,12 +555,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 .getElementById('moreSubMenu')
                 .style.removeProperty('opacity');
             }, 100);
-
-            setTimeout(() => {
-              // replace all a tags under moreSubMenu with rpc so the hand is
-              // not visible when menu is close
-              replaceTagName(container, 'a', 'rpc', null);
-            }, 950);
           }
 
           // close all other open menus
@@ -946,11 +934,6 @@ function formatNav() {
 
   // Select the container by its ID
   const container = document.getElementById('moreSubMenu');
-
-  // replace all anchor tags under moreSubMenu with rpc
-  // so the pointer (hand) doesn't show when hover over a
-  // submenu with an opacity of 0
-  replaceTagName(container, 'a', 'rpc', null);
 }
 
 function resetArrows() {
@@ -988,13 +971,6 @@ function onResize() {
 
     // reset arrows to down position
     resetArrows();
-
-    replaceTagName(
-      document.getElementById('moreSubMenu'),
-      'rpc',
-      'a',
-      addAnchorListeners
-    );
 
     formatNav();
 
@@ -1294,34 +1270,6 @@ function removeActiveClass() {
   // Remove 'active' class from each element
   moreAnchorLinks.forEach((link) => {
     link.classList.remove('active');
-  });
-}
-
-// a hack way to disable links that are under the More menu when it is no open
-// and activating the links when More menu is open.
-function replaceTagName(container, fromTag, toTag, callback) {
-  // Select all elements matching the `fromTag`
-  const elements = container.querySelectorAll(fromTag);
-
-  elements.forEach((originalElement) => {
-    // Create a new element with the desired `toTag`
-    const newElement = document.createElement(toTag);
-
-    // Copy all attributes, including optional ones like `aria-expanded`
-    Array.from(originalElement.attributes).forEach((attr) => {
-      newElement.setAttribute(attr.name, attr.value);
-    });
-
-    // Copy the inner content (including nested elements)
-    newElement.innerHTML = originalElement.innerHTML;
-
-    // Replace the original element with the new one
-    originalElement.replaceWith(newElement);
-
-    // Run the callback function, if provided
-    if (typeof callback === 'function') {
-      callback(newElement);
-    }
   });
 }
 
