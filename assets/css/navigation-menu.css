@@ -55,6 +55,16 @@ a[aria-expanded='false'] + ul.sub-menu {
   display: none; /* Example: Hide the submenu */
 }
 
+a[aria-expanded='true'] + div.sub-menu-div {
+  /* Add your desired styles here */
+  opacity: 1 !important;
+}
+
+a[aria-expanded='false'] + div.sub-menu-div {
+  opacity: 0;
+  display: none !important;
+}
+
 /* initially hide sub menus */
 ul#menu-main-menu li > ul > li > ul {
   opacity: 1;
@@ -452,20 +462,10 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   -ms-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   margin-top: 1.563rem;
-  opacity: 0;
-  visibility: hidden;
-  overflow-y: auto;
+  /* opacity: 0; */
+  /* visibility: hidden; */
+  /* overflow-y: auto; */
   max-height: 85vh;
-}
-
-header
-  nav
-  ul.menu
-  > li.menu-item-has-children:hover
-  .sub-menu-div-hover-disabled,
-header nav ul.menu > li.menu-item-has-children.visible .sub-menu-div {
-  visibility: visible;
-  opacity: 1;
 }
 
 header nav ul.menu > li > .sub-menu-div > ul li {

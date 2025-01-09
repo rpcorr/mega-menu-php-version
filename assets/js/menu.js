@@ -1262,7 +1262,7 @@ function openMenu(bContainsSubMenuDiv, targetElement) {
 
   // Loop through each matched element and change its opacity to 1
   elements.forEach(function (element) {
-    element.style.opacity = '1';
+    //element.style.opacity = '1';
   });
 }
 
