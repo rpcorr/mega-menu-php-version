@@ -434,35 +434,34 @@ document.addEventListener('DOMContentLoaded', () => {
       if (strLibSatMenuStructure !== '' && strLibSatMenuStructure !== undefined)
         menuHTML += strLibSatMenuStructure;
 
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Test <i class="caret angle-down"></i></a>
-            <div class="sub-menu-div mega-menu mega-menu-column-4">
-    <div class="list-item text-center">
-        <a href="#rainForest">
-        <img src="assets/imgs/p1.jpg" alt="Rain Forest">
-        <p>Rain Forest</p>
-        </a>
-    </div>
-    <div class="list-item text-center">
-        <a href="#mountains">
-        <img src="assets/imgs/p2.jpg" alt="Mountains">
-        <p>Mountains</p>
-        </a>
-    </div>
-    <div class="list-item text-center">
-        <a href="#waterfall">
-        <img src="assets/imgs/p3.jpg" alt="Waterfall">
-        <p>Waterfall</p>
-        </a>
-    </div>
-    <div class="list-item text-center">
-        <a href="#owl">
-        <img src="assets/imgs/p4.jpg" alt="Owl">
-        <p>Owl</p>
-        </a>
-    </div>
-</div>
-
-            </li>`;
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">New <i class="caret angle-down"></i></a>
+        <div class="sub-menu-div mega-menu mega-menu-column-4">
+          <div class="list-item text-center">
+              <a href="#rainForest">
+              <img src="assets/imgs/p1.jpg" alt="Rain Forest">
+              <p>Rain Forest</p>
+              </a>
+          </div>
+          <div class="list-item text-center">
+              <a href="#mountains">
+              <img src="assets/imgs/p2.jpg" alt="Mountains">
+              <p>Mountains</p>
+              </a>
+          </div>
+          <div class="list-item text-center">
+              <a href="#waterfall">
+              <img src="assets/imgs/p3.jpg" alt="Waterfall">
+              <p>Waterfall</p>
+              </a>
+          </div>
+          <div class="list-item text-center">
+              <a href="#owl">
+              <img src="assets/imgs/p4.jpg" alt="Owl">
+              <p>Owl</p>
+              </a>
+          </div>
+        </div>
+      </li>`;
 
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
 
