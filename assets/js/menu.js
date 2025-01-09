@@ -1272,15 +1272,3 @@ function removeActiveClass() {
     link.classList.remove('active');
   });
 }
-
-// Callback to add event listeners for <a>
-function addAnchorListeners(element) {
-  if (element.tagName.toLowerCase() === 'a') {
-    element.addEventListener('click', (event) => {
-      event.preventDefault(); // Prevent default link behavior
-
-      // open or close submenu
-      toggleTopLevelMenu(element);
-    });
-  }
-}
