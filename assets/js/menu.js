@@ -1148,12 +1148,6 @@ function toggleTopLevelMenu(menuLink) {
 
   // Get the element with the ID "menuMoreLink"
   const menuMoreLink = document.getElementById('menuMoreLink');
-
-  // Check if the element exists
-  if (menuMoreLink) {
-    // Add the "active" class
-    menuMoreLink.classList.add('active');
-  }
 }
 
 function watchForHover() {
