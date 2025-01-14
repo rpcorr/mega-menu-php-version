@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Grid Example</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-rows: repeat(
+          3,
+          minmax(100px, auto)
+        ); /* Allow rows to grow */
+        grid-template-columns: 300px repeat(3, 1fr);
+
+        width: 100%;
+        height: auto; /* Allow the grid container to grow with content */
+        border: 1px solid #000;
+        background-color: #999;
+        padding-bottom: 1rem;
+
+        grid-auto-flow: column;
+
+        font-size: 1rem;
+      }
+
+      .grid-item {
+        display: flex;
+        align-items: center;
+        /* justify-content: center; */
+        padding: 1rem;
+      }
+
+      .grid-item {
+        display: flex;
+      }
+
+      .grid-item p {
+        margin-top: 0;
+        margin-left: 1em;
+      }
+
+      /* Make the 4th column item span the entire height */
+      .span-all-rows {
+        grid-row: span 3;
+        display: flex;
+        justify-content: start;
+        flex-direction: column;
+        /* justify-items: start; */
+        /* justify-content: start; */
+      }
+
+      /* Set white background color for specified grid items */
+      .grid-item:nth-child(1),
+      .grid-item:nth-child(4),
+      .grid-item:nth-child(5),
+      .grid-item:nth-child(6),
+      .grid-item:nth-child(7),
+      .grid-item:nth-child(8),
+      .grid-item:nth-child(9),
+      .grid-item:nth-child(10) {
+        background-color: white;
+      }
+
+      .grid-item:nth-child(10) {
+        margin: 0 2rem 0 1rem;
+      }
+
+      /* Media Query for screen widths <= 960px */
+      @media (max-width: 960px) {
+        .grid-container {
+          grid-template-rows: repeat(
+            3,
+            minmax(100px, auto)
+          ); /* Allow rows to grow */ /* Adjust rows for smaller screens */
+          /*grid-template-columns: repeat(
+            3,
+            1fr
+          ); */
+          grid-template-columns: 275px repeat(2, 1fr); /* Adjust columns for smaller screens */
+        }
+
+        .span-all-rows {
+          grid-row: unset; /* Unset the span rule */
+          grid-column: span 2; /* Make it span the entire bottom row */
+        }
+
+        .grid-item:nth-child(10) {
+          grid-row: 5 / -1;
+          grid-column: 1 / -1;
+          margin: 0;
+          justify-content: start;
+        }
+      }
+
+      /* Media Query for screen widths <= 320px */
+      @media (max-width: 320px) {
+        .grid-container {
+          grid-template-columns: 1fr;
+          grid-template-rows: repeat(10, 1fr);
+        }
+      }
+
+      .circle {
+        width: 30px;
+        height: 30px;
+        background-color: white; /* Blue color for the circle */
+        border-radius: 50%; /* Makes it a perfect circle */
+        border: 2px black solid;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Adds a shadow */
+      }
+
+      .caret {
+        position: relative;
+      }
+
+      .caret:before {
+        content: '';
+        position: absolute;
+        top: 6px;
+        left: 13px;
+        border-left: 9px solid #000;
+        border-top: 9px solid transparent;
+        border-bottom: 9px solid transparent;
+      }
+
+      .caret:after {
+        content: '';
+        position: absolute;
+        left: 13px;
+        top: 11px;
+        border-left: 4px solid #fff;
+        border-top: 4px solid transparent;
+        border-bottom: 4px solid transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid-container">
+      <div class="grid-item" style="align-items: start; padding-top: 30px">
+        <img src="assets/imgs/pie.gif" width="36" height="33" />
+
+        <p><strong>LibPas</strong><br />Periodic data</p>
+      </div>
+      <div class="grid-item" style="padding-top: 30px">
+        <img src="assets/imgs/medal.gif" width="43" height="43" />
+        <p><strong>LibSAT</strong><br />Qualitative data</p>
+        <div class="circle" style="margin-left: auto">
+          <div class="caret"></div>
+        </div>
+      </div>
+      <div class="grid-item" style="padding-top: 30px">
+        <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
+        <p><strong>InformUs</strong><br />Survey data</p>
+        <div class="circle" style="margin-left: auto">
+          <div class="caret"></div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+        <p>
+          <strong>Data Input</strong><br />
+          {Brief description of the function of data input}
+        </p>
+      </div>
+      <div class="grid-item">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item span-all-rows">
+        <div>
+          <img src="assets/imgs/light-bulb.gif" align="left" />
+          <p>
+            <strong>Did you know that you can do this if you do that?</strong>
+          </p>
+        </div>
+
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+
+        <ul>
+          <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
+          <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

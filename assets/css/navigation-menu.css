@@ -563,7 +563,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-3 > .list-item img {
 }
 
 header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
-  width: 55rem;
+  width: 90vw;
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
