@@ -63,7 +63,8 @@
       .grid-item:nth-child(8),
       .grid-item:nth-child(9),
       .grid-item:nth-child(10),
-      .active {
+      .active,
+      .menu:hover {
         background-color: white;
       }
 
@@ -72,8 +73,14 @@
       }
 
       .active > .circle,
-      .menu:hover > .circle {
+      .menu:hover > .circle,
+      .menu:has(a:focus) > .circle {
         display: none;
+      }
+
+      /* Ensure the menu background changes when its <a> is focused */
+      .menu:has(a:focus) {
+        background-color: white;
       }
 
       /* Media Query for screen widths <= 960px */
@@ -143,15 +150,11 @@
         border-top: 4px solid transparent;
         border-bottom: 4px solid transparent;
       }
-
-      .menu:hover {
-        background-color: white;
-      }
     </style>
   </head>
   <body>
     <div class="grid-container">
-      <div class="grid-item active menu">
+      <div class="grid-item menu active">
         <img src="assets/imgs/pie.gif" width="36" height="33" />
         <p>
           <a href="#"><strong>LibPas</strong><br />Periodic data </a>
@@ -245,5 +248,6 @@
         </ul>
       </div>
     </div>
+    <script src="scripts.js" defer></script>
   </body>
 </html>
