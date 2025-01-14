@@ -71,7 +71,8 @@
         margin: 0 2rem 0 1rem;
       }
 
-      .active > .circle {
+      .active > .circle,
+      .menu:hover > .circle {
         display: none;
       }
 
@@ -142,11 +143,15 @@
         border-top: 4px solid transparent;
         border-bottom: 4px solid transparent;
       }
+
+      .menu:hover {
+        background-color: white;
+      }
     </style>
   </head>
   <body>
     <div class="grid-container">
-      <div class="grid-item active">
+      <div class="grid-item active menu">
         <img src="assets/imgs/pie.gif" width="36" height="33" />
         <p>
           <a href="#"><strong>LibPas</strong><br />Periodic data </a>
@@ -156,7 +161,7 @@
         </div>
       </div>
 
-      <div class="grid-item">
+      <div class="grid-item menu">
         <img src="assets/imgs/medal.gif" width="43" height="43" />
         <p>
           <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
@@ -166,7 +171,7 @@
         </div>
       </div>
 
-      <div class="grid-item">
+      <div class="grid-item menu">
         <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
         <p>
           <a href="#"><strong>InformUs</strong><br />Survey data </a>
