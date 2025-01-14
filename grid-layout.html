@@ -35,13 +35,14 @@
         padding: 1rem;
       }
 
-      .grid-item {
-        display: flex;
-      }
-
       .grid-item p {
         margin-top: 0;
         margin-left: 1em;
+      }
+
+      .grid-item a {
+        color: black;
+        text-decoration: none;
       }
 
       /* Make the 4th column item span the entire height */
@@ -55,19 +56,23 @@
       }
 
       /* Set white background color for specified grid items */
-      .grid-item:nth-child(1),
       .grid-item:nth-child(4),
       .grid-item:nth-child(5),
       .grid-item:nth-child(6),
       .grid-item:nth-child(7),
       .grid-item:nth-child(8),
       .grid-item:nth-child(9),
-      .grid-item:nth-child(10) {
+      .grid-item:nth-child(10),
+      .active {
         background-color: white;
       }
 
       .grid-item:nth-child(10) {
         margin: 0 2rem 0 1rem;
+      }
+
+      .active > .circle {
+        display: none;
       }
 
       /* Media Query for screen widths <= 960px */
@@ -141,21 +146,31 @@
   </head>
   <body>
     <div class="grid-container">
-      <div class="grid-item" style="align-items: start; padding-top: 30px">
+      <div class="grid-item active">
         <img src="assets/imgs/pie.gif" width="36" height="33" />
-
-        <p><strong>LibPas</strong><br />Periodic data</p>
-      </div>
-      <div class="grid-item" style="padding-top: 30px">
-        <img src="assets/imgs/medal.gif" width="43" height="43" />
-        <p><strong>LibSAT</strong><br />Qualitative data</p>
+        <p>
+          <a href="#"><strong>LibPas</strong><br />Periodic data </a>
+        </p>
         <div class="circle" style="margin-left: auto">
           <div class="caret"></div>
         </div>
       </div>
-      <div class="grid-item" style="padding-top: 30px">
+
+      <div class="grid-item">
+        <img src="assets/imgs/medal.gif" width="43" height="43" />
+        <p>
+          <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
+        </p>
+        <div class="circle" style="margin-left: auto">
+          <div class="caret"></div>
+        </div>
+      </div>
+
+      <div class="grid-item">
         <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
-        <p><strong>InformUs</strong><br />Survey data</p>
+        <p>
+          <a href="#"><strong>InformUs</strong><br />Survey data </a>
+        </p>
         <div class="circle" style="margin-left: auto">
           <div class="caret"></div>
         </div>
