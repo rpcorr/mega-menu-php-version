@@ -24,15 +24,11 @@
         padding-bottom: 1rem;
 
         grid-auto-flow: column;
-
-        font-size: 1rem;
       }
 
       .grid-item {
         display: flex;
         align-items: center;
-        /* justify-content: center; */
-        padding: 1rem;
       }
 
       .grid-item p {
@@ -45,12 +41,21 @@
         text-decoration: none;
       }
 
+      .menu {
+        padding: 1rem;
+      }
+
+      .menu-content {
+        padding-left: 3rem;
+      }
+
       /* Make the 4th column item span the entire height */
       .span-all-rows {
         grid-row: span 3;
         display: flex;
         justify-content: start;
         flex-direction: column;
+        padding: 1rem 2rem 0;
         /* justify-items: start; */
         /* justify-content: start; */
       }
@@ -81,41 +86,6 @@
       /* Ensure the menu background changes when its <a> is focused */
       .menu:has(a:focus) {
         background-color: white;
-      }
-
-      /* Media Query for screen widths <= 960px */
-      @media (max-width: 960px) {
-        .grid-container {
-          grid-template-rows: repeat(
-            3,
-            minmax(100px, auto)
-          ); /* Allow rows to grow */ /* Adjust rows for smaller screens */
-          /*grid-template-columns: repeat(
-            3,
-            1fr
-          ); */
-          grid-template-columns: 275px repeat(2, 1fr); /* Adjust columns for smaller screens */
-        }
-
-        .span-all-rows {
-          grid-row: unset; /* Unset the span rule */
-          grid-column: span 2; /* Make it span the entire bottom row */
-        }
-
-        .grid-item:nth-child(10) {
-          grid-row: 5 / -1;
-          grid-column: 1 / -1;
-          margin: 0;
-          justify-content: start;
-        }
-      }
-
-      /* Media Query for screen widths <= 320px */
-      @media (max-width: 320px) {
-        .grid-container {
-          grid-template-columns: 1fr;
-          grid-template-rows: repeat(10, 1fr);
-        }
       }
 
       .circle {
@@ -150,6 +120,223 @@
         border-top: 4px solid transparent;
         border-bottom: 4px solid transparent;
       }
+
+      @media (max-width: 1160px) {
+        .grid-container {
+          grid-template-columns: 250px repeat(3, 1fr);
+        }
+
+        .menu-content {
+          padding-left: 2rem;
+          padding-right: 1rem;
+        }
+      }
+
+      /* Media Query for screen widths <= 960px */
+      @media (max-width: 960px) {
+        .grid-container {
+          grid-template-rows: repeat(
+            3,
+            minmax(100px, auto)
+          ); /* Allow rows to grow */ /* Adjust rows for smaller screens */
+          /*grid-template-columns: repeat(
+            3,
+            1fr
+          ); */
+          grid-template-columns: 275px repeat(2, 1fr); /* Adjust columns for smaller screens */
+        }
+
+        .span-all-rows {
+          grid-row: unset; /* Unset the span rule */
+          grid-column: span 2; /* Make it span the entire bottom row */
+        }
+
+        .grid-item:nth-child(10) {
+          grid-row: 5 / -1;
+          grid-column: 1 / -1;
+          margin: 0;
+          justify-content: start;
+        }
+      }
+
+      @media (max-width: 830px) {
+        .grid-container {
+          grid-auto-flow: row;
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media (max-width: 770px) {
+        .circle {
+          width: 25px;
+          height: 25px;
+        }
+
+        .caret:before {
+          top: 4px;
+          left: 12px;
+        }
+
+        .caret:after {
+          top: 9px;
+          left: 12px;
+        }
+
+        .menu-content,
+        .span-all-rows {
+          font-size: 0.8rem;
+        }
+
+        .menu-content img {
+          width: 35px;
+          height: 46px;
+        }
+      }
+
+      @media (max-width: 730px) {
+        .menu {
+          font-size: 0.9rem;
+        }
+
+        .circle {
+          width: 20px;
+          height: 20px;
+        }
+
+        .caret:before {
+          top: 4px;
+          left: 8px;
+          border-left: 7px solid #000;
+          border-top: 7px solid transparent;
+          border-bottom: 7px solid transparent;
+        }
+
+        .caret:after {
+          top: 7px;
+          left: 8px;
+          border-left: 4px solid #fff;
+          border-top: 4px solid transparent;
+          border-bottom: 4px solid transparent;
+        }
+      }
+
+      @media (max-width: 630px) {
+        .grid-item:nth-child(1) > img {
+          width: 30px;
+          height: 28px;
+        }
+
+        .grid-item:nth-child(2) > img {
+          width: 35px;
+          height: 35px;
+        }
+
+        .grid-item:nth-child(1) > p,
+        .grid-item:nth-child(2) > p,
+        .grid-item:nth-child(3) > p {
+          margin-left: 1em;
+          width: 5em;
+        }
+      }
+
+      @media (max-width: 550px) {
+        .grid-item:nth-child(1) > p,
+        .grid-item:nth-child(2) > p,
+        .grid-item:nth-child(3) > p {
+          margin-left: 0.5em;
+          width: 5em;
+        }
+      }
+
+      @media (max-width: 530px) {
+        .grid-item:nth-child(1) > img {
+          width: 25px;
+          height: 23px;
+        }
+        .grid-item:nth-child(2) > img {
+          width: 30px;
+          height: 30px;
+        }
+
+        .grid-item:nth-child(3) > img {
+          width: 28px;
+          height: 28px;
+        }
+      }
+
+      @media (max-width: 500px) {
+        .grid-item:nth-child(1) > img,
+        .grid-item:nth-child(2) > img,
+        .grid-item:nth-child(3) > img {
+          display: none;
+        }
+
+        .menu-content {
+          padding: 0 1rem;
+        }
+      }
+
+      @media (max-width: 445px) {
+        .menu-content {
+          padding: 0 0.5rem;
+          font-size: 0.7rem;
+        }
+
+        .span-all-rows {
+          padding-left: 0;
+          padding-right: 0;
+        }
+
+        .menu-content img {
+          width: 35px;
+          height: 46px;
+        }
+      }
+
+      /* Media Query for screen widths <= 420px */
+      @media (max-width: 420px) {
+        .grid-container {
+          grid-template-columns: 1fr;
+          grid-template-rows: repeat(3, 80px) repeat(6, 90px) 1fr;
+        }
+
+        .grid-item:nth-child(10) {
+          grid-row: 10 /-1;
+          grid-column: 1 / -1;
+          margin: 0;
+          justify-content: start;
+        }
+
+        .grid-item:nth-child(1) > p,
+        .grid-item:nth-child(2) > p,
+        .grid-item:nth-child(3) > p {
+          margin-left: 0.5em;
+          width: 80%;
+        }
+
+        .menu-content {
+          padding-left: 1rem;
+        }
+
+        .menu-content p,
+        .menu,
+        .span-all-rows {
+          font-size: 1rem;
+        }
+
+        .menu-content img {
+          width: 42px;
+          height: 55px;
+        }
+
+        .menu-content:first-of-type {
+          /* padding-top: 3rem; */
+        }
+
+        .span-all-rows {
+          padding-top: 3rem;
+        }
+      }
     </style>
   </head>
   <body>
@@ -183,7 +370,7 @@
           <div class="caret"></div>
         </div>
       </div>
-      <div class="grid-item">
+      <div class="grid-item menu-content">
         <img src="assets/imgs/reports.gif" width="42" height="55" />
 
         <p>
@@ -191,21 +378,21 @@
           reports}
         </p>
       </div>
-      <div class="grid-item">
+      <div class="grid-item menu-content">
         <img src="assets/imgs/reports.gif" width="42" height="55" />
         <p>
           <strong>Reports</strong><br />{Brief description of the function of
           reports}
         </p>
       </div>
-      <div class="grid-item">
+      <div class="grid-item menu-content">
         <img src="assets/imgs/reports.gif" width="42" height="55" />
         <p>
           <strong>Reports</strong><br />{Brief description of the function of
           reports}
         </p>
       </div>
-      <div class="grid-item">
+      <div class="grid-item menu-content">
         <img src="assets/imgs/reports.gif" width="42" height="55" />
 
         <p>
@@ -213,7 +400,7 @@
           {Brief description of the function of data input}
         </p>
       </div>
-      <div class="grid-item">
+      <div class="grid-item menu-content">
         <img src="assets/imgs/reports.gif" width="42" height="55" />
 
         <p>
@@ -221,7 +408,7 @@
           reports}
         </p>
       </div>
-      <div class="grid-item">
+      <div class="grid-item menu-content">
         <img src="assets/imgs/reports.gif" width="42" height="55" />
 
         <p>
