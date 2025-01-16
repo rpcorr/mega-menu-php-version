@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CSS Grid Example</title>
+    <title>CSS Grid Multiple Services Example</title>
     <style>
       body {
         font-family: Arial, sans-serif;
       }
 
-      .grid-container {
+      .grid-container-multiple {
         display: grid;
         grid-template-rows: repeat(
           3,
@@ -56,8 +56,6 @@
         justify-content: start;
         flex-direction: column;
         padding: 1rem 2rem 0;
-        /* justify-items: start; */
-        /* justify-content: start; */
       }
 
       /* Set white background color for specified grid items */
@@ -121,8 +119,9 @@
         border-bottom: 4px solid transparent;
       }
 
+      /* Media Query for screen widths <= 1160px */
       @media (max-width: 1160px) {
-        .grid-container {
+        .grid-container-multiple {
           grid-template-columns: 250px repeat(3, 1fr);
         }
 
@@ -134,7 +133,7 @@
 
       /* Media Query for screen widths <= 960px */
       @media (max-width: 960px) {
-        .grid-container {
+        .grid-container-multiple {
           grid-template-rows: repeat(
             3,
             minmax(100px, auto)
@@ -159,13 +158,15 @@
         }
       }
 
+      /* Media Query for screen widths <= 830px */
       @media (max-width: 830px) {
-        .grid-container {
+        .grid-container-multiple {
           grid-auto-flow: row;
           grid-template-columns: repeat(3, 1fr);
         }
       }
 
+      /* Media Query for screen widths <= 770px */
       @media (max-width: 770px) {
         .circle {
           width: 25px;
@@ -193,6 +194,7 @@
         }
       }
 
+      /* Media Query for screen widths <= 730px */
       @media (max-width: 730px) {
         .menu {
           font-size: 0.9rem;
@@ -220,6 +222,7 @@
         }
       }
 
+      /* Media Query for screen widths <= 630px */
       @media (max-width: 630px) {
         .grid-item:nth-child(1) > img {
           width: 30px;
@@ -239,6 +242,7 @@
         }
       }
 
+      /* Media Query for screen widths <= 550px */
       @media (max-width: 550px) {
         .grid-item:nth-child(1) > p,
         .grid-item:nth-child(2) > p,
@@ -248,6 +252,7 @@
         }
       }
 
+      /* Media Query for screen widths <= 530px */
       @media (max-width: 530px) {
         .grid-item:nth-child(1) > img {
           width: 25px;
@@ -264,6 +269,7 @@
         }
       }
 
+      /* Media Query for screen widths <= 500px */
       @media (max-width: 500px) {
         .grid-item:nth-child(1) > img,
         .grid-item:nth-child(2) > img,
@@ -276,6 +282,7 @@
         }
       }
 
+      /* Media Query for screen widths <= 445px */
       @media (max-width: 445px) {
         .menu-content {
           padding: 0 0.5rem;
@@ -295,9 +302,9 @@
 
       /* Media Query for screen widths <= 420px */
       @media (max-width: 420px) {
-        .grid-container {
+        .grid-container-multiple {
           grid-template-columns: 1fr;
-          grid-template-rows: repeat(3, 80px) repeat(6, 90px) 1fr;
+          grid-template-rows: repeat(3, 80px) repeat(6, 90px);
         }
 
         .grid-item:nth-child(10) {
@@ -307,10 +314,31 @@
           justify-content: start;
         }
 
+        .grid-item:nth-child(1) > img,
+        .grid-item:nth-child(2) > img,
+        .grid-item:nth-child(3) > img {
+          display: flex;
+        }
+
+        .grid-item:nth-child(1) > img {
+          width: 36px;
+          height: 33px;
+        }
+
+        .grid-item:nth-child(2) > img {
+          width: 43px;
+          height: 43px;
+        }
+
+        .grid-item:nth-child(3) > img {
+          width: 40px;
+          height: 40px;
+        }
+
         .grid-item:nth-child(1) > p,
         .grid-item:nth-child(2) > p,
         .grid-item:nth-child(3) > p {
-          margin-left: 0.5em;
+          margin-left: 1em;
           width: 80%;
         }
 
@@ -324,13 +352,9 @@
           font-size: 1rem;
         }
 
-        .menu-content img {
+        .menu-content > img {
           width: 42px;
           height: 55px;
-        }
-
-        .menu-content:first-of-type {
-          /* padding-top: 3rem; */
         }
 
         .span-all-rows {
@@ -340,7 +364,7 @@
     </style>
   </head>
   <body>
-    <div class="grid-container">
+    <div class="grid-container-multiple">
       <div class="grid-item menu active">
         <img src="assets/imgs/pie.gif" width="36" height="33" />
         <p>
@@ -393,7 +417,7 @@
         </p>
       </div>
       <div class="grid-item menu-content">
-        <img src="assets/imgs/reports.gif" width="42" height="55" />
+        <img src="assets/imgs/data-input.gif" width="42" height="55" />
 
         <p>
           <strong>Data Input</strong><br />
