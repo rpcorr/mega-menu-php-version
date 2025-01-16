@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Grid Single Service Example</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .grid-container-single {
+        display: grid;
+        grid-template-rows: repeat(
+          3,
+          minmax(100px, auto)
+        ); /* Allow rows to grow */
+        grid-template-columns: 300px repeat(3, 1fr);
+
+        width: 100%;
+        height: auto; /* Allow the grid container to grow with content */
+        border: 1px solid #000;
+        background-color: #999;
+        padding-bottom: 1rem;
+
+        grid-auto-flow: column;
+      }
+
+      .grid-item {
+        display: flex;
+        align-items: center;
+      }
+
+      .grid-item p {
+        margin-top: 0;
+        margin-left: 1em;
+      }
+
+      .grid-item a {
+        color: black;
+        text-decoration: none;
+      }
+
+      .menu {
+        padding: 1rem;
+      }
+
+      .menu-content {
+        padding-left: 3rem;
+      }
+
+      .span-two-rows {
+        grid-row: 2 / span 2;
+      }
+
+      /* Make the 4th column item span the entire height */
+      .span-all-rows {
+        grid-row: span 3;
+        display: flex;
+        justify-content: start;
+        flex-direction: column;
+        padding: 1rem 2rem 0;
+      }
+
+      /* Set white background color for specified grid items */
+      .grid-item:nth-child(3),
+      .grid-item:nth-child(4),
+      .grid-item:nth-child(5),
+      .grid-item:nth-child(6),
+      .grid-item:nth-child(7),
+      .grid-item:nth-child(8),
+      .grid-item:nth-child(9),
+      .active {
+        background-color: white;
+      }
+
+      .grid-item:nth-child(9) {
+        margin: 0 2rem 0 1rem;
+      }
+
+      /* Ensure the menu background changes when its <a> is focused */
+      .menu:has(a:focus) {
+        background-color: white;
+      }
+
+      /* Media Query for screen widths <= 1160px */
+      @media (max-width: 1160px) {
+        .grid-container-single {
+          grid-template-columns: 250px repeat(3, 1fr);
+        }
+
+        .menu-content {
+          padding-left: 2rem;
+          padding-right: 1rem;
+        }
+      }
+
+      /* Media Query for screen widths <= 960px */
+      @media (max-width: 960px) {
+        .grid-container-single {
+          grid-template-rows: repeat(
+            3,
+            minmax(100px, auto)
+          ); /* Allow rows to grow */ /* Adjust rows for smaller screens */
+          /*grid-template-columns: repeat(
+            3,
+            1fr
+          ); */
+          grid-template-columns: 275px repeat(2, 1fr); /* Adjust columns for smaller screens */
+        }
+
+        .span-all-rows {
+          grid-row: unset; /* Unset the span rule */
+          grid-column: span 2; /* Make it span the entire bottom row */
+        }
+
+        .grid-item:nth-child(9) {
+          grid-row: 5 / -1;
+          grid-column: 1 / -1;
+          margin: 0;
+          justify-content: start;
+        }
+      }
+
+      /* Media Query for screen widths <= 830px */
+      @media (max-width: 830px) {
+        .grid-container-single {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .span-two-rows {
+          grid-column: 2 / span 2;
+          grid-row: 2 / 1;
+        }
+      }
+
+      /* Media Query for screen widths <= 770px */
+      @media (max-width: 770px) {
+        .menu-content,
+        .span-all-rows {
+          font-size: 0.9rem;
+        }
+
+        .menu-content img {
+          width: 35px;
+          height: 46px;
+        }
+      }
+
+      /* Media Query for screen widths <= 630px */
+      @media (max-width: 630px) {
+        .menu-content {
+          padding: 0 1rem;
+        }
+      }
+
+      /* Media Query for screen widths <= 500px */
+      @media (max-width: 500px) {
+        .grid-item:nth-child(1) > img {
+          display: none;
+        }
+
+        .menu-content {
+          padding: 0 1rem;
+        }
+      }
+
+      /* Media Query for screen widths <= 445px */
+      @media (max-width: 445px) {
+        .menu-content {
+          padding: 0 0.5rem;
+          font-size: 0.8rem;
+        }
+
+        .span-all-rows {
+          padding-left: 0;
+          padding-right: 0;
+        }
+
+        .menu-content img {
+          width: 35px;
+          height: 46px;
+        }
+      }
+
+      /* Media Query for screen widths <= 420px */
+      @media (max-width: 420px) {
+        .grid-container-single {
+          grid-template-columns: 1fr;
+          grid-template-rows: repeat(3, 80px) repeat(7, 90px);
+        }
+
+        .grid-item:nth-child(1) > img {
+          display: flex;
+        }
+
+        .grid-item:nth-child(9) {
+          grid-row: 8 /-1;
+          grid-column: 1 / -1;
+          margin: 0;
+          justify-content: start;
+        }
+
+        .grid-item:nth-child(1) > p,
+        .grid-item:nth-child(2) > p,
+        .grid-item:nth-child(3) > p {
+          margin-left: 1em;
+          width: 80%;
+        }
+
+        .menu-content {
+          padding-left: 1rem;
+        }
+
+        .menu-content p,
+        .menu,
+        .span-all-rows {
+          font-size: 1rem;
+        }
+
+        .menu-content img {
+          width: 42px;
+          height: 55px;
+        }
+
+        .span-two-rows {
+          display: none;
+        }
+
+        .span-all-rows {
+          padding-top: 3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid-container-single">
+      <div class="grid-item menu active">
+        <img src="assets/imgs/pie.gif" width="36" height="33" />
+        <p>
+          <a href="#"><strong>LibPas</strong><br />Periodic data </a>
+        </p>
+      </div>
+
+      <div class="grid-item menu span-two-rows"></div>
+
+      <!-- <div class="grid-item menu"></div> -->
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/data-input.gif" width="42" height="55" />
+
+        <p>
+          <strong>Data Input</strong><br />
+          {Brief description of the function of data input}
+        </p>
+      </div>
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item span-all-rows">
+        <div>
+          <img src="assets/imgs/light-bulb.gif" align="left" />
+          <p>
+            <strong>Did you know that you can do this if you do that?</strong>
+          </p>
+        </div>
+
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+
+        <ul>
+          <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
+          <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
+        </ul>
+      </div>
+    </div>
+    <script src="scripts.js" defer></script>
+  </body>
+</html>
