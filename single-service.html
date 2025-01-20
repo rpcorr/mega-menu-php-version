@@ -49,10 +49,6 @@
         padding-left: 3rem;
       }
 
-      .span-two-rows {
-        grid-row: 2 / span 2;
-      }
-
       /* Make the 4th column item span the entire height */
       .span-all-rows {
         grid-row: span 3;
@@ -63,24 +59,69 @@
       }
 
       /* Set white background color for specified grid items */
-      .grid-item:nth-child(3),
       .grid-item:nth-child(4),
       .grid-item:nth-child(5),
       .grid-item:nth-child(6),
       .grid-item:nth-child(7),
       .grid-item:nth-child(8),
       .grid-item:nth-child(9),
-      .active {
+      .grid-item:nth-child(10),
+      .active,
+      .menu:hover {
         background-color: white;
       }
 
-      .grid-item:nth-child(9) {
+      .grid-container-single > .menu:hover:not(.active) {
+        background-color: transparent;
+      }
+
+      .grid-item:nth-child(10) {
         margin: 0 2rem 0 1rem;
+      }
+
+      .active > .circle,
+      .menu:hover > .circle,
+      .menu:has(a:focus) > .circle {
+        display: none;
       }
 
       /* Ensure the menu background changes when its <a> is focused */
       .menu:has(a:focus) {
         background-color: white;
+      }
+
+      .circle {
+        width: 30px;
+        height: 30px;
+        background-color: white; /* Blue color for the circle */
+        border-radius: 50%; /* Makes it a perfect circle */
+        border: 2px black solid;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Adds a shadow */
+        margin-left: auto;
+      }
+
+      .caret {
+        position: relative;
+      }
+
+      .caret:before {
+        content: '';
+        position: absolute;
+        top: 6px;
+        left: 13px;
+        border-left: 9px solid #000;
+        border-top: 9px solid transparent;
+        border-bottom: 9px solid transparent;
+      }
+
+      .caret:after {
+        content: '';
+        position: absolute;
+        left: 13px;
+        top: 11px;
+        border-left: 4px solid #fff;
+        border-top: 4px solid transparent;
+        border-bottom: 4px solid transparent;
       }
 
       /* Media Query for screen widths <= 1160px */
@@ -114,7 +155,7 @@
           grid-column: span 2; /* Make it span the entire bottom row */
         }
 
-        .grid-item:nth-child(9) {
+        .grid-item:nth-child(10) {
           grid-row: 5 / -1;
           grid-column: 1 / -1;
           margin: 0;
@@ -125,19 +166,31 @@
       /* Media Query for screen widths <= 830px */
       @media (max-width: 830px) {
         .grid-container-single {
+          grid-auto-flow: row;
           grid-template-columns: repeat(3, 1fr);
-        }
-        .span-two-rows {
-          grid-column: 2 / span 2;
-          grid-row: 2 / 1;
         }
       }
 
       /* Media Query for screen widths <= 770px */
       @media (max-width: 770px) {
+        .circle {
+          width: 25px;
+          height: 25px;
+        }
+
+        .caret:before {
+          top: 4px;
+          left: 12px;
+        }
+
+        .caret:after {
+          top: 9px;
+          left: 12px;
+        }
+
         .menu-content,
         .span-all-rows {
-          font-size: 0.9rem;
+          font-size: 1rem;
         }
 
         .menu-content img {
@@ -146,29 +199,91 @@
         }
       }
 
-      /* Media Query for screen widths <= 630px */
-      @media (max-width: 630px) {
-        .menu-content {
-          padding: 0 1rem;
+      /* Media Query for screen widths <= 730px */
+      @media (max-width: 730px) {
+        .menu {
+          font-size: 0.9rem;
+        }
+
+        .circle {
+          width: 20px;
+          height: 20px;
+        }
+
+        .caret:before {
+          top: 4px;
+          left: 8px;
+          border-left: 7px solid #000;
+          border-top: 7px solid transparent;
+          border-bottom: 7px solid transparent;
+        }
+
+        .caret:after {
+          top: 7px;
+          left: 8px;
+          border-left: 4px solid #fff;
+          border-top: 4px solid transparent;
+          border-bottom: 4px solid transparent;
+        }
+      }
+
+      /* Media Query for screen widths <= 550px */
+      @media (max-width: 550px) {
+        .grid-item:nth-child(1) > p,
+        .grid-item:nth-child(2) > p,
+        .grid-item:nth-child(3) > p {
+          margin-left: 0.8em;
+          width: 6em;
+        }
+
+        .menu-content p {
+          font-size: 0.8rem;
+        }
+      }
+
+      /* Media Query for screen widths <= 530px */
+      @media (max-width: 530px) {
+        .grid-container-single {
+          grid-template-columns: 160px repeat(2, 1fr);
+        }
+
+        .menu {
+          padding: 1rem;
+          padding-left: 0.8rem;
         }
       }
 
       /* Media Query for screen widths <= 500px */
       @media (max-width: 500px) {
         .grid-item:nth-child(1) > img {
-          display: none;
+          width: 30%;
+          height: auto;
         }
-
         .menu-content {
           padding: 0 1rem;
         }
+
+        .menu-content p {
+          font-size: 0.9rem;
+        }
       }
 
-      /* Media Query for screen widths <= 445px */
-      @media (max-width: 445px) {
+      /* Media Query for screen widths <= 480px */
+      @media (max-width: 480px) {
+        .grid-item:nth-child(3) > .circle {
+          margin-left: 9px;
+        }
+
+        .menu-content p {
+          font-size: 0.7rem;
+        }
+      }
+
+      /* Media Query for screen widths <= 455px */
+      @media (max-width: 455px) {
         .menu-content {
           padding: 0 0.5rem;
-          font-size: 0.8rem;
+          font-size: 0.7rem;
         }
 
         .span-all-rows {
@@ -177,8 +292,8 @@
         }
 
         .menu-content img {
-          width: 35px;
-          height: 46px;
+          width: 30px;
+          height: auto;
         }
       }
 
@@ -186,18 +301,35 @@
       @media (max-width: 420px) {
         .grid-container-single {
           grid-template-columns: 1fr;
-          grid-template-rows: repeat(3, 80px) repeat(7, 90px);
+          grid-template-rows: 80px repeat(2, 0.5em) repeat(6, 90px);
         }
 
-        .grid-item:nth-child(1) > img {
-          display: flex;
-        }
-
-        .grid-item:nth-child(9) {
-          grid-row: 8 /-1;
+        .grid-item:nth-child(10) {
+          grid-row: 10 /-1;
           grid-column: 1 / -1;
           margin: 0;
           justify-content: start;
+        }
+
+        .grid-item:nth-child(1) > img,
+        .grid-item:nth-child(2) > img,
+        .grid-item:nth-child(3) > img {
+          display: flex;
+        }
+
+        .grid-item:nth-child(1) > img {
+          width: 36px;
+          height: auto;
+        }
+
+        .grid-item:nth-child(2) > img {
+          width: 43px;
+          height: auto;
+        }
+
+        .grid-item:nth-child(3) > img {
+          width: 40px;
+          height: auto;
         }
 
         .grid-item:nth-child(1) > p,
@@ -217,13 +349,9 @@
           font-size: 1rem;
         }
 
-        .menu-content img {
+        .menu-content > img {
           width: 42px;
-          height: 55px;
-        }
-
-        .span-two-rows {
-          display: none;
+          height: auto;
         }
 
         .span-all-rows {
@@ -239,11 +367,18 @@
         <p>
           <a href="#"><strong>LibPas</strong><br />Periodic data </a>
         </p>
+        <div class="circle">
+          <div class="caret"></div>
+        </div>
       </div>
 
-      <div class="grid-item menu span-two-rows"></div>
+      <div class="grid-item menu">
+        <!-- empty-->
+      </div>
 
-      <!-- <div class="grid-item menu"></div> -->
+      <div class="grid-item menu">
+        <!-- empty-->
+      </div>
       <div class="grid-item menu-content">
         <img src="assets/imgs/reports.gif" width="42" height="55" />
 

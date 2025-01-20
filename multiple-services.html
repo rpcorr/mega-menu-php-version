@@ -76,8 +76,11 @@
       }
 
       .active > .circle,
-      .menu:hover > .circle,
       .menu:has(a:focus) > .circle {
+        display: none;
+      }
+
+      .menu:hover > .circle {
         display: none;
       }
 
@@ -93,6 +96,7 @@
         border-radius: 50%; /* Makes it a perfect circle */
         border: 2px black solid;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Adds a shadow */
+        margin-left: auto;
       }
 
       .caret {
@@ -185,12 +189,12 @@
 
         .menu-content,
         .span-all-rows {
-          font-size: 0.8rem;
+          font-size: 1rem;
         }
 
         .menu-content img {
           width: 35px;
-          height: 46px;
+          height: auto;
         }
       }
 
@@ -226,12 +230,12 @@
       @media (max-width: 630px) {
         .grid-item:nth-child(1) > img {
           width: 30px;
-          height: 28px;
+          height: auto;
         }
 
         .grid-item:nth-child(2) > img {
           width: 35px;
-          height: 35px;
+          height: auto;
         }
 
         .grid-item:nth-child(1) > p,
@@ -247,31 +251,45 @@
         .grid-item:nth-child(1) > p,
         .grid-item:nth-child(2) > p,
         .grid-item:nth-child(3) > p {
-          margin-left: 0.5em;
+          margin-left: 0.7em;
           width: 5em;
+        }
+
+        .grid-item:nth-child(1) > p {
+          margin-left: 0.95em;
+          width: 6em;
+        }
+
+        .menu-content p {
+          font-size: 0.8rem;
         }
       }
 
       /* Media Query for screen widths <= 530px */
       @media (max-width: 530px) {
-        .grid-item:nth-child(1) > img {
-          width: 25px;
-          height: 23px;
-        }
-        .grid-item:nth-child(2) > img {
-          width: 30px;
-          height: 30px;
+        .grid-container-multiple {
+          grid-template-columns: 160px repeat(2, 1fr);
         }
 
+        .grid-item:nth-child(1) > img,
+        .grid-item:nth-child(2) > img,
         .grid-item:nth-child(3) > img {
-          width: 28px;
-          height: 28px;
+          width: 30%;
+          height: auto;
+        }
+
+        .grid-item:nth-child(1) > p {
+          margin-left: 0.8em;
+        }
+
+        .menu {
+          padding: 1rem;
+          padding-left: 0.8rem;
         }
       }
 
       /* Media Query for screen widths <= 500px */
       @media (max-width: 500px) {
-        .grid-item:nth-child(1) > img,
         .grid-item:nth-child(2) > img,
         .grid-item:nth-child(3) > img {
           display: none;
@@ -280,13 +298,37 @@
         .menu-content {
           padding: 0 1rem;
         }
+
+        .menu-content p {
+          font-size: 0.9rem;
+        }
       }
 
-      /* Media Query for screen widths <= 445px */
-      @media (max-width: 445px) {
+      /* Media Query for screen widths <= 480px */
+      @media (max-width: 480px) {
+        .grid-item:nth-child(3) > .circle {
+          margin-left: 9px;
+        }
+
+        .menu-content p {
+          font-size: 0.7rem;
+        }
+      }
+
+      /* Media Query for screen widths <= 455px */
+      @media (max-width: 455px) {
         .menu-content {
           padding: 0 0.5rem;
           font-size: 0.7rem;
+        }
+
+        .grid-item:nth-child(3) > .circle {
+          margin-left: 4px;
+        }
+
+        .circle {
+          width: 18px;
+          height: 18px;
         }
 
         .span-all-rows {
@@ -295,8 +337,35 @@
         }
 
         .menu-content img {
-          width: 35px;
-          height: 46px;
+          width: 30px;
+          height: auto;
+        }
+      }
+
+      @media (max-width: 445px) {
+        .menu {
+          font-size: 0.8rem;
+        }
+
+        .circle {
+          width: 15px;
+          height: 15px;
+        }
+
+        .caret:before {
+          top: 3px;
+          left: 6px;
+          border-left: 5px solid #000;
+          border-top: 5px solid transparent;
+          border-bottom: 5px solid transparent;
+        }
+
+        .caret:after {
+          top: 6px;
+          left: 6px;
+          border-left: 2px solid #fff;
+          border-top: 2px solid transparent;
+          border-bottom: 2px solid transparent;
         }
       }
 
@@ -322,17 +391,17 @@
 
         .grid-item:nth-child(1) > img {
           width: 36px;
-          height: 33px;
+          height: auto;
         }
 
         .grid-item:nth-child(2) > img {
           width: 43px;
-          height: 43px;
+          height: auto;
         }
 
         .grid-item:nth-child(3) > img {
           width: 40px;
-          height: 40px;
+          height: auto;
         }
 
         .grid-item:nth-child(1) > p,
@@ -354,11 +423,55 @@
 
         .menu-content > img {
           width: 42px;
-          height: 55px;
+          height: auto;
         }
 
         .span-all-rows {
           padding-top: 3rem;
+        }
+
+        .circle {
+          width: 30px;
+          height: 30px;
+        }
+
+        .caret:before {
+          top: 6px;
+          left: 13px;
+          border-left: 9px solid #000;
+          border-top: 9px solid transparent;
+          border-bottom: 9px solid transparent;
+        }
+
+        .caret:after {
+          left: 13px;
+          top: 11px;
+          border-left: 4px solid #fff;
+          border-top: 4px solid transparent;
+          border-bottom: 4px solid transparent;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .circle {
+          width: 25px;
+          height: 25px;
+        }
+
+        .caret:before {
+          top: 5px;
+          left: 11px;
+          border-left: 8px solid #000;
+          border-top: 8px solid transparent;
+          border-bottom: 8px solid transparent;
+        }
+
+        .caret:after {
+          left: 11px;
+          top: 9px;
+          border-left: 4px solid #fff;
+          border-top: 4px solid transparent;
+          border-bottom: 4px solid transparent;
         }
       }
     </style>
@@ -370,7 +483,7 @@
         <p>
           <a href="#"><strong>LibPas</strong><br />Periodic data </a>
         </p>
-        <div class="circle" style="margin-left: auto">
+        <div class="circle">
           <div class="caret"></div>
         </div>
       </div>
@@ -380,7 +493,7 @@
         <p>
           <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
         </p>
-        <div class="circle" style="margin-left: auto">
+        <div class="circle">
           <div class="caret"></div>
         </div>
       </div>
@@ -390,7 +503,7 @@
         <p>
           <a href="#"><strong>InformUs</strong><br />Survey data </a>
         </p>
-        <div class="circle" style="margin-left: auto">
+        <div class="circle">
           <div class="caret"></div>
         </div>
       </div>
