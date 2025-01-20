@@ -18,11 +18,10 @@
         /* grid-template-columns: repeat(4, 1fr); */
         grid-template-columns: 350px 1fr 450px;
 
-        width: 100%;
         height: auto; /* Allow the grid container to grow with content */
         border: 1px solid #000;
         background-color: #999;
-        padding-bottom: 1rem;
+        padding: 0 2rem 1rem 2rem;
 
         grid-auto-flow: column;
       }
@@ -54,48 +53,21 @@
         padding-left: 3rem;
       }
 
-      /* Make the 4th column item span the entire height */
+      /* Make the 3rd column item span the entire height */
       .span-all-rows {
         grid-row: span 3;
         display: flex;
-        justify-content: start;
         flex-direction: column;
         padding: 1rem 2rem 0;
       }
 
-      /* Set white background color for specified grid items */
-      .grid-item:nth-child(1),
-      .grid-item:nth-child(2),
-      .grid-item:nth-child(3),
-      .grid-item:nth-child(4),
-      .grid-item:nth-child(5),
-      .grid-item:nth-child(6),
-      .grid-item:nth-child(7),
-      .grid-item:nth-child(8),
-      .grid-item:nth-child(9),
-      .grid-item:nth-child(10),
-      .active,
-      .menu:hover {
+      /* Set white background colour for grid items */
+      .grid-item {
         background-color: white;
       }
 
-      .grid-container-pages > .menu:hover:not(.active) {
-        background-color: transparent;
-      }
-
       .grid-item:nth-child(7) {
-        margin: 0 2rem 0 1rem;
-      }
-
-      .grid-item:nth-child(1),
-      .grid-item:nth-child(2),
-      .grid-item:nth-child(3) {
-        margin-left: 2rem;
-      }
-
-      /* Ensure the menu background changes when its <a> is focused */
-      .menu:has(a:focus) {
-        /* background-color: white; */
+        margin-left: 1rem;
       }
 
       /* Media Query for screen widths <= 1160px */
@@ -117,18 +89,6 @@
           grid-template-columns: repeat(2, 1fr);
         }
 
-        .grid-item:nth-child(2),
-        .grid-item:nth-child(4),
-        .grid-item:nth-child(6) {
-          margin-left: 0;
-          margin-right: 2rem;
-        }
-
-        .grid-item:nth-child(5),
-        .grid-item:nth-child(7) {
-          margin-left: 2rem;
-        }
-
         .grid-item {
           padding-right: 2rem;
         }
@@ -140,6 +100,7 @@
 
         .grid-item:nth-child(7) {
           margin-top: 1rem;
+          margin-left: 0;
         }
       }
 
@@ -148,14 +109,10 @@
         .menu-content {
           padding-left: 2rem;
         }
-
-        .span-all-rows p {
-          margin-left: 0;
-        }
       }
 
-      /* Media Query for screen widths <= 515px */
-      @media (max-width: 515px) {
+      /* Media Query for screen widths <= 520px */
+      @media (max-width: 520px) {
         .menu-content img {
           width: 35px;
           height: auto;
@@ -182,36 +139,12 @@
         .grid-container-pages {
           grid-template-columns: 1fr;
           grid-template-rows: repeat(6, 80px) repeat(3, minmax(90px, auto));
-        }
-
-        .grid-item:nth-child(2),
-        .grid-item:nth-child(4),
-        .grid-item:nth-child(6),
-        .grid-item {
-          margin: 0 2rem;
+          padding: 0 1rem 1rem 1rem;
         }
 
         .span-all-rows {
           grid-column: unset;
           grid-row: span 3;
-        }
-      }
-
-      /* Media Query for screen widths <= 320px */
-      @media (max-width: 320px) {
-        .grid-item,
-        .grid-item:nth-child(1),
-        .grid-item:nth-child(2),
-        .grid-item:nth-child(3),
-        .grid-item:nth-child(4),
-        .grid-item:nth-child(5),
-        .grid-item:nth-child(6),
-        .grid-item:nth-child(7) {
-          margin: 0 1rem;
-        }
-
-        .grid-item:nth-child(7) {
-          margin-top: 1rem;
         }
       }
     </style>
