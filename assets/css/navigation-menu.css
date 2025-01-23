@@ -568,6 +568,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
   justify-content: space-evenly;
   flex-wrap: wrap;
   padding: 1.25rem 0;
+  margin-right: 12rem;
 }
 
 @media (max-width: 1800px) {
