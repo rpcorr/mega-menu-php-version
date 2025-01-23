@@ -563,41 +563,93 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-3 > .list-item img {
 }
 
 header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
-  width: 90vw;
+  width: 95vw;
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
   padding: 1.25rem 0;
-  margin-right: 12rem;
+  margin-right: 15rem;
 }
 
-@media (max-width: 1800px) {
+@media (max-width: 1500px) {
   header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
-    width: 40rem;
+    width: 96vw;
+    margin-right: 14rem;
   }
 }
 
-@media (max-width: 1680px) {
+@media (max-width: 1440px) {
   header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
-    width: 35rem;
+    width: 97vw;
+    margin-right: 13rem;
   }
 }
 
-@media (max-width: 1340px) {
+@media (max-width: 1400px) {
   header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
-    width: 30rem;
+    width: 96vw;
   }
 }
 
-@media (max-width: 930px) {
+@media (max-width: 1350px) {
   header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
-    width: 28rem;
+    width: 94vw;
   }
 }
 
-@media (max-width: 780px) {
+@media (max-width: 1300px) {
   header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
-    width: 25rem;
+    width: 94vw;
+    margin-right: 11.5rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
+    width: 96vw;
+    margin-right: 10rem;
+  }
+}
+
+@media (max-width: 1150px) {
+  header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
+    width: 93vw;
+    margin-right: 10rem;
+  }
+}
+
+@media (max-width: 1050px) {
+  header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
+    width: 96vw;
+    margin-right: 8rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
+    width: 98vw;
+    margin-right: 7rem;
+  }
+}
+
+@media (max-width: 960px) {
+  header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
+    width: 95vw;
+    margin-right: 7rem;
+  }
+}
+
+@media (max-width: 900px) {
+  header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
+    width: 97vw;
+    margin-right: 6rem;
+  }
+}
+
+@media (max-width: 880px) {
+  header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
+    width: 95vw;
+    margin-right: 6rem;
   }
 }
 
