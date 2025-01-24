@@ -440,30 +440,111 @@ document.addEventListener('DOMContentLoaded', () => {
       // Services Menu
       menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Services <i class="caret angle-down"></i></a>
         <div class="sub-menu-div mega-menu mega-menu-column-4">
-          <div class="list-item text-center">
-              <a href="#rainForest">
-              <img src="assets/imgs/p1.jpg" alt="Rain Forest">
-              <p>Rain Forest</p>
-              </a>
+          <div class="grid-container-multiple">
+
+            <!--- menu items --->
+            <div class="grid-item menu active">
+              <img src="assets/imgs/pie.gif" width="36" height="33" />
+              <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
+              <div class="circle">
+                <div class="caret"></div>
+              </div>
+            </div>
+
+            <div class="grid-item menu">
+              <img src="assets/imgs/medal.gif" width="43" height="43" />
+              <p>
+                <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
+              </p>
+              <div class="circle">
+                <div class="caret"></div>
+              </div>
+            </div>
+
+            <div class="grid-item menu">
+              <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
+              <p>
+                <a href="#"><strong>InformUs</strong><br />Survey data </a>
+              </p>
+              <div class="circle">
+                <div class="caret"></div>
+              </div>
+            </div>
+
+            <div class="grid-item menu-content">
+              <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+              <p>
+                <strong>Reports</strong><br />{Brief description of the function of
+                reports}
+              </p>
+            </div>
+
+            <div class="grid-item menu-content">
+              <img src="assets/imgs/reports.gif" width="42" height="55" />
+              <p>
+                <strong>Reports</strong><br />{Brief description of the function of
+                reports}
+              </p>
+            </div>
+            <div class="grid-item menu-content">
+              <img src="assets/imgs/reports.gif" width="42" height="55" />
+              <p>
+                <strong>Reports</strong><br />{Brief description of the function of
+                reports}
+              </p>
+            </div>
+            <div class="grid-item menu-content">
+              <img src="assets/imgs/data-input.gif" width="42" height="55" />
+
+              <p>
+                <strong>Data Input</strong><br />
+                {Brief description of the function of data input}
+              </p>
+            </div>
+            <div class="grid-item menu-content">
+              <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+              <p>
+                <strong>Reports</strong><br />{Brief description of the function of
+                reports}
+              </p>
+            </div>
+            <div class="grid-item menu-content">
+              <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+              <p>
+                <strong>Reports</strong><br />{Brief description of the function of
+                reports}
+              </p>
+            </div>
+
+            <div class="grid-item span-all-rows">
+              <div>
+                <img src="assets/imgs/light-bulb.gif" align="left" />
+                <p>
+                  <strong>Did you know that you can do this if you do that?</strong>
+                </p>
+              </div>
+
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </p>
+
+              <ul>
+                <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
+                <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
+              </ul>
+            </div>
+
+
+
           </div>
-          <div class="list-item text-center">
-              <a href="#mountains">
-              <img src="assets/imgs/p2.jpg" alt="Mountains">
-              <p>Mountains</p>
-              </a>
-          </div>
-          <div class="list-item text-center">
-              <a href="#waterfall">
-              <img src="assets/imgs/p3.jpg" alt="Waterfall">
-              <p>Waterfall</p>
-              </a>
-          </div>
-          <div class="list-item text-center">
-              <a href="#owl">
-              <img src="assets/imgs/p4.jpg" alt="Owl">
-              <p>Owl</p>
-              </a>
-          </div>
+
+          
+
+          
         </div>
       </li>`;
 

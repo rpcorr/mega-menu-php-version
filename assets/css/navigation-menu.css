@@ -695,3 +695,99 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
 .breadcrumbs li:last-child::after {
   content: '';
 }
+
+/*//////////////////////////////////////// */
+
+.mega-menu-column-4 .grid-container-multiple {
+  display: grid;
+  grid-template-rows: repeat(3, minmax(100px, auto)); /* Allow rows to grow */
+  grid-template-columns: 300px repeat(3, 1fr);
+
+  height: auto; /* Allow the grid container to grow with content */
+  border: 1px solid #000;
+  background-color: #999;
+  padding-bottom: 1rem;
+  padding-right: 2rem;
+
+  grid-auto-flow: column;
+}
+
+.mega-menu-column-4 .grid-container-multiple > .grid-item {
+  display: flex;
+  align-items: center;
+}
+
+.mega-menu-column-4 .grid-container-multiple > .grid-item p {
+  margin-top: 0;
+  margin-left: 1em;
+}
+
+.mega-menu-column-4 .grid-container-multiple > .grid-item a {
+  color: black;
+  text-decoration: none;
+}
+
+.mega-menu-column-4 .grid-container-multiple > .menu {
+  padding: 1rem;
+}
+
+.mega-menu-column-4 .grid-container-multiple > .menu-content {
+  padding-left: 3rem;
+}
+
+.mega-menu-column-4 .grid-container-multiple .circle {
+  width: 30px;
+  height: 30px;
+  background-color: white; /* Blue color for the circle */
+  border-radius: 50%; /* Makes it a perfect circle */
+  border: 2px black solid;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Adds a shadow */
+  margin-left: auto;
+}
+
+.mega-menu-column-4 .grid-container-multiple .caret {
+  position: relative;
+}
+
+.mega-menu-column-4 .grid-container-multiple .caret:before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 13px;
+  border-left: 9px solid #000;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+}
+
+.mega-menu-column-4 .grid-container-multiple .caret:after {
+  content: '';
+  position: absolute;
+  left: 13px;
+  top: 11px;
+  border-left: 4px solid #fff;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
+/* Make the 4th column item span the entire height */
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows {
+  grid-row: span 3;
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  padding: 1rem 2rem 0;
+  margin-left: 1rem;
+}
+
+/* Ensure content in .span-all-rows respects its boundaries */
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows {
+  grid-row: span 3;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding: 1rem 2rem 0;
+  margin-left: 1rem;
+  max-height: 100%; /* Prevent overflowing */
+  overflow: hidden; /* Hide overflowing content */
+  box-sizing: border-box; /* Include padding in the box model */
+}
