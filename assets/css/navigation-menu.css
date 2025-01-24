@@ -787,8 +787,8 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
   flex-direction: row; /* Align items horizontally if needed */
   align-content: flex-start; /* Align wrapped content at the top */
   justify-content: flex-start; /* Align content to the left */
-  padding: 1rem 2rem 0;
-  margin-left: 1rem;
+  /* padding: 1rem 2rem 0; */
+  /* margin-left: 1rem; */
   gap: 1rem; /* Add space between child elements */
   box-sizing: border-box; /* Include padding in dimensions */
 }
@@ -797,21 +797,28 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
 
 /* Ensure text content in <p> and <li> tags wraps */
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows p,
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows li {
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows li,
+.mega-menu-column-4 .grid-container-multiple > .menu-content p {
   white-space: normal; /* Allow text to wrap to the next line */
   word-wrap: break-word; /* Break words that are too long */
   overflow-wrap: break-word; /* Support for modern browsers */
-  margin: 0; /* Remove default margin to prevent spacing issues */
   width: 100%; /* Ensure the <p> doesn't exceed the container width */
   box-sizing: border-box; /* Include padding in the width calculation */
 }
 
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows p,
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows li {
+  margin: 0; /* Remove default margin to prevent spacing issues */
+}
+
 /* Add some spacing for <li> items in the list */
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows ul {
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows ul,
+.mega-menu-column-4 .grid-container-multiple > .menu-content ul {
   padding-left: 1.5rem; /* Indent the list for better readability */
   margin: 0; /* Reset default margins */
 }
 
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows ul li {
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows ul li,
+.mega-menu-column-4 .grid-container-multiple > .menu-content ul li {
   list-style: disc; /* Ensure a consistent bullet style */
 }
