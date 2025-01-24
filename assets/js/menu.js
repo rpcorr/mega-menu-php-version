@@ -434,13 +434,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (strLibSatMenuStructure !== '' && strLibSatMenuStructure !== undefined)
         menuHTML += strLibSatMenuStructure;
 
-      //Experiement grid menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Services <i class="caret angle-down"></i></a>
-      
-      </li>`;
+      // Pages Menu
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Pages <i class="caret angle-down"></i></a></li>`;
 
-      // New Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">New <i class="caret angle-down"></i></a>
+      // Services Menu
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Services <i class="caret angle-down"></i></a>
         <div class="sub-menu-div mega-menu mega-menu-column-4">
           <div class="list-item text-center">
               <a href="#rainForest">
@@ -470,59 +468,59 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>`;
 
       // SHOP
-      menuHTML += `
-        <li class="menu-item-has-children hover"><a href="#" aria-expanded="false" aria-label="Click Enter to close Shop sub menu">Shop <i class="caret angle-down"></i></a>
-          <div class="sub-menu-div mega-menu mega-menu-column-4">
-              <div class="list-item">
-                <h4 class="title" id="na">North America</h4>
-                <ul>
-                    <li><a href="napackage1.html"><span aria-labelledby="na"></span>Package 1</a></li>
-                    <li><a href="napackage2.html"><span aria-labelledby="na"></span>Package 2</a></li>
-                    <li><a href="napackage3.html"><span aria-labelledby="na"></span>Package 3</a></li>
-                    <li><a href="napackage4.html"><span aria-labelledby="na"></span>Package 4</a></li>
-                    <li><a href="napackage5.html"><span aria-labelledby="na"></span>Package 5</a></li>
-                </ul>
-                <h4 class="title" id="sa">South America</h4>
-                <ul>
-                    <li><a href="sapackage1.html"><span aria-labelledby="sa"></span>Package 1</a></li>
-                    <li><a href="sapackage2.html"><span aria-labelledby="sa"></span>Package 2</a></li>
-                    <li><a href="sapackage3.html"><span aria-labelledby="sa"></span>Package 3</a></li>
-                </ul>
-            </div>
-            <div class="list-item">
-                <h4 class="title" id="au">Australia</h4>
-                <ul>
-                    <li><a href="aupackage1.html"><span aria-labelledby="au"></span>Package 1</a></li>
-                    <li><a href="aupackage2.html"><span aria-labelledby="au"></span>Package 2</a></li>
-                    <li><a href="aupackage3.html"><span aria-labelledby="au"></span>Package 3</a></li>
-                    <li><a href="aupackage4.html"><span aria-labelledby="au"></span>Package 4</a></li>
-                </ul>
-                <h4 class="title" id="af">Africa</h4>
-                <ul>
-                    <li><a href="afpackage1.html"><span aria-labelledby="af"></span>Package 1</a></li>
-                    <li><a href="afpackage2.html"><span aria-labelledby="af"></span>Package 2</a></li>
-                    <li><a href="afpackage3.html"><span aria-labelledby="af"></span>Package 3</a></li>
-                    <li><a href="afpackage4.html"><span aria-labelledby="af"></span>Package 4</a></li>
-                </ul>
-            </div>
-            
-            <div class="list-item">
-              <h4 class="title" id="eu">Europe</h4>
-              <ul>
-                  <li><a href="eupackage1.html"><span aria-labelledby="eu"></span>Package 1</a></li>
-                  <li><a href="eupackage2.html"><span aria-labelledby="eu"></span>Package 2</a></li>
-                  <li><a href="eupackage3.html"><span aria-labelledby="eu"></span>Package 3</a></li>
-                  <li><a href="eupackage4.html"><span aria-labelledby="eu"></span>Package 4</a></li>
-                  <li><a href="eupackage5.html"><span aria-labelledby="eu"></span>Package 5</a></li>
-                  <li><a href="eupackage6.html"><span aria-labelledby="eu"></span>Package 6</a></li>
-                  <li><a href="eupackage7.html"><span aria-labelledby="eu"></span>Package 7</a></li>
-                  <li><a href="eupackage8.html"><span aria-labelledby="eu"></span>Package 8</a></li>
-                  <li><a href="eupackage9.html"><span aria-labelledby="eu"></span>Package 9</a></li>
-              </ul></div>
-              <div class="list-item"><img src="assets/imgs/p5.jpg" alt="Mountain goats"></div>
-          </div>
-        </li>
-      `;
+      // menuHTML += `
+      //   <li class="menu-item-has-children hover"><a href="#" aria-expanded="false" aria-label="Click Enter to close Shop sub menu">Shop <i class="caret angle-down"></i></a>
+      //     <div class="sub-menu-div mega-menu mega-menu-column-4">
+      //         <div class="list-item">
+      //           <h4 class="title" id="na">North America</h4>
+      //           <ul>
+      //               <li><a href="napackage1.html"><span aria-labelledby="na"></span>Package 1</a></li>
+      //               <li><a href="napackage2.html"><span aria-labelledby="na"></span>Package 2</a></li>
+      //               <li><a href="napackage3.html"><span aria-labelledby="na"></span>Package 3</a></li>
+      //               <li><a href="napackage4.html"><span aria-labelledby="na"></span>Package 4</a></li>
+      //               <li><a href="napackage5.html"><span aria-labelledby="na"></span>Package 5</a></li>
+      //           </ul>
+      //           <h4 class="title" id="sa">South America</h4>
+      //           <ul>
+      //               <li><a href="sapackage1.html"><span aria-labelledby="sa"></span>Package 1</a></li>
+      //               <li><a href="sapackage2.html"><span aria-labelledby="sa"></span>Package 2</a></li>
+      //               <li><a href="sapackage3.html"><span aria-labelledby="sa"></span>Package 3</a></li>
+      //           </ul>
+      //       </div>
+      //       <div class="list-item">
+      //           <h4 class="title" id="au">Australia</h4>
+      //           <ul>
+      //               <li><a href="aupackage1.html"><span aria-labelledby="au"></span>Package 1</a></li>
+      //               <li><a href="aupackage2.html"><span aria-labelledby="au"></span>Package 2</a></li>
+      //               <li><a href="aupackage3.html"><span aria-labelledby="au"></span>Package 3</a></li>
+      //               <li><a href="aupackage4.html"><span aria-labelledby="au"></span>Package 4</a></li>
+      //           </ul>
+      //           <h4 class="title" id="af">Africa</h4>
+      //           <ul>
+      //               <li><a href="afpackage1.html"><span aria-labelledby="af"></span>Package 1</a></li>
+      //               <li><a href="afpackage2.html"><span aria-labelledby="af"></span>Package 2</a></li>
+      //               <li><a href="afpackage3.html"><span aria-labelledby="af"></span>Package 3</a></li>
+      //               <li><a href="afpackage4.html"><span aria-labelledby="af"></span>Package 4</a></li>
+      //           </ul>
+      //       </div>
+
+      //       <div class="list-item">
+      //         <h4 class="title" id="eu">Europe</h4>
+      //         <ul>
+      //             <li><a href="eupackage1.html"><span aria-labelledby="eu"></span>Package 1</a></li>
+      //             <li><a href="eupackage2.html"><span aria-labelledby="eu"></span>Package 2</a></li>
+      //             <li><a href="eupackage3.html"><span aria-labelledby="eu"></span>Package 3</a></li>
+      //             <li><a href="eupackage4.html"><span aria-labelledby="eu"></span>Package 4</a></li>
+      //             <li><a href="eupackage5.html"><span aria-labelledby="eu"></span>Package 5</a></li>
+      //             <li><a href="eupackage6.html"><span aria-labelledby="eu"></span>Package 6</a></li>
+      //             <li><a href="eupackage7.html"><span aria-labelledby="eu"></span>Package 7</a></li>
+      //             <li><a href="eupackage8.html"><span aria-labelledby="eu"></span>Package 8</a></li>
+      //             <li><a href="eupackage9.html"><span aria-labelledby="eu"></span>Package 9</a></li>
+      //         </ul></div>
+      //         <div class="list-item"><img src="assets/imgs/p5.jpg" alt="Mountain goats"></div>
+      //     </div>
+      //   </li>
+      // `;
 
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
 

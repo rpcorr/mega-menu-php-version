@@ -563,12 +563,12 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-3 > .list-item img {
 }
 
 header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
-  width: 95vw;
+  width: 96vw;
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
   padding: 1.25rem 0;
-  margin-right: 15rem;
+  margin-right: 13rem;
 }
 
 @media (max-width: 1500px) {
