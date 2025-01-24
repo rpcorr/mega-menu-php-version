@@ -793,8 +793,6 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
   box-sizing: border-box; /* Include padding in dimensions */
 }
 
-/* Ensure child elements wrap properly and fit within the container */
-
 /* Ensure text content in <p> and <li> tags wraps */
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows p,
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows li,
@@ -831,7 +829,8 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
 /* Set white background colour for grid items, .active grid-item and when hovering a menu item */
 .mega-menu-column-4 .grid-container-multiple > .grid-item,
 .mega-menu-column-4 .grid-container-multiple > .active,
-.mega-menu-column-4 .grid-container-multiple > .menu:hover {
+.mega-menu-column-4 .grid-container-multiple > .menu:hover,
+.mega-menu-column-4 .grid-container-multiple > .menu:has(a:focus) {
   background-color: white;
 }
 
