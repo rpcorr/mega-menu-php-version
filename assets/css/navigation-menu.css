@@ -843,3 +843,10 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
 .mega-menu-column-4 .grid-container-multiple > .menu:hover > .circle {
   display: none;
 }
+
+/* Target <a> .sub-menu-div.mega-menu.mega-menu-column-4 .grid-item.menu on hover, on active, and on focus */
+.sub-menu-div.mega-menu.mega-menu-column-4 .grid-item.menu p a:hover,
+.sub-menu-div.mega-menu.mega-menu-column-4 .grid-item.menu p a:active,
+.sub-menu-div.mega-menu.mega-menu-column-4 .grid-item.menu p a:focus {
+  background-color: #fff !important;
+}
