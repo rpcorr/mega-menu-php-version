@@ -821,6 +821,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
   list-style: disc; /* Ensure a consistent bullet style */
 }
 
+/* when li element is hover within .span-all-rows container, ensure the background colour is transparent */
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows ul li:hover {
+  background-color: transparent;
+}
+
 /* Set grey background colour for menu items that are not have class .active */
 .mega-menu-column-4 .grid-container-multiple > .menu:not(.active) {
   background-color: #999;
