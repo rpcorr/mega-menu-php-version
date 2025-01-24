@@ -822,3 +822,19 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
 .mega-menu-column-4 .grid-container-multiple > .menu-content ul li {
   list-style: disc; /* Ensure a consistent bullet style */
 }
+
+/* Set white background colour for grid items, .active grid-item and when hovering a menu item */
+.mega-menu-column-4 .grid-container-multiple > .grid-item,
+.mega-menu-column-4 .grid-container-multiple > .active,
+.mega-menu-column-4 .grid-container-multiple > .menu:hover {
+  background-color: white;
+}
+
+.mega-menu-column-4 .grid-container-multiple > .active > .circle,
+.mega-menu-column-4 .grid-container-multiple > .menu:has(a:focus) > .circle {
+  display: none;
+}
+
+.mega-menu-column-4 .grid-container-multiple > .menu:hover > .circle {
+  display: none;
+}
