@@ -823,6 +823,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
   list-style: disc; /* Ensure a consistent bullet style */
 }
 
+/* Set grey background colour for menu items that are not have class .active */
+.mega-menu-column-4 .grid-container-multiple > .menu:not(.active) {
+  background-color: #999;
+}
+
 /* Set white background colour for grid items, .active grid-item and when hovering a menu item */
 .mega-menu-column-4 .grid-container-multiple > .grid-item,
 .mega-menu-column-4 .grid-container-multiple > .active,
