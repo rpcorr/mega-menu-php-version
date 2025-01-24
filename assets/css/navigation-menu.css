@@ -779,15 +779,39 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
   margin-left: 1rem;
 }
 
-/* Ensure content in .span-all-rows respects its boundaries */
+/* Ensure content in .span-all-rows wraps properly */
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows {
   grid-row: span 3;
   display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
+  flex-wrap: wrap; /* Enable wrapping */
+  flex-direction: row; /* Align items horizontally if needed */
+  align-content: flex-start; /* Align wrapped content at the top */
+  justify-content: flex-start; /* Align content to the left */
   padding: 1rem 2rem 0;
   margin-left: 1rem;
-  max-height: 100%; /* Prevent overflowing */
-  overflow: hidden; /* Hide overflowing content */
-  box-sizing: border-box; /* Include padding in the box model */
+  gap: 1rem; /* Add space between child elements */
+  box-sizing: border-box; /* Include padding in dimensions */
+}
+
+/* Ensure child elements wrap properly and fit within the container */
+
+/* Ensure text content in <p> and <li> tags wraps */
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows p,
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows li {
+  white-space: normal; /* Allow text to wrap to the next line */
+  word-wrap: break-word; /* Break words that are too long */
+  overflow-wrap: break-word; /* Support for modern browsers */
+  margin: 0; /* Remove default margin to prevent spacing issues */
+  width: 100%; /* Ensure the <p> doesn't exceed the container width */
+  box-sizing: border-box; /* Include padding in the width calculation */
+}
+
+/* Add some spacing for <li> items in the list */
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows ul {
+  padding-left: 1.5rem; /* Indent the list for better readability */
+  margin: 0; /* Reset default margins */
+}
+
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows ul li {
+  list-style: disc; /* Ensure a consistent bullet style */
 }
