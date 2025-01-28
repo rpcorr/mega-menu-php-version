@@ -2568,52 +2568,59 @@ function toggleTopLevelMenu(menuLink) {
     }
   }
 
+  determineMegaMenuPosition();
+
+  // Get the element with the ID "menuMoreLink"
+  const menuMoreLink = document.getElementById('menuMoreLink');
+}
+
+function determineMegaMenuPosition() {
+  // Get the main menu element and its children
   const ul = document.getElementById('menu-main-menu');
   const menuItems = Array.from(ul.children);
 
-  const menuItemsWidthArray = [];
+  // Collect the widths of all menu items into an array
+  const menuItemsWidthArray = menuItems.map((li) => li.offsetWidth);
 
-  //push all the menu items width into array
-  menuItems.forEach((li) => {
-    menuItemsWidthArray.push(li.offsetWidth);
-  });
+  /**
+   * Helper function to calculate the sum of menu item widths, skipping the next one
+   * @param {Array} widths - Array of menu item widths
+   * @param {number} currentIndex - Index of the current menu item
+   * @returns {number} - Calculated width
+   */
+  function sumSkippingNext(widths, currentIndex) {
+    return widths
+      .slice(currentIndex + 2)
+      .reduce((acc, width) => acc + width, 0);
+  }
 
+  // Process each menu item
   menuItems.forEach((li, index) => {
-    //menuItemsWidthArray.push(li.offsetWidth);
-
     if (li.classList.contains('visible')) {
-      // determine if li has a mega sub menu
-      const subMenuDiv = li.querySelector('.sub-menu-div'); // Find .sub-menu-div for each <li>
+      const subMenuDiv = li.querySelector('.sub-menu-div'); // Find the mega sub-menu element
 
       if (subMenuDiv) {
         console.log('Menu item has a mega menu');
-        console.log(`current menu index is: ${index}`);
+        console.log(`Current menu index: ${index}`);
 
-        // determine if menu item clicked is the second to last
-        console.log(menuItemsWidthArray.length, index);
-        console.log(`menuItemsWidthArray: ${menuItemsWidthArray}`);
+        // Determine the position of the mega menu
+        const isSecondToLast = menuItemsWidthArray.length - index === 2;
+        const offset = isSecondToLast
+          ? 100
+          : sumSkippingNext(menuItemsWidthArray, index);
 
-        let result = 0;
+        // Apply styles to position the mega menu
+        subMenuDiv.style.position = 'absolute';
+        subMenuDiv.style.right = isSecondToLast
+          ? `${offset}px`
+          : `-${offset}px`;
 
-        if (menuItemsWidthArray.length - index === 2) {
-          subMenuDiv.style.position = 'absolute'; // Ensure proper positioning
-          result = 100;
-          subMenuDiv.style.right = `${result}px`;
-        } else {
-          result = sumSkippingNext(menuItemsWidthArray, index);
-          subMenuDiv.style.position = 'absolute'; // Ensure proper positioning
-          subMenuDiv.style.right = `-${result}px`;
-        }
-
-        console.log(`Result is: ${result}`);
+        console.log(`Calculated offset: ${offset}`);
       } else {
         console.log('Menu item does not have a mega menu');
       }
     }
   });
-
-  // Get the element with the ID "menuMoreLink"
-  const menuMoreLink = document.getElementById('menuMoreLink');
 }
 
 function sumSkippingNext(arr, index) {
