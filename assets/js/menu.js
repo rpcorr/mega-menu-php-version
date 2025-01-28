@@ -2583,13 +2583,21 @@ function determineMegaMenuPosition() {
   const menuItemsWidthArray = menuItems.map((li) => li.offsetWidth);
 
   /**
-   * Helper function to calculate the sum of menu item widths, skipping the next one
+   * Helper function to calculate the sum of menu item widths, skipping the next one.
    * @param {Array} widths - Array of menu item widths
    * @param {number} currentIndex - Index of the current menu item
    * @returns {number} - Calculated width
    */
   function sumSkippingNext(widths, currentIndex) {
-    return widths
+    // Check if screen size is 1366px or less
+    const isSmallScreen = window.innerWidth <= 1366;
+
+    // Adjust widths if the screen size condition is met
+    const adjustedWidths = isSmallScreen
+      ? widths.map((width) => (width >= 27 ? width - 27 : width)) // Only subtract if width >= 27
+      : widths;
+
+    return adjustedWidths
       .slice(currentIndex + 2)
       .reduce((acc, width) => acc + width, 0);
   }
