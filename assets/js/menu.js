@@ -876,7 +876,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // </li>`;
 
       // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 111111 <i class="caret angle-down"></i></a>
             <div class="sub-menu-div mega-menu mega-menu-column-4">
               <div class="grid-container-multiple">
 
@@ -982,7 +982,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </li>`;
 
       // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2 <i class="caret angle-down"></i></a>
     <div class="sub-menu-div mega-menu mega-menu-column-4">
       <div class="grid-container-multiple">
 
@@ -1088,7 +1088,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </li>`;
 
       // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 3 <i class="caret angle-down"></i></a>
     <div class="sub-menu-div mega-menu mega-menu-column-4">
       <div class="grid-container-multiple">
 
@@ -1194,7 +1194,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </li>`;
 
       // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 4 <i class="caret angle-down"></i></a>
     <div class="sub-menu-div mega-menu mega-menu-column-4">
       <div class="grid-container-multiple">
 
@@ -2497,85 +2497,6 @@ function toggleTopLevelMenu(menuLink) {
         // check to see if anchor doesn't have a class
         if (anchorTag.classList.length === 0) anchorTag.classList.add('active');
       }
-
-      const ul = document.getElementById('menu-main-menu');
-
-      //const numberOfItems = ul.children.length - 1;
-
-      // store all the width of the top level menu items
-      const menuItemsWidth = [];
-
-      let selectedMenu;
-
-      Array.from(ul.children).forEach((li, i) => {
-        if (li.classList.contains('visible')) {
-          // print out li's index
-          selectedMenu = i + 1;
-          console.log(`Selected <li></li> index is ${i + 1}`);
-          //console.log(`Number of items: ${numberOfItems}`);
-        }
-
-        // push current menu's width to array
-        menuItemsWidth.push(li.offsetWidth);
-      });
-
-      console.log(menuItemsWidth, selectedMenu);
-
-      // Get total width base on item selected and select all the widths after
-      let totalWidth = 0;
-      for (let i = selectedMenu + 1; i < menuItemsWidth.length; i++) {
-        if (selectedMenu !== menuItemsWidth.length - 1)
-          totalWidth += menuItemsWidth[i];
-      }
-
-      if (totalWidth === menuItemsWidth[menuItemsWidth.length - 1]) {
-        totalWidth += menuItemsWidth[menuItemsWidth.length - 2];
-      }
-
-      console.log(totalWidth);
-
-      const subMenuDiv = document.querySelector(
-        'header nav ul.menu > li.menu-item-has-children > .sub-menu-div'
-      );
-
-      if (totalWidth !== 0 && selectedMenu !== 1) {
-        console.log('fafdsf');
-        // subMenuDiv.style.right = '0em';
-        //subMenuDiv.style.right = `-${totalWidth}px`;
-        document.querySelector(
-          'header nav ul.menu > li.menu-item-has-children > .sub-menu-div'
-        ).style.right = '0em !important';
-      } else {
-        // Set the right property to a new value (e.g., 10px)
-        subMenuDiv.style.right = `-${totalWidth}px`;
-      }
-
-      // Get the element
-      const megaMenu = document.querySelector('.mega-menu');
-
-      const megaMenuWidth = Math.round(megaMenu.getBoundingClientRect().width);
-
-      //console.log(megaMenuWidth);
-
-      // Get the right position of the mega-menu relative to the browser window
-      const megaMenuRect = megaMenu.getBoundingClientRect();
-      const distanceFromRight = window.innerWidth - megaMenuRect.right;
-
-      console.log(
-        'Distance from right side of browser window:',
-        distanceFromRight
-      );
-
-      if (megaMenuWidth != 0) {
-        console.log('here');
-        // Select the target element
-        const subMenuDiv = document.querySelector(
-          'header nav ul.menu > li.menu-item-has-children > .sub-menu-div'
-        );
-
-        // Set the right property to a new value (e.g., 10px)
-        //subMenuDiv.style.right = '0em';
-      }
     });
   } else {
     // BEFORE CLOSING MENU - CHECK IF LINK HAS A SUB MENU
@@ -2647,8 +2568,69 @@ function toggleTopLevelMenu(menuLink) {
     }
   }
 
+  const ul = document.getElementById('menu-main-menu');
+  const menuItems = Array.from(ul.children);
+
+  const menuItemsWidthArray = [];
+
+  //push all the menu items width into array
+  menuItems.forEach((li) => {
+    menuItemsWidthArray.push(li.offsetWidth);
+  });
+
+  menuItems.forEach((li, index) => {
+    //menuItemsWidthArray.push(li.offsetWidth);
+
+    if (li.classList.contains('visible')) {
+      // determine if li has a mega sub menu
+      const subMenuDiv = li.querySelector('.sub-menu-div'); // Find .sub-menu-div for each <li>
+
+      if (subMenuDiv) {
+        console.log('Menu item has a mega menu');
+        console.log(`current menu index is: ${index}`);
+
+        // determine if menu item clicked is the second to last
+        console.log(menuItemsWidthArray.length, index);
+        console.log(`menuItemsWidthArray: ${menuItemsWidthArray}`);
+
+        let result = 0;
+
+        if (menuItemsWidthArray.length - index === 2) {
+          subMenuDiv.style.position = 'absolute'; // Ensure proper positioning
+          result = 100;
+          subMenuDiv.style.right = `${result}px`;
+        } else {
+          result = sumSkippingNext(menuItemsWidthArray, index);
+          subMenuDiv.style.position = 'absolute'; // Ensure proper positioning
+          subMenuDiv.style.right = `-${result}px`;
+        }
+
+        console.log(`Result is: ${result}`);
+      } else {
+        console.log('Menu item does not have a mega menu');
+      }
+    }
+  });
+
   // Get the element with the ID "menuMoreLink"
   const menuMoreLink = document.getElementById('menuMoreLink');
+}
+
+function sumSkippingNext(arr, index) {
+  console.log(arr, index);
+  // Ensure the index is within the bounds of the array
+  if (index < 0 || index >= arr.length) {
+    throw new Error('Index is out of bounds');
+  }
+
+  let sum = 0;
+
+  // Start at the index + 2 to skip the next value
+  for (let i = index + 2; i < arr.length; i++) {
+    sum += arr[i];
+  }
+
+  return sum;
 }
 
 function watchForHover() {
