@@ -2605,9 +2605,15 @@ function determineMegaMenuPosition() {
 
         // Determine the position of the mega menu
         const isSecondToLast = menuItemsWidthArray.length - index === 2;
-        const offset = isSecondToLast
+        // Set offset based on conditions
+        let offset = isSecondToLast
           ? 100
           : sumSkippingNext(menuItemsWidthArray, index);
+
+        // Adjust offset for the second-to-last menu item if the viewport is <= 1366px
+        if (isSecondToLast && window.innerWidth <= 1366) {
+          offset = 135; // Override offset for smaller screens
+        }
 
         // Apply styles to position the mega menu
         subMenuDiv.style.position = 'absolute';
@@ -2621,23 +2627,6 @@ function determineMegaMenuPosition() {
       }
     }
   });
-}
-
-function sumSkippingNext(arr, index) {
-  console.log(arr, index);
-  // Ensure the index is within the bounds of the array
-  if (index < 0 || index >= arr.length) {
-    throw new Error('Index is out of bounds');
-  }
-
-  let sum = 0;
-
-  // Start at the index + 2 to skip the next value
-  for (let i = index + 2; i < arr.length; i++) {
-    sum += arr[i];
-  }
-
-  return sum;
 }
 
 function watchForHover() {
