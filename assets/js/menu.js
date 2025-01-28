@@ -2396,6 +2396,8 @@ function onResize() {
 
     formatNav();
 
+    determineMegaMenuPosition();
+
     winWidth = window.innerWidth;
   }
 }
@@ -2611,6 +2613,15 @@ function determineMegaMenuPosition() {
         console.log('Menu item has a mega menu');
         console.log(`Current menu index: ${index}`);
 
+        // Check if the subMenuDiv is inside #moreSubMenu
+        const isUnderMoreSubMenu =
+          subMenuDiv.closest('#moreSubMenu') === moreSubMenu;
+        if (isUnderMoreSubMenu) {
+          console.log('The mega menu is under #moreSubMenu');
+        } else {
+          console.log('The mega menu is not under #moreSubMenu');
+        }
+
         // Determine the position of the mega menu
         const isSecondToLast = menuItemsWidthArray.length - index === 2;
         // Set offset based on conditions
@@ -2624,10 +2635,12 @@ function determineMegaMenuPosition() {
         }
 
         // Apply styles to position the mega menu
-        subMenuDiv.style.position = 'absolute';
-        subMenuDiv.style.right = isSecondToLast
-          ? `${offset}px`
-          : `-${offset}px`;
+        if (!isUnderMoreSubMenu) {
+          subMenuDiv.style.position = 'absolute';
+          subMenuDiv.style.right = isSecondToLast
+            ? `${offset}px`
+            : `-${offset}px`;
+        }
 
         console.log(`Calculated offset: ${offset}`);
       } else {
