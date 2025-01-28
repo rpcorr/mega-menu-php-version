@@ -876,7 +876,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // </li>`;
 
       // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Se <i class="caret angle-down"></i></a>
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
             <div class="sub-menu-div mega-menu mega-menu-column-4">
               <div class="grid-container-multiple">
 
@@ -1089,533 +1089,745 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Services Menu
       menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
-        <div class="sub-menu-div mega-menu mega-menu-column-4">
-          <div class="grid-container-multiple">
-    
-            <!--- menu items --->
-            <div class="grid-item menu active">
-              <img src="assets/imgs/pie.gif" width="36" height="33" />
-              <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
-              <div class="circle">
-                <div class="caret"></div>
-              </div>
-            </div>
-    
-            <div class="grid-item menu">
-              <img src="assets/imgs/medal.gif" width="43" height="43" />
-              <p>
-                <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
-              </p>
-              <div class="circle">
-                <div class="caret"></div>
-              </div>
-            </div>
-    
-            <div class="grid-item menu">
-              <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
-              <p>
-                <a href="#"><strong>InformUs</strong><br />Survey data </a>
-              </p>
-              <div class="circle">
-                <div class="caret"></div>
-              </div>
-            </div>
-    
-            <div class="grid-item menu-content">
-              <img src="assets/imgs/reports.gif" width="42" height="55" />
-    
-              <p>
-                <strong>Reports</strong><br />{Brief description of the function of
-                reports}
-              </p>
-            </div>
-    
-            <div class="grid-item menu-content">
-              <img src="assets/imgs/reports.gif" width="42" height="55" />
-              <p>
-                <strong>Reports</strong><br />{Brief description of the function of
-                reports}
-              </p>
-            </div>
-            <div class="grid-item menu-content">
-              <img src="assets/imgs/reports.gif" width="42" height="55" />
-              <p>
-                <strong>Reports</strong><br />{Brief description of the function of
-                reports}
-              </p>
-            </div>
-            <div class="grid-item menu-content">
-              <img src="assets/imgs/data-input.gif" width="42" height="55" />
-    
-              <p>
-                <strong>Data Input</strong><br />
-                {Brief description of the function of data input}
-              </p>
-            </div>
-            <div class="grid-item menu-content">
-              <img src="assets/imgs/reports.gif" width="42" height="55" />
-    
-              <p>
-                <strong>Reports</strong><br />{Brief description of the function of
-                reports}
-              </p>
-            </div>
-            <div class="grid-item menu-content">
-              <img src="assets/imgs/reports.gif" width="42" height="55" />
-    
-              <p>
-                <strong>Reports</strong><br />{Brief description of the function of
-                reports}
-              </p>
-            </div>
-    
-            <div class="grid-item span-all-rows">
-              <div>
-                <img src="assets/imgs/light-bulb.gif" align="left" />
-                <p>
-                  <strong>Did you know that you can do this if you do that?</strong>
-                </p>
-              </div>
-    
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-    
-              <ul>
-                <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
-                <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
-              </ul>
-            </div>
-    
-          </div>
-    
-        </div>
-      </li>`;
+    <div class="sub-menu-div mega-menu mega-menu-column-4">
+      <div class="grid-container-multiple">
 
-      // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
-            <div class="sub-menu-div mega-menu mega-menu-column-4">
-              <div class="grid-container-multiple">
-        
-                <!--- menu items --->
-                <div class="grid-item menu active">
-                  <img src="assets/imgs/pie.gif" width="36" height="33" />
-                  <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
-                  <div class="circle">
-                    <div class="caret"></div>
-                  </div>
-                </div>
-        
-                <div class="grid-item menu">
-                  <img src="assets/imgs/medal.gif" width="43" height="43" />
-                  <p>
-                    <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
-                  </p>
-                  <div class="circle">
-                    <div class="caret"></div>
-                  </div>
-                </div>
-        
-                <div class="grid-item menu">
-                  <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
-                  <p>
-                    <a href="#"><strong>InformUs</strong><br />Survey data </a>
-                  </p>
-                  <div class="circle">
-                    <div class="caret"></div>
-                  </div>
-                </div>
-        
-                <div class="grid-item menu-content">
-                  <img src="assets/imgs/reports.gif" width="42" height="55" />
-        
-                  <p>
-                    <strong>Reports</strong><br />{Brief description of the function of
-                    reports}
-                  </p>
-                </div>
-        
-                <div class="grid-item menu-content">
-                  <img src="assets/imgs/reports.gif" width="42" height="55" />
-                  <p>
-                    <strong>Reports</strong><br />{Brief description of the function of
-                    reports}
-                  </p>
-                </div>
-                <div class="grid-item menu-content">
-                  <img src="assets/imgs/reports.gif" width="42" height="55" />
-                  <p>
-                    <strong>Reports</strong><br />{Brief description of the function of
-                    reports}
-                  </p>
-                </div>
-                <div class="grid-item menu-content">
-                  <img src="assets/imgs/data-input.gif" width="42" height="55" />
-        
-                  <p>
-                    <strong>Data Input</strong><br />
-                    {Brief description of the function of data input}
-                  </p>
-                </div>
-                <div class="grid-item menu-content">
-                  <img src="assets/imgs/reports.gif" width="42" height="55" />
-        
-                  <p>
-                    <strong>Reports</strong><br />{Brief description of the function of
-                    reports}
-                  </p>
-                </div>
-                <div class="grid-item menu-content">
-                  <img src="assets/imgs/reports.gif" width="42" height="55" />
-        
-                  <p>
-                    <strong>Reports</strong><br />{Brief description of the function of
-                    reports}
-                  </p>
-                </div>
-        
-                <div class="grid-item span-all-rows">
-                  <div>
-                    <img src="assets/imgs/light-bulb.gif" align="left" />
-                    <p>
-                      <strong>Did you know that you can do this if you do that?</strong>
-                    </p>
-                  </div>
-        
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </p>
-        
-                  <ul>
-                    <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
-                    <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
-                  </ul>
-                </div>
-        
-              </div>
-        
-            </div>
-          </li>`;
-
-      // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
-      <div class="sub-menu-div mega-menu mega-menu-column-4">
-        <div class="grid-container-multiple">
-  
-          <!--- menu items --->
-          <div class="grid-item menu active">
-            <img src="assets/imgs/pie.gif" width="36" height="33" />
-            <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
-            <div class="circle">
-              <div class="caret"></div>
-            </div>
+        <!--- menu items --->
+        <div class="grid-item menu active">
+          <img src="assets/imgs/pie.gif" width="36" height="33" />
+          <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
+          <div class="circle">
+            <div class="caret"></div>
           </div>
-  
-          <div class="grid-item menu">
-            <img src="assets/imgs/medal.gif" width="43" height="43" />
-            <p>
-              <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
-            </p>
-            <div class="circle">
-              <div class="caret"></div>
-            </div>
-          </div>
-  
-          <div class="grid-item menu">
-            <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
-            <p>
-              <a href="#"><strong>InformUs</strong><br />Survey data </a>
-            </p>
-            <div class="circle">
-              <div class="caret"></div>
-            </div>
-          </div>
-  
-          <div class="grid-item menu-content">
-            <img src="assets/imgs/reports.gif" width="42" height="55" />
-  
-            <p>
-              <strong>Reports</strong><br />{Brief description of the function of
-              reports}
-            </p>
-          </div>
-  
-          <div class="grid-item menu-content">
-            <img src="assets/imgs/reports.gif" width="42" height="55" />
-            <p>
-              <strong>Reports</strong><br />{Brief description of the function of
-              reports}
-            </p>
-          </div>
-          <div class="grid-item menu-content">
-            <img src="assets/imgs/reports.gif" width="42" height="55" />
-            <p>
-              <strong>Reports</strong><br />{Brief description of the function of
-              reports}
-            </p>
-          </div>
-          <div class="grid-item menu-content">
-            <img src="assets/imgs/data-input.gif" width="42" height="55" />
-  
-            <p>
-              <strong>Data Input</strong><br />
-              {Brief description of the function of data input}
-            </p>
-          </div>
-          <div class="grid-item menu-content">
-            <img src="assets/imgs/reports.gif" width="42" height="55" />
-  
-            <p>
-              <strong>Reports</strong><br />{Brief description of the function of
-              reports}
-            </p>
-          </div>
-          <div class="grid-item menu-content">
-            <img src="assets/imgs/reports.gif" width="42" height="55" />
-  
-            <p>
-              <strong>Reports</strong><br />{Brief description of the function of
-              reports}
-            </p>
-          </div>
-  
-          <div class="grid-item span-all-rows">
-            <div>
-              <img src="assets/imgs/light-bulb.gif" align="left" />
-              <p>
-                <strong>Did you know that you can do this if you do that?</strong>
-              </p>
-            </div>
-  
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-  
-            <ul>
-              <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
-              <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
-            </ul>
-          </div>
-  
         </div>
-  
+
+        <div class="grid-item menu">
+          <img src="assets/imgs/medal.gif" width="43" height="43" />
+          <p>
+            <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
+          </p>
+          <div class="circle">
+            <div class="caret"></div>
+          </div>
+        </div>
+
+        <div class="grid-item menu">
+          <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
+          <p>
+            <a href="#"><strong>InformUs</strong><br />Survey data </a>
+          </p>
+          <div class="circle">
+            <div class="caret"></div>
+          </div>
+        </div>
+
+        <div class="grid-item menu-content">
+          <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+          <p>
+            <strong>Reports</strong><br />{Brief description of the function of
+            reports}
+          </p>
+        </div>
+
+        <div class="grid-item menu-content">
+          <img src="assets/imgs/reports.gif" width="42" height="55" />
+          <p>
+            <strong>Reports</strong><br />{Brief description of the function of
+            reports}
+          </p>
+        </div>
+        <div class="grid-item menu-content">
+          <img src="assets/imgs/reports.gif" width="42" height="55" />
+          <p>
+            <strong>Reports</strong><br />{Brief description of the function of
+            reports}
+          </p>
+        </div>
+        <div class="grid-item menu-content">
+          <img src="assets/imgs/data-input.gif" width="42" height="55" />
+
+          <p>
+            <strong>Data Input</strong><br />
+            {Brief description of the function of data input}
+          </p>
+        </div>
+        <div class="grid-item menu-content">
+          <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+          <p>
+            <strong>Reports</strong><br />{Brief description of the function of
+            reports}
+          </p>
+        </div>
+        <div class="grid-item menu-content">
+          <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+          <p>
+            <strong>Reports</strong><br />{Brief description of the function of
+            reports}
+          </p>
+        </div>
+
+        <div class="grid-item span-all-rows">
+          <div>
+            <img src="assets/imgs/light-bulb.gif" align="left" />
+            <p>
+              <strong>Did you know that you can do this if you do that?</strong>
+            </p>
+          </div>
+
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+
+          <ul>
+            <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
+            <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
+          </ul>
+        </div>
+
       </div>
-    </li>`;
+
+    </div>
+  </li>`;
 
       // Services Menu
       menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
-          <div class="sub-menu-div mega-menu mega-menu-column-4">
-            <div class="grid-container-multiple">
-      
-              <!--- menu items --->
-              <div class="grid-item menu active">
-                <img src="assets/imgs/pie.gif" width="36" height="33" />
-                <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
-                <div class="circle">
-                  <div class="caret"></div>
-                </div>
-              </div>
-      
-              <div class="grid-item menu">
-                <img src="assets/imgs/medal.gif" width="43" height="43" />
-                <p>
-                  <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
-                </p>
-                <div class="circle">
-                  <div class="caret"></div>
-                </div>
-              </div>
-      
-              <div class="grid-item menu">
-                <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
-                <p>
-                  <a href="#"><strong>InformUs</strong><br />Survey data </a>
-                </p>
-                <div class="circle">
-                  <div class="caret"></div>
-                </div>
-              </div>
-      
-              <div class="grid-item menu-content">
-                <img src="assets/imgs/reports.gif" width="42" height="55" />
-      
-                <p>
-                  <strong>Reports</strong><br />{Brief description of the function of
-                  reports}
-                </p>
-              </div>
-      
-              <div class="grid-item menu-content">
-                <img src="assets/imgs/reports.gif" width="42" height="55" />
-                <p>
-                  <strong>Reports</strong><br />{Brief description of the function of
-                  reports}
-                </p>
-              </div>
-              <div class="grid-item menu-content">
-                <img src="assets/imgs/reports.gif" width="42" height="55" />
-                <p>
-                  <strong>Reports</strong><br />{Brief description of the function of
-                  reports}
-                </p>
-              </div>
-              <div class="grid-item menu-content">
-                <img src="assets/imgs/data-input.gif" width="42" height="55" />
-      
-                <p>
-                  <strong>Data Input</strong><br />
-                  {Brief description of the function of data input}
-                </p>
-              </div>
-              <div class="grid-item menu-content">
-                <img src="assets/imgs/reports.gif" width="42" height="55" />
-      
-                <p>
-                  <strong>Reports</strong><br />{Brief description of the function of
-                  reports}
-                </p>
-              </div>
-              <div class="grid-item menu-content">
-                <img src="assets/imgs/reports.gif" width="42" height="55" />
-      
-                <p>
-                  <strong>Reports</strong><br />{Brief description of the function of
-                  reports}
-                </p>
-              </div>
-      
-              <div class="grid-item span-all-rows">
-                <div>
-                  <img src="assets/imgs/light-bulb.gif" align="left" />
-                  <p>
-                    <strong>Did you know that you can do this if you do that?</strong>
-                  </p>
-                </div>
-      
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-      
-                <ul>
-                  <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
-                  <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
-                </ul>
-              </div>
-      
-            </div>
-      
-          </div>
-        </li>`;
+    <div class="sub-menu-div mega-menu mega-menu-column-4">
+      <div class="grid-container-multiple">
 
-      // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
-      <div class="sub-menu-div mega-menu mega-menu-column-4">
-        <div class="grid-container-multiple">
-  
-          <!--- menu items --->
-          <div class="grid-item menu active">
-            <img src="assets/imgs/pie.gif" width="36" height="33" />
-            <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
-            <div class="circle">
-              <div class="caret"></div>
-            </div>
+        <!--- menu items --->
+        <div class="grid-item menu active">
+          <img src="assets/imgs/pie.gif" width="36" height="33" />
+          <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
+          <div class="circle">
+            <div class="caret"></div>
           </div>
-  
-          <div class="grid-item menu">
-            <img src="assets/imgs/medal.gif" width="43" height="43" />
-            <p>
-              <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
-            </p>
-            <div class="circle">
-              <div class="caret"></div>
-            </div>
-          </div>
-  
-          <div class="grid-item menu">
-            <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
-            <p>
-              <a href="#"><strong>InformUs</strong><br />Survey data </a>
-            </p>
-            <div class="circle">
-              <div class="caret"></div>
-            </div>
-          </div>
-  
-          <div class="grid-item menu-content">
-            <img src="assets/imgs/reports.gif" width="42" height="55" />
-  
-            <p>
-              <strong>Reports</strong><br />{Brief description of the function of
-              reports}
-            </p>
-          </div>
-  
-          <div class="grid-item menu-content">
-            <img src="assets/imgs/reports.gif" width="42" height="55" />
-            <p>
-              <strong>Reports</strong><br />{Brief description of the function of
-              reports}
-            </p>
-          </div>
-          <div class="grid-item menu-content">
-            <img src="assets/imgs/reports.gif" width="42" height="55" />
-            <p>
-              <strong>Reports</strong><br />{Brief description of the function of
-              reports}
-            </p>
-          </div>
-          <div class="grid-item menu-content">
-            <img src="assets/imgs/data-input.gif" width="42" height="55" />
-  
-            <p>
-              <strong>Data Input</strong><br />
-              {Brief description of the function of data input}
-            </p>
-          </div>
-          <div class="grid-item menu-content">
-            <img src="assets/imgs/reports.gif" width="42" height="55" />
-  
-            <p>
-              <strong>Reports</strong><br />{Brief description of the function of
-              reports}
-            </p>
-          </div>
-          <div class="grid-item menu-content">
-            <img src="assets/imgs/reports.gif" width="42" height="55" />
-  
-            <p>
-              <strong>Reports</strong><br />{Brief description of the function of
-              reports}
-            </p>
-          </div>
-  
-          <div class="grid-item span-all-rows">
-            <div>
-              <img src="assets/imgs/light-bulb.gif" align="left" />
-              <p>
-                <strong>Did you know that you can do this if you do that?</strong>
-              </p>
-            </div>
-  
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-  
-            <ul>
-              <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
-              <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
-            </ul>
-          </div>
-  
         </div>
-  
+
+        <div class="grid-item menu">
+          <img src="assets/imgs/medal.gif" width="43" height="43" />
+          <p>
+            <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
+          </p>
+          <div class="circle">
+            <div class="caret"></div>
+          </div>
+        </div>
+
+        <div class="grid-item menu">
+          <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
+          <p>
+            <a href="#"><strong>InformUs</strong><br />Survey data </a>
+          </p>
+          <div class="circle">
+            <div class="caret"></div>
+          </div>
+        </div>
+
+        <div class="grid-item menu-content">
+          <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+          <p>
+            <strong>Reports</strong><br />{Brief description of the function of
+            reports}
+          </p>
+        </div>
+
+        <div class="grid-item menu-content">
+          <img src="assets/imgs/reports.gif" width="42" height="55" />
+          <p>
+            <strong>Reports</strong><br />{Brief description of the function of
+            reports}
+          </p>
+        </div>
+        <div class="grid-item menu-content">
+          <img src="assets/imgs/reports.gif" width="42" height="55" />
+          <p>
+            <strong>Reports</strong><br />{Brief description of the function of
+            reports}
+          </p>
+        </div>
+        <div class="grid-item menu-content">
+          <img src="assets/imgs/data-input.gif" width="42" height="55" />
+
+          <p>
+            <strong>Data Input</strong><br />
+            {Brief description of the function of data input}
+          </p>
+        </div>
+        <div class="grid-item menu-content">
+          <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+          <p>
+            <strong>Reports</strong><br />{Brief description of the function of
+            reports}
+          </p>
+        </div>
+        <div class="grid-item menu-content">
+          <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+          <p>
+            <strong>Reports</strong><br />{Brief description of the function of
+            reports}
+          </p>
+        </div>
+
+        <div class="grid-item span-all-rows">
+          <div>
+            <img src="assets/imgs/light-bulb.gif" align="left" />
+            <p>
+              <strong>Did you know that you can do this if you do that?</strong>
+            </p>
+          </div>
+
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+
+          <ul>
+            <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
+            <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
+          </ul>
+        </div>
+
       </div>
-    </li>`;
+
+    </div>
+  </li>`;
+
+      // Services Menu
+      // menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
+      //   <div class="sub-menu-div mega-menu mega-menu-column-4">
+      //     <div class="grid-container-multiple">
+
+      //       <!--- menu items --->
+      //       <div class="grid-item menu active">
+      //         <img src="assets/imgs/pie.gif" width="36" height="33" />
+      //         <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
+      //         <div class="circle">
+      //           <div class="caret"></div>
+      //         </div>
+      //       </div>
+
+      //       <div class="grid-item menu">
+      //         <img src="assets/imgs/medal.gif" width="43" height="43" />
+      //         <p>
+      //           <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
+      //         </p>
+      //         <div class="circle">
+      //           <div class="caret"></div>
+      //         </div>
+      //       </div>
+
+      //       <div class="grid-item menu">
+      //         <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
+      //         <p>
+      //           <a href="#"><strong>InformUs</strong><br />Survey data </a>
+      //         </p>
+      //         <div class="circle">
+      //           <div class="caret"></div>
+      //         </div>
+      //       </div>
+
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+      //         <p>
+      //           <strong>Reports</strong><br />{Brief description of the function of
+      //           reports}
+      //         </p>
+      //       </div>
+
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/reports.gif" width="42" height="55" />
+      //         <p>
+      //           <strong>Reports</strong><br />{Brief description of the function of
+      //           reports}
+      //         </p>
+      //       </div>
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/reports.gif" width="42" height="55" />
+      //         <p>
+      //           <strong>Reports</strong><br />{Brief description of the function of
+      //           reports}
+      //         </p>
+      //       </div>
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/data-input.gif" width="42" height="55" />
+
+      //         <p>
+      //           <strong>Data Input</strong><br />
+      //           {Brief description of the function of data input}
+      //         </p>
+      //       </div>
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+      //         <p>
+      //           <strong>Reports</strong><br />{Brief description of the function of
+      //           reports}
+      //         </p>
+      //       </div>
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+      //         <p>
+      //           <strong>Reports</strong><br />{Brief description of the function of
+      //           reports}
+      //         </p>
+      //       </div>
+
+      //       <div class="grid-item span-all-rows">
+      //         <div>
+      //           <img src="assets/imgs/light-bulb.gif" align="left" />
+      //           <p>
+      //             <strong>Did you know that you can do this if you do that?</strong>
+      //           </p>
+      //         </div>
+
+      //         <p>
+      //           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+      //           eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      //         </p>
+
+      //         <ul>
+      //           <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
+      //           <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
+      //         </ul>
+      //       </div>
+
+      //     </div>
+
+      //   </div>
+      // </li>`;
+
+      // Services Menu
+      // menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
+      //       <div class="sub-menu-div mega-menu mega-menu-column-4">
+      //         <div class="grid-container-multiple">
+
+      //           <!--- menu items --->
+      //           <div class="grid-item menu active">
+      //             <img src="assets/imgs/pie.gif" width="36" height="33" />
+      //             <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
+      //             <div class="circle">
+      //               <div class="caret"></div>
+      //             </div>
+      //           </div>
+
+      //           <div class="grid-item menu">
+      //             <img src="assets/imgs/medal.gif" width="43" height="43" />
+      //             <p>
+      //               <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
+      //             </p>
+      //             <div class="circle">
+      //               <div class="caret"></div>
+      //             </div>
+      //           </div>
+
+      //           <div class="grid-item menu">
+      //             <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
+      //             <p>
+      //               <a href="#"><strong>InformUs</strong><br />Survey data </a>
+      //             </p>
+      //             <div class="circle">
+      //               <div class="caret"></div>
+      //             </div>
+      //           </div>
+
+      //           <div class="grid-item menu-content">
+      //             <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+      //             <p>
+      //               <strong>Reports</strong><br />{Brief description of the function of
+      //               reports}
+      //             </p>
+      //           </div>
+
+      //           <div class="grid-item menu-content">
+      //             <img src="assets/imgs/reports.gif" width="42" height="55" />
+      //             <p>
+      //               <strong>Reports</strong><br />{Brief description of the function of
+      //               reports}
+      //             </p>
+      //           </div>
+      //           <div class="grid-item menu-content">
+      //             <img src="assets/imgs/reports.gif" width="42" height="55" />
+      //             <p>
+      //               <strong>Reports</strong><br />{Brief description of the function of
+      //               reports}
+      //             </p>
+      //           </div>
+      //           <div class="grid-item menu-content">
+      //             <img src="assets/imgs/data-input.gif" width="42" height="55" />
+
+      //             <p>
+      //               <strong>Data Input</strong><br />
+      //               {Brief description of the function of data input}
+      //             </p>
+      //           </div>
+      //           <div class="grid-item menu-content">
+      //             <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+      //             <p>
+      //               <strong>Reports</strong><br />{Brief description of the function of
+      //               reports}
+      //             </p>
+      //           </div>
+      //           <div class="grid-item menu-content">
+      //             <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+      //             <p>
+      //               <strong>Reports</strong><br />{Brief description of the function of
+      //               reports}
+      //             </p>
+      //           </div>
+
+      //           <div class="grid-item span-all-rows">
+      //             <div>
+      //               <img src="assets/imgs/light-bulb.gif" align="left" />
+      //               <p>
+      //                 <strong>Did you know that you can do this if you do that?</strong>
+      //               </p>
+      //             </div>
+
+      //             <p>
+      //               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+      //               eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      //             </p>
+
+      //             <ul>
+      //               <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
+      //               <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
+      //             </ul>
+      //           </div>
+
+      //         </div>
+
+      //       </div>
+      //     </li>`;
+
+      // Services Menu
+      //   menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
+      //   <div class="sub-menu-div mega-menu mega-menu-column-4">
+      //     <div class="grid-container-multiple">
+
+      //       <!--- menu items --->
+      //       <div class="grid-item menu active">
+      //         <img src="assets/imgs/pie.gif" width="36" height="33" />
+      //         <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
+      //         <div class="circle">
+      //           <div class="caret"></div>
+      //         </div>
+      //       </div>
+
+      //       <div class="grid-item menu">
+      //         <img src="assets/imgs/medal.gif" width="43" height="43" />
+      //         <p>
+      //           <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
+      //         </p>
+      //         <div class="circle">
+      //           <div class="caret"></div>
+      //         </div>
+      //       </div>
+
+      //       <div class="grid-item menu">
+      //         <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
+      //         <p>
+      //           <a href="#"><strong>InformUs</strong><br />Survey data </a>
+      //         </p>
+      //         <div class="circle">
+      //           <div class="caret"></div>
+      //         </div>
+      //       </div>
+
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+      //         <p>
+      //           <strong>Reports</strong><br />{Brief description of the function of
+      //           reports}
+      //         </p>
+      //       </div>
+
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/reports.gif" width="42" height="55" />
+      //         <p>
+      //           <strong>Reports</strong><br />{Brief description of the function of
+      //           reports}
+      //         </p>
+      //       </div>
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/reports.gif" width="42" height="55" />
+      //         <p>
+      //           <strong>Reports</strong><br />{Brief description of the function of
+      //           reports}
+      //         </p>
+      //       </div>
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/data-input.gif" width="42" height="55" />
+
+      //         <p>
+      //           <strong>Data Input</strong><br />
+      //           {Brief description of the function of data input}
+      //         </p>
+      //       </div>
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+      //         <p>
+      //           <strong>Reports</strong><br />{Brief description of the function of
+      //           reports}
+      //         </p>
+      //       </div>
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+      //         <p>
+      //           <strong>Reports</strong><br />{Brief description of the function of
+      //           reports}
+      //         </p>
+      //       </div>
+
+      //       <div class="grid-item span-all-rows">
+      //         <div>
+      //           <img src="assets/imgs/light-bulb.gif" align="left" />
+      //           <p>
+      //             <strong>Did you know that you can do this if you do that?</strong>
+      //           </p>
+      //         </div>
+
+      //         <p>
+      //           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+      //           eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      //         </p>
+
+      //         <ul>
+      //           <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
+      //           <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
+      //         </ul>
+      //       </div>
+
+      //     </div>
+
+      //   </div>
+      // </li>`;
+
+      // Services Menu
+      // menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
+      //     <div class="sub-menu-div mega-menu mega-menu-column-4">
+      //       <div class="grid-container-multiple">
+
+      //         <!--- menu items --->
+      //         <div class="grid-item menu active">
+      //           <img src="assets/imgs/pie.gif" width="36" height="33" />
+      //           <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
+      //           <div class="circle">
+      //             <div class="caret"></div>
+      //           </div>
+      //         </div>
+
+      //         <div class="grid-item menu">
+      //           <img src="assets/imgs/medal.gif" width="43" height="43" />
+      //           <p>
+      //             <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
+      //           </p>
+      //           <div class="circle">
+      //             <div class="caret"></div>
+      //           </div>
+      //         </div>
+
+      //         <div class="grid-item menu">
+      //           <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
+      //           <p>
+      //             <a href="#"><strong>InformUs</strong><br />Survey data </a>
+      //           </p>
+      //           <div class="circle">
+      //             <div class="caret"></div>
+      //           </div>
+      //         </div>
+
+      //         <div class="grid-item menu-content">
+      //           <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+      //           <p>
+      //             <strong>Reports</strong><br />{Brief description of the function of
+      //             reports}
+      //           </p>
+      //         </div>
+
+      //         <div class="grid-item menu-content">
+      //           <img src="assets/imgs/reports.gif" width="42" height="55" />
+      //           <p>
+      //             <strong>Reports</strong><br />{Brief description of the function of
+      //             reports}
+      //           </p>
+      //         </div>
+      //         <div class="grid-item menu-content">
+      //           <img src="assets/imgs/reports.gif" width="42" height="55" />
+      //           <p>
+      //             <strong>Reports</strong><br />{Brief description of the function of
+      //             reports}
+      //           </p>
+      //         </div>
+      //         <div class="grid-item menu-content">
+      //           <img src="assets/imgs/data-input.gif" width="42" height="55" />
+
+      //           <p>
+      //             <strong>Data Input</strong><br />
+      //             {Brief description of the function of data input}
+      //           </p>
+      //         </div>
+      //         <div class="grid-item menu-content">
+      //           <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+      //           <p>
+      //             <strong>Reports</strong><br />{Brief description of the function of
+      //             reports}
+      //           </p>
+      //         </div>
+      //         <div class="grid-item menu-content">
+      //           <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+      //           <p>
+      //             <strong>Reports</strong><br />{Brief description of the function of
+      //             reports}
+      //           </p>
+      //         </div>
+
+      //         <div class="grid-item span-all-rows">
+      //           <div>
+      //             <img src="assets/imgs/light-bulb.gif" align="left" />
+      //             <p>
+      //               <strong>Did you know that you can do this if you do that?</strong>
+      //             </p>
+      //           </div>
+
+      //           <p>
+      //             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+      //             eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      //           </p>
+
+      //           <ul>
+      //             <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
+      //             <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
+      //           </ul>
+      //         </div>
+
+      //       </div>
+
+      //     </div>
+      //   </li>`;
+
+      // Services Menu
+      //   menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
+      //   <div class="sub-menu-div mega-menu mega-menu-column-4">
+      //     <div class="grid-container-multiple">
+
+      //       <!--- menu items --->
+      //       <div class="grid-item menu active">
+      //         <img src="assets/imgs/pie.gif" width="36" height="33" />
+      //         <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
+      //         <div class="circle">
+      //           <div class="caret"></div>
+      //         </div>
+      //       </div>
+
+      //       <div class="grid-item menu">
+      //         <img src="assets/imgs/medal.gif" width="43" height="43" />
+      //         <p>
+      //           <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
+      //         </p>
+      //         <div class="circle">
+      //           <div class="caret"></div>
+      //         </div>
+      //       </div>
+
+      //       <div class="grid-item menu">
+      //         <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
+      //         <p>
+      //           <a href="#"><strong>InformUs</strong><br />Survey data </a>
+      //         </p>
+      //         <div class="circle">
+      //           <div class="caret"></div>
+      //         </div>
+      //       </div>
+
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+      //         <p>
+      //           <strong>Reports</strong><br />{Brief description of the function of
+      //           reports}
+      //         </p>
+      //       </div>
+
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/reports.gif" width="42" height="55" />
+      //         <p>
+      //           <strong>Reports</strong><br />{Brief description of the function of
+      //           reports}
+      //         </p>
+      //       </div>
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/reports.gif" width="42" height="55" />
+      //         <p>
+      //           <strong>Reports</strong><br />{Brief description of the function of
+      //           reports}
+      //         </p>
+      //       </div>
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/data-input.gif" width="42" height="55" />
+
+      //         <p>
+      //           <strong>Data Input</strong><br />
+      //           {Brief description of the function of data input}
+      //         </p>
+      //       </div>
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+      //         <p>
+      //           <strong>Reports</strong><br />{Brief description of the function of
+      //           reports}
+      //         </p>
+      //       </div>
+      //       <div class="grid-item menu-content">
+      //         <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+      //         <p>
+      //           <strong>Reports</strong><br />{Brief description of the function of
+      //           reports}
+      //         </p>
+      //       </div>
+
+      //       <div class="grid-item span-all-rows">
+      //         <div>
+      //           <img src="assets/imgs/light-bulb.gif" align="left" />
+      //           <p>
+      //             <strong>Did you know that you can do this if you do that?</strong>
+      //           </p>
+      //         </div>
+
+      //         <p>
+      //           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+      //           eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      //         </p>
+
+      //         <ul>
+      //           <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
+      //           <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
+      //         </ul>
+      //       </div>
+
+      //     </div>
+
+      //   </div>
+      // </li>`;
 
       // SHOP
       // menuHTML += `
@@ -1925,16 +2137,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Select moreSubMenu
   const container = document.getElementById('moreSubMenu');
-  //const container = document.querySelectorAll('moreSubMenu');
-
-  const menuMore = document.getElementById('menu-more');
-  //const menuMore = document.querySelectorAll('menu-more');
-
-  const anchors = document.querySelectorAll('#moreSubMenu a');
-
-  console.log(container);
-  console.log(menuMore);
-  console.log(anchors);
 
   if (!container === null) {
     console.log('here');
@@ -2045,45 +2247,23 @@ function formatNav() {
     document.querySelector('.menu-main-menu-container').getBoundingClientRect()
       .width
   );
+
   const navPadding = 5; // for spacing around items
   //const numItems = navItems.length - 1;
   const numItems = 5;
 
-  console.log(navItems);
-  console.log(navItems.length);
+  // Get the width of the mega-menu
+  //const megaMenu = document.querySelector('.mega-menu');
+  //const megaMenuWidth = megaMenu.offsetWidth;
+
+  console.log(`container width ${containerWidth}`);
 
   // for each menu item
-  navItems.forEach(function (item, index) {
-    // Add a click event listener to the <li>
-    item.addEventListener('click', function (event) {
-      // Prevent default action if necessary (e.g., for links)
-      event.preventDefault();
-
-      // Log or handle the clicked <li>
-      console.log('Clicked item:', item);
-      console.log('Item index:', index);
-
-      // Example: Check if this item has a mega menu
-      const hasMegaMenu = item.querySelector(
-        'div.sub-menu-div.mega-menu.mega-menu-column-4'
-      );
-      if (hasMegaMenu) {
-        console.log('This item has a mega menu:', item);
-      }
-
-      // You can add custom logic here based on the clicked <li>
-    });
-
+  navItems.forEach(function (item) {
     // Check if the navItem contains the specific div
     const hasMegaMenu = item.querySelector(
       'div.sub-menu-div.mega-menu.mega-menu-column-4'
     );
-
-    // If it has the mega menu, handle accordingly
-    if (hasMegaMenu) {
-      console.log('Found mega menu for nav item:', item);
-      // Add specific logic for mega menu items if needed
-    }
 
     // get width of menu with that item
     tempWidth = totalWidth + navItemWidth[count] + navPadding;
@@ -2163,13 +2343,11 @@ function formatNav() {
 
   // Loop through all navItems
   navItems.forEach((li, index) => {
-    console.log(li.offsetWidth, containerWidth);
+    //console.log(li.offsetWidth, containerWidth);
     // // Get the position and width of the <li> element
     // const rect = li.getBoundingClientRect();
-
     // // Calculate how far the right edge of the navItem is from the right side of the window
     // const distanceFromRight = window.innerWidth - rect.right;
-
     // // Log the result
     // console.log(
     //   `NavItem at index ${index} is ${distanceFromRight}px from the right edge of the browser window.`
@@ -2318,6 +2496,85 @@ function toggleTopLevelMenu(menuLink) {
       ) {
         // check to see if anchor doesn't have a class
         if (anchorTag.classList.length === 0) anchorTag.classList.add('active');
+      }
+
+      const ul = document.getElementById('menu-main-menu');
+
+      //const numberOfItems = ul.children.length - 1;
+
+      // store all the width of the top level menu items
+      const menuItemsWidth = [];
+
+      let selectedMenu;
+
+      Array.from(ul.children).forEach((li, i) => {
+        if (li.classList.contains('visible')) {
+          // print out li's index
+          selectedMenu = i + 1;
+          console.log(`Selected <li></li> index is ${i + 1}`);
+          //console.log(`Number of items: ${numberOfItems}`);
+        }
+
+        // push current menu's width to array
+        menuItemsWidth.push(li.offsetWidth);
+      });
+
+      console.log(menuItemsWidth, selectedMenu);
+
+      // Get total width base on item selected and select all the widths after
+      let totalWidth = 0;
+      for (let i = selectedMenu + 1; i < menuItemsWidth.length; i++) {
+        if (selectedMenu !== menuItemsWidth.length - 1)
+          totalWidth += menuItemsWidth[i];
+      }
+
+      if (totalWidth === menuItemsWidth[menuItemsWidth.length - 1]) {
+        totalWidth += menuItemsWidth[menuItemsWidth.length - 2];
+      }
+
+      console.log(totalWidth);
+
+      const subMenuDiv = document.querySelector(
+        'header nav ul.menu > li.menu-item-has-children > .sub-menu-div'
+      );
+
+      if (totalWidth !== 0 && selectedMenu !== 1) {
+        console.log('fafdsf');
+        // subMenuDiv.style.right = '0em';
+        //subMenuDiv.style.right = `-${totalWidth}px`;
+        document.querySelector(
+          'header nav ul.menu > li.menu-item-has-children > .sub-menu-div'
+        ).style.right = '0em !important';
+      } else {
+        // Set the right property to a new value (e.g., 10px)
+        subMenuDiv.style.right = `-${totalWidth}px`;
+      }
+
+      // Get the element
+      const megaMenu = document.querySelector('.mega-menu');
+
+      const megaMenuWidth = Math.round(megaMenu.getBoundingClientRect().width);
+
+      //console.log(megaMenuWidth);
+
+      // Get the right position of the mega-menu relative to the browser window
+      const megaMenuRect = megaMenu.getBoundingClientRect();
+      const distanceFromRight = window.innerWidth - megaMenuRect.right;
+
+      console.log(
+        'Distance from right side of browser window:',
+        distanceFromRight
+      );
+
+      if (megaMenuWidth != 0) {
+        console.log('here');
+        // Select the target element
+        const subMenuDiv = document.querySelector(
+          'header nav ul.menu > li.menu-item-has-children > .sub-menu-div'
+        );
+
+        // Set the right property to a new value (e.g., 10px)
+        //subMenuDiv.style.right = '0em';
       }
     });
   } else {
