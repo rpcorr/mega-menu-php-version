@@ -981,6 +981,8 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </li>`;
 
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-label="Click Enter to open Pages  sub menu" class="active">Pages <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="/admin/helpAccounts.php">Page 1</a></li><li><a href="/admin/help.php">Page 2</a></li></ul></li>`;
+
       // Services Menu
       menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2 <i class="caret angle-down"></i></a>
     <div class="sub-menu-div mega-menu mega-menu-column-4">
@@ -1298,6 +1300,112 @@ document.addEventListener('DOMContentLoaded', () => {
 
     </div>
   </li>`;
+
+      // Services Menu
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 5 <i class="caret angle-down"></i></a>
+  <div class="sub-menu-div mega-menu mega-menu-column-4">
+    <div class="grid-container-multiple">
+
+      <!--- menu items --->
+      <div class="grid-item menu active">
+        <img src="assets/imgs/pie.gif" width="36" height="33" />
+        <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
+        <div class="circle">
+          <div class="caret"></div>
+        </div>
+      </div>
+
+      <div class="grid-item menu">
+        <img src="assets/imgs/medal.gif" width="43" height="43" />
+        <p>
+          <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
+        </p>
+        <div class="circle">
+          <div class="caret"></div>
+        </div>
+      </div>
+
+      <div class="grid-item menu">
+        <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
+        <p>
+          <a href="#"><strong>InformUs</strong><br />Survey data </a>
+        </p>
+        <div class="circle">
+          <div class="caret"></div>
+        </div>
+      </div>
+
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/data-input.gif" width="42" height="55" />
+
+        <p>
+          <strong>Data Input</strong><br />
+          {Brief description of the function of data input}
+        </p>
+      </div>
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+
+      <div class="grid-item span-all-rows">
+        <div>
+          <img src="assets/imgs/light-bulb.gif" align="left" />
+          <p>
+            <strong>Did you know that you can do this if you do that?</strong>
+          </p>
+        </div>
+
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+
+        <ul>
+          <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
+          <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+</li>`;
 
       // Services Menu
       // menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
@@ -2255,14 +2363,7 @@ function formatNav() {
   );
 
   const navPadding = 5; // for spacing around items
-  //const numItems = navItems.length - 1;
   const numItems = 5;
-
-  // Get the width of the mega-menu
-  //const megaMenu = document.querySelector('.mega-menu');
-  //const megaMenuWidth = megaMenu.offsetWidth;
-
-  console.log(`container width ${containerWidth}`);
 
   // for each menu item
   navItems.forEach(function (item) {
@@ -2345,19 +2446,6 @@ function formatNav() {
 
     // update count
     count += 1;
-  });
-
-  // Loop through all navItems
-  navItems.forEach((li, index) => {
-    //console.log(li.offsetWidth, containerWidth);
-    // // Get the position and width of the <li> element
-    // const rect = li.getBoundingClientRect();
-    // // Calculate how far the right edge of the navItem is from the right side of the window
-    // const distanceFromRight = window.innerWidth - rect.right;
-    // // Log the result
-    // console.log(
-    //   `NavItem at index ${index} is ${distanceFromRight}px from the right edge of the browser window.`
-    // );
   });
 
   // Select the container by its ID
@@ -2585,75 +2673,37 @@ function toggleTopLevelMenu(menuLink) {
 function determineMegaMenuPosition() {
   // Get the main menu element and its children
   const ul = document.getElementById('menu-main-menu');
-  const menuItems = Array.from(ul.children);
+  const menuMore = document.getElementById('menu-more');
+  const menuItems = document.querySelectorAll('#menu-main-menu > li');
+  const screenWidth = Math.round(
+    document.querySelector('#header').getBoundingClientRect().width
+  );
 
-  // Collect the widths of all menu items into an array
-  const menuItemsWidthArray = menuItems.map((li) => li.offsetWidth);
+  let count = 0; // keep track of number of menu that comes before the "More" menu
 
-  /**
-   * Helper function to calculate the sum of menu item widths, skipping the next one.
-   * @param {Array} widths - Array of menu item widths
-   * @param {number} currentIndex - Index of the current menu item
-   * @returns {number} - Calculated width
-   */
-  function sumSkippingNext(widths, currentIndex) {
-    // Check if screen size is 1366px or less
-    const isSmallScreen = window.innerWidth <= 1366;
+  // Process each menu item that comes before the "More" menu
+  for (const li of menuItems) {
+    count++;
+    if (li === menuMore) break; // Stop when reaching #menu-more
 
-    // Adjust widths if the screen size condition is met
-    const adjustedWidths = isSmallScreen
-      ? widths.map((width) => (width >= 27 ? width - 27 : width)) // Only subtract if width >= 27
-      : widths;
-
-    return adjustedWidths
-      .slice(currentIndex + 2)
-      .reduce((acc, width) => acc + width, 0);
-  }
-
-  // Process each menu item
-  menuItems.forEach((li, index) => {
     if (li.classList.contains('visible')) {
       const subMenuDiv = li.querySelector('.sub-menu-div'); // Find the mega sub-menu element
 
       if (subMenuDiv) {
-        console.log('Menu item has a mega menu');
-        console.log(`Current menu index: ${index}`);
+        if (!subMenuDiv.dataset.positioned) {
+          const rect = subMenuDiv.getBoundingClientRect();
+          const distanceFromRight = screenWidth - rect.right;
 
-        // Check if the subMenuDiv is inside #moreSubMenu
-        const isUnderMoreSubMenu =
-          subMenuDiv.closest('#moreSubMenu') === moreSubMenu;
-        if (isUnderMoreSubMenu) {
-          console.log('The mega menu is under #moreSubMenu');
-        } else {
-          console.log('The mega menu is not under #moreSubMenu');
+          // Move the element to align it to the right
+          subMenuDiv.style.position = 'absolute'; // Ensure it's positioned absolutely
+          subMenuDiv.style.right = -distanceFromRight + 110 + 'px'; // Set right 110 seems to be that magic number
+
+          // To prevent rect.right being reapplied each time the submenu is opened
+          subMenuDiv.dataset.positioned = 'true'; // Mark as positioned
         }
-
-        // Determine the position of the mega menu
-        const isSecondToLast = menuItemsWidthArray.length - index === 2;
-        // Set offset based on conditions
-        let offset = isSecondToLast
-          ? 100
-          : sumSkippingNext(menuItemsWidthArray, index);
-
-        // Adjust offset for the second-to-last menu item if the viewport is <= 1366px
-        if (isSecondToLast && window.innerWidth <= 1366) {
-          offset = 135; // Override offset for smaller screens
-        }
-
-        // Apply styles to position the mega menu
-        if (!isUnderMoreSubMenu) {
-          subMenuDiv.style.position = 'absolute';
-          subMenuDiv.style.right = isSecondToLast
-            ? `${offset}px`
-            : `-${offset}px`;
-        }
-
-        console.log(`Calculated offset: ${offset}`);
-      } else {
-        console.log('Menu item does not have a mega menu');
       }
     }
-  });
+  }
 }
 
 function watchForHover() {
