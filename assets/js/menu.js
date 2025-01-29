@@ -1984,7 +1984,7 @@ document.addEventListener('DOMContentLoaded', () => {
               element.classList.remove('visible');
             });
 
-          // display the More menu
+          // display the More menu content
           this.closest('.menu-item-has-children').classList.toggle('visible');
 
           // remove active class from anchor elements
@@ -2125,6 +2125,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // format navigation on page load
       formatNav();
+
+      // set More Menu tabindex to -1 if there are no children
+      const menuMore = document.getElementById('menu-more');
+      if (menuMore.children[1].children.length === 0) {
+        document.getElementById('menuMoreLink').setAttribute('tabindex', '-1');
+      }
 
       // watch for difference between touchscreen and mouse
       watchForHover();
