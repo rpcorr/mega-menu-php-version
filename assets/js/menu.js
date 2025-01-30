@@ -2087,9 +2087,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
           // close all other open menus
           document
-            .querySelectorAll('.menu-item-has-children:not(#menu-more)')
-            .forEach(function (element) {
-              element.classList.remove('visible');
+            .querySelectorAll('li.menu-item-has-children > a')
+            .forEach((a) => {
+              a.setAttribute('aria-expanded', 'false');
+              a.classList.remove('active');
             });
 
           // display the More menu content
