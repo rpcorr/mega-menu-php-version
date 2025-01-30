@@ -50,6 +50,13 @@ a[aria-expanded='true'] + ul.sub-menu {
   display: block; /* Example: Make the submenu visible */
 }
 
+/* position sub-menu under moreSubMenu to relative in order to display */
+#moreSubMenu a[aria-expanded='true'] + ul.sub-menu {
+  position: relative;
+  display: block;
+  opacity: 1;
+}
+
 a[aria-expanded='false'] + ul.sub-menu {
   opacity: 0;
   display: none; /* Example: Hide the submenu */
@@ -71,8 +78,8 @@ ul#menu-main-menu li > ul > li > ul {
   display: none;
 }
 
-/* displays sub menus when parent li has the visible class */
-ul#menu-main-menu li > ul > li.visible > ul {
+/* displays sub menus when anchor has the active class */
+ul#menu-main-menu li > ul > li > a.active > ul {
   opacity: 1;
   display: block;
 }
@@ -90,7 +97,7 @@ body.has-hover
   li.menu-item-has-children:hover
   > ul
   ul.sub-menu,
-ul#menu-main-menu li.menu-item-has-children.visible > ul ul.sub-menu {
+ul#menu-main-menu li.menu-item-has-children > a.active > ul ul.sub-menu {
   position: relative;
 }
 
@@ -129,7 +136,7 @@ ul#menuu-main-menu li.menu-item-has-children::after {
   -o-transform: rotate(45deg) translate(-25%, -25%);
 }
 
-ul#menu-main-menu li.menu-item-has-children.visible::after {
+ul#menu-main-menu li.menu-item-has-children > a.class::after {
   top: calc(50% - 0.4rem);
   -webkit-transform: rotate(225deg) translate(-25%, -25%);
   -ms-transform: rotate(225deg) translate(-25%, -25%);
@@ -262,7 +269,7 @@ nav {
 }
 
 body.has-hover ul#menu-main-menu .hover:hover > ul ul.sub-menu,
-ul#menu-main-menu li.menu-item-has-children.visible > ul ul.sub-menu {
+ul#menu-main-menu li.menu-item-has-children > a.active > ul ul.sub-menu {
   position: relative;
 }
 
@@ -292,7 +299,7 @@ ul#menuu-main-menu li.menu-item-has-children::after {
   -o-transform: rotate(45deg) translate(-25%, -25%);
 }
 
-ul#menu-main-menu li.menu-item-has-children.visible::after {
+ul#menu-main-menu li.menu-item-has-children > a.active::after {
   top: calc(50% - 0.4rem);
   -webkit-transform: rotate(225deg) translate(-25%, -25%);
   -ms-transform: rotate(225deg) translate(-25%, -25%);
@@ -307,7 +314,8 @@ ul#menu-main-menu li.menu-item-has-children li.menu-item-has-children::after {
 
 ul#menu-main-menu
   li.menu-item-has-children
-  li.menu-item-has-children.visible::after {
+  li.menu-item-has-children
+  > a.active::after {
   top: 1.25rem;
 }
 
@@ -368,7 +376,7 @@ ul#menu-main-menu
 }
 
 ul#menu-main-menu li.menu-item-has-children > a::after,
-ul#menu-main-menu li.menu-item-has-children.visible > a::after {
+ul#menu-main-menu li.menu-item-has-children > a.active > a::after {
   display: none;
 }
 

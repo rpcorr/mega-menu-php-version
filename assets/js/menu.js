@@ -2292,64 +2292,28 @@ window.addEventListener('resize', function () {
 // input: current menu item or a string
 // returns: void
 function closeAllMenus(menuItem) {
-  // run if the esc key was pressed
-  if (menuItem === 'esc') {
-    //1.  close all submenus
-    document.querySelectorAll('li').forEach(function (element) {
-      element.classList.remove('visible');
-    });
+  const links = document.querySelectorAll('.menu-item-has-children a');
 
-    //2. reset arrows to down position
-    resetArrows();
+  let closestLink = null;
+  let minDistance = Infinity;
 
-    //3.  reset aria-labels to Click enter to open
-    document
-      .querySelectorAll('.menu-item-has-children > a')
-      .forEach(function (element) {
-        element.setAttribute(
-          'aria-label',
-          `${element.textContent} has a sub menu. Click enter to open`
-        );
+  links.forEach((link) => {
+    const rect = link.getBoundingClientRect();
+    const distance = Math.abs(rect.top);
 
-        //4. Reset aria-expanded attribute to false
-        element.setAttribute('aria-expanded', 'false');
+    if (distance < minDistance) {
+      minDistance = distance;
+      closestLink = link;
+    }
+  });
 
-        //5. Remove active class
-        element.classList.remove('active');
-        if (element && element.className.trim() === '')
-          element.removeAttribute('class');
-      });
-
-    // exit function early to avoid crash with menuLink.attr('id')
-    return;
-  }
-
-  // handle case if link is NOT the More link
-  if (menuItem.id === undefined) {
-    //1. Close all submenus
-    document.querySelectorAll('li').forEach(function (element) {
-      element.classList.remove('visible');
-    });
-  }
-
-  //2. Reset arrows to down position
-  resetArrows();
-
-  //3. Reset aria-labels to Click enter to open
-  document
-    .querySelectorAll('.menu-item-has-children > a')
-    .forEach(function (element) {
-      element.setAttribute(
-        'aria-label',
-        `${element.textContent} has a sub menu. Click enter to open`
-      );
-
-      // 4. Reset aria-expanded attribute to false
-      element.setAttribute('aria-expanded', 'false');
-    });
-
-  // remove class visible
-  menuItem.closest('li').classList.remove('visible');
+  links.forEach((link) => {
+    if (link === closestLink) {
+      link.setAttribute('aria-expanded', 'true');
+    } else {
+      link.setAttribute('aria-expanded', 'false');
+    }
+  });
 }
 
 function formatNav() {
@@ -2477,14 +2441,8 @@ function onResize() {
       }
     });
 
-    moreWidth = document.getElementById('menu-more').offsetWidth;
-
     // hide all submenus
-    document
-      .querySelectorAll('.menu-item-has-children')
-      .forEach(function (element) {
-        element.classList.remove('visible');
-      });
+    closeAllMenus(null);
 
     // reset arrows to down position
     resetArrows();
@@ -2498,182 +2456,63 @@ function onResize() {
 }
 
 function toggleTopLevelMenu(menuLink) {
-  // CLOSE ALL MENUS EXCEPT FOR THE CURRENT IF OPEN
-  if (
-    !menuLink.closest('.menu-item-has-children').classList.contains('visible')
-  ) {
-    // 1-a. remove visible class from all menus items except the current
-    document
-      .querySelectorAll('li.menu-item-has-children')
-      .forEach(function (element) {
-        if (element !== menuLink.closest('li')) {
-          element.classList.remove('visible');
-        }
-      });
+  // Find all menu items with children
+  const allMenuItems = document.querySelectorAll('.menu-item-has-children > a');
 
-    // 1-b. reset arrows
-    resetArrows();
+  // Toggle the current menu
+  const isExpanded = menuLink.getAttribute('aria-expanded') === 'true';
 
-    // 1-c. update aria label to close menu
-    let focusedLink = document.querySelector(
-      'li.menu-item-has-children > a:focus'
-    );
-
-    document
-      .querySelectorAll('li.menu-item-has-children > a')
-      .forEach(function (element) {
-        if (element !== focusedLink) {
-          element.setAttribute(
-            'aria-label',
-            `${element.textContent} has a sub menu. Click enter to open`
-          );
-        }
-      });
-
-    // 1-d. reset sub-menu aria-expanded to false
-    document
-      .querySelectorAll('li.menu-item-has-children > a')
-      .forEach(function (element) {
-        if (element !== focusedLink) {
-          element.setAttribute('aria-expanded', 'false');
-        }
-      });
-
-    // 1-e. remove active class
-    document
-      .querySelectorAll('li.menu-item-has-children > a')
-      .forEach(function (element) {
-        if (element !== focusedLink) {
-          // then remove class attrib if empty
-          element.classList.remove('active');
-          if (element && element.className.trim() === '')
-            element.removeAttribute('class');
-        }
-      });
-
-    //-------------------------------------------------------------
-
-    // 2. OPEN CURRENT MENU
-    let parents = [];
-    let element = menuLink;
-
-    while (element) {
-      if (element.matches('.menu-item-has-children')) {
-        parents.push(element);
-      }
-      element = element.parentElement;
-    }
-
-    parents.forEach(function (parent) {
-      // 2-a. set visible class to menu's parent
-      parent.classList.add('visible');
-
-      console.log('there you are');
-
-      // 2-b. set the arrow to upwards position
-      const iconsInMenuItem = parent.querySelector('i');
-      iconsInMenuItem.classList.remove('angle-down');
-      iconsInMenuItem.classList.add('angle-up');
-
-      // 2-c. update aria label to close sub menu
-      const anchorTag = parent.querySelector('a');
-      anchorTag.setAttribute(
-        'aria-label',
-        `Click Enter to close ${anchorTag.textContent} sub menu`
-      );
-
-      // 2-d set aria-expanded to true
-      anchorTag.setAttribute('aria-expanded', 'true');
-
-      // 2-e set class to active
-      if (menuLink.parentElement.parentElement.hasAttribute('id')) {
-        anchorTag.classList.add('active');
-      } else if (
-        !menuLink.parentElement.parentElement.parentElement.hasAttribute('id')
-      ) {
-        // check to see if anchor doesn't have a class
-        if (anchorTag.classList.length === 0) anchorTag.classList.add('active');
-      }
-    });
-  } else {
-    // BEFORE CLOSING MENU - CHECK IF LINK HAS A SUB MENU
-    if (
-      menuLink.parentElement.parentElement.matches('ul#menu-main-menu.menu')
-    ) {
-      // link is the top menu, so do close
-      closeAllMenus(menuLink);
-    } else {
-      // menu item is NOT the top item
-
-      // 3. OPEN secondary menu
-      if (!menuLink.parentElement.classList.contains('visible')) {
-        // 3-a. set visible class to menu's parent
-        menuLink.closest('.menu-item-has-children').classList.add('visible');
-
-        console.log('here I am');
-
-        // 3-b. set the arrow to upwards position
-        menuLink.querySelectorAll('i').forEach(function (icon) {
-          icon.classList.remove('angle-down');
-          icon.classList.add('angle-up');
-        });
-
-        // 3-c. set the aria-label to close sub menu
-        menuLink.setAttribute(
-          'aria-label',
-          `Click Enter to close ${menuLink.textContent} sub menu`
-        );
-
-        // 3-d. set aria-expanded to true
-        menuLink.setAttribute('aria-expanded', 'true');
-      } else {
-        // 4. CLOSE secondary menu
-
-        // 4-a. remove visible class from sub menu
-        if (
-          menuLink.parentElement.classList.contains('menu-item-has-children')
-        ) {
-          menuLink.parentElement.classList.remove('visible');
-        }
-
-        // 4-b. set the arrow to downwards position
-        menuLink.querySelectorAll('i').forEach(function (icon) {
-          icon.classList.remove('angle-up');
-          icon.classList.add('angle-down');
-        });
-
-        // 4-c. set the aria label to open menu
-        menuLink.setAttribute(
-          'aria-label',
-          `${menuLink.textContent} has a sub menu. Click enter to open`
-        );
-
-        // 4-d. reset aria-expanded to false
-        menuLink.setAttribute('aria-expanded', 'false');
-
-        // 4-e. remove active class
-        menuLink.classList.remove('active');
-        if (menuLink && menuLink.className.trim() === '')
-          menuLink.removeAttribute('class');
-
-        if (menuLink.parentElement.parentElement.hasAttribute('id')) {
-          menuLink.classList.remove('active');
-          if (menuLink && menuLink.className.trim() === '')
-            menuLink.removeAttribute('class');
-        }
+  // Close all other menus
+  allMenuItems.forEach((link) => {
+    if (link !== menuLink) {
+      link.setAttribute('aria-expanded', 'false');
+      const icon = link.querySelector('i');
+      if (icon) {
+        icon.classList.add('angle-down');
+        icon.classList.remove('angle-up');
       }
     }
+  });
+
+  // Toggle aria-expanded of the clicked menu
+  menuLink.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+
+  // Toggle icon class
+  const icon = menuLink.querySelector('i');
+  if (icon) {
+    icon.classList.toggle('angle-down', isExpanded);
+    icon.classList.toggle('angle-up', !isExpanded);
+  }
+
+  // keep parent (More) link open when a child link submenu is open
+  const li = menuLink.closest('li');
+  let isInMoreSubMenu = li.closest('#moreSubMenu') !== null;
+
+  if (isInMoreSubMenu) {
+    document
+      .querySelector('#menuMoreLink')
+      .setAttribute('aria-expanded', 'true');
   }
 
   determineMegaMenuPosition();
-
-  // Get the element with the ID "menuMoreLink"
-  const menuMoreLink = document.getElementById('menuMoreLink');
 }
+
+// Listen for the ESC key press to toggle menu
+document.addEventListener('keydown', function (event) {
+  if (event.key === 'Escape') {
+    // Find the currently expanded menu item
+    const expandedMenuItem = document.querySelector(
+      '.menu-item-has-children > a[aria-expanded="true"]'
+    );
+    if (expandedMenuItem) {
+      // Trigger the same toggle function to close the expanded menu
+      toggleTopLevelMenu(expandedMenuItem);
+    }
+  }
+});
 
 function determineMegaMenuPosition() {
   // Get the main menu element and its children
-  const ul = document.getElementById('menu-main-menu');
   const menuMore = document.getElementById('menu-more');
   const menuItems = document.querySelectorAll('#menu-main-menu > li');
   const screenWidth = Math.round(
@@ -2687,7 +2526,9 @@ function determineMegaMenuPosition() {
     count++;
     if (li === menuMore) break; // Stop when reaching #menu-more
 
-    if (li.classList.contains('visible')) {
+    let ariaExpanded = li.querySelector('a').getAttribute('aria-expanded');
+
+    if (ariaExpanded === 'true') {
       const subMenuDiv = li.querySelector('.sub-menu-div'); // Find the mega sub-menu element
 
       if (subMenuDiv) {
@@ -2698,7 +2539,6 @@ function determineMegaMenuPosition() {
           // Determine mega menu sub menu offset value base on the browser
           let offset = 110; // Default offset
           const userAgent = navigator.userAgent.toLowerCase();
-
           if (userAgent.includes('chrome')) {
             offset -= 10; // Chrome
           } else if (userAgent.includes('edg')) {
@@ -2706,11 +2546,9 @@ function determineMegaMenuPosition() {
           } else if (userAgent.includes('opr') || userAgent.includes('opera')) {
             offset -= 10; // Opera
           }
-
           // Move the element to align it to the right
           subMenuDiv.style.position = 'absolute'; // Ensure it's positioned absolutely
           subMenuDiv.style.right = -distanceFromRight + offset + 'px';
-
           // To prevent rect.right being reapplied each time the submenu is opened
           subMenuDiv.dataset.positioned = 'true'; // Mark as positioned
         }
