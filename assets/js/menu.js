@@ -2694,9 +2694,21 @@ function determineMegaMenuPosition() {
           const rect = subMenuDiv.getBoundingClientRect();
           const distanceFromRight = screenWidth - rect.right;
 
+          // Determine mega menu sub menu offset value base on the browser
+          let offset = 110; // Default offset
+          const userAgent = navigator.userAgent.toLowerCase();
+
+          if (userAgent.includes('chrome')) {
+            offset -= 10; // Chrome
+          } else if (userAgent.includes('edg')) {
+            offset -= 8; // Edge
+          } else if (userAgent.includes('opr') || userAgent.includes('opera')) {
+            offset -= 10; // Opera
+          }
+
           // Move the element to align it to the right
           subMenuDiv.style.position = 'absolute'; // Ensure it's positioned absolutely
-          subMenuDiv.style.right = -distanceFromRight + 110 + 'px'; // Set right 110 seems to be that magic number
+          subMenuDiv.style.right = -distanceFromRight + offset + 'px';
 
           // To prevent rect.right being reapplied each time the submenu is opened
           subMenuDiv.dataset.positioned = 'true'; // Mark as positioned
