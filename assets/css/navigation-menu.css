@@ -792,3 +792,33 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 .sub-menu-div.mega-menu.mega-menu-column-4 .grid-item.menu p a:focus {
   background-color: #fff !important;
 }
+
+/* Styles .grid-container-multiple that is under #menu-more menu */
+
+#menu-more .mega-menu-column-4 .grid-container-multiple {
+  width: 90vw; /* Make the grid expand to the full viewport width */
+  max-width: 100%; /* Prevent overflow */
+  left: 0; /* Ensure it starts from the left edge */
+  position: relative; /* Keep it in the document flow */
+  /*grid-auto-flow: row; */ /* Reset auto-flow to prevent forced columns */
+}
+
+@media (max-width: 1366px) {
+  #menu-more .mega-menu-column-4 .grid-container-multiple {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, 1fr);
+    padding-right: 0;
+  }
+
+  #menu-more .mega-menu-column-4 .grid-container-multiple .span-all-rows {
+    grid-row: 5 / -1;
+    grid-column: 1 / -1;
+    margin-top: 1rem;
+    margin-left: 0;
+    justify-content: start;
+  }
+
+  #menu-more .mega-menu-column-4 .grid-container-multiple > .grid-item p {
+    text-align: left;
+  }
+}
