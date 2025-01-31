@@ -981,7 +981,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </li>`;
 
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-label="Click Enter to open Pages  sub menu">Pages <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="/admin/helpAccounts.php">Page 1</a></li><li><a href="/admin/help.php">Page 2</a></li></ul></li>`;
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Click Enter to open Pages  sub menu">Pages <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="/admin/helpAccounts.php">Page 1</a></li><li><a href="/admin/help.php">Page 2</a></li></ul></li>`;
 
       // Services Menu
       menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2 <i class="caret angle-down"></i></a>
