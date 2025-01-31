@@ -2236,10 +2236,7 @@ document.addEventListener('DOMContentLoaded', () => {
       formatNav();
 
       // set More Menu tabindex to -1 if there are no children
-      const menuMore = document.getElementById('menu-more');
-      if (menuMore.children[1].children.length === 0) {
-        document.getElementById('menuMoreLink').setAttribute('tabindex', '-1');
-      }
+      updateMenuMoreTabIndex();
 
       // watch for difference between touchscreen and mouse
       watchForHover();
@@ -2450,6 +2447,8 @@ function onResize() {
     // reset menus aria-labels
     updateAllAriaLabels();
 
+    updateMenuMoreTabIndex();
+
     formatNav();
 
     determineMegaMenuPosition();
@@ -2577,6 +2576,20 @@ function determineMegaMenuPosition() {
           subMenuDiv.dataset.positioned = 'true'; // Mark as positioned
         }
       }
+    }
+  }
+}
+
+function updateMenuMoreTabIndex() {
+  const menuLink = document.getElementById('menuMoreLink');
+  if (menuLink) {
+    // Get text content excluding the icon element
+    const textContent = menuLink.childNodes[0]?.nodeValue.trim();
+
+    if (!textContent) {
+      menuLink.setAttribute('tabindex', '-1');
+    } else {
+      menuLink.removeAttribute('tabindex');
     }
   }
 }
