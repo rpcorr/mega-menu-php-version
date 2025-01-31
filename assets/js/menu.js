@@ -981,7 +981,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </li>`;
 
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Click Enter to open Pages  sub menu">Pages <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="/admin/helpAccounts.php">Page 1</a></li><li><a href="/admin/help.php">Page 2</a></li></ul></li>`;
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Click Enter to open Pages sub menu">Pages <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="/admin/helpAccounts.php">Page 1</a></li><li><a href="/admin/help.php">Page 2</a></li></ul></li>`;
 
       // Services Menu
       menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2 <i class="caret angle-down"></i></a>
@@ -2447,6 +2447,9 @@ function onResize() {
     // reset arrows to down position
     resetArrows();
 
+    // reset menus aria-labels
+    updateAllAriaLabels();
+
     formatNav();
 
     determineMegaMenuPosition();
@@ -2461,6 +2464,7 @@ function toggleTopLevelMenu(menuLink) {
 
   // Toggle the current menu
   const isExpanded = menuLink.getAttribute('aria-expanded') === 'true';
+  const menuText = menuLink.textContent.trim();
 
   // Close all other menus
   allMenuItems.forEach((link) => {
@@ -2476,6 +2480,9 @@ function toggleTopLevelMenu(menuLink) {
 
   // Toggle aria-expanded of the clicked menu
   menuLink.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+
+  // Toggle aria-label
+  setAriaLabel(menuLink, !isExpanded);
 
   // Toggle icon class
   const icon = menuLink.querySelector('i');
@@ -2495,6 +2502,23 @@ function toggleTopLevelMenu(menuLink) {
   }
 
   determineMegaMenuPosition();
+}
+
+function setAriaLabel(link, isOpen) {
+  const menuText = link.textContent.trim();
+  link.setAttribute(
+    'aria-label',
+    isOpen
+      ? `Click enter to close ${menuText} sub menu`
+      : `${menuText} has a sub menu. Click enter to open`
+  );
+}
+
+function updateAllAriaLabels() {
+  document.querySelectorAll('.menu-item-has-children > a').forEach((link) => {
+    const isExpanded = link.getAttribute('aria-expanded') === 'true';
+    setAriaLabel(link, isExpanded);
+  });
 }
 
 // Listen for the ESC key press to toggle menu
