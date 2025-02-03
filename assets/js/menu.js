@@ -2458,6 +2458,7 @@ function onResize() {
 }
 
 function toggleTopLevelMenu(menuLink) {
+  // Find all menu items with children
   const allMenuItems = document.querySelectorAll('.menu-item-has-children > a');
 
   // Remove 'active' from all grid items
@@ -2467,6 +2468,7 @@ function toggleTopLevelMenu(menuLink) {
 
   const isExpanded = menuLink.getAttribute('aria-expanded') === 'true';
 
+  // Close all other menus
   allMenuItems.forEach((link) => {
     if (link !== menuLink) {
       link.setAttribute('aria-expanded', 'false');
@@ -2478,9 +2480,13 @@ function toggleTopLevelMenu(menuLink) {
     }
   });
 
+  // Toggle aria-expanded of the clicked menu
   menuLink.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+
+  // Toggle aria-label
   setAriaLabel(menuLink, !isExpanded);
 
+  // Toggle icon class
   const icon = menuLink.querySelector('i');
   if (icon) {
     icon.classList.toggle('angle-down', isExpanded);
@@ -2500,6 +2506,7 @@ function toggleTopLevelMenu(menuLink) {
     }
   }
 
+  // keep parent (More) link open when a child link submenu is open
   const li = menuLink.closest('li');
   let isInMoreSubMenu = li.closest('#moreSubMenu') !== null;
 
@@ -2520,6 +2527,7 @@ function toggleTopLevelMenu(menuLink) {
       }
     });
 
+    // Prevent sub-menu-div from closing when interacting with it
     subMenu.querySelectorAll('a').forEach((subMenuLink) => {
       subMenuLink.addEventListener('click', (event) => {
         event.stopPropagation();
