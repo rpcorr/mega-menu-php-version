@@ -449,7 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
       //     <div class="grid-container-multiple">
 
       //       <!--- menu items --->
-      //       <div class="grid-item menu active">
+      //       <div class="grid-item menu">
       //         <img src="assets/imgs/pie.gif" width="36" height="33" />
       //         <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
       //         <div class="circle">
@@ -561,7 +561,7 @@ document.addEventListener('DOMContentLoaded', () => {
       //     <div class="grid-container-multiple">
 
       //       <!--- menu items --->
-      //       <div class="grid-item menu active">
+      //       <div class="grid-item menu">
       //         <img src="assets/imgs/pie.gif" width="36" height="33" />
       //         <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
       //         <div class="circle">
@@ -667,7 +667,7 @@ document.addEventListener('DOMContentLoaded', () => {
       //     <div class="grid-container-multiple">
 
       //       <!--- menu items --->
-      //       <div class="grid-item menu active">
+      //       <div class="grid-item menu">
       //         <img src="assets/imgs/pie.gif" width="36" height="33" />
       //         <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
       //         <div class="circle">
@@ -775,7 +775,7 @@ document.addEventListener('DOMContentLoaded', () => {
       //     <div class="grid-container-multiple">
 
       //       <!--- menu items --->
-      //       <div class="grid-item menu active">
+      //       <div class="grid-item menu">
       //         <img src="assets/imgs/pie.gif" width="36" height="33" />
       //         <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
       //         <div class="circle">
@@ -881,7 +881,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="grid-container-multiple">
 
                 <!--- menu items --->
-                <div class="grid-item menu active">
+                <div class="grid-item menu">
                   <img src="assets/imgs/pie.gif" width="36" height="33" />
                   <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
                   <div class="circle">
@@ -989,7 +989,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="grid-container-multiple">
 
         <!--- menu items --->
-        <div class="grid-item menu active">
+        <div class="grid-item menu">
           <img src="assets/imgs/pie.gif" width="36" height="33" />
           <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
           <div class="circle">
@@ -1095,7 +1095,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="grid-container-multiple">
 
         <!--- menu items --->
-        <div class="grid-item menu active">
+        <div class="grid-item menu">
           <img src="assets/imgs/pie.gif" width="36" height="33" />
           <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
           <div class="circle">
@@ -1201,7 +1201,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="grid-container-multiple">
 
         <!--- menu items --->
-        <div class="grid-item menu active">
+        <div class="grid-item menu">
           <img src="assets/imgs/pie.gif" width="36" height="33" />
           <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
           <div class="circle">
@@ -1307,7 +1307,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="grid-container-multiple">
 
       <!--- menu items --->
-      <div class="grid-item menu active">
+      <div class="grid-item menu">
         <img src="assets/imgs/pie.gif" width="36" height="33" />
         <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
         <div class="circle">
@@ -1413,7 +1413,7 @@ document.addEventListener('DOMContentLoaded', () => {
       //     <div class="grid-container-multiple">
 
       //       <!--- menu items --->
-      //       <div class="grid-item menu active">
+      //       <div class="grid-item menu">
       //         <img src="assets/imgs/pie.gif" width="36" height="33" />
       //         <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
       //         <div class="circle">
@@ -1519,7 +1519,7 @@ document.addEventListener('DOMContentLoaded', () => {
       //         <div class="grid-container-multiple">
 
       //           <!--- menu items --->
-      //           <div class="grid-item menu active">
+      //           <div class="grid-item menu">
       //             <img src="assets/imgs/pie.gif" width="36" height="33" />
       //             <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
       //             <div class="circle">
@@ -1625,7 +1625,7 @@ document.addEventListener('DOMContentLoaded', () => {
       //     <div class="grid-container-multiple">
 
       //       <!--- menu items --->
-      //       <div class="grid-item menu active">
+      //       <div class="grid-item menu">
       //         <img src="assets/imgs/pie.gif" width="36" height="33" />
       //         <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
       //         <div class="circle">
@@ -1731,7 +1731,7 @@ document.addEventListener('DOMContentLoaded', () => {
       //       <div class="grid-container-multiple">
 
       //         <!--- menu items --->
-      //         <div class="grid-item menu active">
+      //         <div class="grid-item menu">
       //           <img src="assets/imgs/pie.gif" width="36" height="33" />
       //           <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
       //           <div class="circle">
@@ -1837,7 +1837,7 @@ document.addEventListener('DOMContentLoaded', () => {
       //     <div class="grid-container-multiple">
 
       //       <!--- menu items --->
-      //       <div class="grid-item menu active">
+      //       <div class="grid-item menu">
       //         <img src="assets/imgs/pie.gif" width="36" height="33" />
       //         <p><a href="#"><strong>LibPas</strong><br />Periodic data </a></p>
       //         <div class="circle">
@@ -2458,14 +2458,15 @@ function onResize() {
 }
 
 function toggleTopLevelMenu(menuLink) {
-  // Find all menu items with children
   const allMenuItems = document.querySelectorAll('.menu-item-has-children > a');
 
-  // Toggle the current menu
-  const isExpanded = menuLink.getAttribute('aria-expanded') === 'true';
-  const menuText = menuLink.textContent.trim();
+  // Remove 'active' from all grid items
+  document.querySelectorAll('.grid-item.menu').forEach((item) => {
+    item.classList.remove('active');
+  });
 
-  // Close all other menus
+  const isExpanded = menuLink.getAttribute('aria-expanded') === 'true';
+
   allMenuItems.forEach((link) => {
     if (link !== menuLink) {
       link.setAttribute('aria-expanded', 'false');
@@ -2477,20 +2478,28 @@ function toggleTopLevelMenu(menuLink) {
     }
   });
 
-  // Toggle aria-expanded of the clicked menu
   menuLink.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
-
-  // Toggle aria-label
   setAriaLabel(menuLink, !isExpanded);
 
-  // Toggle icon class
   const icon = menuLink.querySelector('i');
   if (icon) {
     icon.classList.toggle('angle-down', isExpanded);
     icon.classList.toggle('angle-up', !isExpanded);
   }
 
-  // keep parent (More) link open when a child link submenu is open
+  // Assign 'active' to the first grid-item.menu where the parent <a> has aria-expanded="true"
+  const expandedMenu = document.querySelector(
+    '.menu-item-has-children > a[aria-expanded="true"]'
+  );
+  if (expandedMenu) {
+    const firstGridMenu = expandedMenu
+      .closest('li')
+      .querySelector('.grid-item.menu');
+    if (firstGridMenu) {
+      firstGridMenu.classList.add('active');
+    }
+  }
+
   const li = menuLink.closest('li');
   let isInMoreSubMenu = li.closest('#moreSubMenu') !== null;
 
@@ -2498,6 +2507,29 @@ function toggleTopLevelMenu(menuLink) {
     document
       .querySelector('#menuMoreLink')
       .setAttribute('aria-expanded', 'true');
+  }
+
+  const subMenu = li.querySelector('.sub-menu-div');
+  if (subMenu) {
+    subMenu.addEventListener('click', (event) => {
+      event.stopPropagation();
+      menuLink.setAttribute('aria-expanded', 'true');
+      if (icon) {
+        icon.classList.add('angle-up');
+        icon.classList.remove('angle-down');
+      }
+    });
+
+    subMenu.querySelectorAll('a').forEach((subMenuLink) => {
+      subMenuLink.addEventListener('click', (event) => {
+        event.stopPropagation();
+        menuLink.setAttribute('aria-expanded', 'true');
+        if (icon) {
+          icon.classList.add('angle-up');
+          icon.classList.remove('angle-down');
+        }
+      });
+    });
   }
 
   determineMegaMenuPosition();

@@ -764,17 +764,18 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   background-color: transparent;
 }
 
-/* Set grey background colour for menu items that are not have class .active */
-.mega-menu-column-4 .grid-container-multiple > .menu:not(.active) {
+/* Set grey background colour for menu items*/
+.mega-menu-column-4 .grid-container-multiple > .menu {
   background-color: #999;
 }
 
-/* Set white background colour for grid items, .active grid-item and when hovering a menu item */
-.mega-menu-column-4 .grid-container-multiple > .grid-item,
-.mega-menu-column-4 .grid-container-multiple > .active,
+/* Set white background colour for grid items, .active grid-item and when hovering a menu item, a menu item has the active class, or menu item has focus */
+.mega-menu-column-4 .grid-container-multiple > .menu-content,
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows,
+.mega-menu-column-4 .grid-container-multiple > .menu.active,
 .mega-menu-column-4 .grid-container-multiple > .menu:hover,
 .mega-menu-column-4 .grid-container-multiple > .menu:has(a:focus) {
-  background-color: white;
+  background-color: #fff;
 }
 
 .mega-menu-column-4 .grid-container-multiple > .active > .circle,
