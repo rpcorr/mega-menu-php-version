@@ -1013,7 +1013,6 @@ function toggleTopLevelMenu(menuLink) {
 
   // Toggle aria-expanded and aria-label for clicked menu
   menuLink.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
-  //setAriaLabel(menuLink, !isExpanded);
 
   // Toggle icon class
   const icon = menuLink.querySelector('i');
@@ -1353,8 +1352,8 @@ function renderMenu(menuData, menuContainer) {
       anchor.setAttribute('aria-current', 'true');
     }
 
-    // Set data attribute for identification
-    menuItem.setAttribute('data-title', item.menuTitle);
+    // Set menuItem id for identification
+    menuItem.setAttribute('id', item.menuTitle);
 
     fragment.appendChild(menuContent);
   });
