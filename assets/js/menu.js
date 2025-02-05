@@ -523,8 +523,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
 
-      //getMegaMenu('one');
-
       navItems = document.querySelectorAll('#menu-main-menu > li');
 
       megaMenuLinks = document.querySelectorAll('nav a');
@@ -1286,24 +1284,32 @@ function removeActiveClass() {
 function getMegaMenu(id) {
   const menuContainer = document.getElementById(id);
 
+  if (!menuContainer) return;
+
   renderMenu(menu, menuContainer);
   renderBodyContent(libPasBodyContent, menuContainer);
   renderExtraContent(menuContainer);
 
-  document.getElementById(id).addEventListener(
-    'click',
-    function (event) {
-      //console.log('Captured click before bubbling:', event.target);
+  // Prevent multiple event listeners
+  if (!menuContainer.dataset.listenerAdded) {
+    menuContainer.addEventListener(
+      'click',
+      function (event) {
+        //console.log('Captured click before bubbling:', event.target);
 
-      const anchor = event.target.closest('a');
-      if (anchor) {
-        console.log('Captured anchor:', anchor.href);
-        event.preventDefault();
-        toggleTopLevelMenu(this);
-      }
-    },
-    true // Runs in capture phase
-  );
+        const anchor = event.target.closest('a');
+        if (anchor) {
+          console.log('Captured anchor:', anchor.href);
+          event.preventDefault();
+          toggleTopLevelMenu(this);
+        }
+      },
+      true // Runs in capture phase
+    );
+
+    // Mark as initialized
+    menuContainer.dataset.listenerAdded = 'true';
+  }
 }
 
 function renderMenu(menuData, menuContainer) {
