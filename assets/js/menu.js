@@ -11,6 +11,79 @@ let output = '';
 let megaMenuLinks = '';
 let initialColumns = '';
 
+/// The Data ///
+const menu = [
+  {
+    graphic: 'pie.gif',
+    width: '36',
+    height: '33',
+    url: '#',
+    menuTitle: 'LibPas',
+    subText: 'Periodic data',
+  },
+  {
+    graphic: 'medal.gif',
+    width: '43',
+    height: '43',
+    url: '#',
+    menuTitle: 'LibSAT',
+    subText: 'Qualitative data',
+  },
+  {
+    graphic: 'puzzle-pieces.gif',
+    width: '40',
+    height: '40',
+    url: '#',
+    menuTitle: 'InformUs',
+    subText: 'Survey data',
+  },
+];
+
+const libPasBodyContent = [
+  {
+    graphic: 'reports.gif',
+    width: '42',
+    height: '55',
+    title: 'LibPas Reports',
+    subText: '{Brief description of the function of reports}',
+  },
+  {
+    graphic: 'reports.gif',
+    width: '42',
+    height: '55',
+    title: 'Reports',
+    subText: '{Brief description of the function of reports}',
+  },
+  {
+    graphic: 'reports.gif',
+    width: '42',
+    height: '55',
+    title: 'Reports',
+    subText: '{Brief description of the function of reports}',
+  },
+  {
+    graphic: 'reports.gif',
+    width: '42',
+    height: '55',
+    title: 'Reports',
+    subText: '{Brief description of the function of reports}',
+  },
+  {
+    graphic: 'data-input.gif',
+    width: '42',
+    height: '55',
+    title: 'Data Input',
+    subText: '{Brief description of the function of data input}',
+  },
+  {
+    graphic: 'reports.gif',
+    width: '42',
+    height: '55',
+    title: 'Reports',
+    subText: '{Brief description of the function of reports}',
+  },
+];
+
 console.log(`I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}.`);
 
 console.log(JSONfile);
@@ -437,13 +510,20 @@ document.addEventListener('DOMContentLoaded', () => {
       // Services Menu
       menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
             <div class="sub-menu-div mega-menu mega-menu-column-4">
-            <div class="grid-container-multiple" id="one"></div>
+            <div class="grid-container-multiple"></div>
+            </div>
+          </li>`;
+
+      // Services Menu
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2<i class="caret angle-down"></i></a>
+            <div class="sub-menu-div mega-menu mega-menu-column-4">
+            <div class="grid-container-multiple"></div>
             </div>
           </li>`;
 
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
 
-      getMegaMenu('one');
+      //getMegaMenu('one');
 
       navItems = document.querySelectorAll('#menu-main-menu > li');
 
@@ -909,15 +989,13 @@ function onResize() {
 }
 
 function toggleTopLevelMenu(menuLink) {
-  // Find all menu items with children
   const allMenuItems = document.querySelectorAll('.menu-item-has-children > a');
+  const isExpanded = menuLink.getAttribute('aria-expanded') === 'true';
 
   // Remove 'active' from all grid items
   document.querySelectorAll('.grid-item.menu').forEach((item) => {
     item.classList.remove('active');
   });
-
-  const isExpanded = menuLink.getAttribute('aria-expanded') === 'true';
 
   // Close all other menus
   allMenuItems.forEach((link) => {
@@ -925,17 +1003,19 @@ function toggleTopLevelMenu(menuLink) {
       link.setAttribute('aria-expanded', 'false');
       const icon = link.querySelector('i');
       if (icon) {
-        icon.classList.add('angle-down');
-        icon.classList.remove('angle-up');
+        icon.classList.replace('angle-up', 'angle-down');
       }
     }
   });
 
-  // Toggle aria-expanded of the clicked menu
-  menuLink.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+  // Only call setAriaLabel if menuLink is NOT inside a sub-menu-div
+  if (!menuLink.closest('.sub-menu-div')) {
+    setAriaLabel(menuLink, !isExpanded);
+  }
 
-  // Toggle aria-label
-  setAriaLabel(menuLink, !isExpanded);
+  // Toggle aria-expanded and aria-label for clicked menu
+  menuLink.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+  //setAriaLabel(menuLink, !isExpanded);
 
   // Toggle icon class
   const icon = menuLink.querySelector('i');
@@ -944,49 +1024,50 @@ function toggleTopLevelMenu(menuLink) {
     icon.classList.toggle('angle-up', !isExpanded);
   }
 
-  // Assign 'active' to the first grid-item.menu where the parent <a> has aria-expanded="true"
-  const expandedMenu = document.querySelector(
+  // Find the currently expanded menu
+  const expandedMenuLink = document.querySelector(
     '.menu-item-has-children > a[aria-expanded="true"]'
   );
-  if (expandedMenu) {
-    const firstGridMenu = expandedMenu
-      .closest('li')
-      .querySelector('.grid-item.menu');
-    if (firstGridMenu) {
-      firstGridMenu.classList.add('active');
+
+  // Manage 'megaMenu' ID assignment
+  const megaMenuElement = document.getElementById('megaMenu');
+  if (expandedMenuLink) {
+    const subMenu =
+      expandedMenuLink.parentElement.querySelector('.sub-menu-div');
+    const gridContainer = subMenu?.querySelector(
+      'div[class*="grid-container"]'
+    );
+
+    if (gridContainer) {
+      gridContainer.id = 'megaMenu';
+      getMegaMenu('megaMenu');
     }
+  } else if (megaMenuElement) {
+    megaMenuElement.removeAttribute('id');
   }
 
-  // keep parent (More) link open when a child link submenu is open
+  // Keep parent (More) link open when a child submenu is open
   const li = menuLink.closest('li');
-  let isInMoreSubMenu = li.closest('#moreSubMenu') !== null;
-
-  if (isInMoreSubMenu) {
+  if (li?.closest('#moreSubMenu')) {
     document
       .querySelector('#menuMoreLink')
-      .setAttribute('aria-expanded', 'true');
+      ?.setAttribute('aria-expanded', 'true');
   }
 
-  const subMenu = li.querySelector('.sub-menu-div');
+  // Prevent sub-menu from closing when interacting with it
+  const subMenu = li?.querySelector('.sub-menu-div');
   if (subMenu) {
     subMenu.addEventListener('click', (event) => {
       event.stopPropagation();
       menuLink.setAttribute('aria-expanded', 'true');
-      if (icon) {
-        icon.classList.add('angle-up');
-        icon.classList.remove('angle-down');
-      }
+      if (icon) icon.classList.replace('angle-down', 'angle-up');
     });
 
-    // Prevent sub-menu-div from closing when interacting with it
     subMenu.querySelectorAll('a').forEach((subMenuLink) => {
       subMenuLink.addEventListener('click', (event) => {
         event.stopPropagation();
         menuLink.setAttribute('aria-expanded', 'true');
-        if (icon) {
-          icon.classList.add('angle-up');
-          icon.classList.remove('angle-down');
-        }
+        if (icon) icon.classList.replace('angle-down', 'angle-up');
       });
     });
   }
@@ -1203,6 +1284,12 @@ function removeActiveClass() {
 }
 
 function getMegaMenu(id) {
+  const menuContainer = document.getElementById(id);
+
+  renderMenu(menu, menuContainer);
+  renderBodyContent(libPasBodyContent, menuContainer);
+  renderExtraContent(menuContainer);
+
   document.getElementById(id).addEventListener(
     'click',
     function (event) {
@@ -1217,4 +1304,99 @@ function getMegaMenu(id) {
     },
     true // Runs in capture phase
   );
+}
+
+function renderMenu(menuData, menuContainer) {
+  const menuTemplate = document.querySelector('#menuTemplate');
+
+  if (!menuTemplate || !menuContainer) {
+    console.error('Error: Menu template or container not found.');
+    return;
+  }
+
+  // Clear existing content before appending new elements
+  menuContainer.innerHTML = '';
+
+  const fragment = document.createDocumentFragment();
+  const templateContent = menuTemplate.content;
+
+  menuData.forEach((item, index) => {
+    const menuContent = templateContent.cloneNode(true);
+    const img = menuContent.querySelector('img');
+    const anchor = menuContent.querySelector('a');
+    const strong = anchor.querySelector('strong');
+    const menuItem = menuContent.querySelector('.grid-item.menu');
+
+    if (!img || !anchor || !strong || !menuItem) {
+      console.error('Error: Missing elements inside template.');
+      return;
+    }
+
+    // Set attributes
+    img.src = `assets/imgs/${item.graphic}`;
+    img.width = item.width;
+    img.height = item.height;
+
+    anchor.href = item.url;
+    strong.textContent = item.menuTitle;
+    anchor.insertAdjacentHTML('beforeend', `<br>${item.subText}`);
+
+    // Set active class for first item
+    if (index === 0) {
+      menuItem.classList.add('active');
+      anchor.setAttribute('aria-current', 'true');
+    }
+
+    // Set data attribute for identification
+    menuItem.setAttribute('data-title', item.menuTitle);
+
+    fragment.appendChild(menuContent);
+  });
+
+  menuContainer.appendChild(fragment);
+}
+
+function renderBodyContent(contentData, menuContainer) {
+  const contentTemplate = document.querySelector('#menuContent');
+
+  if (!contentTemplate || !menuContainer) {
+    console.error('Error: Body content template or container not found.');
+    return;
+  }
+
+  const fragment = document.createDocumentFragment();
+
+  contentData.forEach((item) => {
+    const menuContent = contentTemplate.content.cloneNode(true);
+    const img = menuContent.querySelector('img');
+    const p = menuContent.querySelector('p');
+
+    if (!img || !p) {
+      console.error('Error: Missing elements inside body content template.');
+      return;
+    }
+
+    // Set attributes
+    img.src = `assets/imgs/${item.graphic}`;
+    img.width = item.width;
+    img.height = item.height;
+
+    p.querySelector('strong').textContent = item.title;
+    p.innerHTML += item.subText;
+
+    fragment.appendChild(menuContent);
+  });
+
+  menuContainer.appendChild(fragment);
+}
+
+function renderExtraContent(menuContainer) {
+  const extraContent = document.getElementById('menuExtraContentLibPas');
+
+  if (!extraContent || !menuContainer) {
+    console.error('Error: Extra content template or container not found.');
+    return;
+  }
+
+  menuContainer.appendChild(extraContent.content.cloneNode(true));
 }
