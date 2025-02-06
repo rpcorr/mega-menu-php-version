@@ -18,6 +18,7 @@
       <script src='<?php echo getRelativePath(''); ?>assets/js/selectTheme.js' defer></script>
     <!-- <script src='<?php //echo getRelativePath(''); ?>assets/js/checkTimerInactivity.min.js' defer></script> -->
     <?php } ?>
+    
     <!-- ///// The Templates ///// -->
     <template id="menuTemplate">
       <div class="grid-item menu" id="">
@@ -38,27 +39,17 @@
       </div>
     </template>
 
-    <template id="menuExtraContentLibPas">
+    <template id="menuExtraContent">
       <div class="grid-item span-all-rows">
         <div>
-          <img src="assets/imgs/light-bulb.gif" align="left" />
+          <img src="" width="" height="" align="left" />
           <p>
-            <strong>Did you know that you can do this if you do that?</strong>
+            <strong></strong>
           </p>
         </div>
 
-        <p>LibPas Extra Content</p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
-
-        <ul>
-          <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
-          <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
-        </ul>
+        <div id="bodyContent"></div>
       </div>
     </template>
-
   </body>
 </html>

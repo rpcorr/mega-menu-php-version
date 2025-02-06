@@ -752,6 +752,14 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   margin: 0; /* Remove default margin to prevent spacing issues */
 }
 
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows #bodyContent p {
+  margin-bottom: 0.5rem;
+}
+
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows #bodyContent {
+  font-weight: normal;
+}
+
 /* Add some spacing for <li> items in the list */
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows ul,
 .mega-menu-column-4 .grid-container-multiple > .menu-content ul {

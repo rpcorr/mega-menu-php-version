@@ -84,6 +84,36 @@ const libPasBodyContent = [
   },
 ];
 
+const libPasExtraContent = [
+  {
+    graphic: 'light-bulb.gif',
+    width: '32',
+    height: '37',
+    heading: 'Did you know that you can do this if you do that?',
+    extraBodyContent: [
+      {
+        bodyText: 'LibPas Extra Content',
+        htmlElement: 'p',
+      },
+      {
+        bodyText:
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        htmlElement: 'p',
+      },
+      {
+        listItems: [
+          {
+            li: 'Ut enim ad minim veniam, quis nostrud exercitation',
+          },
+          {
+            li: 'Ullamco laboris nisi ut aliquip ex ea commodo consequat',
+          },
+        ],
+      },
+    ],
+  },
+];
+
 console.log(`I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}.`);
 
 console.log(JSONfile);
@@ -1287,7 +1317,7 @@ function getMegaMenu(id) {
 
   renderMenu(menu, menuContainer);
   renderBodyContent(libPasBodyContent, menuContainer);
-  renderExtraContent(menuContainer);
+  renderExtraContent(libPasExtraContent, menuContainer);
 
   // Prevent multiple event listeners
   if (!menuContainer.dataset.listenerAdded) {
@@ -1404,13 +1434,55 @@ function renderBodyContent(contentData, menuContainer) {
   menuContainer.appendChild(fragment);
 }
 
-function renderExtraContent(menuContainer) {
-  const extraContent = document.getElementById('menuExtraContentLibPas');
+function renderExtraContent(contentData, menuContainer) {
+  const contentTemplate = document.querySelector('#menuExtraContent');
 
-  if (!extraContent || !menuContainer) {
-    console.error('Error: Extra content template or container not found.');
+  if (!contentTemplate || !menuContainer) {
+    console.error('Error: Body content template or container not found.');
     return;
   }
 
-  menuContainer.appendChild(extraContent.content.cloneNode(true));
+  const fragment = document.createDocumentFragment();
+
+  contentData.forEach((item) => {
+    const menuContent = contentTemplate.content.cloneNode(true);
+    const img = menuContent.querySelector('img');
+    const strong = menuContent.querySelector('p > strong');
+    const bodyContent = menuContent.querySelector('#bodyContent');
+
+    if (!img || !strong || !bodyContent) {
+      console.error('Error: Missing elements inside body content template.');
+      return;
+    }
+
+    // Set attributes
+    img.src = `assets/imgs/${item.graphic}`;
+    img.width = item.width;
+    img.height = item.height;
+
+    strong.textContent = item.heading;
+
+    item.extraBodyContent.forEach((content) => {
+      if (content.bodyText !== undefined) {
+        bodyContent.innerHTML += `<${content.htmlElement}>${content.bodyText}</${content.htmlElement}>`;
+      }
+
+      if (content.listItems !== undefined && content.listItems.length > 0) {
+        // Create UL element properly
+        const ul = document.createElement('ul');
+
+        content.listItems.forEach((li) => {
+          const listItem = document.createElement('li');
+          listItem.textContent = li.li; // Assign text correctly
+          ul.appendChild(listItem); // Append to UL
+        });
+
+        bodyContent.appendChild(ul); // Append UL to the container
+      }
+    });
+
+    fragment.appendChild(menuContent);
+  });
+
+  menuContainer.appendChild(fragment);
 }
