@@ -1340,7 +1340,7 @@ function renderMenu(menuData, menuContainer) {
     const span = anchor.querySelector('span');
     const menuItem = menuContent.querySelector('.grid-item.menu');
 
-    if (!img || !anchor || !strong || !menuItem) {
+    if (!img || !anchor || !strong || !span || !menuItem) {
       console.error('Error: Missing elements inside template.');
       return;
     }
@@ -1353,7 +1353,6 @@ function renderMenu(menuData, menuContainer) {
     anchor.href = item.url;
     strong.textContent = item.menuTitle;
     span.textContent = item.subText;
-    //anchor.insertAdjacentHTML('beforeend', `<br>${item.subText}`);
 
     // Set active class for first item
     if (index === 0) {
@@ -1384,8 +1383,9 @@ function renderBodyContent(contentData, menuContainer) {
     const menuContent = contentTemplate.content.cloneNode(true);
     const img = menuContent.querySelector('img');
     const p = menuContent.querySelector('p');
+    const span = menuContent.querySelector('span');
 
-    if (!img || !p) {
+    if (!img || !p || !span) {
       console.error('Error: Missing elements inside body content template.');
       return;
     }
@@ -1396,7 +1396,7 @@ function renderBodyContent(contentData, menuContainer) {
     img.height = item.height;
 
     p.querySelector('strong').textContent = item.title;
-    p.innerHTML += item.subText;
+    p.querySelector('span').textContent = item.subText;
 
     fragment.appendChild(menuContent);
   });

@@ -34,7 +34,7 @@
     <template id="menuContent">
       <div class="grid-item menu-content">
         <img src="" width="" height="" />
-        <p><strong></strong><br /></p>
+        <p><strong></strong><br /><span></span></p>
       </div>
     </template>
 
