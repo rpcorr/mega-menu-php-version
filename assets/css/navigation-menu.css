@@ -665,6 +665,10 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   text-decoration: none;
 }
 
+.mega-menu-column-4 .menu span {
+  font-weight: normal;
+}
+
 .mega-menu-column-4 .grid-container-multiple > .menu {
   padding: 1rem;
 }

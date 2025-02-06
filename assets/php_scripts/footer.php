@@ -23,7 +23,7 @@
       <div class="grid-item menu" id="">
         <img src="" />
         <p>
-          <a href=""><strong></strong><br /></a>
+          <a href=""><strong></strong><br/><span></span></a>
         </p>
         <div class="circle">
           <div class="caret"></div>
