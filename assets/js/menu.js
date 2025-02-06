@@ -1298,8 +1298,15 @@ function getMegaMenu(id) {
 
         const anchor = event.target.closest('a');
         if (anchor) {
-          console.log('Captured anchor:', anchor.href);
+          //console.log('Captured anchor:', anchor.href);
+
+          // obtain id of grid-item for the clicked link
           event.preventDefault();
+          let parentDiv = anchor.closest('.grid-item.menu');
+          if (parentDiv) {
+            let id = parentDiv.id;
+            console.log(id); // Logs "LibSAT"
+          }
           toggleTopLevelMenu(this);
         }
       },
@@ -1330,6 +1337,7 @@ function renderMenu(menuData, menuContainer) {
     const img = menuContent.querySelector('img');
     const anchor = menuContent.querySelector('a');
     const strong = anchor.querySelector('strong');
+    const span = anchor.querySelector('span');
     const menuItem = menuContent.querySelector('.grid-item.menu');
 
     if (!img || !anchor || !strong || !menuItem) {
@@ -1344,7 +1352,8 @@ function renderMenu(menuData, menuContainer) {
 
     anchor.href = item.url;
     strong.textContent = item.menuTitle;
-    anchor.insertAdjacentHTML('beforeend', `<br>${item.subText}`);
+    span.textContent = item.subText;
+    //anchor.insertAdjacentHTML('beforeend', `<br>${item.subText}`);
 
     // Set active class for first item
     if (index === 0) {
