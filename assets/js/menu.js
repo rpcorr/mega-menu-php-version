@@ -84,6 +84,96 @@ const libPasBodyContent = [
   },
 ];
 
+const libSATBodyContent = [
+  {
+    graphic: 'data-input.gif',
+    width: '42',
+    height: '55',
+    title: 'libSAT Data Input',
+    subText: '{Brief description of the function of data input}',
+  },
+  {
+    graphic: 'reports.gif',
+    width: '42',
+    height: '55',
+    title: 'Reports',
+    subText: '{Brief description of the function of reports}',
+  },
+  {
+    graphic: 'reports.gif',
+    width: '42',
+    height: '55',
+    title: 'Reports',
+    subText: '{Brief description of the function of reports}',
+  },
+  {
+    graphic: 'reports.gif',
+    width: '42',
+    height: '55',
+    title: 'Reports',
+    subText: '{Brief description of the function of reports}',
+  },
+  {
+    graphic: 'data-input.gif',
+    width: '42',
+    height: '55',
+    title: 'Data Input',
+    subText: '{Brief description of the function of data input}',
+  },
+  {
+    graphic: 'reports.gif',
+    width: '42',
+    height: '55',
+    title: 'Reports',
+    subText: '{Brief description of the function of reports}',
+  },
+];
+
+const informUsBodyContent = [
+  {
+    graphic: 'reports.gif',
+    width: '42',
+    height: '55',
+    title: 'Reports InformUs',
+    subText: '{Brief description of the function of reports}',
+  },
+  {
+    graphic: 'data-input.gif',
+    width: '42',
+    height: '55',
+    title: 'Data Input',
+    subText: '{Brief description of the function of data input}',
+  },
+  {
+    graphic: 'reports.gif',
+    width: '42',
+    height: '55',
+    title: 'Reports',
+    subText: '{Brief description of the function of reports}',
+  },
+  {
+    graphic: 'data-input.gif',
+    width: '42',
+    height: '55',
+    title: 'Data Input',
+    subText: '{Brief description of the function of data input}',
+  },
+  {
+    graphic: 'data-input.gif',
+    width: '42',
+    height: '55',
+    title: 'Data Input',
+    subText: '{Brief description of the function of data input}',
+  },
+  {
+    graphic: 'reports.gif',
+    width: '42',
+    height: '55',
+    title: 'Reports',
+    subText: '{Brief description of the function of reports}',
+  },
+];
+
 const libPasExtraContent = [
   {
     graphic: 'light-bulb.gif',
@@ -93,6 +183,66 @@ const libPasExtraContent = [
     extraBodyContent: [
       {
         bodyText: 'LibPas Extra Content',
+        htmlElement: 'p',
+      },
+      {
+        bodyText:
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        htmlElement: 'p',
+      },
+      {
+        listItems: [
+          {
+            li: 'Ut enim ad minim veniam, quis nostrud exercitation',
+          },
+          {
+            li: 'Ullamco laboris nisi ut aliquip ex ea commodo consequat',
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const informUsExtraContent = [
+  {
+    graphic: 'light-bulb.gif',
+    width: '32',
+    height: '37',
+    heading: 'Did you know that you can do this if you do that?',
+    extraBodyContent: [
+      {
+        bodyText: 'InformUs Extra Content',
+        htmlElement: 'p',
+      },
+      {
+        bodyText:
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        htmlElement: 'p',
+      },
+      {
+        listItems: [
+          {
+            li: 'Ut enim ad minim veniam, quis nostrud exercitation',
+          },
+          {
+            li: 'Ullamco laboris nisi ut aliquip ex ea commodo consequat',
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const libSatExtraContent = [
+  {
+    graphic: 'light-bulb.gif',
+    width: '32',
+    height: '37',
+    heading: 'Did you know that you can do this if you do that?',
+    extraBodyContent: [
+      {
+        bodyText: 'LibSAT Extra Content',
         htmlElement: 'p',
       },
       {
@@ -1336,8 +1486,25 @@ function getMegaMenu(id) {
           if (parentDiv) {
             let id = parentDiv.id;
             console.log(id); // Logs "LibSAT"
+
+            if (id === 'LibPas') {
+              renderMenu(menu, menuContainer);
+              renderBodyContent(libPasBodyContent, menuContainer);
+              renderExtraContent(libPasExtraContent, menuContainer);
+            } else if (id === 'LibSAT') {
+              renderMenu(menu, menuContainer);
+              renderBodyContent(libSATBodyContent, menuContainer);
+              renderExtraContent(libSatExtraContent, menuContainer);
+            } else if (id === 'InformUs') {
+              renderMenu(menu, menuContainer);
+              renderBodyContent(informUsBodyContent, menuContainer);
+              renderExtraContent(informUsExtraContent, menuContainer);
+            } else {
+              console.log('something went wrong');
+            }
           }
-          toggleTopLevelMenu(this);
+
+          //toggleTopLevelMenu(this);
         }
       },
       true // Runs in capture phase
@@ -1399,10 +1566,10 @@ function renderMenu(menuData, menuContainer) {
   menuContainer.appendChild(fragment);
 }
 
-function renderBodyContent(contentData, menuContainer) {
+function renderBodyContent(contentData, contentContainer) {
   const contentTemplate = document.querySelector('#menuContent');
 
-  if (!contentTemplate || !menuContainer) {
+  if (!contentTemplate || !contentContainer) {
     console.error('Error: Body content template or container not found.');
     return;
   }
@@ -1431,7 +1598,7 @@ function renderBodyContent(contentData, menuContainer) {
     fragment.appendChild(menuContent);
   });
 
-  menuContainer.appendChild(fragment);
+  contentContainer.appendChild(fragment);
 }
 
 function renderExtraContent(contentData, menuContainer) {
