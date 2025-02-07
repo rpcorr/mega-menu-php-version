@@ -1567,6 +1567,12 @@ function renderMenu(menuData, menuContainer, currentMenuItem) {
   });
 
   menuContainer.appendChild(fragment);
+
+  // Set focus to the current menu item
+  const currentAnchor = menuContainer.querySelector('a[aria-current="true"]');
+  if (currentAnchor) {
+    currentAnchor.focus();
+  }
 }
 
 function renderBodyContent(contentData, contentContainer) {
