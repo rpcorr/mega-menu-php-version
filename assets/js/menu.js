@@ -1170,10 +1170,8 @@ function toggleTopLevelMenu(menuLink) {
   const allMenuItems = document.querySelectorAll('.menu-item-has-children > a');
   const isExpanded = menuLink.getAttribute('aria-expanded') === 'true';
 
-  // Remove 'active' from all grid items
-  document.querySelectorAll('.grid-item.menu').forEach((item) => {
-    item.classList.remove('active');
-  });
+  // Remove active class from all grid items
+  removeActiveFromAllGridItems();
 
   // Close all other menus
   allMenuItems.forEach((link) => {
@@ -1442,6 +1440,7 @@ function perserveMenuColour() {
 
   document.getElementById('menu-more').addEventListener('mouseleave', () => {
     document.getElementById('menuMoreLink').classList.remove('active');
+
     if (
       document.getElementById('menuMoreLink') &&
       document.getElementById('menuMoreLink').className.trim() === ''
@@ -1460,12 +1459,19 @@ function removeActiveClass() {
   });
 }
 
+function removeActiveFromAllGridItems() {
+  // Remove 'active' from all grid items
+  document.querySelectorAll('.grid-item.menu').forEach((item) => {
+    item.classList.remove('active');
+  });
+}
+
 function getMegaMenu(id) {
   const menuContainer = document.getElementById(id);
 
   if (!menuContainer) return;
 
-  renderMenu(menu, menuContainer);
+  renderMenu(menu, menuContainer, 'LibPas');
   renderBodyContent(libPasBodyContent, menuContainer);
   renderExtraContent(libPasExtraContent, menuContainer);
 
@@ -1474,37 +1480,34 @@ function getMegaMenu(id) {
     menuContainer.addEventListener(
       'click',
       function (event) {
-        //console.log('Captured click before bubbling:', event.target);
-
         const anchor = event.target.closest('a');
         if (anchor) {
-          //console.log('Captured anchor:', anchor.href);
-
           // obtain id of grid-item for the clicked link
           event.preventDefault();
+
+          // remove active from all grid items
+          removeActiveFromAllGridItems();
+
           let parentDiv = anchor.closest('.grid-item.menu');
           if (parentDiv) {
             let id = parentDiv.id;
-            console.log(id); // Logs "LibSAT"
 
             if (id === 'LibPas') {
-              renderMenu(menu, menuContainer);
+              renderMenu(menu, menuContainer, 'LibPas');
               renderBodyContent(libPasBodyContent, menuContainer);
               renderExtraContent(libPasExtraContent, menuContainer);
             } else if (id === 'LibSAT') {
-              renderMenu(menu, menuContainer);
+              renderMenu(menu, menuContainer, 'LibSAT');
               renderBodyContent(libSATBodyContent, menuContainer);
               renderExtraContent(libSatExtraContent, menuContainer);
             } else if (id === 'InformUs') {
-              renderMenu(menu, menuContainer);
+              renderMenu(menu, menuContainer, 'InformUs');
               renderBodyContent(informUsBodyContent, menuContainer);
               renderExtraContent(informUsExtraContent, menuContainer);
             } else {
               console.log('something went wrong');
             }
           }
-
-          //toggleTopLevelMenu(this);
         }
       },
       true // Runs in capture phase
@@ -1515,7 +1518,7 @@ function getMegaMenu(id) {
   }
 }
 
-function renderMenu(menuData, menuContainer) {
+function renderMenu(menuData, menuContainer, currentMenuItem) {
   const menuTemplate = document.querySelector('#menuTemplate');
 
   if (!menuTemplate || !menuContainer) {
@@ -1551,14 +1554,14 @@ function renderMenu(menuData, menuContainer) {
     strong.textContent = item.menuTitle;
     span.textContent = item.subText;
 
-    // Set active class for first item
-    if (index === 0) {
+    // Set menuItem id for identification
+    menuItem.setAttribute('id', item.menuTitle);
+
+    // Set active class for currentMenuItem
+    if (currentMenuItem === menuItem.id) {
       menuItem.classList.add('active');
       anchor.setAttribute('aria-current', 'true');
     }
-
-    // Set menuItem id for identification
-    menuItem.setAttribute('id', item.menuTitle);
 
     fragment.appendChild(menuContent);
   });
