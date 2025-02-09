@@ -1214,11 +1214,12 @@ function toggleTopLevelMenu(menuLink) {
     );
 
     if (gridContainer) {
-      gridContainer.id = 'megaMenu';
-      getMegaMenu('megaMenu');
+      document
+        .querySelectorAll('.grid-container-multiple')
+        .forEach((menuContainer) => {
+          getMegaMenu(menuContainer);
+        });
     }
-  } else if (megaMenuElement) {
-    megaMenuElement.removeAttribute('id');
   }
 
   // Keep parent (More) link open when a child submenu is open
@@ -1466,54 +1467,56 @@ function removeActiveFromAllGridItems() {
   });
 }
 
-function getMegaMenu(id) {
-  const menuContainer = document.getElementById(id);
+function getMegaMenu(menuContainer) {
+  if (!menuContainer) return; // Exit if no menu container is found
 
-  if (!menuContainer) return;
-
+  // Render the default menu items and content for 'LibPas' when the menu initializes
   renderMenu(menu, menuContainer, 'LibPas');
   renderBodyContent(libPasBodyContent, menuContainer);
   renderExtraContent(libPasExtraContent, menuContainer);
 
-  // Prevent multiple event listeners
+  // Prevent adding multiple event listeners to the same menu container
   if (!menuContainer.dataset.listenerAdded) {
     menuContainer.addEventListener(
       'click',
       function (event) {
-        const anchor = event.target.closest('a');
+        const anchor = event.target.closest('a'); // Check if a link was clicked
         if (anchor) {
-          // obtain id of grid-item for the clicked link
-          event.preventDefault();
+          event.preventDefault(); // Prevent default link behavior
 
-          // remove active from all grid items
-          removeActiveFromAllGridItems();
+          removeActiveFromAllGridItems(); // Remove active class from all grid items
 
-          let parentDiv = anchor.closest('.grid-item.menu');
+          let parentDiv = anchor.closest('.grid-item.menu'); // Find the closest menu item container
           if (parentDiv) {
-            let id = parentDiv.id;
+            let id = parentDiv.id; // Get the ID of the clicked menu item
 
-            if (id === 'LibPas') {
-              renderMenu(menu, menuContainer, 'LibPas');
-              renderBodyContent(libPasBodyContent, menuContainer);
-              renderExtraContent(libPasExtraContent, menuContainer);
-            } else if (id === 'LibSAT') {
-              renderMenu(menu, menuContainer, 'LibSAT');
-              renderBodyContent(libSATBodyContent, menuContainer);
-              renderExtraContent(libSatExtraContent, menuContainer);
-            } else if (id === 'InformUs') {
-              renderMenu(menu, menuContainer, 'InformUs');
-              renderBodyContent(informUsBodyContent, menuContainer);
-              renderExtraContent(informUsExtraContent, menuContainer);
-            } else {
-              console.log('something went wrong');
+            // Render content based on the clicked menu item
+            switch (id) {
+              case 'LibPas':
+                renderMenu(menu, menuContainer, 'LibPas');
+                renderBodyContent(libPasBodyContent, menuContainer);
+                renderExtraContent(libPasExtraContent, menuContainer);
+                break;
+              case 'LibSAT':
+                renderMenu(menu, menuContainer, 'LibSAT');
+                renderBodyContent(libSATBodyContent, menuContainer);
+                renderExtraContent(libSatExtraContent, menuContainer);
+                break;
+              case 'InformUs':
+                renderMenu(menu, menuContainer, 'InformUs');
+                renderBodyContent(informUsBodyContent, menuContainer);
+                renderExtraContent(informUsExtraContent, menuContainer);
+                break;
+              default:
+                console.log('Something went wrong'); // Debugging: Log an error if no match is found
             }
           }
         }
       },
-      true // Runs in capture phase
+      true // Run the event listener in the capture phase
     );
 
-    // Mark as initialized
+    // Mark the menu container as initialized to prevent duplicate listeners
     menuContainer.dataset.listenerAdded = 'true';
   }
 }
