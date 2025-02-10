@@ -823,6 +823,14 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   /*grid-auto-flow: row; */ /* Reset auto-flow to prevent forced columns */
 }
 
+#menu-more
+  .mega-menu-column-4
+  .grid-container-multiple
+  .span-all-rows
+  > div:first-child {
+  width: 100%;
+}
+
 @media (max-width: 1366px) {
   #menu-more .mega-menu-column-4 .grid-container-multiple {
     grid-auto-flow: row;
