@@ -831,7 +831,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   width: 100%;
 }
 
-@media (max-width: 1366px) {
+@media (max-width: 85.375rem) {
+  /* 1366px */
   #menu-more .mega-menu-column-4 .grid-container-multiple {
     grid-auto-flow: row;
     grid-template-columns: repeat(3, 1fr);
@@ -848,5 +849,21 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
   #menu-more .mega-menu-column-4 .grid-container-multiple > .grid-item p {
     text-align: left;
+  }
+}
+
+@media (max-width: 60rem) {
+  .mega-menu-column-4 .grid-container-multiple {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, 1fr);
+    padding-right: 0;
+  }
+
+  .mega-menu-column-4 .grid-container-multiple .span-all-rows {
+    grid-row: 5 / -1;
+    grid-column: 1 / -1;
+    margin-top: 1rem;
+    margin-left: 0;
+    justify-content: start;
   }
 }
