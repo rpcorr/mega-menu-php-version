@@ -658,6 +658,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 .mega-menu-column-4 .grid-container-multiple > .grid-item p {
   margin-top: 0;
   margin-left: 1em;
+  text-align: left;
 }
 
 .mega-menu-column-4 .grid-container-multiple > .grid-item a {
@@ -765,6 +766,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 .mega-menu-column-4 .grid-container-multiple > .menu-content ul {
   padding-left: 1.5rem; /* Indent the list for better readability */
   margin: 0; /* Reset default margins */
+  text-align: left;
 }
 
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows ul li,
