@@ -695,8 +695,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 .mega-menu-column-4 .grid-container-multiple .caret:before {
   content: '';
   position: absolute;
-  top: 6px;
-  left: 13px;
+  top: 5px;
+  left: 12px;
   border-left: 9px solid #000;
   border-top: 9px solid transparent;
   border-bottom: 9px solid transparent;
@@ -705,8 +705,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 .mega-menu-column-4 .grid-container-multiple .caret:after {
   content: '';
   position: absolute;
-  left: 13px;
-  top: 11px;
+  left: 12px;
+  top: 10px;
   border-left: 4px solid #fff;
   border-top: 4px solid transparent;
   border-bottom: 4px solid transparent;
