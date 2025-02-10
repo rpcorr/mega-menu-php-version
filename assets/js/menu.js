@@ -688,63 +688,21 @@ document.addEventListener('DOMContentLoaded', () => {
         menuHTML += strLibSatMenuStructure;
 
       // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service <i class="caret angle-down"></i></a>
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Services <i class="caret angle-down"></i></a>
             <div class="sub-menu-div mega-menu mega-menu-column-4">
             <div class="grid-container-multiple"></div>
             </div>
           </li>`;
 
       // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2<i class="caret angle-down"></i></a>
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Item 3<i class="caret angle-down"></i></a>
             <div class="sub-menu-div mega-menu mega-menu-column-4">
             <div class="grid-container-multiple"></div>
             </div>
           </li>`;
 
       // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2<i class="caret angle-down"></i></a>
-            <div class="sub-menu-div mega-menu mega-menu-column-4">
-            <div class="grid-container-multiple"></div>
-            </div>
-          </li>`;
-
-      // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2<i class="caret angle-down"></i></a>
-            <div class="sub-menu-div mega-menu mega-menu-column-4">
-            <div class="grid-container-multiple"></div>
-            </div>
-          </li>`;
-
-      // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2<i class="caret angle-down"></i></a>
-            <div class="sub-menu-div mega-menu mega-menu-column-4">
-            <div class="grid-container-multiple"></div>
-            </div>
-          </li>`;
-
-      // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2<i class="caret angle-down"></i></a>
-            <div class="sub-menu-div mega-menu mega-menu-column-4">
-            <div class="grid-container-multiple"></div>
-            </div>
-          </li>`;
-
-      // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2<i class="caret angle-down"></i></a>
-            <div class="sub-menu-div mega-menu mega-menu-column-4">
-            <div class="grid-container-multiple"></div>
-            </div>
-          </li>`;
-
-      // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2<i class="caret angle-down"></i></a>
-            <div class="sub-menu-div mega-menu mega-menu-column-4">
-            <div class="grid-container-multiple"></div>
-            </div>
-          </li>`;
-
-      // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2<i class="caret angle-down"></i></a>
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Support<i class="caret angle-down"></i></a>
             <div class="sub-menu-div mega-menu mega-menu-column-4">
             <div class="grid-container-multiple"></div>
             </div>
