@@ -748,6 +748,10 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   box-sizing: border-box; /* Include padding in the width calculation */
 }
 
+.mega-menu-column-4 .grid-container-multiple > .menu-content p {
+  margin-right: 2.5rem;
+}
+
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows p,
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows li {
   margin: 0; /* Remove default margin to prevent spacing issues */
