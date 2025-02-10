@@ -701,6 +701,55 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </li>`;
 
+      // Services Menu
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2<i class="caret angle-down"></i></a>
+            <div class="sub-menu-div mega-menu mega-menu-column-4">
+            <div class="grid-container-multiple"></div>
+            </div>
+          </li>`;
+
+      // Services Menu
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2<i class="caret angle-down"></i></a>
+            <div class="sub-menu-div mega-menu mega-menu-column-4">
+            <div class="grid-container-multiple"></div>
+            </div>
+          </li>`;
+
+      // Services Menu
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2<i class="caret angle-down"></i></a>
+            <div class="sub-menu-div mega-menu mega-menu-column-4">
+            <div class="grid-container-multiple"></div>
+            </div>
+          </li>`;
+
+      // Services Menu
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2<i class="caret angle-down"></i></a>
+            <div class="sub-menu-div mega-menu mega-menu-column-4">
+            <div class="grid-container-multiple"></div>
+            </div>
+          </li>`;
+
+      // Services Menu
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2<i class="caret angle-down"></i></a>
+            <div class="sub-menu-div mega-menu mega-menu-column-4">
+            <div class="grid-container-multiple"></div>
+            </div>
+          </li>`;
+
+      // Services Menu
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2<i class="caret angle-down"></i></a>
+            <div class="sub-menu-div mega-menu mega-menu-column-4">
+            <div class="grid-container-multiple"></div>
+            </div>
+          </li>`;
+
+      // Services Menu
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Service 2<i class="caret angle-down"></i></a>
+            <div class="sub-menu-div mega-menu mega-menu-column-4">
+            <div class="grid-container-multiple"></div>
+            </div>
+          </li>`;
+
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
 
       navItems = document.querySelectorAll('#menu-main-menu > li');
