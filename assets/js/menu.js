@@ -708,7 +708,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </li>`;
 
-      menuHTML += `<li class="menu-item-has-children hover"><a href="#" aria-expanded="false" aria-label="Profile has a sub menu. Click enter to open">John Smith <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="#">My Profile</a></li><li><a href="#">Settings</a></li><li><a href="#">Notifications</a></li><li><a href="#">Help &amp; Support</a></li><li><a href="#">Sign Out</a></li></ul></li>`;
+      menuHTML += `<li class="menu-item-has-children hover"><a href="#" aria-expanded="false" aria-label="Profile has a sub menu. Click enter to open"><div class="profile">JS</div>John Smith <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="#">My Profile</a></li><li><a href="#">Settings</a></li><li><a href="#">Notifications</a></li><li><a href="#">Help &amp; Support</a></li><li><a href="#">Sign Out</a></li></ul></li>`;
 
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
 
@@ -1386,18 +1386,19 @@ function updateMenuMoreTabIndex() {
         const menuItem = menuItems[menuItems.length - 2];
         if (menuItem.textContent.trim().includes('Profile')) {
           menuItem.style.marginLeft = 'auto';
+
+          // override padding left
+          const anchor = menuItem.querySelector('a');
+          anchor.style.paddingLeft = '0.5rem';
         }
       }
     } else {
       // If text content exists, restore tabindex and remove margin adjustment
       menuLink.removeAttribute('tabindex');
 
-      if (menuItems.length > 1) {
-        const menuItem = menuItems[menuItems.length - 2];
-        if (menuItem.textContent.trim().includes('Profile')) {
-          menuItem.style.marginLeft = '';
-        }
-      }
+      // add a margin right of 0.5rem to the profile class
+      const profile = document.querySelector('.profile');
+      profile.style.marginRight = '0.5rem';
     }
   }
 }
