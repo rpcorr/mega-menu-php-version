@@ -708,6 +708,8 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </li>`;
 
+      menuHTML += `<li class="menu-item-has-children hover"><a href="#" aria-expanded="false" aria-label="Profile has a sub menu. Click enter to open">John Smith <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="#">My Profile</a></li><li><a href="#">Settings</a></li><li><a href="#">Notifications</a></li><li><a href="#">Help &amp; Support</a></li><li><a href="#">Sign Out</a></li></ul></li>`;
+
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
 
       navItems = document.querySelectorAll('#menu-main-menu > li');
@@ -1362,15 +1364,40 @@ function determineMegaMenuPosition() {
 }
 
 function updateMenuMoreTabIndex() {
+  // Get the "More" menu link element
   const menuLink = document.getElementById('menuMoreLink');
+
+  // Select all top-level menu items that have children
+  const menuItems = document.querySelectorAll(
+    '#menu-main-menu > li.menu-item-has-children'
+  );
+
   if (menuLink) {
     // Get text content excluding the icon element
     const textContent = menuLink.childNodes[0]?.nodeValue.trim();
 
     if (!textContent) {
+      // If there is no text content, make the link unfocusable
       menuLink.setAttribute('tabindex', '-1');
+
+      // Apply margin-left: auto to the second last top-level menu item if there are at least two
+      // and its text content contains "Profile"
+      if (menuItems.length > 1) {
+        const menuItem = menuItems[menuItems.length - 2];
+        if (menuItem.textContent.trim().includes('Profile')) {
+          menuItem.style.marginLeft = 'auto';
+        }
+      }
     } else {
+      // If text content exists, restore tabindex and remove margin adjustment
       menuLink.removeAttribute('tabindex');
+
+      if (menuItems.length > 1) {
+        const menuItem = menuItems[menuItems.length - 2];
+        if (menuItem.textContent.trim().includes('Profile')) {
+          menuItem.style.marginLeft = '';
+        }
+      }
     }
   }
 }
