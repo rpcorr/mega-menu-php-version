@@ -1339,9 +1339,10 @@ function determineMegaMenuPosition() {
 
       if (subMenuDiv) {
         if (!subMenuDiv.dataset.positioned) {
-          // Keep it invisible until positioned
+          // Initially, keep it hidden and positioned above
           subMenuDiv.style.opacity = '0';
           subMenuDiv.style.pointerEvents = 'none';
+          subMenuDiv.style.transform = 'translateY(-200px)'; // Start further above
 
           const rect = subMenuDiv.getBoundingClientRect();
           const distanceFromRight = screenWidth - rect.right;
@@ -1364,10 +1365,11 @@ function determineMegaMenuPosition() {
           // Mark it as positioned
           subMenuDiv.dataset.positioned = 'true';
 
-          // Wait for positioning to apply, then fade in
+          // Wait for positioning to apply, then slide in and show
           requestAnimationFrame(() => {
-            subMenuDiv.style.opacity = '1';
+            subMenuDiv.style.opacity = '1'; // Fade it in
             subMenuDiv.style.pointerEvents = 'auto'; // Enable interaction
+            subMenuDiv.style.transform = 'translateY(0)'; // Slide it into place
           });
         }
       }
