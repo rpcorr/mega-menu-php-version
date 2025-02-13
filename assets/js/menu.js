@@ -1325,9 +1325,9 @@ function determineMegaMenuPosition() {
     document.querySelector('#header').getBoundingClientRect().width
   );
 
-  let count = 0; // keep track of number of menu that comes before the "More" menu
+  let count = 0; // Keep track of number of menu items before "More"
 
-  // Process each menu item that comes before the "More" menu
+  // Process each menu item before "More"
   for (const li of menuItems) {
     count++;
     if (li === menuMore) break; // Stop when reaching #menu-more
@@ -1335,14 +1335,18 @@ function determineMegaMenuPosition() {
     let ariaExpanded = li.querySelector('a').getAttribute('aria-expanded');
 
     if (ariaExpanded === 'true') {
-      const subMenuDiv = li.querySelector('.sub-menu-div'); // Find the mega sub-menu element
+      const subMenuDiv = li.querySelector('.sub-menu-div'); // Find mega sub-menu element
 
       if (subMenuDiv) {
         if (!subMenuDiv.dataset.positioned) {
+          // Keep it invisible until positioned
+          subMenuDiv.style.opacity = '0';
+          subMenuDiv.style.pointerEvents = 'none';
+
           const rect = subMenuDiv.getBoundingClientRect();
           const distanceFromRight = screenWidth - rect.right;
 
-          // Determine mega menu sub menu offset value base on the browser
+          // Determine mega menu sub-menu offset based on browser
           let offset = 110; // Default offset
           const userAgent = navigator.userAgent.toLowerCase();
           if (userAgent.includes('chrome')) {
@@ -1352,11 +1356,19 @@ function determineMegaMenuPosition() {
           } else if (userAgent.includes('opr') || userAgent.includes('opera')) {
             offset -= 10; // Opera
           }
-          // Move the element to align it to the right
-          subMenuDiv.style.position = 'absolute'; // Ensure it's positioned absolutely
+
+          // Position it properly
+          subMenuDiv.style.position = 'absolute';
           subMenuDiv.style.right = -distanceFromRight + offset + 'px';
-          // To prevent rect.right being reapplied each time the submenu is opened
-          subMenuDiv.dataset.positioned = 'true'; // Mark as positioned
+
+          // Mark it as positioned
+          subMenuDiv.dataset.positioned = 'true';
+
+          // Wait for positioning to apply, then fade in
+          requestAnimationFrame(() => {
+            subMenuDiv.style.opacity = '1';
+            subMenuDiv.style.pointerEvents = 'auto'; // Enable interaction
+          });
         }
       }
     }

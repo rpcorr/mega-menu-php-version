@@ -199,6 +199,9 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
 header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   background-color: rgba(255, 255, 255, 0.9);
   color: #000000;
+  opacity: 0;
+  pointer-events: none; /* Prevents interaction while hidden */
+  transition: opacity 0.2s ease-in-out; /* Smooth fade-in */
 }
 
 .login-form {
