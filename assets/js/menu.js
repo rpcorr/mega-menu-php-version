@@ -1418,7 +1418,6 @@ function updateMenuMoreTabIndex() {
         const menuItem = menuItems[menuItems.length - 2];
         if (menuItem.textContent.trim().includes('Profile')) {
           menuItem.style.marginLeft = 'auto';
-          menuItem.style.zIndex = '-1';
 
           // override padding left
           const anchor = menuItem.querySelector('a');

@@ -200,6 +200,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   background-color: rgba(255, 255, 255, 0.9);
   color: #000000;
   opacity: 0;
+  z-index: 1;
   pointer-events: none; /*Prevent interaction while hidden*/
   transform: translateY(-200px); /*Start further off-screen*/
   transition: opacity 0.5s ease, transform 0.5s ease; /*Smoothtransition*/
