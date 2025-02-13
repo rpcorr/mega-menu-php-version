@@ -633,6 +633,11 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
   content: '';
 }
 
+header {
+  position: fixed;
+  width: 100%;
+}
+
 /*//////////////////////////////////////// */
 
 header nav ul.menu > li.menu-item-has-children > .sub-menu-div {

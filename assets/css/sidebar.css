@@ -1,0 +1,61 @@
+.sidebar-container {
+  position: fixed;
+  top: 87px;
+  /*Start below the header*/
+  right: -250px;
+  /*Start hidden off-screen*/
+  height: calc(100vh - 82px);
+  /*Full viewport height minus the header*/
+  width: 250px;
+  background-color: #444;
+  color: white;
+  padding: 20px;
+  z-index: 100; /*Make sure sidebar is above content*/
+  /* Smooth sliding transition */
+  transition: right 0.3s ease;
+  -webkit-transition: right 0.3s ease;
+  -moz-transition: right 0.3s ease;
+  -ms-transition: right 0.3s ease;
+  -o-transition: right 0.3s ease;
+}
+
+.sidebar {
+  width: 100%;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Button to toggle sidebar */
+.toggle-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 0px; /*Positioned to the right of the sidebar when collapsed*/
+  background-color: #444;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 200;
+  transition: right 0.3s ease; /*Smooth transition when sidebar expands*/
+  -webkit-transition: right 0.3s ease;
+  -moz-transition: right 0.3s ease;
+  -ms-transition: right 0.3s ease;
+  -o-transition: right 0.3s ease;
+  -webkit-transition: right 0.3s ease;
+}
+
+.toggle-btn:hover {
+  background-color: #555;
+}
