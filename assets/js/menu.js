@@ -1255,9 +1255,24 @@ function toggleTopLevelMenu(menuLink) {
         if (icon) icon.classList.replace('angle-down', 'angle-up');
       });
     });
+    determineMegaMenuPosition();
   }
 
-  determineMegaMenuPosition();
+  // get the subMenu div
+  const subMenuDiv = menuLink.nextElementSibling;
+  if (menuLink.getAttribute('aria-expanded') === 'false') {
+    // if subMenuDiv exist remove styles
+    if (subMenuDiv.classList.contains('sub-menu-div')) {
+      subMenuDiv.style.removeProperty('opacity');
+      subMenuDiv.style.removeProperty('pointer-events');
+      subMenuDiv.style.removeProperty('transform');
+    }
+  }
+
+  if (menuLink.getAttribute('aria-expanded') === 'true') {
+    // slide in sub mega menu and show
+    displaySubMegaMenu(subMenuDiv);
+  }
 
   // see if mega menu spills over to the left, if so set container width
   const menuMore = document.getElementById('menu-more');
@@ -1334,9 +1349,9 @@ function determineMegaMenuPosition() {
 
     let ariaExpanded = li.querySelector('a').getAttribute('aria-expanded');
 
-    if (ariaExpanded === 'true') {
-      const subMenuDiv = li.querySelector('.sub-menu-div'); // Find mega sub-menu element
+    const subMenuDiv = li.querySelector('.sub-menu-div'); // Find mega sub-menu element
 
+    if (ariaExpanded === 'true') {
       if (subMenuDiv) {
         if (!subMenuDiv.dataset.positioned) {
           // Initially, keep it hidden and positioned above
@@ -1359,22 +1374,25 @@ function determineMegaMenuPosition() {
           }
 
           // Position it properly
-          subMenuDiv.style.position = 'absolute';
           subMenuDiv.style.right = -distanceFromRight + offset + 'px';
 
           // Mark it as positioned
           subMenuDiv.dataset.positioned = 'true';
 
           // Wait for positioning to apply, then slide in and show
-          requestAnimationFrame(() => {
-            subMenuDiv.style.opacity = '1'; // Fade it in
-            subMenuDiv.style.pointerEvents = 'auto'; // Enable interaction
-            subMenuDiv.style.transform = 'translateY(0)'; // Slide it into place
-          });
+          displaySubMegaMenu(subMenuDiv);
         }
       }
     }
   }
+}
+
+function displaySubMegaMenu(subMenuDiv) {
+  requestAnimationFrame(() => {
+    subMenuDiv.style.opacity = '1'; // Fade it in
+    subMenuDiv.style.pointerEvents = 'auto'; // Enable interaction
+    subMenuDiv.style.transform = 'translateY(0)'; // Slide it into place
+  });
 }
 
 function updateMenuMoreTabIndex() {

@@ -203,7 +203,6 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   pointer-events: none; /*Prevent interaction while hidden*/
   transform: translateY(-200px); /*Start further off-screen*/
   transition: opacity 0.5s ease, transform 0.5s ease; /*Smoothtransition*/
-  position: absolute; /* Ensure absolute positioning */
 }
 
 .login-form {
