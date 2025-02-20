@@ -645,7 +645,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   left: auto; /* Prevent conflicting left/right declarations */
 }
 
-.mega-menu-column-4 .grid-container-multiple {
+.mega-menu-column-4 .grid-container-multiple,
+.mega-menu-column-4 .grid-container-single {
   display: grid;
   grid-template-rows: repeat(3, minmax(100px, auto)); /* Allow rows to grow */
   grid-template-columns: 300px repeat(3, 1fr);
@@ -659,18 +660,21 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   grid-auto-flow: column;
 }
 
-.mega-menu-column-4 .grid-container-multiple > .grid-item {
+.mega-menu-column-4 .grid-container-multiple > .grid-item,
+.mega-menu-column-4 .grid-container-single > .grid-item {
   display: flex;
   align-items: center;
 }
 
-.mega-menu-column-4 .grid-container-multiple > .grid-item p {
+.mega-menu-column-4 .grid-container-multiple > .grid-item p,
+.mega-menu-column-4 .grid-container-single > .grid-item p {
   margin-top: 0;
   margin-left: 1em;
   text-align: left;
 }
 
-.mega-menu-column-4 .grid-container-multiple > .grid-item a {
+.mega-menu-column-4 .grid-container-multiple > .grid-item a,
+.mega-menu-column-4 .grid-container-single > .grid-item a {
   color: black;
   text-decoration: none;
 }
@@ -680,11 +684,13 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   font-weight: normal;
 }
 
-.mega-menu-column-4 .grid-container-multiple > .menu {
+.mega-menu-column-4 .grid-container-multiple > .menu,
+.mega-menu-column-4 .grid-container-single > .menu {
   padding: 1rem;
 }
 
-.mega-menu-column-4 .grid-container-multiple > .menu-content {
+.mega-menu-column-4 .grid-container-multiple > .menu-content,
+.mega-menu-column-4 .grid-container-single > .menu-content {
   padding-left: 3rem;
 }
 
@@ -698,11 +704,13 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   margin-left: auto;
 }
 
-.mega-menu-column-4 .grid-container-multiple .caret {
+.mega-menu-column-4 .grid-container-multiple .caret,
+.mega-menu-column-4 .grid-container-single .caret {
   position: relative;
 }
 
-.mega-menu-column-4 .grid-container-multiple .caret:before {
+.mega-menu-column-4 .grid-container-multiple .caret:before,
+.mega-menu-column-4 .grid-container-single .caret:before {
   content: '';
   position: absolute;
   top: 5px;
@@ -712,7 +720,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   border-bottom: 9px solid transparent;
 }
 
-.mega-menu-column-4 .grid-container-multiple .caret:after {
+.mega-menu-column-4 .grid-container-multiple .caret:after,
+.mega-menu-column-4 .grid-container-single .caret:after {
   content: '';
   position: absolute;
   left: 12px;
@@ -723,7 +732,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 }
 
 /* Make the 4th column item span the entire height */
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows {
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows,
+.mega-menu-column-4 .grid-container-single > .span-all-rows {
   grid-row: span 3;
   display: flex;
   justify-content: start;
@@ -733,7 +743,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 }
 
 /* Ensure content in .span-all-rows wraps properly */
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows {
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows,
+.mega-menu-column-4 .grid-container-single > .span-all-rows {
   grid-row: span 3;
   display: flex;
   flex-wrap: wrap; /* Enable wrapping */
@@ -749,7 +760,10 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 /* Ensure text content in <p> and <li> tags wraps */
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows p,
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows li,
-.mega-menu-column-4 .grid-container-multiple > .menu-content p {
+.mega-menu-column-4 .grid-container-multiple > .menu-content p,
+.mega-menu-column-4 .grid-container-single > .span-all-rows p,
+.mega-menu-column-4 .grid-container-single > .span-all-rows li,
+.mega-menu-column-4 .grid-container-single > .menu-content p {
   white-space: normal; /* Allow text to wrap to the next line */
   word-wrap: break-word; /* Break words that are too long */
   overflow-wrap: break-word; /* Support for modern browsers */
@@ -757,33 +771,42 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   box-sizing: border-box; /* Include padding in the width calculation */
 }
 
-.mega-menu-column-4 .grid-container-multiple > .menu-content p {
+.mega-menu-column-4 .grid-container-multiple > .menu-content p,
+.mega-menu-column-4 .grid-container-single > .menu-content p {
   margin-right: 2.5rem;
 }
 
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows p,
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows li {
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows li,
+.mega-menu-column-4 .grid-container-single > .span-all-rows p,
+.mega-menu-column-4 .grid-container-single > .span-all-rows li {
   margin: 0; /* Remove default margin to prevent spacing issues */
 }
 
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows #bodyContent p {
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows #bodyContent p,
+.mega-menu-column-4 .grid-container-single > .span-all-rows #bodyContent p {
   margin-bottom: 0.5rem;
 }
 
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows #bodyContent {
+.mega-menu-column-4 .grid-container-multiple > .span-all-rows #bodyContent,
+.mega-menu-column-4 .grid-container-single > .span-all-rows #bodyContent {
   font-weight: normal;
 }
 
 /* Add some spacing for <li> items in the list */
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows ul,
-.mega-menu-column-4 .grid-container-multiple > .menu-content ul {
+.mega-menu-column-4 .grid-container-multiple > .menu-content ul,
+.mega-menu-column-4 .grid-container-single > .span-all-rows ul,
+.mega-menu-column-4 .grid-container-single > .menu-content ul {
   padding-left: 1.5rem; /* Indent the list for better readability */
   margin: 0; /* Reset default margins */
   text-align: left;
 }
 
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows ul li,
-.mega-menu-column-4 .grid-container-multiple > .menu-content ul li {
+.mega-menu-column-4 .grid-container-multiple > .menu-content ul li,
+.mega-menu-column-4 .grid-container-single > .span-all-rows ul li,
+.mega-menu-column-4 .grid-container-single > .menu-content ul li {
   list-style: disc; /* Ensure a consistent bullet style */
 }
 
@@ -793,7 +816,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 }
 
 /* Set grey background colour for menu items*/
-.mega-menu-column-4 .grid-container-multiple > .menu {
+.mega-menu-column-4 .grid-container-multiple > .menu,
+.mega-menu-column-4 .grid-container-single > .menu {
   background-color: #999;
 }
 
@@ -802,16 +826,23 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows,
 .mega-menu-column-4 .grid-container-multiple > .menu.active,
 .mega-menu-column-4 .grid-container-multiple > .menu:hover,
-.mega-menu-column-4 .grid-container-multiple > .menu:has(a:focus) {
+.mega-menu-column-4 .grid-container-multiple > .menu:has(a:focus),
+.mega-menu-column-4 .grid-container-single > .menu-content,
+.mega-menu-column-4 .grid-container-single > .span-all-rows,
+.mega-menu-column-4 .grid-container-single > .menu.active,
+.mega-menu-column-4 .grid-container-single > .menu:has(a:focus) {
   background-color: #fff;
 }
 
 .mega-menu-column-4 .grid-container-multiple > .active > .circle,
-.mega-menu-column-4 .grid-container-multiple > .menu:has(a:focus) > .circle {
+.mega-menu-column-4 .grid-container-multiple > .menu:has(a:focus) > .circle,
+.mega-menu-column-4 .grid-container-single > .active > .circle,
+.mega-menu-column-4 .grid-container-single > .menu:has(a:focus) > .circle {
   display: none;
 }
 
-.mega-menu-column-4 .grid-container-multiple > .menu:hover > .circle {
+.mega-menu-column-4 .grid-container-multiple > .menu:hover > .circle,
+.mega-menu-column-4 .grid-container-single > .menu:hover > .circle {
   display: none;
 }
 
@@ -824,7 +855,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
 /* Styles .grid-container-multiple that is under #menu-more menu */
 
-#menu-more .mega-menu-column-4 .grid-container-multiple {
+#menu-more .mega-menu-column-4 .grid-container-multiple,
+#menu-more .mega-menu-column-4 .grid-container-single {
   width: 90vw; /* Make the grid expand to the full viewport width */
   max-width: 100%; /* Prevent overflow */
   left: 0; /* Ensure it starts from the left edge */
@@ -836,19 +868,26 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   .mega-menu-column-4
   .grid-container-multiple
   .span-all-rows
+  > div:first-child,
+#menu-more
+  .mega-menu-column-4
+  .grid-container-single
+  .span-all-rows
   > div:first-child {
   width: 100%;
 }
 
 @media (max-width: 85.375rem) {
   /* 1366px */
-  #menu-more .mega-menu-column-4 .grid-container-multiple {
+  #menu-more .mega-menu-column-4 .grid-container-multiple,
+  #menu-more .mega-menu-column-4 .grid-container-single {
     grid-auto-flow: row;
     grid-template-columns: repeat(3, 1fr);
     padding-right: 0;
   }
 
-  #menu-more .mega-menu-column-4 .grid-container-multiple .span-all-rows {
+  #menu-more .mega-menu-column-4 .grid-container-multiple .span-all-rows,
+  #menu-more .mega-menu-column-4 .grid-container-single .span-all-rows {
     grid-row: 5 / -1;
     grid-column: 1 / -1;
     margin-top: 1rem;
@@ -856,20 +895,23 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
     justify-content: start;
   }
 
-  #menu-more .mega-menu-column-4 .grid-container-multiple > .grid-item p {
+  #menu-more .mega-menu-column-4 .grid-container-multiple > .grid-item p,
+  #menu-more .mega-menu-column-4 .grid-container-single > .grid-item p {
     text-align: left;
   }
 }
 
 @media (max-width: 64rem) {
   /* 1024px */
-  .mega-menu-column-4 .grid-container-multiple {
+  .mega-menu-column-4 .grid-container-multiple,
+  .mega-menu-column-4 .grid-container-single {
     grid-auto-flow: row;
     grid-template-columns: repeat(3, 1fr);
     padding-right: 0;
   }
 
-  .mega-menu-column-4 .grid-container-multiple .span-all-rows {
+  .mega-menu-column-4 .grid-container-multiple .span-all-rows,
+  .mega-menu-column-4 .grid-container-single .span-all-rows {
     grid-row: 5 / -1;
     grid-column: 1 / -1;
     margin-top: 1rem;
@@ -885,7 +927,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
     .mega-menu-column-4
     .grid-container-multiple
     > .menu:nth-child(2)
-    p {
+    p,
+  #menu-more .mega-menu-column-4 .grid-container-single > .menu:nth-child(2) p {
     margin-left: 0.5rem;
   }
 
@@ -893,20 +936,24 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
     .mega-menu-column-4
     .grid-container-multiple
     > .menu:nth-child(2)
-    a {
+    a,
+  #menu-more .mega-menu-column-4 .grid-container-single > .menu:nth-child(2) a {
     font-size: 0.95rem;
   }
 
-  #menu-more .mega-menu-column-4 .grid-container-multiple > .menu a {
+  #menu-more .mega-menu-column-4 .grid-container-multiple > .menu a,
+  #menu-more .mega-menu-column-4 .grid-container-single > .menu a {
     padding-left: 0;
   }
 
-  .mega-menu-column-4 .grid-container-multiple > .menu-content p {
+  .mega-menu-column-4 .grid-container-multiple > .menu-content p,
+  .mega-menu-column-4 .grid-container-single > .menu-content p {
     margin-right: 1.5rem;
     font-size: 0.9rem;
   }
 
-  .mega-menu-column-4 .grid-container-multiple > .menu-content {
+  .mega-menu-column-4 .grid-container-multiple > .menu-content,
+  .mega-menu-column-4 .grid-container-single > .menu-content {
     padding-left: 1rem;
   }
 }
@@ -915,13 +962,17 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   /* 480px */
 
   .mega-menu-column-4 .grid-container-multiple,
-  #menu-more .mega-menu-column-4 .grid-container-multiple {
+  #menu-more .mega-menu-column-4 .grid-container-multiple,
+  .mega-menu-column-4 .grid-container-single,
+  #menu-more .mega-menu-column-4 .grid-container-single {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(3, 80px) repeat(6, 90px);
   }
 
   .mega-menu-column-4 .grid-container-multiple .span-all-rows,
-  #menu-more .mega-menu-column-4 .grid-container-multiple .span-all-rows {
+  #menu-more .mega-menu-column-4 .grid-container-multiple .span-all-rows,
+  .mega-menu-column-4 .grid-container-single .span-all-rows,
+  #menu-more .mega-menu-column-4 .grid-container-single .span-all-rows {
     grid-row: 10 / -1;
     grid-column: 1 / -1;
     justify-content: start;

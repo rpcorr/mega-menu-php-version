@@ -33,6 +33,15 @@
       </div>
     </template> 
 
+    <template id="oneMenuTemplate">
+      <div class="grid-item menu" id="">
+        <img src="" />
+        <p>
+          <a href=""><strong></strong><br/><span></span></a>
+        </p>
+      </div>
+    </template> 
+
     <template id="menuContent">
       <div class="grid-item menu-content">
         <img src="" width="" height="" />

@@ -39,6 +39,33 @@ const menu = [
   },
 ];
 
+const menuSingle = [
+  {
+    graphic: 'pie.gif',
+    width: '36',
+    height: '33',
+    url: '#',
+    menuTitle: 'LibPas',
+    subText: 'Periodic data',
+  },
+  {
+    graphic: '',
+    width: '',
+    height: '',
+    url: '',
+    menuTitle: '',
+    subText: '',
+  },
+  {
+    graphic: '',
+    width: '',
+    height: '',
+    url: '',
+    menuTitle: '',
+    subText: '',
+  },
+];
+
 const libPasBodyContent = [
   {
     graphic: 'reports.gif',
@@ -697,7 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Services Menu
       menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Item 3<i class="caret angle-down"></i></a>
             <div class="sub-menu-div mega-menu mega-menu-column-4">
-            <div class="grid-container-multiple"></div>
+            <div class="grid-container-single"></div>
             </div>
           </li>`;
 
@@ -1226,7 +1253,13 @@ function toggleTopLevelMenu(menuLink) {
       document
         .querySelectorAll('.grid-container-multiple')
         .forEach((menuContainer) => {
-          getMegaMenu(menuContainer);
+          getMegaMenu(menuContainer, 'multiple');
+        });
+
+      document
+        .querySelectorAll('.grid-container-single')
+        .forEach((menuContainer) => {
+          getMegaMenu(menuContainer, 'single');
         });
     }
   }
@@ -1560,11 +1593,20 @@ function removeActiveFromAllGridItems() {
   });
 }
 
-function getMegaMenu(menuContainer) {
+function getMegaMenu(menuContainer, type) {
   if (!menuContainer) return; // Exit if no menu container is found
 
+  console.log(type);
+
   // Render the default menu items and content for 'LibPas' when the menu initializes
-  renderMenu(menu, menuContainer, 'LibPas');
+  if (type === 'multiple') {
+    renderMenu(menu, menuContainer, type, 'LibPas');
+  }
+
+  if (type === 'single') {
+    renderMenu(menuSingle, menuContainer, type, 'LibPas');
+  }
+
   renderBodyContent(libPasBodyContent, menuContainer);
   renderExtraContent(libPasExtraContent, menuContainer);
 
@@ -1586,17 +1628,22 @@ function getMegaMenu(menuContainer) {
             // Render content based on the clicked menu item
             switch (id) {
               case 'LibPas':
-                renderMenu(menu, menuContainer, 'LibPas');
+                if (type === 'multiple')
+                  renderMenu(menu, menuContainer, type, 'LibPas');
+
+                if (type === 'single')
+                  renderMenu(menuSingle, menuContainer, type, 'LibPas');
+
                 renderBodyContent(libPasBodyContent, menuContainer);
                 renderExtraContent(libPasExtraContent, menuContainer);
                 break;
               case 'LibSAT':
-                renderMenu(menu, menuContainer, 'LibSAT');
+                renderMenu(menu, menuContainer, type, 'LibSAT');
                 renderBodyContent(libSATBodyContent, menuContainer);
                 renderExtraContent(libSatExtraContent, menuContainer);
                 break;
               case 'InformUs':
-                renderMenu(menu, menuContainer, 'InformUs');
+                renderMenu(menu, menuContainer, type, 'InformUs');
                 renderBodyContent(informUsBodyContent, menuContainer);
                 renderExtraContent(informUsExtraContent, menuContainer);
                 break;
@@ -1614,8 +1661,16 @@ function getMegaMenu(menuContainer) {
   }
 }
 
-function renderMenu(menuData, menuContainer, currentMenuItem) {
-  const menuTemplate = document.querySelector('#menuTemplate');
+function renderMenu(menuData, menuContainer, type, currentMenuItem) {
+  let menuTemplate;
+
+  if (type === 'multiple')
+    menuTemplate = document.querySelector('#menuTemplate');
+
+  if (type === 'single')
+    menuTemplate = document.querySelector('#oneMenuTemplate');
+
+  console.log(menuData);
 
   if (!menuTemplate || !menuContainer) {
     console.error('Error: Menu template or container not found.');
