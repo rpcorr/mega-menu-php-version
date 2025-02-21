@@ -660,14 +660,30 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   grid-auto-flow: column;
 }
 
+.mega-menu-column-4 .grid-container-pages {
+  display: grid;
+  grid-template-rows: repeat(3, minmax(100px, auto)); /* Allow rows to grow */
+  grid-template-columns: repeat(4, 1fr);
+
+  height: auto; /* Allow the grid container to grow with content */
+  border: 1px solid #000;
+  background-color: #999;
+  padding-bottom: 1rem;
+  padding-right: 2rem;
+
+  grid-auto-flow: column;
+}
+
 .mega-menu-column-4 .grid-container-multiple > .grid-item,
-.mega-menu-column-4 .grid-container-single > .grid-item {
+.mega-menu-column-4 .grid-container-single > .grid-item,
+.mega-menu-column-4 .grid-container-pages > .grid-item {
   display: flex;
   align-items: center;
 }
 
 .mega-menu-column-4 .grid-container-multiple > .grid-item p,
-.mega-menu-column-4 .grid-container-single > .grid-item p {
+.mega-menu-column-4 .grid-container-single > .grid-item p,
+.mega-menu-column-4 .grid-container-pages > .grid-item p {
   margin-top: 0;
   margin-left: 1em;
   text-align: left;
@@ -690,7 +706,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 }
 
 .mega-menu-column-4 .grid-container-multiple > .menu-content,
-.mega-menu-column-4 .grid-container-single > .menu-content {
+.mega-menu-column-4 .grid-container-single > .menu-content,
+.mega-menu-column-4 .grid-container-pages > .menu-content {
   padding-left: 3rem;
 }
 
@@ -733,7 +750,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
 /* Make the 4th column item span the entire height */
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows,
-.mega-menu-column-4 .grid-container-single > .span-all-rows {
+.mega-menu-column-4 .grid-container-single > .span-all-rows,
+.mega-menu-column-4 .grid-container-pages > .span-all-rows {
   grid-row: span 3;
   display: flex;
   justify-content: start;
@@ -744,7 +762,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
 /* Ensure content in .span-all-rows wraps properly */
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows,
-.mega-menu-column-4 .grid-container-single > .span-all-rows {
+.mega-menu-column-4 .grid-container-single > .span-all-rows,
+.mega-menu-column-4 .grid-container-pages > .span-all-rows {
   grid-row: span 3;
   display: flex;
   flex-wrap: wrap; /* Enable wrapping */
@@ -763,7 +782,10 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 .mega-menu-column-4 .grid-container-multiple > .menu-content p,
 .mega-menu-column-4 .grid-container-single > .span-all-rows p,
 .mega-menu-column-4 .grid-container-single > .span-all-rows li,
-.mega-menu-column-4 .grid-container-single > .menu-content p {
+.mega-menu-column-4 .grid-container-single > .menu-content p,
+.mega-menu-column-4 .grid-container-pages > .span-all-rows p,
+.mega-menu-column-4 .grid-container-pages > .span-all-rows li,
+.mega-menu-column-4 .grid-container-pages > .menu-content p {
   white-space: normal; /* Allow text to wrap to the next line */
   word-wrap: break-word; /* Break words that are too long */
   overflow-wrap: break-word; /* Support for modern browsers */
@@ -772,24 +794,29 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 }
 
 .mega-menu-column-4 .grid-container-multiple > .menu-content p,
-.mega-menu-column-4 .grid-container-single > .menu-content p {
-  margin-right: 2.5rem;
+.mega-menu-column-4 .grid-container-single > .menu-content p,
+.mega-menu-column-4 .grid-container-pages > .menu-content p {
+  /* margin-right: 2.5rem; */
 }
 
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows p,
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows li,
 .mega-menu-column-4 .grid-container-single > .span-all-rows p,
-.mega-menu-column-4 .grid-container-single > .span-all-rows li {
+.mega-menu-column-4 .grid-container-single > .span-all-rows li,
+.mega-menu-column-4 .grid-container-pages > .span-all-rows p,
+.mega-menu-column-4 .grid-container-pages > .span-all-rows li {
   margin: 0; /* Remove default margin to prevent spacing issues */
 }
 
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows #bodyContent p,
-.mega-menu-column-4 .grid-container-single > .span-all-rows #bodyContent p {
+.mega-menu-column-4 .grid-container-single > .span-all-rows #bodyContent p,
+.mega-menu-column-4 .grid-container-pages > .span-all-rows #bodyContent p {
   margin-bottom: 0.5rem;
 }
 
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows #bodyContent,
-.mega-menu-column-4 .grid-container-single > .span-all-rows #bodyContent {
+.mega-menu-column-4 .grid-container-single > .span-all-rows #bodyContent,
+.mega-menu-column-4 .grid-container-pages > .span-all-rows #bodyContent {
   font-weight: normal;
 }
 
@@ -797,7 +824,9 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows ul,
 .mega-menu-column-4 .grid-container-multiple > .menu-content ul,
 .mega-menu-column-4 .grid-container-single > .span-all-rows ul,
-.mega-menu-column-4 .grid-container-single > .menu-content ul {
+.mega-menu-column-4 .grid-container-single > .menu-content ul,
+.mega-menu-column-4 .grid-container-pages > .span-all-rows ul,
+.mega-menu-column-4 .grid-container-pages > .menu-content ul {
   padding-left: 1.5rem; /* Indent the list for better readability */
   margin: 0; /* Reset default margins */
   text-align: left;
@@ -806,7 +835,9 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows ul li,
 .mega-menu-column-4 .grid-container-multiple > .menu-content ul li,
 .mega-menu-column-4 .grid-container-single > .span-all-rows ul li,
-.mega-menu-column-4 .grid-container-single > .menu-content ul li {
+.mega-menu-column-4 .grid-container-single > .menu-content ul li,
+.mega-menu-column-4 .grid-container-pages > .span-all-rows ul li,
+.mega-menu-column-4 .grid-container-pages > .menu-content ul li {
   list-style: disc; /* Ensure a consistent bullet style */
 }
 
@@ -830,7 +861,9 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 .mega-menu-column-4 .grid-container-single > .menu-content,
 .mega-menu-column-4 .grid-container-single > .span-all-rows,
 .mega-menu-column-4 .grid-container-single > .menu.active,
-.mega-menu-column-4 .grid-container-single > .menu:has(a:focus) {
+.mega-menu-column-4 .grid-container-single > .menu:has(a:focus),
+.mega-menu-column-4 .grid-container-pages > .menu-content,
+.mega-menu-column-4 .grid-container-pages > .span-all-rows {
   background-color: #fff;
 }
 
@@ -856,7 +889,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 /* Styles .grid-container-multiple that is under #menu-more menu */
 
 #menu-more .mega-menu-column-4 .grid-container-multiple,
-#menu-more .mega-menu-column-4 .grid-container-single {
+#menu-more .mega-menu-column-4 .grid-container-single,
+#menu-more .mega-menu-column-4 .grid-container-pages {
   width: 90vw; /* Make the grid expand to the full viewport width */
   max-width: 100%; /* Prevent overflow */
   left: 0; /* Ensure it starts from the left edge */
@@ -872,6 +906,11 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 #menu-more
   .mega-menu-column-4
   .grid-container-single
+  .span-all-rows
+  > div:first-child,
+#menu-more
+  .mega-menu-column-4
+  .grid-container-pages
   .span-all-rows
   > div:first-child {
   width: 100%;

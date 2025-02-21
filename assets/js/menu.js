@@ -731,7 +731,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Services Menu
       menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Support<i class="caret angle-down"></i></a>
             <div class="sub-menu-div mega-menu mega-menu-column-4">
-            <div class="grid-container-multiple"></div>
+            <div class="grid-container-pages"></div>
             </div>
           </li>`;
 
@@ -1261,6 +1261,12 @@ function toggleTopLevelMenu(menuLink) {
         .forEach((menuContainer) => {
           getMegaMenu(menuContainer, 'single');
         });
+
+      document
+        .querySelectorAll('.grid-container-pages')
+        .forEach((menuContainer) => {
+          getMegaMenu(menuContainer, 'pages');
+        });
     }
   }
 
@@ -1607,8 +1613,16 @@ function getMegaMenu(menuContainer, type) {
     renderMenu(menuSingle, menuContainer, type, 'LibPas');
   }
 
-  renderBodyContent(libPasBodyContent, menuContainer);
-  renderExtraContent(libPasExtraContent, menuContainer);
+  if (type === 'multiple' || type === 'single') {
+    renderBodyContent(libPasBodyContent, menuContainer);
+    renderExtraContent(libPasExtraContent, menuContainer);
+  }
+
+  if (type === 'pages') {
+    renderMenu(null, menuContainer, type, '');
+    renderBodyContent(libPasBodyContent, menuContainer);
+    renderExtraContent(libPasExtraContent, menuContainer);
+  }
 
   // Prevent adding multiple event listeners to the same menu container
   if (!menuContainer.dataset.listenerAdded) {
@@ -1667,10 +1681,8 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
   if (type === 'multiple')
     menuTemplate = document.querySelector('#menuTemplate');
 
-  if (type === 'single')
+  if (type === 'single' || 'pages')
     menuTemplate = document.querySelector('#oneMenuTemplate');
-
-  console.log(menuData);
 
   if (!menuTemplate || !menuContainer) {
     console.error('Error: Menu template or container not found.');
@@ -1680,49 +1692,51 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
   // Clear existing content before appending new elements
   menuContainer.innerHTML = '';
 
-  const fragment = document.createDocumentFragment();
-  const templateContent = menuTemplate.content;
+  if (menuData) {
+    const fragment = document.createDocumentFragment();
+    const templateContent = menuTemplate.content;
 
-  menuData.forEach((item, index) => {
-    const menuContent = templateContent.cloneNode(true);
-    const img = menuContent.querySelector('img');
-    const anchor = menuContent.querySelector('a');
-    const strong = anchor.querySelector('strong');
-    const span = anchor.querySelector('span');
-    const menuItem = menuContent.querySelector('.grid-item.menu');
+    menuData.forEach((item, index) => {
+      const menuContent = templateContent.cloneNode(true);
+      const img = menuContent.querySelector('img');
+      const anchor = menuContent.querySelector('a');
+      const strong = anchor.querySelector('strong');
+      const span = anchor.querySelector('span');
+      const menuItem = menuContent.querySelector('.grid-item.menu');
 
-    if (!img || !anchor || !strong || !span || !menuItem) {
-      console.error('Error: Missing elements inside template.');
-      return;
+      if (!img || !anchor || !strong || !span || !menuItem) {
+        console.error('Error: Missing elements inside template.');
+        return;
+      }
+
+      // Set attributes
+      img.src = `assets/imgs/${item.graphic}`;
+      img.width = item.width;
+      img.height = item.height;
+
+      anchor.href = item.url;
+      strong.textContent = item.menuTitle;
+      span.textContent = item.subText;
+
+      // Set menuItem id for identification
+      menuItem.setAttribute('id', item.menuTitle);
+
+      // Set active class for currentMenuItem
+      if (currentMenuItem === menuItem.id) {
+        menuItem.classList.add('active');
+        anchor.setAttribute('aria-current', 'true');
+      }
+
+      fragment.appendChild(menuContent);
+    });
+
+    menuContainer.appendChild(fragment);
+
+    // Set focus to the current menu item
+    const currentAnchor = menuContainer.querySelector('a[aria-current="true"]');
+    if (currentAnchor) {
+      currentAnchor.focus();
     }
-
-    // Set attributes
-    img.src = `assets/imgs/${item.graphic}`;
-    img.width = item.width;
-    img.height = item.height;
-
-    anchor.href = item.url;
-    strong.textContent = item.menuTitle;
-    span.textContent = item.subText;
-
-    // Set menuItem id for identification
-    menuItem.setAttribute('id', item.menuTitle);
-
-    // Set active class for currentMenuItem
-    if (currentMenuItem === menuItem.id) {
-      menuItem.classList.add('active');
-      anchor.setAttribute('aria-current', 'true');
-    }
-
-    fragment.appendChild(menuContent);
-  });
-
-  menuContainer.appendChild(fragment);
-
-  // Set focus to the current menu item
-  const currentAnchor = menuContainer.querySelector('a[aria-current="true"]');
-  if (currentAnchor) {
-    currentAnchor.focus();
   }
 }
 
