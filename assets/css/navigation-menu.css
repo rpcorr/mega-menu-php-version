@@ -662,8 +662,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
 .mega-menu-column-4 .grid-container-pages {
   display: grid;
-  grid-template-rows: repeat(3, minmax(100px, auto)); /* Allow rows to grow */
-  grid-template-columns: repeat(4, 1fr);
+  /* grid-template-rows: repeat(1, minmax(100px, auto)); Allow rows to grow */
+  grid-template-columns: 1fr, 400px;
 
   height: auto; /* Allow the grid container to grow with content */
   border: 1px solid #000;
@@ -676,14 +676,15 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
 .mega-menu-column-4 .grid-container-multiple > .grid-item,
 .mega-menu-column-4 .grid-container-single > .grid-item,
-.mega-menu-column-4 .grid-container-pages > .grid-item {
+.mega-menu-column-4 .grid-container-pages > .left-content > .grid-item {
   display: flex;
   align-items: center;
+  padding: 1rem;
 }
 
 .mega-menu-column-4 .grid-container-multiple > .grid-item p,
 .mega-menu-column-4 .grid-container-single > .grid-item p,
-.mega-menu-column-4 .grid-container-pages > .grid-item p {
+.mega-menu-column-4 .grid-container-pages > .left-content > .grid-item p {
   margin-top: 0;
   margin-left: 1em;
   text-align: left;
@@ -706,8 +707,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 }
 
 .mega-menu-column-4 .grid-container-multiple > .menu-content,
-.mega-menu-column-4 .grid-container-single > .menu-content,
-.mega-menu-column-4 .grid-container-pages > .menu-content {
+.mega-menu-column-4 .grid-container-single > .menu-content {
   padding-left: 3rem;
 }
 
@@ -750,8 +750,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
 /* Make the 4th column item span the entire height */
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows,
-.mega-menu-column-4 .grid-container-single > .span-all-rows,
-.mega-menu-column-4 .grid-container-pages > .span-all-rows {
+.mega-menu-column-4 .grid-container-single > .span-all-rows {
   grid-row: span 3;
   display: flex;
   justify-content: start;
@@ -792,7 +791,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   display: flex;
   justify-content: start;
   flex-direction: column;
-  padding: 1rem 2rem 0;
+  padding: 1rem 2.5rem 0 2rem;
   margin-left: 1rem;
 }
 
@@ -832,6 +831,17 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 .mega-menu-column-4 .grid-container-single > .span-all-rows #bodyContent p,
 .mega-menu-column-4 .grid-container-pages > .span-all-rows #bodyContent p {
   margin-bottom: 0.5rem;
+}
+
+.mega-menu-column-4 .grid-container-pages > .span-all-rows #bodyContent p {
+  margin-top: 1rem;
+}
+.mega-menu-column-4
+  .grid-container-pages
+  > .span-all-rows
+  #bodyContent
+  p:nth-child(1) {
+  margin-bottom: 0rem;
 }
 
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows #bodyContent,
