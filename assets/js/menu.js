@@ -1614,13 +1614,13 @@ function getMegaMenu(menuContainer, type) {
   }
 
   if (type === 'multiple' || type === 'single') {
-    renderBodyContent(libPasBodyContent, menuContainer);
+    renderBodyContent(libPasBodyContent, menuContainer, type);
     renderExtraContent(libPasExtraContent, menuContainer);
   }
 
   if (type === 'pages') {
     renderMenu(null, menuContainer, type, '');
-    renderBodyContent(libPasBodyContent, menuContainer);
+    renderBodyContent(libPasBodyContent, menuContainer, type);
     renderExtraContent(libPasExtraContent, menuContainer);
   }
 
@@ -1648,17 +1648,17 @@ function getMegaMenu(menuContainer, type) {
                 if (type === 'single')
                   renderMenu(menuSingle, menuContainer, type, 'LibPas');
 
-                renderBodyContent(libPasBodyContent, menuContainer);
+                renderBodyContent(libPasBodyContent, menuContainer, type);
                 renderExtraContent(libPasExtraContent, menuContainer);
                 break;
               case 'LibSAT':
                 renderMenu(menu, menuContainer, type, 'LibSAT');
-                renderBodyContent(libSATBodyContent, menuContainer);
+                renderBodyContent(libSATBodyContent, menuContainer, type);
                 renderExtraContent(libSatExtraContent, menuContainer);
                 break;
               case 'InformUs':
                 renderMenu(menu, menuContainer, type, 'InformUs');
-                renderBodyContent(informUsBodyContent, menuContainer);
+                renderBodyContent(informUsBodyContent, menuContainer, type);
                 renderExtraContent(informUsExtraContent, menuContainer);
                 break;
               default:
@@ -1740,7 +1740,9 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
   }
 }
 
-function renderBodyContent(contentData, contentContainer) {
+function renderBodyContent(contentData, contentContainer, type) {
+  console.log(type);
+
   const contentTemplate = document.querySelector('#menuContent');
 
   if (!contentTemplate || !contentContainer) {
@@ -1772,7 +1774,14 @@ function renderBodyContent(contentData, contentContainer) {
     fragment.appendChild(menuContent);
   });
 
-  contentContainer.appendChild(fragment);
+  if (type === 'pages') {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('left-content');
+    wrapper.appendChild(fragment);
+    contentContainer.appendChild(wrapper);
+  } else {
+    contentContainer.appendChild(fragment);
+  }
 }
 
 function renderExtraContent(contentData, menuContainer) {

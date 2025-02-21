@@ -762,8 +762,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
 /* Ensure content in .span-all-rows wraps properly */
 .mega-menu-column-4 .grid-container-multiple > .span-all-rows,
-.mega-menu-column-4 .grid-container-single > .span-all-rows,
-.mega-menu-column-4 .grid-container-pages > .span-all-rows {
+.mega-menu-column-4 .grid-container-single > .span-all-rows {
   grid-row: span 3;
   display: flex;
   flex-wrap: wrap; /* Enable wrapping */
@@ -774,6 +773,27 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   /* margin-left: 1rem; */
   gap: 1rem; /* Add space between child elements */
   box-sizing: border-box; /* Include padding in dimensions */
+}
+
+.mega-menu-column-4 .grid-container-pages > .left-content {
+  grid-column: span 3; /* Forces the left section to take 3 columns */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three columns */
+  grid-auto-flow: column; /* Fills items in columns first */
+  grid-template-rows: repeat(3, auto); /* Allows up to 3 items per column */
+  gap: 10px;
+  padding: 1rem;
+  background-color: #fff;
+}
+
+.mega-menu-column-4 .grid-container-pages > .span-all-rows {
+  grid-column: 4; /* Positions at the far right */
+  grid-row: span 1; /* Spans all three rows */
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  padding: 1rem 2rem 0;
+  margin-left: 1rem;
 }
 
 /* Ensure text content in <p> and <li> tags wraps */
