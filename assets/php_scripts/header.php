@@ -121,7 +121,7 @@
       </div>
     </header>
     <?php include('assets/php_scripts/sidebar.php'); ?>
-    <nav>
+    <nav aria-label="breadcrumbs">
       <ul class="breadcrumbs" id="breadcrumbs"></ul>
     </nav>
     
