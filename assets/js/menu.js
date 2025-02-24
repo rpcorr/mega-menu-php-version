@@ -1467,6 +1467,7 @@ function updateMenuMoreTabIndex() {
     } else {
       // If text content exists, restore tabindex and remove margin adjustment
       menuLink.removeAttribute('tabindex');
+      menuLink.removeAttribute('aria-hidden');
 
       // add a margin right of 0.5rem to the profile class
       const profile = document.querySelector('.profile');
