@@ -199,6 +199,7 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
 header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   background-color: rgba(255, 255, 255, 0.9);
   color: #000000;
+  width: 99vw;
   opacity: 0;
   z-index: 1;
   pointer-events: none; /*Prevent interaction while hidden*/
