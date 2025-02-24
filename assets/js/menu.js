@@ -715,21 +715,21 @@ document.addEventListener('DOMContentLoaded', () => {
         menuHTML += strLibSatMenuStructure;
 
       // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Services <i class="caret angle-down"></i></a>
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
             <div class="sub-menu-div mega-menu mega-menu-column-4">
             <div class="grid-container-multiple"></div>
             </div>
           </li>`;
 
       // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Item 3<i class="caret angle-down"></i></a>
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Item 3 has a sub menu. Click enter to open">Item 3<i class="caret angle-down"></i></a>
             <div class="sub-menu-div mega-menu mega-menu-column-4">
             <div class="grid-container-single"></div>
             </div>
           </li>`;
 
       // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false">Support<i class="caret angle-down"></i></a>
+      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Support has a sub menu. Click enter to open">Support<i class="caret angle-down"></i></a>
             <div class="sub-menu-div mega-menu mega-menu-column-4">
             <div class="grid-container-pages"></div>
             </div>
@@ -1450,6 +1450,7 @@ function updateMenuMoreTabIndex() {
     if (!textContent) {
       // If there is no text content, make the link unfocusable
       menuLink.setAttribute('tabindex', '-1');
+      menuLink.setAttribute('aria-hidden', 'true');
 
       // Apply margin-left: auto to the second last top-level menu item if there are at least two
       // and its text content contains "Profile"
