@@ -1,3 +1,4 @@
+<button class="toggle-btn" onclick="toggleSidebar()" aria-label="Click to open sidebar">☰</button>
 <div id="sidebar" class="sidebar-container">
     <nav class="sidebar" aria-label="sidebar">
         <ul>
@@ -8,4 +9,3 @@
         </ul>
     </nav>
 </div>
-<button class="toggle-btn" onclick="toggleSidebar()">☰</button>
