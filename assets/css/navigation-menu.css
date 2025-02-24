@@ -625,12 +625,25 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
   text-decoration: none;
   color: blue;
 }
+
 .breadcrumbs li::after {
-  content: '>';
+  content: '';
+}
+
+.breadcrumbs li::after {
+  content: attr(data-symbol);
   margin-left: 5px;
 }
-.breadcrumbs li:last-child::after {
-  content: '';
+
+.breadcrumbs li span {
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
 }
 
 header {
