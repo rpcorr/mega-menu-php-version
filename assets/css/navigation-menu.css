@@ -261,6 +261,11 @@ nav {
   text-align: center;
 }
 
+.hidden-text {
+  position: absolute;
+  left: -9999px;
+}
+
 /* function */
 /* Initial state of the submenu (hidden or collapsed) */
 #moreSubMenu {
