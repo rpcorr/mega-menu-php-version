@@ -22,7 +22,7 @@
     
     <!-- ///// The Templates ///// -->
     <template id="menuTemplate">
-      <div class="grid-item menu" id="">
+      <div class="grid-item menu" role="tab" aria-selected="false"  id="">
         <img src="" />
         <p>
           <a href=""><strong></strong><br/><span></span></a>
@@ -34,7 +34,7 @@
     </template> 
 
     <template id="oneMenuTemplate">
-      <div class="grid-item menu" id="">
+      <div class="grid-item menu" role="tab" aria-selected="true" id="">
         <img src="" />
         <p>
           <a href=""><strong></strong><br/><span></span></a>

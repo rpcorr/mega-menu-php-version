@@ -1739,7 +1739,10 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
       // Set active class for currentMenuItem
       if (currentMenuItem === menuItem.id) {
         menuItem.classList.add('active');
+        menuItem.setAttribute('aria-selected', 'true');
         anchor.setAttribute('aria-current', 'true');
+      } else {
+        menuItem.setAttribute('aria-selected', 'false');
       }
 
       fragment.appendChild(menuContent);
