@@ -1693,10 +1693,10 @@ function getMegaMenu(menuContainer, type) {
 function renderMenu(menuData, menuContainer, type, currentMenuItem) {
   let menuTemplate;
 
+  console.log(type);
   if (type === 'multiple')
     menuTemplate = document.querySelector('#menuTemplate');
-
-  if (type === 'single' || 'pages')
+  else if (type === 'single' || 'pages')
     menuTemplate = document.querySelector('#oneMenuTemplate');
 
   if (!menuTemplate || !menuContainer) {
