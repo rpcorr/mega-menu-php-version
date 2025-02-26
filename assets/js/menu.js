@@ -1629,8 +1629,8 @@ function getMegaMenu(menuContainer, type) {
   }
 
   if (type === 'multiple' || type === 'single') {
-    //renderBodyContent(libPasBodyContent, menuContainer, type);
-    //renderExtraContent(libPasExtraContent, menuContainer);
+    renderBodyContent(libPasBodyContent, menuContainer, type);
+    renderExtraContent(libPasExtraContent, menuContainer);
   }
 
   if (type === 'pages') {
@@ -1798,14 +1798,20 @@ function renderBodyContent(contentData, contentContainer, type) {
     fragment.appendChild(menuContent);
   });
 
+  // Create the tabs__panels wrapper
+  const tabsPanels = document.createElement('div');
+  tabsPanels.classList.add('tabs__panels');
+
   if (type === 'pages') {
     const wrapper = document.createElement('div');
     wrapper.classList.add('left-content');
     wrapper.appendChild(fragment);
-    contentContainer.appendChild(wrapper);
+    tabsPanels.appendChild(wrapper);
   } else {
-    contentContainer.appendChild(fragment);
+    tabsPanels.appendChild(fragment);
   }
+
+  contentContainer.appendChild(tabsPanels);
 }
 
 function renderExtraContent(contentData, menuContainer) {

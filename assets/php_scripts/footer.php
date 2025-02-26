@@ -22,7 +22,7 @@
     
     <!-- ///// The Templates ///// -->
     <template id="menuTemplate">
-      <li role="presentation"><img src="" /><a href=""><strong></strong><br/><span></span></a> <div class="circle">
+      <li role="presentation"><img src="" /><p><a href=""><strong></strong><br/><span></span></a></p> <div class="circle">
           <div class="caret"></div>
         </div></li>
     </template> 
@@ -37,14 +37,14 @@
     </template> 
 
     <template id="menuContent">
-      <div class="grid-item menu-content">
+      <div>
         <img src="" width="" height="" />
         <p><a href="#"><strong></strong><br/><span></span></a></p>
       </div>
     </template>
 
     <template id="menuExtraContent">
-      <div class="grid-item span-all-rows">
+      <div class="extra-content">
         <div>
           <img src="" width="" height="" align="left" />
           <p>

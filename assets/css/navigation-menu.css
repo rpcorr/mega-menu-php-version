@@ -377,7 +377,7 @@ ul#menu-main-menu
 }
 
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a {
-  padding: 1rem 0;
+  padding: 1.5rem 0;
 }
 
 .menu-main-menu-container
@@ -595,27 +595,6 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
   padding: 1.25rem 0;
 }
 
-header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item {
-  flex: 0 0 22%;
-  flex-grow: 0;
-}
-
-header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1;
-  padding: 0.625rem 0;
-}
-
-header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item img {
-  width: 190px;
-}
-
-/* width of images on mega-menu when menu item is under More */
-#moreSubMenu > li > .sub-menu-div > .list-item img {
-  width: 240px;
-}
-
 /* Basic CSS for breadcrumbs */
 .breadcrumbs {
   display: flex;
@@ -666,43 +645,81 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 .mega-menu-column-4 .tabs-container {
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: 250px repeat(3, 1fr);
-  /* height: auto; */
+  grid-template-columns: 250px 2fr 1fr;
   border: 1px solid #000;
   background-color: #999;
   padding-bottom: 1rem;
   padding-right: 2rem;
-  padding-left: 2rem;
-  /* grid-auto-flow: column; */
+  height: 100%;
+  max-width: 100%; /* Ensures it does not exceed the parent width */
+  box-sizing: border-box; /* Ensures padding does not add to the width */
+  overflow: hidden; /* Prevents content from overflowing */
 }
 
-.mega-menu-column-4 .grid-container-multiple .menu-list li {
+.mega-menu-column-4 .menu-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distributes items evenly */
+  height: 100%; /* Ensures it takes full height */
+}
+
+.mega-menu-column-4 .tabs-container a {
+  text-decoration: none; /* remove all underline */
+}
+
+.mega-menu-column-4 .tabs-container .menu-list li {
+  padding-left: 1rem;
+}
+
+.mega-menu-column-4 .tabs__panels {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, auto);
+  gap: 10px;
+  background-color: #fff;
+}
+
+.mega-menu-column-4 .tabs__panels div {
+  display: flex;
+  align-items: center;
+  padding-left: 2rem;
+  gap: 1rem;
+}
+
+.mega-menu-column-4 .menu-list li {
   display: flex;
   align-items: center;
   align-content: center;
   gap: 1em;
 }
 
-.mega-menu-column-4 .grid-container-multiple .menu-list li .circle {
-  width: 30px;
-  height: 30px;
-  background-color: white; /* Blue color for the circle */
-  border-radius: 50%; /* Makes it a perfect circle */
-  border: 2px black solid;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Adds a shadow */
-  margin-left: auto;
+.mega-menu-column-4 .menu-list span,
+.mega-menu-column-4 .tabs__panels span {
+  font-weight: normal;
 }
 
-.mega-menu-column-4 .grid-container-multiple .menu-list li .circle .caret {
+.mega-menu-column-4 .menu-list li .circle {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  /*Bluecolorforthecircle*/
+  border-radius: 50%;
+  /*Makesitaperfectcircle*/
+  border: 2px black solid;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  /*Addsashadow*/
+  margin-left: auto;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+.mega-menu-column-4 .menu-list li .circle .caret {
   position: relative;
 }
 
-.mega-menu-column-4
-  .grid-container-multiple
-  .menu-list
-  li
-  .circle
-  .caret:before {
+.mega-menu-column-4 .menu-list li .circle .caret:before {
   content: '';
   position: absolute;
   top: 5px;
@@ -712,12 +729,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   border-bottom: 9px solid transparent;
 }
 
-.mega-menu-column-4
-  .grid-container-multiple
-  .menu-list
-  li
-  .circle
-  .caret:after {
+.mega-menu-column-4 .menu-list li .circle .caret:after {
   content: '';
   position: absolute;
   left: 12px;
@@ -725,4 +737,36 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   border-left: 4px solid #fff;
   border-top: 4px solid transparent;
   border-bottom: 4px solid transparent;
+}
+
+.mega-menu-column-4 .extra-content {
+  margin-left: 1rem;
+  background-color: #fff;
+  padding: 1rem 2rem 0;
+}
+
+.mega-menu-column-4 .extra-content p {
+  white-space: normal; /* Allow text to wrap to the next line */
+  word-wrap: break-word; /* Break words that are too long */
+  overflow-wrap: break-word; /* Support for modern browsers */
+  width: 100%; /* Ensure the <p> doesn't exceed the container width */
+  box-sizing: border-box; /* Include padding in the width calculation */
+}
+
+.mega-menu-column-4 .extra-content #bodyContent {
+  margin-top: 1.5rem;
+  font-weight: normal;
+  line-height: 1.5rem;
+}
+
+.mega-menu-column-4 .extra-content #bodyContent p {
+  margin-bottom: 0.5rem;
+}
+
+.mega-menu-column-4 .extra-content ul {
+  margin-left: 1.75rem;
+}
+
+.mega-menu-column-4 .extra-content ul li {
+  list-style-type: disc;
 }
