@@ -17,7 +17,7 @@ const menu = [
     graphic: 'pie.gif',
     width: '36',
     height: '33',
-    url: '#',
+    url: '#libPas',
     menuTitle: 'LibPas',
     subText: 'Periodic data',
   },
@@ -25,7 +25,7 @@ const menu = [
     graphic: 'medal.gif',
     width: '43',
     height: '43',
-    url: '#',
+    url: '#libSAT',
     menuTitle: 'LibSAT',
     subText: 'Qualitative data',
   },
@@ -33,7 +33,7 @@ const menu = [
     graphic: 'puzzle-pieces.gif',
     width: '40',
     height: '40',
-    url: '#',
+    url: '#InformUs',
     menuTitle: 'InformUs',
     subText: 'Survey data',
   },
@@ -1639,6 +1639,8 @@ function getMegaMenu(menuContainer, type) {
     //renderExtraContent(libPasExtraContent, menuContainer);
   }
 
+  setTabsContainer();
+
   // Prevent adding multiple event listeners to the same menu container
   if (!menuContainer.dataset.listenerAdded) {
     menuContainer.addEventListener(
@@ -1647,6 +1649,14 @@ function getMegaMenu(menuContainer, type) {
         const anchor = event.target.closest('a'); // Check if a link was clicked
         if (anchor) {
           event.preventDefault(); // Prevent default link behavior
+          console.log('Ronan');
+
+          const clickedTab = event.target.closest('a');
+          if (!clickedTab) return;
+
+          console.log(clickedTab);
+
+          switchTab(clickedTab);
 
           removeActiveFromAllGridItems(); // Remove active class from all grid items
 
@@ -1685,6 +1695,25 @@ function getMegaMenu(menuContainer, type) {
       true // Run the event listener in the capture phase
     );
 
+    menuContainer.addEventListener('keydown', (e) => {
+      switch (e.key) {
+        case 'ArrowLeft':
+          moveLeft();
+          break;
+        case 'ArrowRight':
+          moveRight();
+          break;
+        case 'Home':
+          e.preventDefault();
+          switchTab(tabButtons[0]);
+          break;
+        case 'End':
+          e.preventDefault();
+          switchTab(tabButtons[tabButtons.length - 1]);
+          break;
+      }
+    });
+
     // Mark the menu container as initialized to prevent duplicate listeners
     menuContainer.dataset.listenerAdded = 'true';
   }
@@ -1709,7 +1738,7 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
   menuContainer.innerHTML = '';
 
   const menuList = document.createElement('ul');
-  menuList.setAttribute('role', 'tablist');
+  //menuList.setAttribute('role', 'tablist');
   menuList.classList.add('menu-list');
 
   if (menuData) {
@@ -1865,4 +1894,98 @@ function renderExtraContent(contentData, menuContainer) {
   });
 
   menuContainer.appendChild(fragment);
+}
+
+///////  Navigation through tabs /////////////////
+function setTabsContainer() {
+  const tabsContainer = document.querySelector('.tabs-container');
+  const tabsList = tabsContainer.querySelector('ul');
+  const tabButtons = tabsList.querySelectorAll('a');
+  const tabPanels = tabsContainer.querySelectorAll('.tabs__panels > div');
+
+  tabsList.setAttribute('role', 'tablist');
+
+  tabsList.querySelectorAll('li').forEach((listItem) => {
+    listItem.setAttribute('role', 'presentation');
+  });
+
+  tabButtons.forEach((tab, index) => {
+    tab.setAttribute('role', 'tab');
+
+    tab.setAttribute('id', `tab-${index + 1}`);
+
+    if (index === 0) {
+      tab.setAttribute('aria-selected', 'true');
+      // we'll add something here
+    } else {
+      tab.setAttribute('tabindex', '-1');
+      tabPanels[index].setAttribute('hidden', '');
+    }
+  });
+
+  tabPanels.forEach((panel) => {
+    panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('tabindex', '0');
+  });
+}
+
+function moveLeft() {
+  const tabsContainer = document.querySelector('.tabs-container');
+  const tabsList = tabsContainer.querySelector('ul');
+  const tabButtons = tabsList.querySelectorAll('a');
+  const currentTab = document.activeElement;
+
+  if (currentTab.id == 'tab-1') {
+    switchTab(tabButtons[tabButtons.length - 1]);
+  } else if (currentTab.id == 'tab-2') {
+    switchTab(tabButtons[0]);
+  } else if (currentTab.id == 'tab-3') {
+    switchTab(
+      tabButtons[tabButtons.length - (extractAfterDash(currentTab.id) - 1)]
+    );
+  }
+}
+
+function moveRight() {
+  const tabsContainer = document.querySelector('.tabs-container');
+  const tabsList = tabsContainer.querySelector('ul');
+  const tabButtons = tabsList.querySelectorAll('a');
+  const currentTab = document.activeElement;
+
+  if (currentTab.id == 'tab-1') {
+    switchTab(tabButtons[1]);
+  } else if (currentTab.id == 'tab-2') {
+    switchTab(tabButtons[tabButtons.length - 1]);
+  } else if (currentTab.id == 'tab-3') {
+    switchTab(tabButtons[0]);
+  }
+}
+
+function extractAfterDash(input) {
+  const parts = input.split('-');
+  return parts.length > 1 ? parts.slice(1).join('-') : null;
+}
+
+function switchTab(clickedTab) {
+  const tabsContainer = document.querySelector('.tabs-container');
+  const activePanelId = clickedTab.getAttribute('href');
+  const tabsList = tabsContainer.querySelector('ul');
+  const tabButtons = tabsList.querySelectorAll('a');
+  const tabPanels = tabsContainer.querySelectorAll('.tabs__panels > div');
+
+  const activePanel = tabsContainer.querySelector(activePanelId);
+
+  tabButtons.forEach((button) => {
+    button.setAttribute('aria-selected', false);
+    button.setAttribute('tabindex', '-1');
+  });
+
+  tabPanels.forEach((panel) => {
+    panel.setAttribute('hidden', true);
+  });
+  //activePanel.removeAttribute('hidden', false);
+
+  clickedTab.setAttribute('aria-selected', true);
+  clickedTab.setAttribute('tabindex', '0');
+  clickedTab.focus();
 }
