@@ -22,15 +22,9 @@
     
     <!-- ///// The Templates ///// -->
     <template id="menuTemplate">
-      <div class="grid-item menu" role="tab" aria-selected="false"  id="">
-        <img src="" />
-        <p>
-          <a href=""><strong></strong><br/><span></span></a>
-        </p>
-        <div class="circle">
+      <li role="presentation"><img src="" /><a href=""><strong></strong><br/><span></span></a> <div class="circle">
           <div class="caret"></div>
-        </div>
-      </div>
+        </div></li>
     </template> 
 
     <template id="oneMenuTemplate">

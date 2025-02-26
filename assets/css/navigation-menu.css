@@ -663,73 +663,27 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   left: auto; /* Prevent conflicting left/right declarations */
 }
 
-.mega-menu-column-4 .grid-container-multiple,
-.mega-menu-column-4 .grid-container-single {
+.mega-menu-column-4 .tabs-container {
   display: grid;
-  grid-template-rows: repeat(3, minmax(100px, auto)); /* Allow rows to grow */
-  grid-template-columns: 300px repeat(3, 1fr);
-
-  height: auto; /* Allow the grid container to grow with content */
+  grid-template-rows: 1fr;
+  grid-template-columns: 250px repeat(3, 1fr);
+  /* height: auto; */
   border: 1px solid #000;
   background-color: #999;
   padding-bottom: 1rem;
   padding-right: 2rem;
-
-  grid-auto-flow: column;
+  padding-left: 2rem;
+  /* grid-auto-flow: column; */
 }
 
-.mega-menu-column-4 .grid-container-pages {
-  display: grid;
-  /* grid-template-rows: repeat(1, minmax(100px, auto)); Allow rows to grow */
-  grid-template-columns: 1fr, 400px;
-
-  height: auto; /* Allow the grid container to grow with content */
-  border: 1px solid #000;
-  background-color: #999;
-  padding-bottom: 1rem;
-  padding-right: 2rem;
-
-  grid-auto-flow: column;
-}
-
-.mega-menu-column-4 .grid-container-multiple > .grid-item,
-.mega-menu-column-4 .grid-container-single > .grid-item,
-.mega-menu-column-4 .grid-container-pages > .left-content > .grid-item {
+.mega-menu-column-4 .grid-container-multiple .menu-list li {
   display: flex;
   align-items: center;
-  padding: 1rem;
+  align-content: center;
+  gap: 1em;
 }
 
-.mega-menu-column-4 .grid-container-multiple > .grid-item p,
-.mega-menu-column-4 .grid-container-single > .grid-item p,
-.mega-menu-column-4 .grid-container-pages > .left-content > .grid-item p {
-  margin-top: 0;
-  margin-left: 1em;
-  text-align: left;
-}
-
-.mega-menu-column-4 .grid-container-multiple > .grid-item a,
-.mega-menu-column-4 .grid-container-single > .grid-item a {
-  color: black;
-  text-decoration: none;
-}
-
-.mega-menu-column-4 .menu span,
-.mega-menu-column-4 .menu-content span {
-  font-weight: normal;
-}
-
-.mega-menu-column-4 .grid-container-multiple > .menu,
-.mega-menu-column-4 .grid-container-single > .menu {
-  padding: 1rem;
-}
-
-.mega-menu-column-4 .grid-container-multiple > .menu-content,
-.mega-menu-column-4 .grid-container-single > .menu-content {
-  padding-left: 3rem;
-}
-
-.mega-menu-column-4 .grid-container-multiple .circle {
+.mega-menu-column-4 .grid-container-multiple .menu-list li .circle {
   width: 30px;
   height: 30px;
   background-color: white; /* Blue color for the circle */
@@ -739,13 +693,16 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   margin-left: auto;
 }
 
-.mega-menu-column-4 .grid-container-multiple .caret,
-.mega-menu-column-4 .grid-container-single .caret {
+.mega-menu-column-4 .grid-container-multiple .menu-list li .circle .caret {
   position: relative;
 }
 
-.mega-menu-column-4 .grid-container-multiple .caret:before,
-.mega-menu-column-4 .grid-container-single .caret:before {
+.mega-menu-column-4
+  .grid-container-multiple
+  .menu-list
+  li
+  .circle
+  .caret:before {
   content: '';
   position: absolute;
   top: 5px;
@@ -755,8 +712,12 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   border-bottom: 9px solid transparent;
 }
 
-.mega-menu-column-4 .grid-container-multiple .caret:after,
-.mega-menu-column-4 .grid-container-single .caret:after {
+.mega-menu-column-4
+  .grid-container-multiple
+  .menu-list
+  li
+  .circle
+  .caret:after {
   content: '';
   position: absolute;
   left: 12px;
@@ -764,305 +725,4 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   border-left: 4px solid #fff;
   border-top: 4px solid transparent;
   border-bottom: 4px solid transparent;
-}
-
-/* Make the 4th column item span the entire height */
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows,
-.mega-menu-column-4 .grid-container-single > .span-all-rows {
-  grid-row: span 3;
-  display: flex;
-  justify-content: start;
-  flex-direction: column;
-  padding: 1rem 2rem 0;
-  margin-left: 1rem;
-}
-
-/* Ensure content in .span-all-rows wraps properly */
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows,
-.mega-menu-column-4 .grid-container-single > .span-all-rows {
-  grid-row: span 3;
-  display: flex;
-  flex-wrap: wrap; /* Enable wrapping */
-  flex-direction: row; /* Align items horizontally if needed */
-  align-content: flex-start; /* Align wrapped content at the top */
-  justify-content: flex-start; /* Align content to the left */
-  /* padding: 1rem 2rem 0; */
-  /* margin-left: 1rem; */
-  gap: 1rem; /* Add space between child elements */
-  box-sizing: border-box; /* Include padding in dimensions */
-}
-
-.mega-menu-column-4 .grid-container-pages > .left-content {
-  grid-column: span 3; /* Forces the left section to take 3 columns */
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns */
-  grid-auto-flow: column; /* Fills items in columns first */
-  grid-template-rows: repeat(3, auto); /* Allows up to 3 items per column */
-  gap: 10px;
-  padding: 1rem;
-  background-color: #fff;
-}
-
-.mega-menu-column-4 .grid-container-pages > .span-all-rows {
-  grid-column: 4; /* Positions at the far right */
-  grid-row: span 1; /* Spans all three rows */
-  display: flex;
-  justify-content: start;
-  flex-direction: column;
-  padding: 1rem 2.5rem 0 2rem;
-  margin-left: 1rem;
-}
-
-/* Ensure text content in <p> and <li> tags wraps */
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows p,
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows li,
-.mega-menu-column-4 .grid-container-multiple > .menu-content p,
-.mega-menu-column-4 .grid-container-single > .span-all-rows p,
-.mega-menu-column-4 .grid-container-single > .span-all-rows li,
-.mega-menu-column-4 .grid-container-single > .menu-content p,
-.mega-menu-column-4 .grid-container-pages > .span-all-rows p,
-.mega-menu-column-4 .grid-container-pages > .span-all-rows li,
-.mega-menu-column-4 .grid-container-pages > .menu-content p {
-  white-space: normal; /* Allow text to wrap to the next line */
-  word-wrap: break-word; /* Break words that are too long */
-  overflow-wrap: break-word; /* Support for modern browsers */
-  width: 100%; /* Ensure the <p> doesn't exceed the container width */
-  box-sizing: border-box; /* Include padding in the width calculation */
-}
-
-.mega-menu-column-4 .grid-container-multiple > .menu-content p,
-.mega-menu-column-4 .grid-container-single > .menu-content p,
-.mega-menu-column-4 .grid-container-pages > .menu-content p {
-  /* margin-right: 2.5rem; */
-}
-
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows p,
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows li,
-.mega-menu-column-4 .grid-container-single > .span-all-rows p,
-.mega-menu-column-4 .grid-container-single > .span-all-rows li,
-.mega-menu-column-4 .grid-container-pages > .span-all-rows p,
-.mega-menu-column-4 .grid-container-pages > .span-all-rows li {
-  margin: 0; /* Remove default margin to prevent spacing issues */
-}
-
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows #bodyContent p,
-.mega-menu-column-4 .grid-container-single > .span-all-rows #bodyContent p,
-.mega-menu-column-4 .grid-container-pages > .span-all-rows #bodyContent p {
-  margin-bottom: 0.5rem;
-}
-
-.mega-menu-column-4 .grid-container-pages > .span-all-rows #bodyContent p {
-  margin-top: 1rem;
-}
-.mega-menu-column-4
-  .grid-container-pages
-  > .span-all-rows
-  #bodyContent
-  p:nth-child(1) {
-  margin-bottom: 0rem;
-}
-
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows #bodyContent,
-.mega-menu-column-4 .grid-container-single > .span-all-rows #bodyContent,
-.mega-menu-column-4 .grid-container-pages > .span-all-rows #bodyContent {
-  font-weight: normal;
-}
-
-/* Add some spacing for <li> items in the list */
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows ul,
-.mega-menu-column-4 .grid-container-multiple > .menu-content ul,
-.mega-menu-column-4 .grid-container-single > .span-all-rows ul,
-.mega-menu-column-4 .grid-container-single > .menu-content ul,
-.mega-menu-column-4 .grid-container-pages > .span-all-rows ul,
-.mega-menu-column-4 .grid-container-pages > .menu-content ul {
-  padding-left: 1.5rem; /* Indent the list for better readability */
-  margin: 0; /* Reset default margins */
-  text-align: left;
-}
-
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows ul li,
-.mega-menu-column-4 .grid-container-multiple > .menu-content ul li,
-.mega-menu-column-4 .grid-container-single > .span-all-rows ul li,
-.mega-menu-column-4 .grid-container-single > .menu-content ul li,
-.mega-menu-column-4 .grid-container-pages > .span-all-rows ul li,
-.mega-menu-column-4 .grid-container-pages > .menu-content ul li {
-  list-style: disc; /* Ensure a consistent bullet style */
-}
-
-/* when li element is hover within .span-all-rows container, ensure the background colour is transparent */
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows ul li:hover {
-  background-color: transparent;
-}
-
-/* Set grey background colour for menu items*/
-.mega-menu-column-4 .grid-container-multiple > .menu,
-.mega-menu-column-4 .grid-container-single > .menu {
-  background-color: #999;
-}
-
-/* Set white background colour for grid items, .active grid-item and when hovering a menu item, a menu item has the active class, or menu item has focus */
-.mega-menu-column-4 .grid-container-multiple > .menu-content,
-.mega-menu-column-4 .grid-container-multiple > .span-all-rows,
-.mega-menu-column-4 .grid-container-multiple > .menu.active,
-.mega-menu-column-4 .grid-container-multiple > .menu:hover,
-.mega-menu-column-4 .grid-container-multiple > .menu:has(a:focus),
-.mega-menu-column-4 .grid-container-single > .menu-content,
-.mega-menu-column-4 .grid-container-single > .span-all-rows,
-.mega-menu-column-4 .grid-container-single > .menu.active,
-.mega-menu-column-4 .grid-container-single > .menu:has(a:focus),
-.mega-menu-column-4 .grid-container-pages > .menu-content,
-.mega-menu-column-4 .grid-container-pages > .span-all-rows {
-  background-color: #fff;
-}
-
-.mega-menu-column-4 .grid-container-multiple > .active > .circle,
-.mega-menu-column-4 .grid-container-multiple > .menu:has(a:focus) > .circle,
-.mega-menu-column-4 .grid-container-single > .active > .circle,
-.mega-menu-column-4 .grid-container-single > .menu:has(a:focus) > .circle {
-  display: none;
-}
-
-.mega-menu-column-4 .grid-container-multiple > .menu:hover > .circle,
-.mega-menu-column-4 .grid-container-single > .menu:hover > .circle {
-  display: none;
-}
-
-/* Target <a> .sub-menu-div.mega-menu.mega-menu-column-4 .grid-item.menu on hover, on active, and on focus */
-.sub-menu-div.mega-menu.mega-menu-column-4 .grid-item.menu p a:hover,
-.sub-menu-div.mega-menu.mega-menu-column-4 .grid-item.menu p a:active,
-.sub-menu-div.mega-menu.mega-menu-column-4 .grid-item.menu p a:focus {
-  background-color: #fff !important;
-}
-
-/* Styles .grid-container-multiple that is under #menu-more menu */
-
-#menu-more .mega-menu-column-4 .grid-container-multiple,
-#menu-more .mega-menu-column-4 .grid-container-single,
-#menu-more .mega-menu-column-4 .grid-container-pages {
-  width: 90vw; /* Make the grid expand to the full viewport width */
-  max-width: 100%; /* Prevent overflow */
-  left: 0; /* Ensure it starts from the left edge */
-  position: relative; /* Keep it in the document flow */
-  /*grid-auto-flow: row; */ /* Reset auto-flow to prevent forced columns */
-}
-
-#menu-more
-  .mega-menu-column-4
-  .grid-container-multiple
-  .span-all-rows
-  > div:first-child,
-#menu-more
-  .mega-menu-column-4
-  .grid-container-single
-  .span-all-rows
-  > div:first-child,
-#menu-more
-  .mega-menu-column-4
-  .grid-container-pages
-  .span-all-rows
-  > div:first-child {
-  width: 100%;
-}
-
-@media (max-width: 85.375rem) {
-  /* 1366px */
-  #menu-more .mega-menu-column-4 .grid-container-multiple,
-  #menu-more .mega-menu-column-4 .grid-container-single {
-    grid-auto-flow: row;
-    grid-template-columns: repeat(3, 1fr);
-    padding-right: 0;
-  }
-
-  #menu-more .mega-menu-column-4 .grid-container-multiple .span-all-rows,
-  #menu-more .mega-menu-column-4 .grid-container-single .span-all-rows {
-    grid-row: 5 / -1;
-    grid-column: 1 / -1;
-    margin-top: 1rem;
-    margin-left: 0;
-    justify-content: start;
-  }
-
-  #menu-more .mega-menu-column-4 .grid-container-multiple > .grid-item p,
-  #menu-more .mega-menu-column-4 .grid-container-single > .grid-item p {
-    text-align: left;
-  }
-}
-
-@media (max-width: 64rem) {
-  /* 1024px */
-  .mega-menu-column-4 .grid-container-multiple,
-  .mega-menu-column-4 .grid-container-single {
-    grid-auto-flow: row;
-    grid-template-columns: repeat(3, 1fr);
-    padding-right: 0;
-  }
-
-  .mega-menu-column-4 .grid-container-multiple .span-all-rows,
-  .mega-menu-column-4 .grid-container-single .span-all-rows {
-    grid-row: 5 / -1;
-    grid-column: 1 / -1;
-    margin-top: 1rem;
-    margin-left: 0;
-    justify-content: start;
-  }
-}
-
-@media (max-width: 48rem) {
-  /* 768px */
-
-  #menu-more
-    .mega-menu-column-4
-    .grid-container-multiple
-    > .menu:nth-child(2)
-    p,
-  #menu-more .mega-menu-column-4 .grid-container-single > .menu:nth-child(2) p {
-    margin-left: 0.5rem;
-  }
-
-  #menu-more
-    .mega-menu-column-4
-    .grid-container-multiple
-    > .menu:nth-child(2)
-    a,
-  #menu-more .mega-menu-column-4 .grid-container-single > .menu:nth-child(2) a {
-    font-size: 0.95rem;
-  }
-
-  #menu-more .mega-menu-column-4 .grid-container-multiple > .menu a,
-  #menu-more .mega-menu-column-4 .grid-container-single > .menu a {
-    padding-left: 0;
-  }
-
-  .mega-menu-column-4 .grid-container-multiple > .menu-content p,
-  .mega-menu-column-4 .grid-container-single > .menu-content p {
-    margin-right: 1.5rem;
-    font-size: 0.9rem;
-  }
-
-  .mega-menu-column-4 .grid-container-multiple > .menu-content,
-  .mega-menu-column-4 .grid-container-single > .menu-content {
-    padding-left: 1rem;
-  }
-}
-
-@media (max-width: 48rem) {
-  /* 480px */
-
-  .mega-menu-column-4 .grid-container-multiple,
-  #menu-more .mega-menu-column-4 .grid-container-multiple,
-  .mega-menu-column-4 .grid-container-single,
-  #menu-more .mega-menu-column-4 .grid-container-single {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(3, 80px) repeat(6, 90px);
-  }
-
-  .mega-menu-column-4 .grid-container-multiple .span-all-rows,
-  #menu-more .mega-menu-column-4 .grid-container-multiple .span-all-rows,
-  .mega-menu-column-4 .grid-container-single .span-all-rows,
-  #menu-more .mega-menu-column-4 .grid-container-single .span-all-rows {
-    grid-row: 10 / -1;
-    grid-column: 1 / -1;
-    justify-content: start;
-    padding-top: 2rem;
-  }
 }
