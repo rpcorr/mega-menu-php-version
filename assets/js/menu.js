@@ -1916,7 +1916,6 @@ function setTabsContainer() {
 
     if (index === 0) {
       tab.setAttribute('aria-selected', 'true');
-      // we'll add something here
     } else {
       tab.setAttribute('tabindex', '-1');
       tabPanels[index].setAttribute('hidden', '');
@@ -1930,40 +1929,36 @@ function setTabsContainer() {
 }
 
 function moveLeft() {
+  // Select the tabs container and list
   const tabsContainer = document.querySelector('.tabs-container');
   const tabsList = tabsContainer.querySelector('ul');
-  const tabButtons = tabsList.querySelectorAll('a');
+  const tabButtons = Array.from(tabsList.querySelectorAll('a'));
   const currentTab = document.activeElement;
 
-  if (currentTab.id == 'tab-1') {
-    switchTab(tabButtons[tabButtons.length - 1]);
-  } else if (currentTab.id == 'tab-2') {
-    switchTab(tabButtons[0]);
-  } else if (currentTab.id == 'tab-3') {
-    switchTab(
-      tabButtons[tabButtons.length - (extractAfterDash(currentTab.id) - 1)]
-    );
-  }
+  // Find the index of the currently focused tab
+  const currentIndex = tabButtons.findIndex((tab) => tab === currentTab);
+  if (currentIndex === -1) return;
+
+  // Calculate the previous index in a circular manner
+  const previousIndex =
+    (currentIndex - 1 + tabButtons.length) % tabButtons.length;
+  switchTab(tabButtons[previousIndex]);
 }
 
 function moveRight() {
+  // Select the tabs container and list
   const tabsContainer = document.querySelector('.tabs-container');
   const tabsList = tabsContainer.querySelector('ul');
-  const tabButtons = tabsList.querySelectorAll('a');
+  const tabButtons = Array.from(tabsList.querySelectorAll('a'));
   const currentTab = document.activeElement;
 
-  if (currentTab.id == 'tab-1') {
-    switchTab(tabButtons[1]);
-  } else if (currentTab.id == 'tab-2') {
-    switchTab(tabButtons[tabButtons.length - 1]);
-  } else if (currentTab.id == 'tab-3') {
-    switchTab(tabButtons[0]);
-  }
-}
+  // Find the index of the currently focused tab
+  const currentIndex = tabButtons.findIndex((tab) => tab === currentTab);
+  if (currentIndex === -1) return;
 
-function extractAfterDash(input) {
-  const parts = input.split('-');
-  return parts.length > 1 ? parts.slice(1).join('-') : null;
+  // Calculate the next index in a circular manner
+  const nextIndex = (currentIndex + 1) % tabButtons.length;
+  switchTab(tabButtons[nextIndex]);
 }
 
 function switchTab(clickedTab) {
