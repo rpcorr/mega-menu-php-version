@@ -659,8 +659,25 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 .mega-menu-column-4 .menu-list {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Distributes items evenly */
   height: 100%; /* Ensures it takes full height */
+}
+
+.mega-menu-column-4 .menu-list li:hover,
+.mega-menu-column-4 .menu-list li:has(a:focus),
+.mega-menu-column-4 .menu-list li:has(a[aria-selected='true']),
+.mega-menu-column-4 .menu-list a:hover,
+.mega-menu-column-4 .menu-list a:focus {
+  background-color: #fff !important;
+}
+
+.mega-menu-column-4 .menu-list a:focus,
+.mega-menu-column-4 .menu-list a:focus-visible {
+  background-color: #fff;
+  display: block; /* Ensure background covers the area */
+}
+
+.mega-menu-column-4 .menu-list a:focus-within {
+  background-color: #fff;
 }
 
 .mega-menu-column-4 .tabs-container a {
@@ -675,7 +692,6 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, auto);
-  gap: 10px;
   background-color: #fff;
 }
 
