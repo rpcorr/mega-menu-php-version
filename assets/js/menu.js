@@ -48,22 +48,6 @@ const menuSingle = [
     menuTitle: 'LibPas',
     subText: 'Periodic data',
   },
-  {
-    graphic: '',
-    width: '',
-    height: '',
-    url: '',
-    menuTitle: '',
-    subText: '',
-  },
-  {
-    graphic: '',
-    width: '',
-    height: '',
-    url: '',
-    menuTitle: '',
-    subText: '',
-  },
 ];
 
 const libPasBodyContent = [
