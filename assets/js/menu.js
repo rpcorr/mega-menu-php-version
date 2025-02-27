@@ -1897,34 +1897,46 @@ function renderExtraContent(contentData, menuContainer) {
 }
 
 ///////  Navigation through tabs /////////////////
+
 function setTabsContainer() {
+  // Select the main tabs container
   const tabsContainer = document.querySelector('.tabs-container');
+
+  // Get the unordered list (<ul>) inside the tabs container
   const tabsList = tabsContainer.querySelector('ul');
+
+  // Select all tab buttons (anchor elements) inside the list
   const tabButtons = tabsList.querySelectorAll('a');
+
+  // Select all tab panels inside the container
   const tabPanels = tabsContainer.querySelectorAll('.tabs__panels > div');
 
+  // Set ARIA role to define this as a tab list for accessibility
   tabsList.setAttribute('role', 'tablist');
 
+  // Assign 'presentation' role to each list item to prevent it from being read as a list by screen readers
   tabsList.querySelectorAll('li').forEach((listItem) => {
     listItem.setAttribute('role', 'presentation');
   });
 
+  // Loop through each tab button and set appropriate attributes
   tabButtons.forEach((tab, index) => {
-    tab.setAttribute('role', 'tab');
+    tab.setAttribute('role', 'tab'); // Set ARIA role as 'tab'
+    tab.setAttribute('id', `tab-${index + 1}`); // Assign unique ID for accessibility
 
-    tab.setAttribute('id', `tab-${index + 1}`);
-
+    // Set the first tab as selected and focusable, others as hidden and unfocusable
     if (index === 0) {
       tab.setAttribute('aria-selected', 'true');
     } else {
-      tab.setAttribute('tabindex', '-1');
-      tabPanels[index].setAttribute('hidden', '');
+      tab.setAttribute('tabindex', '-1'); // Make inactive tabs unfocusable
+      tabPanels[index].setAttribute('hidden', ''); // Hide corresponding tab panel
     }
   });
 
+  // Set ARIA roles and tabindex for all tab panels
   tabPanels.forEach((panel) => {
-    panel.setAttribute('role', 'tabpanel');
-    panel.setAttribute('tabindex', '0');
+    panel.setAttribute('role', 'tabpanel'); // Define the role for accessibility
+    panel.setAttribute('tabindex', '0'); // Allow tabbing into the panel for accessibility
   });
 }
 
