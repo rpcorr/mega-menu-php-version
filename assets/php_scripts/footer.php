@@ -28,7 +28,7 @@
     </template> 
 
     <template id="oneMenuTemplate">
-      <li><img src="" /><p><a href=""><strong></strong><br/><span></span></a></p> </li>
+      <li><img src="" /><p><a href="" aria-selected="true"><strong></strong><br/><span></span></a></p> </li>
     </template> 
 
     <template id="menuContent">
