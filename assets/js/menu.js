@@ -1920,7 +1920,6 @@ function setTabsContainer() {
   // Set ARIA roles and tabindex for all tab panels
   tabPanels.forEach((panel) => {
     panel.setAttribute('role', 'tabpanel'); // Define the role for accessibility
-    panel.setAttribute('tabindex', '0'); // Allow tabbing into the panel for accessibility
   });
 }
 
