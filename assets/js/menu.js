@@ -1337,7 +1337,6 @@ function setAriaLabel(link, isOpen) {
 
   // Get the text content excluding the profile element
   const menuText = tempElement.textContent.trim();
-  console.log(menuText);
 
   link.setAttribute(
     'aria-label',
@@ -1633,7 +1632,6 @@ function getMegaMenu(menuContainer, type) {
         const anchor = event.target.closest('a'); // Check if a link was clicked
         if (anchor) {
           event.preventDefault(); // Prevent default link behavior
-          console.log('Ronan');
 
           const clickedTab = event.target.closest('a');
           if (!clickedTab) return;
@@ -1906,7 +1904,11 @@ function setTabsContainer() {
   // Loop through each tab button and set appropriate attributes
   tabButtons.forEach((tab, index) => {
     tab.setAttribute('role', 'tab'); // Set ARIA role as 'tab'
-    tab.setAttribute('id', `tab-${index + 1}`); // Assign unique ID for accessibility
+
+    // Extract text from the <strong> tag inside the tab
+    const strongText = tab.querySelector('strong').textContent.trim();
+
+    tab.setAttribute('id', strongText.replace(/\s+/g, '-')); // Assign unique ID based on strong text
 
     // Set the first tab as selected and focusable, others as hidden and unfocusable
     if (index === 0) {
