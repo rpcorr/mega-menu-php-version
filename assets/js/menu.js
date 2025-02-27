@@ -724,7 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Services Menu
       menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Item 3 has a sub menu. Click enter to open">Item 3<i class="caret angle-down"></i></a>
             <div class="sub-menu-div mega-menu mega-menu-column-4">
-            <div class="grid-container-single"></div>
+            <div class="grid-container-single tabs-container"></div>
             </div>
           </li>`;
 
