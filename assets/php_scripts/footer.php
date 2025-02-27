@@ -28,12 +28,7 @@
     </template> 
 
     <template id="oneMenuTemplate">
-      <div class="grid-item menu" role="tab" aria-selected="true" id="">
-        <img src="" />
-        <p>
-          <a href=""><strong></strong><br/><span></span></a>
-        </p>
-      </div>
+      <li><img src="" /><p><a href=""><strong></strong><br/><span></span></a></p> </li>
     </template> 
 
     <template id="menuContent">
