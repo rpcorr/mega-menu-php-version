@@ -1962,24 +1962,35 @@ function moveRight() {
 }
 
 function switchTab(clickedTab) {
+  // Select the tabs container
   const tabsContainer = document.querySelector('.tabs-container');
+
+  // Get the ID of the panel associated with the clicked tab
   const activePanelId = clickedTab.getAttribute('href');
+
+  // Select the list of tabs and tab panels
   const tabsList = tabsContainer.querySelector('ul');
   const tabButtons = tabsList.querySelectorAll('a');
   const tabPanels = tabsContainer.querySelectorAll('.tabs__panels > div');
 
+  // Get the corresponding panel for the clicked tab
   const activePanel = tabsContainer.querySelector(activePanelId);
 
+  // Reset all tabs to unselected state
   tabButtons.forEach((button) => {
     button.setAttribute('aria-selected', false);
     button.setAttribute('tabindex', '-1');
   });
 
+  // Hide all tab panels
   tabPanels.forEach((panel) => {
     panel.setAttribute('hidden', true);
   });
-  //activePanel.removeAttribute('hidden', false);
 
+  // Uncomment to ensure hidden attribute is removed correctly
+  // activePanel.removeAttribute('hidden', false);
+
+  // Set the clicked tab as the active tab
   clickedTab.setAttribute('aria-selected', true);
   clickedTab.setAttribute('tabindex', '0');
   clickedTab.focus();
