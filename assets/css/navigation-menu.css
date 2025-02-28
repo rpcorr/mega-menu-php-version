@@ -718,17 +718,15 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   width: 30px;
   height: 30px;
   background-color: white;
-  /*Bluecolorforthecircle*/
-  border-radius: 50%;
-  /*Makesitaperfectcircle*/
+  border-radius: 50%; /*Makes it a perfect circle*/
   border: 2px black solid;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  /*Addsashadow*/
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /*Adds a shadow*/
   margin-left: auto;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
+  margin-right: 0.5em;
 }
 
 .mega-menu-column-4 .menu-list li .circle .caret {
@@ -753,6 +751,11 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   border-left: 4px solid #fff;
   border-top: 4px solid transparent;
   border-bottom: 4px solid transparent;
+}
+
+.mega-menu-column-4 .menu-list li:has(a[aria-selected='true']) > .circle,
+.mega-menu-column-4 .menu-list li:hover > .circle {
+  display: none;
 }
 
 .mega-menu-column-4 .extra-content {
