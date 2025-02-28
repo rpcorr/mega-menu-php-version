@@ -22,13 +22,13 @@
     
     <!-- ///// The Templates ///// -->
     <template id="menuTemplate">
-      <li><img src="" /><p><a href=""><strong></strong><br/><span></span></a></p> <div class="circle">
+      <li><img src="" /><p><a href="" role="tab"><strong></strong><br/><span></span></a></p> <div class="circle">
           <div class="caret"></div>
         </div></li>
     </template> 
 
     <template id="oneMenuTemplate">
-      <li><img src="" /><p><a href="" aria-selected="true"><strong></strong><br/><span></span></a></p> </li>
+      <li><img src="" /><p><a href="" role="tab" aria-selected="true"><strong></strong><br/><span></span></a></p> </li>
     </template> 
 
     <template id="menuContent">

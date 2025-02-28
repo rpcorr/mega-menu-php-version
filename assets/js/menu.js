@@ -1190,9 +1190,6 @@ function toggleTopLevelMenu(menuLink) {
   const allMenuItems = document.querySelectorAll('.menu-item-has-children > a');
   const isExpanded = menuLink.getAttribute('aria-expanded') === 'true';
 
-  // Remove active class from all grid items
-  removeActiveFromAllGridItems();
-
   // Close all other menus
   allMenuItems.forEach((link) => {
     if (link !== menuLink) {
@@ -1244,6 +1241,7 @@ function toggleTopLevelMenu(menuLink) {
         .querySelectorAll('.grid-container-single')
         .forEach((menuContainer) => {
           getMegaMenu(menuContainer, 'single');
+          //switchTab(menuLink);
         });
 
       document
@@ -1590,17 +1588,8 @@ function removeActiveClass() {
   });
 }
 
-function removeActiveFromAllGridItems() {
-  // Remove 'active' from all grid items
-  document.querySelectorAll('.grid-item.menu').forEach((item) => {
-    item.classList.remove('active');
-  });
-}
-
 function getMegaMenu(menuContainer, type) {
   if (!menuContainer) return; // Exit if no menu container is found
-
-  console.log(type);
 
   // Render the default menu items and content for 'LibPas' when the menu initializes
   if (type === 'multiple') {
@@ -1622,13 +1611,14 @@ function getMegaMenu(menuContainer, type) {
     //renderExtraContent(libPasExtraContent, menuContainer);
   }
 
-  setTabsContainer();
+  setTabsContainer(null);
 
   // Prevent adding multiple event listeners to the same menu container
   if (!menuContainer.dataset.listenerAdded) {
     menuContainer.addEventListener(
       'click',
       function (event) {
+        event.stopPropagation(); // Prevents unintended event bubbling
         const anchor = event.target.closest('a'); // Check if a link was clicked
         if (anchor) {
           event.preventDefault(); // Prevent default link behavior
@@ -1636,42 +1626,35 @@ function getMegaMenu(menuContainer, type) {
           const clickedTab = event.target.closest('a');
           if (!clickedTab) return;
 
-          console.log(clickedTab);
+          // Render content based on the clicked menu item
+          switch (clickedTab.id) {
+            case 'LibPas':
+              if (type === 'multiple')
+                renderMenu(menu, menuContainer, type, 'LibPas');
 
-          switchTab(clickedTab);
+              if (type === 'single')
+                renderMenu(menuSingle, menuContainer, type, 'LibPas');
 
-          removeActiveFromAllGridItems(); // Remove active class from all grid items
-
-          let parentDiv = anchor.closest('.grid-item.menu'); // Find the closest menu item container
-          if (parentDiv) {
-            let id = parentDiv.id; // Get the ID of the clicked menu item
-
-            // Render content based on the clicked menu item
-            switch (id) {
-              case 'LibPas':
-                if (type === 'multiple')
-                  renderMenu(menu, menuContainer, type, 'LibPas');
-
-                if (type === 'single')
-                  renderMenu(menuSingle, menuContainer, type, 'LibPas');
-
-                //renderBodyContent(libPasBodyContent, menuContainer, type);
-                //renderExtraContent(libPasExtraContent, menuContainer);
-                break;
-              case 'LibSAT':
-                renderMenu(menu, menuContainer, type, 'LibSAT');
-                //renderBodyContent(libSATBodyContent, menuContainer, type);
-                //renderExtraContent(libSatExtraContent, menuContainer);
-                break;
-              case 'InformUs':
-                renderMenu(menu, menuContainer, type, 'InformUs');
-                //renderBodyContent(informUsBodyContent, menuContainer, type);
-                //renderExtraContent(informUsExtraContent, menuContainer);
-                break;
-              default:
-                console.log('Something went wrong'); // Debugging: Log an error if no match is found
-            }
+              renderBodyContent(libPasBodyContent, menuContainer, type);
+              renderExtraContent(libPasExtraContent, menuContainer);
+              break;
+            case 'LibSAT':
+              renderMenu(menu, menuContainer, type, 'LibSAT');
+              renderBodyContent(libSATBodyContent, menuContainer, type);
+              renderExtraContent(libSatExtraContent, menuContainer);
+              break;
+            case 'InformUs':
+              renderMenu(menu, menuContainer, type, 'InformUs');
+              renderBodyContent(informUsBodyContent, menuContainer, type);
+              renderExtraContent(informUsExtraContent, menuContainer);
+              break;
+            default:
+              console.log('Something went wrong'); // Debugging: Log an error if no match is found
           }
+
+          setTimeout(() => {
+            setTabsContainer(clickedTab.id);
+          }, 100);
         }
       },
       true // Run the event listener in the capture phase
@@ -1704,7 +1687,6 @@ function getMegaMenu(menuContainer, type) {
 function renderMenu(menuData, menuContainer, type, currentMenuItem) {
   let menuTemplate;
 
-  console.log(type);
   if (type === 'multiple') {
     menuTemplate = document.querySelector('#menuTemplate');
   } else if (type === 'single' || type === 'pages') {
@@ -1731,9 +1713,10 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
       const menuContent = templateContent.cloneNode(true);
       const img = menuContent.querySelector('img');
       const anchor = menuContent.querySelector('a');
+      const id = menuContent.querySelector('id');
       const strong = anchor.querySelector('strong');
       const span = anchor.querySelector('span');
-      //const menuItem = menuContent.querySelector('.grid-item.menu');
+      const menuItem = menuContent.querySelector('li');
 
       if (!anchor || !strong || !span) {
         console.error('Error: Missing elements inside template.');
@@ -1749,17 +1732,8 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
       span.textContent = item.subText;
 
       // Set menuItem id for identification
-      //menuItem.setAttribute('id', item.menuTitle);
+      menuItem.setAttribute('id', item.menuTitle);
       //menuItem.setAttribute('role', 'tab');
-
-      // Set active class for currentMenuItem
-      // if (currentMenuItem === menuItem.id) {
-      //   menuItem.classList.add('active');
-      //   menuItem.setAttribute('aria-selected', 'true');
-      //   anchor.setAttribute('aria-current', 'true');
-      // } else {
-      //   menuItem.setAttribute('aria-selected', 'false');
-      // }
 
       fragment.appendChild(menuContent);
     });
@@ -1776,8 +1750,6 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
 }
 
 function renderBodyContent(contentData, contentContainer, type) {
-  console.log(type);
-
   const contentTemplate = document.querySelector('#menuContent');
 
   if (!contentTemplate || !contentContainer) {
@@ -1880,7 +1852,7 @@ function renderExtraContent(contentData, menuContainer) {
 
 ///////  Navigation through tabs /////////////////
 
-function setTabsContainer() {
+function setTabsContainer(selectedTab) {
   // Select the main tabs container
   const tabsContainer = document.querySelector('.tabs-container');
 
@@ -1911,17 +1883,18 @@ function setTabsContainer() {
     tab.setAttribute('id', strongText.replace(/\s+/g, '-')); // Assign unique ID based on strong text
 
     // Set the first tab as selected and focusable, others as hidden and unfocusable
-    if (index === 0) {
+    if (selectedTab !== null && selectedTab === tab.id) {
       tab.setAttribute('aria-selected', 'true');
+      tab.setAttribute('tabindex', '0');
+      tab.focus(); // Ensure selected tab receives focus
+    } else if (index === 0 && selectedTab === null) {
+      tab.setAttribute('aria-selected', 'true');
+      tab.setAttribute('tabindex', '0');
     } else {
+      tab.setAttribute('aria-selected', 'false');
       tab.setAttribute('tabindex', '-1'); // Make inactive tabs unfocusable
       tabPanels[index].setAttribute('hidden', ''); // Hide corresponding tab panel
     }
-  });
-
-  // Set ARIA roles and tabindex for all tab panels
-  tabPanels.forEach((panel) => {
-    panel.setAttribute('role', 'tabpanel'); // Define the role for accessibility
   });
 }
 
@@ -1971,7 +1944,7 @@ function switchTab(clickedTab) {
   const tabPanels = tabsContainer.querySelectorAll('.tabs__panels > div');
 
   // Get the corresponding panel for the clicked tab
-  const activePanel = tabsContainer.querySelector(activePanelId);
+  //const activePanel = tabsContainer.querySelector(activePanelId);
 
   // Reset all tabs to unselected state
   tabButtons.forEach((button) => {
@@ -1984,11 +1957,15 @@ function switchTab(clickedTab) {
     panel.setAttribute('hidden', true);
   });
 
-  // Uncomment to ensure hidden attribute is removed correctly
-  // activePanel.removeAttribute('hidden', false);
-
-  // Set the clicked tab as the active tab
-  clickedTab.setAttribute('aria-selected', true);
+  // === FIX: Set the clicked tab as active ===
+  clickedTab.setAttribute('aria-selected', 'true');
   clickedTab.setAttribute('tabindex', '0');
-  clickedTab.focus();
+  clickedTab.focus(); // Ensure the tab is focused for accessibility
+
+  // Ensure the active panel is shown
+  // if (activePanel) {
+  //   activePanel.removeAttribute('hidden');
+  // }
+
+  //console.log('After setting active tab:', clickedTab.outerHTML);
 }
