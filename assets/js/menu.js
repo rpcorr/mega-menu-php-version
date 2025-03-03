@@ -1624,57 +1624,31 @@ function getMegaMenu(menuContainer, type) {
           event.preventDefault(); // Prevent default link behavior
 
           const clickedTab = event.target.closest('a');
+
           if (!clickedTab) return;
 
-          // Render content based on the clicked menu item
-          switch (clickedTab.id) {
-            case 'LibPas':
-              if (type === 'multiple')
-                renderMenu(menu, menuContainer, type, 'LibPas');
-
-              if (type === 'single')
-                renderMenu(menuSingle, menuContainer, type, 'LibPas');
-
-              renderBodyContent(libPasBodyContent, menuContainer, type);
-              renderExtraContent(libPasExtraContent, menuContainer);
-              break;
-            case 'LibSAT':
-              renderMenu(menu, menuContainer, type, 'LibSAT');
-              renderBodyContent(libSATBodyContent, menuContainer, type);
-              renderExtraContent(libSatExtraContent, menuContainer);
-              break;
-            case 'InformUs':
-              renderMenu(menu, menuContainer, type, 'InformUs');
-              renderBodyContent(informUsBodyContent, menuContainer, type);
-              renderExtraContent(informUsExtraContent, menuContainer);
-              break;
-            default:
-              console.log('Something went wrong'); // Debugging: Log an error if no match is found
-          }
-
-          setTimeout(() => {
-            setTabsContainer(clickedTab.id);
-          }, 100);
+          switchTab(clickedTab, menuContainer, type);
         }
       },
       true // Run the event listener in the capture phase
     );
 
-    menuContainer.addEventListener('keydown', (e) => {
-      switch (e.key) {
+    menuContainer.addEventListener('keydown', (event) => {
+      const clickedTab = event.target.closest('a');
+      switch (event.key) {
         case 'ArrowLeft':
-          moveLeft();
+          moveLeft(clickedTab, menuContainer, type);
           break;
         case 'ArrowRight':
-          moveRight();
+          moveRight(clickedTab, menuContainer, type);
           break;
         case 'Home':
-          e.preventDefault();
-          switchTab(tabButtons[0]);
+          event.preventDefault();
+          switchTab(tabButtons[0], menuContainer, type);
           break;
         case 'End':
-          e.preventDefault();
-          switchTab(tabButtons[tabButtons.length - 1]);
+          event.preventDefault();
+          switchTab(tabButtons[tabButtons.length - 1], menuContainer, type);
           break;
       }
     });
@@ -1713,7 +1687,6 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
       const menuContent = templateContent.cloneNode(true);
       const img = menuContent.querySelector('img');
       const anchor = menuContent.querySelector('a');
-      const id = menuContent.querySelector('id');
       const strong = anchor.querySelector('strong');
       const span = anchor.querySelector('span');
       const menuItem = menuContent.querySelector('li');
@@ -1733,7 +1706,12 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
 
       // Set menuItem id for identification
       menuItem.setAttribute('id', item.menuTitle);
-      //menuItem.setAttribute('role', 'tab');
+
+      // Check if this is the current menu item
+      if (item.menuTitle === currentMenuItem) {
+        anchor.setAttribute('aria-selected', 'true');
+        anchor.setAttribute('tabindex', '0');
+      }
 
       fragment.appendChild(menuContent);
     });
@@ -1742,7 +1720,9 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
     menuContainer.appendChild(menuList);
 
     // Set focus to the current menu item
-    const currentAnchor = menuContainer.querySelector('a[aria-current="true"]');
+    const currentAnchor = menuContainer.querySelector(
+      'a[aria-selected="true"]'
+    );
     if (currentAnchor) {
       currentAnchor.focus();
     }
@@ -1868,37 +1848,19 @@ function setTabsContainer(selectedTab) {
   // Set ARIA role to define this as a tab list for accessibility
   tabsList.setAttribute('role', 'tablist');
 
-  // Assign 'presentation' role to each list item to prevent it from being read as a list by screen readers
-  tabsList.querySelectorAll('li').forEach((listItem) => {
-    listItem.setAttribute('role', 'presentation');
-  });
-
-  // Loop through each tab button and set appropriate attributes
+  // Loop through each tab button and set id
   tabButtons.forEach((tab, index) => {
-    tab.setAttribute('role', 'tab'); // Set ARIA role as 'tab'
-
     // Extract text from the <strong> tag inside the tab
     const strongText = tab.querySelector('strong').textContent.trim();
-
-    tab.setAttribute('id', strongText.replace(/\s+/g, '-')); // Assign unique ID based on strong text
-
-    // Set the first tab as selected and focusable, others as hidden and unfocusable
-    if (selectedTab !== null && selectedTab === tab.id) {
-      tab.setAttribute('aria-selected', 'true');
-      tab.setAttribute('tabindex', '0');
-      tab.focus(); // Ensure selected tab receives focus
-    } else if (index === 0 && selectedTab === null) {
-      tab.setAttribute('aria-selected', 'true');
-      tab.setAttribute('tabindex', '0');
-    } else {
-      tab.setAttribute('aria-selected', 'false');
-      tab.setAttribute('tabindex', '-1'); // Make inactive tabs unfocusable
-      tabPanels[index].setAttribute('hidden', ''); // Hide corresponding tab panel
-    }
+    //tab.setAttribute('id', strongText.replace(/\s+/g, '-')); // Assign unique ID based on strong text
   });
+
+  const firstTab = document.querySelector('.menu-list li:first-child a');
+  firstTab.setAttribute('aria-selected', 'true');
+  firstTab.removeAttribute('tabindex');
 }
 
-function moveLeft() {
+function moveLeft(clickedTab, menuContainer, type) {
   // Select the tabs container and list
   const tabsContainer = document.querySelector('.tabs-container');
   const tabsList = tabsContainer.querySelector('ul');
@@ -1912,10 +1874,11 @@ function moveLeft() {
   // Calculate the previous index in a circular manner
   const previousIndex =
     (currentIndex - 1 + tabButtons.length) % tabButtons.length;
-  switchTab(tabButtons[previousIndex]);
+  //switchTab(tabButtons[previousIndex]);
+  switchTab(tabButtons[previousIndex], menuContainer, type);
 }
 
-function moveRight() {
+function moveRight(clickedTab, menuContainer, type) {
   // Select the tabs container and list
   const tabsContainer = document.querySelector('.tabs-container');
   const tabsList = tabsContainer.querySelector('ul');
@@ -1928,20 +1891,20 @@ function moveRight() {
 
   // Calculate the next index in a circular manner
   const nextIndex = (currentIndex + 1) % tabButtons.length;
-  switchTab(tabButtons[nextIndex]);
+  switchTab(tabButtons[nextIndex], menuContainer, type);
 }
 
-function switchTab(clickedTab) {
+function switchTab(clickedTab, menuContainer, type) {
   // Select the tabs container
   const tabsContainer = document.querySelector('.tabs-container');
 
   // Get the ID of the panel associated with the clicked tab
-  const activePanelId = clickedTab.getAttribute('href');
+  //const activePanelId = clickedTab.getAttribute('href');
 
   // Select the list of tabs and tab panels
   const tabsList = tabsContainer.querySelector('ul');
   const tabButtons = tabsList.querySelectorAll('a');
-  const tabPanels = tabsContainer.querySelectorAll('.tabs__panels > div');
+  //const tabPanels = tabsContainer.querySelectorAll('.tabs__panels > div');
 
   // Get the corresponding panel for the clicked tab
   //const activePanel = tabsContainer.querySelector(activePanelId);
@@ -1952,20 +1915,32 @@ function switchTab(clickedTab) {
     button.setAttribute('tabindex', '-1');
   });
 
-  // Hide all tab panels
-  tabPanels.forEach((panel) => {
-    panel.setAttribute('hidden', true);
-  });
+  //Render content based on the clicked menu item
+  switch (clickedTab.closest('li').id) {
+    case 'LibPas':
+      if (type === 'multiple') renderMenu(menu, menuContainer, type, 'LibPas');
 
-  // === FIX: Set the clicked tab as active ===
+      if (type === 'single')
+        renderMenu(menuSingle, menuContainer, type, 'LibPas');
+
+      renderBodyContent(libPasBodyContent, menuContainer, type);
+      renderExtraContent(libPasExtraContent, menuContainer);
+      break;
+    case 'LibSAT':
+      renderMenu(menu, menuContainer, type, 'LibSAT');
+      renderBodyContent(libSATBodyContent, menuContainer, type);
+      renderExtraContent(libSatExtraContent, menuContainer);
+      break;
+    case 'InformUs':
+      renderMenu(menu, menuContainer, type, 'InformUs');
+      renderBodyContent(informUsBodyContent, menuContainer, type);
+      renderExtraContent(informUsExtraContent, menuContainer);
+      break;
+    default:
+      console.log('Something went wrong'); // Debugging: Log an error if no match is found
+  }
+
   clickedTab.setAttribute('aria-selected', 'true');
   clickedTab.setAttribute('tabindex', '0');
-  clickedTab.focus(); // Ensure the tab is focused for accessibility
-
-  // Ensure the active panel is shown
-  // if (activePanel) {
-  //   activePanel.removeAttribute('hidden');
-  // }
-
-  //console.log('After setting active tab:', clickedTab.outerHTML);
+  clickedTab.focus();
 }
