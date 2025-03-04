@@ -34,7 +34,8 @@ ul#menu-main-menu li a:hover,
 ul#menu-main-menu li a:focus,
 ul#menu-main-menu a.active,
 ul.menu li a:focus,
-ul.menu li a:active {
+ul.menu li a:active,
+ul.menu li a[aria-expanded='true'] {
   background-color: var(--bgColourHoverActiveFocus);
   color: var(--textColourHoverActiveFocus);
 }
