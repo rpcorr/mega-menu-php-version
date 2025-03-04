@@ -1241,7 +1241,6 @@ function toggleTopLevelMenu(menuLink) {
         .querySelectorAll('.grid-container-single')
         .forEach((menuContainer) => {
           getMegaMenu(menuContainer, 'single');
-          //switchTab(menuLink);
         });
 
       document
@@ -1627,7 +1626,9 @@ function getMegaMenu(menuContainer, type) {
 
           if (!clickedTab) return;
 
-          switchTab(clickedTab, menuContainer, type);
+          // switch tabs if a tab is clicked
+          if (clickedTab.getAttribute('role') === 'tab')
+            switchTab(clickedTab, menuContainer, type);
         }
       },
       true // Run the event listener in the capture phase
@@ -1848,13 +1849,6 @@ function setTabsContainer(selectedTab) {
   // Set ARIA role to define this as a tab list for accessibility
   tabsList.setAttribute('role', 'tablist');
 
-  // Loop through each tab button and set id
-  tabButtons.forEach((tab, index) => {
-    // Extract text from the <strong> tag inside the tab
-    const strongText = tab.querySelector('strong').textContent.trim();
-    //tab.setAttribute('id', strongText.replace(/\s+/g, '-')); // Assign unique ID based on strong text
-  });
-
   const firstTab = document.querySelector('.menu-list li:first-child a');
   firstTab.setAttribute('aria-selected', 'true');
   firstTab.removeAttribute('tabindex');
@@ -1874,7 +1868,6 @@ function moveLeft(clickedTab, menuContainer, type) {
   // Calculate the previous index in a circular manner
   const previousIndex =
     (currentIndex - 1 + tabButtons.length) % tabButtons.length;
-  //switchTab(tabButtons[previousIndex]);
   switchTab(tabButtons[previousIndex], menuContainer, type);
 }
 
@@ -1915,32 +1908,36 @@ function switchTab(clickedTab, menuContainer, type) {
     button.setAttribute('tabindex', '-1');
   });
 
-  //Render content based on the clicked menu item
-  switch (clickedTab.closest('li').id) {
-    case 'LibPas':
-      if (type === 'multiple') renderMenu(menu, menuContainer, type, 'LibPas');
+  // only switch tabs if a tab has been clicked
+  if (clickedTab.closest('li').id !== '') {
+    //Render content based on the clicked menu item
+    switch (clickedTab.closest('li').id) {
+      case 'LibPas':
+        if (type === 'multiple')
+          renderMenu(menu, menuContainer, type, 'LibPas');
 
-      if (type === 'single')
-        renderMenu(menuSingle, menuContainer, type, 'LibPas');
+        if (type === 'single')
+          renderMenu(menuSingle, menuContainer, type, 'LibPas');
 
-      renderBodyContent(libPasBodyContent, menuContainer, type);
-      renderExtraContent(libPasExtraContent, menuContainer);
-      break;
-    case 'LibSAT':
-      renderMenu(menu, menuContainer, type, 'LibSAT');
-      renderBodyContent(libSATBodyContent, menuContainer, type);
-      renderExtraContent(libSatExtraContent, menuContainer);
-      break;
-    case 'InformUs':
-      renderMenu(menu, menuContainer, type, 'InformUs');
-      renderBodyContent(informUsBodyContent, menuContainer, type);
-      renderExtraContent(informUsExtraContent, menuContainer);
-      break;
-    default:
-      console.log('Something went wrong'); // Debugging: Log an error if no match is found
+        renderBodyContent(libPasBodyContent, menuContainer, type);
+        renderExtraContent(libPasExtraContent, menuContainer);
+        break;
+      case 'LibSAT':
+        renderMenu(menu, menuContainer, type, 'LibSAT');
+        renderBodyContent(libSATBodyContent, menuContainer, type);
+        renderExtraContent(libSatExtraContent, menuContainer);
+        break;
+      case 'InformUs':
+        renderMenu(menu, menuContainer, type, 'InformUs');
+        renderBodyContent(informUsBodyContent, menuContainer, type);
+        renderExtraContent(informUsExtraContent, menuContainer);
+        break;
+      default:
+        console.log('Something went wrong'); // Debugging: Log an error if no match is found
+    }
+
+    clickedTab.setAttribute('aria-selected', 'true');
+    clickedTab.setAttribute('tabindex', '0');
+    clickedTab.focus();
   }
-
-  clickedTab.setAttribute('aria-selected', 'true');
-  clickedTab.setAttribute('tabindex', '0');
-  clickedTab.focus();
 }
