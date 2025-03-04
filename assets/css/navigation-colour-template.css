@@ -33,7 +33,6 @@ ul#menu-main-menu a:active {
 ul#menu-main-menu li a:hover,
 ul#menu-main-menu li a:focus,
 ul#menu-main-menu a.active,
-ul.menu li:hover,
 ul.menu li a:focus,
 ul.menu li a:active {
   background-color: var(--bgColourHoverActiveFocus);
