@@ -1607,8 +1607,8 @@ function getMegaMenu(menuContainer, type) {
 
   if (type === 'pages') {
     renderMenu(null, menuContainer, type, '');
-    //renderBodyContent(libPasBodyContent, menuContainer, type);
-    //renderExtraContent(libPasExtraContent, menuContainer);
+    renderBodyContent(libPasBodyContent, menuContainer, type);
+    renderExtraContent(libPasExtraContent, menuContainer);
   }
 
   setTabsContainer(null);
@@ -1761,20 +1761,20 @@ function renderBodyContent(contentData, contentContainer, type) {
     fragment.appendChild(menuContent);
   });
 
-  // Create the tabs__panels wrapper
-  const tabsPanels = document.createElement('div');
-  tabsPanels.classList.add('tabs__panels');
+  if (type !== 'pages') {
+    // Create the tabs__panels wrapper
+    const tabsPanels = document.createElement('div');
+    tabsPanels.classList.add('tabs__panels');
+    tabsPanels.appendChild(fragment);
+    contentContainer.appendChild(tabsPanels);
+  }
 
   if (type === 'pages') {
     const wrapper = document.createElement('div');
     wrapper.classList.add('left-content');
     wrapper.appendChild(fragment);
-    tabsPanels.appendChild(wrapper);
-  } else {
-    tabsPanels.appendChild(fragment);
+    contentContainer.appendChild(wrapper);
   }
-
-  contentContainer.appendChild(tabsPanels);
 }
 
 function renderExtraContent(contentData, menuContainer) {
