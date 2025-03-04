@@ -680,7 +680,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   background-color: #fff;
 }
 
-.mega-menu-column-4 .tabs-container a {
+.mega-menu-column-4 .tabs-container a,
+.mega-menu-column-4 .grid-container-pages > .left-content a {
   text-decoration: none; /* remove all underline */
 }
 
@@ -772,6 +773,17 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   overflow: hidden; /* Prevents content from overflowing */
 }
 
+.mega-menu-column-4 .grid-container-pages > .left-content {
+  grid-column: span 2; /* Forces the left section to take 2 columns */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three columns */
+  grid-auto-flow: column; /* Fills items in columns first */
+  grid-template-rows: repeat(3, auto); /* Allows up to 3 items per column */
+  gap: 10px;
+  padding: 1rem;
+  background-color: #fff;
+}
+
 .mega-menu-column-4 .grid-container-pages > .left-content > .grid-item {
   display: flex;
   align-items: center;
@@ -782,17 +794,6 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   margin-top: 0;
   margin-left: 1em;
   text-align: left;
-}
-
-.mega-menu-column-4 .grid-container-pages > .left-content {
-  grid-column: span 2; /* Forces the left section to take 2 columns */
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns */
-  grid-auto-flow: column; /* Fills items in columns first */
-  grid-template-rows: repeat(3, auto); /* Allows up to 3 items per column */
-  gap: 10px;
-  padding: 1rem;
-  background-color: #fff;
 }
 
 .mega-menu-column-4 .grid-container-pages > .left-content div {
@@ -807,11 +808,9 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   overflow-wrap: break-word; /* Support for modern browsers */
   width: 100%; /* Ensure the <p> doesn't exceed the container width */
   box-sizing: border-box; /* Include padding in the width calculation */
-}
-
-.mega-menu-column-4 .grid-container-pages > .left-content p {
   margin-left: 1em;
 }
+
 .mega-menu-column-4 .grid-container-pages > .left-content p span {
   font-weight: normal;
 }
