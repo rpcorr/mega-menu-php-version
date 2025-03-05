@@ -906,6 +906,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // collapse all sub-menus when user clicks off
       document.body.addEventListener('click', function (event) {
+        if (event.target.getAttribute('onClick') === 'toggleSidebar()') return;
+
         if (!event.target.closest('li')) {
           document
             .querySelectorAll('.menu-item-has-children')
@@ -927,9 +929,14 @@ document.addEventListener('DOMContentLoaded', () => {
             );
             element.setAttribute('aria-expanded', 'false');
           });
-
         // call removeActiveClass
         removeActiveClass();
+
+        // close sidebar
+        const sidebar = document.getElementById('sidebar');
+        const button = document.querySelector('.toggle-btn');
+        sidebar.style.right = '-250px';
+        button.style.right = '0px';
       });
 
       perserveMenuColour();
