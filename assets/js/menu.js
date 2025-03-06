@@ -1326,6 +1326,115 @@ function toggleTopLevelMenu(menuLink) {
       }
     });
   }
+
+  // populate sidebar base on the top menu link
+  populateSidebar(menuLink);
+}
+
+function populateSidebar(menuLink) {
+  // Get the sidebar element from the document
+  const sidebar = document.querySelector('.sidebar');
+
+  // Extract the text content of the clicked menu link (e.g., "Services", "Profile", etc.)
+  const menuItem = menuLink.textContent;
+
+  // Define menu items and their associated links.
+  // Each section contains a title and a list of items with names and URLs
+  const menuData = {
+    services: {
+      title: 'Services',
+      items: [
+        { name: 'Service 1', url: '#service-1' },
+        { name: 'Service 2', url: '#service-2' },
+        { name: 'Service 3', url: '#service-3' },
+        { name: 'Service 4', url: '#service-4' },
+        { name: 'Service 5', url: '#service-5' },
+      ],
+    },
+    'item 3': {
+      title: 'Item 3',
+      items: [
+        { name: 'Item 3-1', url: '#item-3-1' },
+        { name: 'Item 3-2', url: '#item-3-2' },
+        { name: 'Item 3-3', url: '#item-3-3' },
+        { name: 'Item 3-4', url: '#item-3-4' },
+      ],
+    },
+    support: {
+      title: 'Support',
+      items: [
+        { name: 'Support-1', url: '#support-3-1' },
+        { name: 'Support-2', url: '#support-3-2' },
+        { name: 'Support-3', url: '#support-3-3' },
+        { name: 'Support-4', url: '#support-3-4' },
+      ],
+    },
+    profile: {
+      title: 'Profile',
+      items: [
+        { name: 'Profile-1', url: '#profile-1' },
+        { name: 'Profile-2', url: '#profile-2' },
+        { name: 'Profile-3', url: '#profile-3' },
+      ],
+    },
+    default: {
+      title: 'Default Menu Items',
+      items: [
+        { name: 'Menu Item 1', url: '#menu-item-1' },
+        { name: 'Menu Item 2', url: '#menu-item-2' },
+        { name: 'Menu Item 3', url: '#menu-item-3' },
+        { name: 'Menu Item 4', url: '#menu-item-4' },
+      ],
+    },
+  };
+
+  // Normalize menuItem text for case-insensitive comparison
+  const normalizedMenuItem = menuItem.trim().toLowerCase();
+
+  // If the menu item includes the word 'profile', display the profile menu
+  if (normalizedMenuItem.includes('profile')) {
+    createSidebarSection(sidebar, menuData.profile);
+  }
+
+  // If no menu is open (aria-expanded is 'false'), show the default menu
+  if (menuLink.getAttribute('aria-expanded') === 'false') {
+    createSidebarSection(sidebar, menuData.default);
+    return; // Exit the function early since the default menu is shown
+  }
+
+  // If the menu item matches a known section in the menuData, display it
+  if (menuData[normalizedMenuItem]) {
+    createSidebarSection(sidebar, menuData[normalizedMenuItem]);
+  }
+}
+
+// Helper function to create and append sidebar content
+function createSidebarSection(sidebar, menuSection) {
+  // Clear out the current sidebar content
+  sidebar.innerHTML = '';
+
+  // Create a heading element for the section title
+  const heading = document.createElement('h2');
+  heading.textContent = menuSection.title;
+
+  // Create an unordered list to hold the menu items
+  const ul = document.createElement('ul');
+
+  // Loop through the items in the current menu section and add them as list items
+  menuSection.items.forEach((item) => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.textContent = item.name; // Set link text to the menu item's name
+    a.href = item.url; // Set the URL for the menu item
+    a.style.textDecoration = 'underline'; // Underline the link
+    a.setAttribute('aria-label', `Learn more about ${item.name}`); // Add accessibility label
+    li.appendChild(a); // Append the link to the list item
+    ul.appendChild(li); // Append the list item to the unordered list
+  });
+
+  // Append the heading and list to the sidebar
+  sidebar.appendChild(heading);
+  sidebar.appendChild(ul);
 }
 
 function setAriaLabel(link, isOpen) {
