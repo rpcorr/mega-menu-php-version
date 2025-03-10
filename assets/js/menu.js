@@ -1348,6 +1348,14 @@ function populateSidebar(menuLink) {
         { name: 'Service 5', url: '#service-5' },
       ],
     },
+    admin: {
+      title: 'Admin',
+      items: [
+        { name: 'Admin 1', url: '#admin-1' },
+        { name: 'Admin 2', url: '#admin-2' },
+        { name: 'Admin 3', url: '#admin-3' },
+      ],
+    },
     'item 3': {
       title: 'Item 3',
       items: [
@@ -1426,6 +1434,13 @@ function populateSidebar(menuLink) {
   // If the menu item includes the word 'profile', display the profile menu
   if (normalizedMenuItem.includes('profile')) {
     createSidebarSection(menuData.profile, '');
+    return; // exit early since sidebar is known
+  }
+
+  // if menu is admin
+  if (normalizedMenuItem === 'admin') {
+    createSidebarSection(menuData.admin, '');
+    return; // exit early since sidebar is known
   }
 
   // If no menu is open (aria-expanded is 'false'), show the default menu
@@ -1478,18 +1493,18 @@ function createSidebarSection(menuSection, extraContent) {
     ul.appendChild(li); // Append the list item to the unordered list
   });
 
-  // Create a heading element for the extra content title
-  const extraHeading = document.createElement('h2');
-  extraHeading.textContent = extraContent.title;
-
-  const extraContentUl = document.createElement('ul');
-
   // Append the heading and list to the sidebar
   sidebar.appendChild(heading);
   sidebar.appendChild(ul);
 
   // Loop through the items in the extra content section and add them as list items
   if (extraContent !== '') {
+    // Create a heading element for the extra content title
+    const extraHeading = document.createElement('h2');
+    extraHeading.textContent = extraContent.title;
+
+    const extraContentUl = document.createElement('ul');
+
     extraContent.items.forEach((item) => {
       const li = document.createElement('li');
       const a = document.createElement('a');
@@ -1500,6 +1515,7 @@ function createSidebarSection(menuSection, extraContent) {
       li.appendChild(a); // Append the link to the list item
       extraContentUl.appendChild(li); // Append the list item to the unordered list
     });
+
     sidebar.appendChild(extraHeading);
     sidebar.appendChild(extraContentUl);
   }
