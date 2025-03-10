@@ -76,15 +76,17 @@
     <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/reset.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-menu.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/sidebar.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/default.min.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-colour-template.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/default.css" />
+    
     <?php if (basename($_SERVER['PHP_SELF']) === 'preferences.php') { ?>
 
         <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/colourswatch.min.css" />
 
     <?php }  
   
-    if ($ukey || $user) {  
+    if ($ukey || $user) {   ?>
+        <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-colour-template.min.css" />
+    <?php
       
       if (isset($_SESSION['theme'])) { ?>
         <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php echo $_SESSION['theme'] ?>.css" />
