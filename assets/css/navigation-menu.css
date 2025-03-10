@@ -668,6 +668,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 .mega-menu-column-4 .menu-list a:hover,
 .mega-menu-column-4 .menu-list a:focus {
   background-color: #fff !important;
+  color: #000 !important;
 }
 
 .mega-menu-column-4 .menu-list a:focus,
