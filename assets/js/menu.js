@@ -1332,9 +1332,6 @@ function toggleTopLevelMenu(menuLink) {
 }
 
 function populateSidebar(menuLink) {
-  // Get the sidebar element from the document
-  const sidebar = document.querySelector('.sidebar');
-
   // Extract the text content of the clicked menu link (e.g., "Services", "Profile", etc.)
   const menuItem = menuLink.textContent;
 
@@ -1388,28 +1385,77 @@ function populateSidebar(menuLink) {
     },
   };
 
+  const tabData = {
+    libPas: {
+      title: 'LibPas',
+      items: [
+        { name: 'LibPas 1', url: '#libPas-1' },
+        { name: 'LibPas 2', url: '#libPas-2' },
+      ],
+    },
+    libSat: {
+      title: 'LibSat',
+      items: [
+        { name: 'LibSat 1', url: '#libSat-1' },
+        { name: 'LibSat 2', url: '#libSat-2' },
+        { name: 'LibSat 3', url: '#libSat-3' },
+      ],
+    },
+    informUs: {
+      title: 'InformUs',
+      items: [
+        { name: 'InformUs 1', url: '#informUs-1' },
+        { name: 'InformUs 2', url: '#informUs-2' },
+        { name: 'InformUs 3', url: '#informUs-3' },
+        { name: 'InformUs 4', url: '#informUs-4' },
+      ],
+    },
+  };
+
   // Normalize menuItem text for case-insensitive comparison
   const normalizedMenuItem = menuItem.trim().toLowerCase();
 
+  const selectedItem = Object.values(tabData).find((data) => {
+    return normalizedMenuItem.toLowerCase().includes(data.title.toLowerCase());
+  });
+
+  let extraContent = selectedItem;
+
+  if (extraContent === undefined) extraContent = tabData.libPas;
+
   // If the menu item includes the word 'profile', display the profile menu
   if (normalizedMenuItem.includes('profile')) {
-    createSidebarSection(sidebar, menuData.profile);
+    createSidebarSection(menuData.profile, '');
   }
 
   // If no menu is open (aria-expanded is 'false'), show the default menu
   if (menuLink.getAttribute('aria-expanded') === 'false') {
-    createSidebarSection(sidebar, menuData.default);
+    createSidebarSection(menuData.default, '');
     return; // Exit the function early since the default menu is shown
   }
 
-  // If the menu item matches a known section in the menuData, display it
-  if (menuData[normalizedMenuItem]) {
-    createSidebarSection(sidebar, menuData[normalizedMenuItem]);
-  }
+  // get the top selected menu item
+  const topMenuItem = document
+    .querySelector('a[aria-expanded="true"]')
+    .textContent.toLocaleLowerCase()
+    .trim();
+
+  let topLevelMenuData = '';
+
+  if (topMenuItem === 'services') topLevelMenuData = menuData.services;
+
+  if (topMenuItem === 'item 3') topLevelMenuData = menuData['item 3'];
+
+  if (topMenuItem === 'support') topLevelMenuData = menuData.support;
+
+  createSidebarSection(topLevelMenuData, extraContent);
 }
 
 // Helper function to create and append sidebar content
-function createSidebarSection(sidebar, menuSection) {
+function createSidebarSection(menuSection, extraContent) {
+  // Get the sidebar element from the document
+  const sidebar = document.querySelector('.sidebar');
+
   // Clear out the current sidebar content
   sidebar.innerHTML = '';
 
@@ -1432,9 +1478,31 @@ function createSidebarSection(sidebar, menuSection) {
     ul.appendChild(li); // Append the list item to the unordered list
   });
 
+  // Create a heading element for the extra content title
+  const extraHeading = document.createElement('h2');
+  extraHeading.textContent = extraContent.title;
+
+  const extraContentUl = document.createElement('ul');
+
   // Append the heading and list to the sidebar
   sidebar.appendChild(heading);
   sidebar.appendChild(ul);
+
+  // Loop through the items in the extra content section and add them as list items
+  if (extraContent !== '') {
+    extraContent.items.forEach((item) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.textContent = item.name; // Set link text to the menu item's name
+      a.href = item.url; // Set the URL for the menu item
+      a.style.textDecoration = 'underline'; // Underline the link
+      a.setAttribute('aria-label', `Learn more about ${item.name}`); // Add accessibility label
+      li.appendChild(a); // Append the link to the list item
+      extraContentUl.appendChild(li); // Append the list item to the unordered list
+    });
+    sidebar.appendChild(extraHeading);
+    sidebar.appendChild(extraContentUl);
+  }
 }
 
 function setAriaLabel(link, isOpen) {
@@ -2007,16 +2075,9 @@ function switchTab(clickedTab, menuContainer, type) {
   // Select the tabs container
   const tabsContainer = document.querySelector('.tabs-container');
 
-  // Get the ID of the panel associated with the clicked tab
-  //const activePanelId = clickedTab.getAttribute('href');
-
   // Select the list of tabs and tab panels
   const tabsList = tabsContainer.querySelector('ul');
   const tabButtons = tabsList.querySelectorAll('a');
-  //const tabPanels = tabsContainer.querySelectorAll('.tabs__panels > div');
-
-  // Get the corresponding panel for the clicked tab
-  //const activePanel = tabsContainer.querySelector(activePanelId);
 
   // Reset all tabs to unselected state
   tabButtons.forEach((button) => {
@@ -2024,7 +2085,7 @@ function switchTab(clickedTab, menuContainer, type) {
     button.setAttribute('tabindex', '-1');
   });
 
-  // only switch tabs if a tab has been clicked
+  // Only switch tabs if a tab has been clicked
   if (clickedTab.closest('li').id !== '') {
     //Render content based on the clicked menu item
     switch (clickedTab.closest('li').id) {
@@ -2055,5 +2116,7 @@ function switchTab(clickedTab, menuContainer, type) {
     clickedTab.setAttribute('aria-selected', 'true');
     clickedTab.setAttribute('tabindex', '0');
     clickedTab.focus();
+
+    populateSidebar(clickedTab);
   }
 }
