@@ -698,28 +698,30 @@ document.addEventListener('DOMContentLoaded', () => {
       if (strLibSatMenuStructure !== '' && strLibSatMenuStructure !== undefined)
         menuHTML += strLibSatMenuStructure;
 
-      // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
+      if (ukey.trim() !== '') {
+        // Services Menu
+        menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
             <div class="sub-menu-div mega-menu mega-menu-column-4">
             <div class="grid-container-multiple tabs-container"></div>
             </div>
           </li>`;
 
-      // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Item 3 has a sub menu. Click enter to open">Item 3<i class="caret angle-down"></i></a>
+        // Services Menu
+        menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Item 3 has a sub menu. Click enter to open">Item 3<i class="caret angle-down"></i></a>
             <div class="sub-menu-div mega-menu mega-menu-column-4">
             <div class="grid-container-single tabs-container"></div>
             </div>
           </li>`;
 
-      // Services Menu
-      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Support has a sub menu. Click enter to open">Support<i class="caret angle-down"></i></a>
+        // Services Menu
+        menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Support has a sub menu. Click enter to open">Support<i class="caret angle-down"></i></a>
             <div class="sub-menu-div mega-menu mega-menu-column-4">
             <div class="grid-container-pages"></div>
             </div>
           </li>`;
 
-      menuHTML += `<li class="menu-item-has-children hover"><a href="#" aria-expanded="false" aria-label="John Smith profile has a sub menu. Click enter to open"><div class="profile"><span aria-hidden="true">JS</span></div>John Smith <span class="hidden-text">profile</span> <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="#">My Profile</a></li><li><a href="#">Settings</a></li><li><a href="#">Notifications</a></li><li><a href="#">Help &amp; Support</a></li><li><a href="#">Sign Out</a></li></ul></li>`;
+        menuHTML += `<li class="menu-item-has-children hover"><a href="#" aria-expanded="false" aria-label="John Smith profile has a sub menu. Click enter to open"><div class="profile"><span aria-hidden="true">JS</span></div>John Smith <span class="hidden-text">profile</span> <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="#">My Profile</a></li><li><a href="#">Settings</a></li><li><a href="#">Notifications</a></li><li><a href="#">Help &amp; Support</a></li><li><a href="#">Sign Out</a></li></ul></li>`;
+      }
 
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
 
