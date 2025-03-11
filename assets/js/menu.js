@@ -11,41 +11,13 @@ let output = '';
 let megaMenuLinks = '';
 let initialColumns = '';
 
-/// The Data ///
-const menu = [
-  {
-    graphic: 'pie.gif',
-    width: '36',
-    height: '33',
-    url: '#libPas',
-    menuTitle: 'LibPas',
-    subText: 'Periodic data',
-  },
-  {
-    graphic: 'medal.gif',
-    width: '43',
-    height: '43',
-    url: '#libSAT',
-    menuTitle: 'LibSAT',
-    subText: 'Qualitative data',
-  },
-  {
-    graphic: 'puzzle-pieces.gif',
-    width: '40',
-    height: '40',
-    url: '#InformUs',
-    menuTitle: 'InformUs',
-    subText: 'Survey data',
-  },
-];
-
 const menuSingle = [
   {
     graphic: 'pie.gif',
     width: '36',
     height: '33',
     url: '#',
-    menuTitle: 'LibPas',
+    menuTitle: 'LibPAS',
     subText: 'Periodic data',
   },
 ];
@@ -55,7 +27,7 @@ const libPasBodyContent = [
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    title: 'LibPas Reports',
+    title: 'LibPAS Reports',
     subText: '{Brief description of the function of reports}',
   },
   {
@@ -140,12 +112,12 @@ const libSATBodyContent = [
   },
 ];
 
-const informUsBodyContent = [
+const informsUsBodyContent = [
   {
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    title: 'Reports InformUs',
+    title: 'Reports InformsUs',
     subText: '{Brief description of the function of reports}',
   },
   {
@@ -193,7 +165,7 @@ const libPasExtraContent = [
     heading: 'Did you know that you can do this if you do that?',
     extraBodyContent: [
       {
-        bodyText: 'LibPas Extra Content',
+        bodyText: 'LibPAS Extra Content',
         htmlElement: 'p',
       },
       {
@@ -215,7 +187,7 @@ const libPasExtraContent = [
   },
 ];
 
-const informUsExtraContent = [
+const informsUsExtraContent = [
   {
     graphic: 'light-bulb.gif',
     width: '32',
@@ -223,7 +195,7 @@ const informUsExtraContent = [
     heading: 'Did you know that you can do this if you do that?',
     extraBodyContent: [
       {
-        bodyText: 'InformUs Extra Content',
+        bodyText: 'InformsUs Extra Content',
         htmlElement: 'p',
       },
       {
@@ -630,19 +602,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return `<li ${strBorderBottomStyle}><a href="${menuArray[currentMenuItem].page_link}">${menuArray[currentMenuItem].page_prompt}</a></li>`;
       }
 
-      // Find Libsat section and remove from array
-      const index = finalGroupedArray.findIndex(
-        (section) =>
-          section.section_prompt &&
-          section.section_prompt.toLowerCase() === 'libsat'
-      );
-
-      if (index !== -1) {
-        finalGroupedArray.splice(index, 1);
-      }
-
       function createMenu(menuData) {
         let menuHTML = '';
+        let createdServicesMenu = false;
 
         menuData.forEach((section) => {
           // If section_id is 0, create top-level menu items
@@ -658,33 +620,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 menuHTML += '</li>';
               }
             });
+          } else if (
+            section.section_id === '2' ||
+            section.section_id === '5' ||
+            section.section_id === ' 1'
+          ) {
+            if (createdServicesMenu === false) {
+              createdServicesMenu = true;
+              menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
+            <div class="sub-menu-div mega-menu mega-menu-column-4">
+            <div class="grid-container-multiple tabs-container"></div>
+            </div>
+          </li>`;
+            }
           } else {
-            let openSubmenu = false;
-            // Create submenus for other sections
-            if (section.section_prompt) {
-              menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="${section.section_prompt} has a sub menu. Click enter to open">${section.section_prompt} <i class="caret angle-down"></i></a>`;
+            if (section.section_prompt != 'LibSat') {
+              let openSubmenu = false;
+              // Create submenus for other sections
+              if (section.section_prompt) {
+                menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="${section.section_prompt} has a sub menu. Click enter to open">${section.section_prompt} <i class="caret angle-down"></i></a>`;
 
-              menuHTML += '<ul class="sub-menu">';
+                menuHTML += '<ul class="sub-menu">';
 
-              section.pages.forEach((page, index) => {
-                if (
-                  page.page_prompt.toLowerCase() !==
-                  section.section_prompt.toLowerCase()
-                )
-                  if (page.page_link === '') {
-                    menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="${page.page_prompt} has a sub menu. Click enter to open">${page.page_prompt} <i class="caret angle-down"></i></a>`;
-                    menuHTML += '<ul class="sub-menu">';
-                    openSubmenu = true;
-                  } else {
-                    menuHTML += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
+                section.pages.forEach((page, index) => {
+                  if (
+                    page.page_prompt.toLowerCase() !==
+                    section.section_prompt.toLowerCase()
+                  )
+                    if (page.page_link === '') {
+                      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="${page.page_prompt} has a sub menu. Click enter to open">${page.page_prompt} <i class="caret angle-down"></i></a>`;
+                      menuHTML += '<ul class="sub-menu">';
+                      openSubmenu = true;
+                    } else {
+                      menuHTML += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
+                    }
+
+                  // close sub menu if index is at the end of section and openSubmenu is true
+                  if (index === section.pages.length - 1 && openSubmenu) {
+                    menuHTML += '</ul></li>';
                   }
-
-                // close sub menu if index is at the end of section and openSubmenu is true
-                if (index === section.pages.length - 1 && openSubmenu) {
-                  menuHTML += '</ul></li>';
-                }
-              });
-              menuHTML += '</ul></li>';
+                });
+                menuHTML += '</ul></li>';
+              }
             }
           }
         });
@@ -695,35 +672,41 @@ document.addEventListener('DOMContentLoaded', () => {
       // Call the function to create the menu
       let menuHTML = createMenu(finalGroupedArray);
 
-      if (strLibSatMenuStructure !== '' && strLibSatMenuStructure !== undefined)
-        menuHTML += strLibSatMenuStructure;
+      //let menuHTML = '';
+
+      // if (strLibSatMenuStructure !== '' && strLibSatMenuStructure !== undefined)
+      //   menuHTML += strLibSatMenuStructure;
 
       if (ukey.trim() !== '') {
-        // Services Menu
-        menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
-            <div class="sub-menu-div mega-menu mega-menu-column-4">
-            <div class="grid-container-multiple tabs-container"></div>
-            </div>
-          </li>`;
+        // // Services Menu
+        // menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
+        //     <div class="sub-menu-div mega-menu mega-menu-column-4">
+        //     <div class="grid-container-multiple tabs-container"></div>
+        //     </div>
+        //   </li>`;
 
-        // Services Menu
-        menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Item 3 has a sub menu. Click enter to open">Item 3<i class="caret angle-down"></i></a>
-            <div class="sub-menu-div mega-menu mega-menu-column-4">
-            <div class="grid-container-single tabs-container"></div>
-            </div>
-          </li>`;
+        // // Item 3
+        // menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Item 3 has a sub menu. Click enter to open">Item 3<i class="caret angle-down"></i></a>
+        //     <div class="sub-menu-div mega-menu mega-menu-column-4">
+        //     <div class="grid-container-single tabs-container"></div>
+        //     </div>
+        //   </li>`;
 
-        // Services Menu
-        menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Support has a sub menu. Click enter to open">Support<i class="caret angle-down"></i></a>
-            <div class="sub-menu-div mega-menu mega-menu-column-4">
-            <div class="grid-container-pages"></div>
-            </div>
-          </li>`;
+        // // Services Menu
+        // menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Support has a sub menu. Click enter to open">Support<i class="caret angle-down"></i></a>
+        //     <div class="sub-menu-div mega-menu mega-menu-column-4">
+        //     <div class="grid-container-pages"></div>
+        //     </div>
+        //   </li>`;
 
         menuHTML += `<li class="menu-item-has-children hover"><a href="#" aria-expanded="false" aria-label="John Smith profile has a sub menu. Click enter to open"><div class="profile"><span aria-hidden="true">JS</span></div>John Smith <span class="hidden-text">profile</span> <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="#">My Profile</a></li><li><a href="#">Settings</a></li><li><a href="#">Notifications</a></li><li><a href="#">Help &amp; Support</a></li><li><a href="logout.php">Sign Out</a></li></ul></li>`;
       }
 
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
+
+      console.log(finalGroupedArray);
+
+      populateMegaMenu(finalGroupedArray);
 
       navItems = document.querySelectorAll('#menu-main-menu > li');
 
@@ -1225,41 +1208,6 @@ function toggleTopLevelMenu(menuLink) {
     icon.classList.toggle('angle-up', !isExpanded);
   }
 
-  // Find the currently expanded menu
-  const expandedMenuLink = document.querySelector(
-    '.menu-item-has-children > a[aria-expanded="true"]'
-  );
-
-  // Manage 'megaMenu' ID assignment
-  const megaMenuElement = document.getElementById('megaMenu');
-  if (expandedMenuLink) {
-    const subMenu =
-      expandedMenuLink.parentElement.querySelector('.sub-menu-div');
-    const gridContainer = subMenu?.querySelector(
-      'div[class*="grid-container"]'
-    );
-
-    if (gridContainer) {
-      document
-        .querySelectorAll('.grid-container-multiple')
-        .forEach((menuContainer) => {
-          getMegaMenu(menuContainer, 'multiple');
-        });
-
-      document
-        .querySelectorAll('.grid-container-single')
-        .forEach((menuContainer) => {
-          getMegaMenu(menuContainer, 'single');
-        });
-
-      document
-        .querySelectorAll('.grid-container-pages')
-        .forEach((menuContainer) => {
-          getMegaMenu(menuContainer, 'pages');
-        });
-    }
-  }
-
   // Keep parent (More) link open when a child submenu is open
   const li = menuLink.closest('li');
   if (li?.closest('#moreSubMenu')) {
@@ -1397,10 +1345,10 @@ function populateSidebar(menuLink) {
 
   const tabData = {
     libPas: {
-      title: 'LibPas',
+      title: 'LibPAS',
       items: [
-        { name: 'LibPas 1', url: '#libPas-1' },
-        { name: 'LibPas 2', url: '#libPas-2' },
+        { name: 'LibPAS 1', url: '#libPas-1' },
+        { name: 'LibPAS 2', url: '#libPas-2' },
       ],
     },
     libSat: {
@@ -1411,13 +1359,13 @@ function populateSidebar(menuLink) {
         { name: 'LibSat 3', url: '#libSat-3' },
       ],
     },
-    informUs: {
-      title: 'InformUs',
+    informsUs: {
+      title: 'InformsUs',
       items: [
-        { name: 'InformUs 1', url: '#informUs-1' },
-        { name: 'InformUs 2', url: '#informUs-2' },
-        { name: 'InformUs 3', url: '#informUs-3' },
-        { name: 'InformUs 4', url: '#informUs-4' },
+        { name: 'InformsUs 1', url: '#informsUs-1' },
+        { name: 'InformsUs 2', url: '#informsUs-2' },
+        { name: 'InformsUs 3', url: '#informsUs-3' },
+        { name: 'InformsUs 4', url: '#informsUs-4' },
       ],
     },
   };
@@ -1435,19 +1383,19 @@ function populateSidebar(menuLink) {
 
   // If the menu item includes the word 'profile', display the profile menu
   if (normalizedMenuItem.includes('profile')) {
-    createSidebarSection(menuData.profile, '');
+    //createSidebarSection(menuData.profile, '');
     return; // exit early since sidebar is known
   }
 
   // if menu is admin
   if (normalizedMenuItem === 'admin') {
-    createSidebarSection(menuData.admin, '');
+    //createSidebarSection(menuData.admin, '');
     return; // exit early since sidebar is known
   }
 
   // If no menu is open (aria-expanded is 'false'), show the default menu
   if (menuLink.getAttribute('aria-expanded') === 'false') {
-    createSidebarSection(menuData.default, '');
+    //createSidebarSection(menuData.default, '');
     return; // Exit the function early since the default menu is shown
   }
 
@@ -1465,7 +1413,7 @@ function populateSidebar(menuLink) {
 
   if (topMenuItem === 'support') topLevelMenuData = menuData.support;
 
-  createSidebarSection(topLevelMenuData, extraContent);
+  //createSidebarSection(topLevelMenuData, extraContent);
 }
 
 // Helper function to create and append sidebar content
@@ -1789,16 +1737,17 @@ function removeActiveClass() {
   });
 }
 
-function getMegaMenu(menuContainer, type) {
+function getMegaMenu(menuContainer, type, menu) {
+  // console.log(menuContainer, type);
   if (!menuContainer) return; // Exit if no menu container is found
 
-  // Render the default menu items and content for 'LibPas' when the menu initializes
+  // Render the default menu items and content for 'LibPAS' when the menu initializes
   if (type === 'multiple') {
-    renderMenu(menu, menuContainer, type, 'LibPas');
+    renderMenu(menu, menuContainer, type, 'LibPAS');
   }
 
   if (type === 'single') {
-    renderMenu(menuSingle, menuContainer, type, 'LibPas');
+    renderMenu(menuSingle, menuContainer, type, 'LibPAS');
   }
 
   if (type === 'multiple' || type === 'single') {
@@ -2090,6 +2039,33 @@ function moveRight(clickedTab, menuContainer, type) {
 }
 
 function switchTab(clickedTab, menuContainer, type) {
+  const menu = [
+    {
+      graphic: 'pie.gif',
+      width: '36',
+      height: '33',
+      url: '#libPas',
+      menuTitle: 'LibPAS',
+      subText: 'Periodic data',
+    },
+    {
+      graphic: 'puzzle-pieces.gif',
+      width: '40',
+      height: '40',
+      url: '#InformsUs',
+      menuTitle: 'InformsUs',
+      subText: 'Survey data',
+    },
+    {
+      graphic: 'medal.gif',
+      width: '43',
+      height: '43',
+      url: '#libSAT',
+      menuTitle: 'LibSAT',
+      subText: 'Qualitative data',
+    },
+  ];
+
   // Select the tabs container
   const tabsContainer = document.querySelector('.tabs-container');
 
@@ -2106,26 +2082,26 @@ function switchTab(clickedTab, menuContainer, type) {
   // Only switch tabs if a tab has been clicked
   if (clickedTab.closest('li').id !== '') {
     //Render content based on the clicked menu item
-    switch (clickedTab.closest('li').id) {
-      case 'LibPas':
+    switch (clickedTab.closest('li').id.toLowerCase()) {
+      case 'libpas':
         if (type === 'multiple')
-          renderMenu(menu, menuContainer, type, 'LibPas');
+          renderMenu(menu, menuContainer, type, 'LibPAS');
 
         if (type === 'single')
-          renderMenu(menuSingle, menuContainer, type, 'LibPas');
+          renderMenu(menuSingle, menuContainer, type, 'LibPAS');
 
         renderBodyContent(libPasBodyContent, menuContainer, type);
         renderExtraContent(libPasExtraContent, menuContainer);
         break;
-      case 'LibSAT':
+      case 'libsat':
         renderMenu(menu, menuContainer, type, 'LibSAT');
         renderBodyContent(libSATBodyContent, menuContainer, type);
         renderExtraContent(libSatExtraContent, menuContainer);
         break;
-      case 'InformUs':
-        renderMenu(menu, menuContainer, type, 'InformUs');
-        renderBodyContent(informUsBodyContent, menuContainer, type);
-        renderExtraContent(informUsExtraContent, menuContainer);
+      case 'informsus':
+        renderMenu(menu, menuContainer, type, 'InformsUs');
+        renderBodyContent(informsUsBodyContent, menuContainer, type);
+        renderExtraContent(informsUsExtraContent, menuContainer);
         break;
       default:
         console.log('Something went wrong'); // Debugging: Log an error if no match is found
@@ -2135,6 +2111,58 @@ function switchTab(clickedTab, menuContainer, type) {
     clickedTab.setAttribute('tabindex', '0');
     clickedTab.focus();
 
-    populateSidebar(clickedTab);
+    //populateSidebar(clickedTab);
   }
+}
+
+function populateMegaMenu(menuData) {
+  // extra enteries where section_id equals 2, 5, or 1
+  const libPasInformsUSLibSat = menuData.filter((item) =>
+    ['2', '5', '1'].includes(item.section_id)
+  );
+
+  console.log(libPasInformsUSLibSat);
+
+  // create the menu object
+  const menu = libPasInformsUSLibSat
+    .map((item) => {
+      switch (item.section_id) {
+        case '2':
+          return {
+            graphic: 'pie.gif',
+            width: '36',
+            height: '33',
+            url: `#${item.section_prompt.toLowerCase()}`,
+            menuTitle: item.section_prompt,
+            subText: 'Periodic data',
+          };
+        case '5':
+          return {
+            graphic: 'puzzle-pieces.gif',
+            width: '40',
+            height: '40',
+            url: `#${item.section_prompt.toLowerCase()}`,
+            menuTitle: item.section_prompt,
+            subText: 'Survey data',
+          };
+        case '1':
+          return {
+            graphic: 'medal.gif',
+            width: '43',
+            height: '43',
+            url: `#${item.section_prompt.toLowerCase()}`,
+            menuTitle: item.section_prompt,
+            subText: 'Qualitative data',
+          };
+        default:
+          return null;
+      }
+    })
+    .filter(Boolean);
+
+  document
+    .querySelectorAll('.grid-container-multiple')
+    .forEach((menuContainer) => {
+      getMegaMenu(menuContainer, 'multiple', menu);
+    });
 }
