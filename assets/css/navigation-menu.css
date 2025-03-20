@@ -835,13 +835,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 #moreSubMenu .mega-menu-column-4 .extra-content {
   margin-left: 0rem;
   margin-top: 1rem;
-}
-
-/* 1700 px */
-@media (min-width: 106.25em) {
-  .mega-menu-column-4 .extra-content {
-    padding: 1rem 1rem 0;
-  }
+  padding-bottom: 1rem;
+  text-align: left;
 }
 
 .mega-menu-column-4 .extra-content p {
