@@ -1270,6 +1270,8 @@ function toggleTopLevelMenu(menuLink) {
           div.style.width = '80vw';
         } else if (viewportWidth >= 2200) {
           div.style.width = '82vw';
+        } else if (viewportWidth >= 1700) {
+          div.style.width = '82vw';
         } else {
           div.style.width = '85vw';
         }
