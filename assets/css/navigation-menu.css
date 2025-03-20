@@ -657,7 +657,9 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 }
 
 #moreSubMenu .mega-menu-column-4 .tabs-container {
-  grid-template-columns: 17em 40em 1fr;
+  grid-template-columns: 80em;
+  grid-auto-flow: row;
+  padding-right: 0;
 }
 
 .mega-menu-column-4 .menu-list {
@@ -683,6 +685,10 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
 .mega-menu-column-4 .menu-list a:focus-within {
   background-color: #fff;
+}
+
+#moreSubMenu .mega-menu-column-4 .menu-list {
+  flex-direction: row;
 }
 
 .mega-menu-column-4 .tabs-container a,
@@ -824,6 +830,11 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   margin-left: 1rem;
   background-color: #fff;
   padding: 1rem 2rem 0;
+}
+
+#moreSubMenu .mega-menu-column-4 .extra-content {
+  margin-left: 0rem;
+  margin-top: 1rem;
 }
 
 /* 1700 px */
