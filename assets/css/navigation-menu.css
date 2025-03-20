@@ -705,6 +705,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, auto);
   background-color: #fff;
+  row-gap: 1em;
+  padding: 1em 0;
 }
 
 .mega-menu-column-4 .tabs__panels div {
