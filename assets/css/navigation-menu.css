@@ -656,6 +656,10 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   overflow: hidden; /* Prevents content from overflowing */
 }
 
+#moreSubMenu .mega-menu-column-4 .tabs-container {
+  grid-template-columns: 18em 40em 1fr;
+}
+
 .mega-menu-column-4 .menu-list {
   display: flex;
   flex-direction: column;
