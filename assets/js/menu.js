@@ -2124,7 +2124,8 @@ function switchTab(clickedTab, menuContainer, type) {
     clickedTab.setAttribute('tabindex', '0');
     clickedTab.focus();
 
-    //populateSidebar(clickedTab);
+    // call populate sidebar function
+    populateSidebar(clickedTab);
   }
 }
 
