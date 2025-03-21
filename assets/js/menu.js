@@ -1385,19 +1385,19 @@ function populateSidebar(menuLink) {
 
   // If the menu item includes the word 'profile', display the profile menu
   if (normalizedMenuItem.includes('profile')) {
-    //createSidebarSection(menuData.profile, '');
+    createSidebarSection(menuData.profile, '');
     return; // exit early since sidebar is known
   }
 
   // if menu is admin
   if (normalizedMenuItem === 'admin') {
-    //createSidebarSection(menuData.admin, '');
+    createSidebarSection(menuData.admin, '');
     return; // exit early since sidebar is known
   }
 
   // If no menu is open (aria-expanded is 'false'), show the default menu
   if (menuLink.getAttribute('aria-expanded') === 'false') {
-    //createSidebarSection(menuData.default, '');
+    createSidebarSection(menuData.default, '');
     return; // Exit the function early since the default menu is shown
   }
 
@@ -1415,7 +1415,18 @@ function populateSidebar(menuLink) {
 
   if (topMenuItem === 'support') topLevelMenuData = menuData.support;
 
-  //createSidebarSection(topLevelMenuData, extraContent);
+  if (topMenuItem === 'more') {
+    const expandedLinks = document.querySelectorAll('a[aria-expanded="true"]');
+    const lastExpandedLink = expandedLinks[expandedLinks.length - 1];
+
+    if (lastExpandedLink) {
+      if (lastExpandedLink.textContent.toLowerCase().trim() == 'services') {
+        topLevelMenuData = menuData.services;
+      }
+    }
+  }
+
+  createSidebarSection(topLevelMenuData, extraContent);
 }
 
 // Helper function to create and append sidebar content
