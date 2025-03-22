@@ -1,22 +1,18 @@
 .sidebar-container {
   position: fixed;
   top: 87px;
-  /*Start below the header*/
-  right: -250px;
-  /*Start hidden off-screen*/
+  right: -250px; /* Start hidden */
   height: calc(100vh - 82px);
-  /*Full viewport height minus the header*/
   width: 250px;
   background-color: #444;
   color: white;
   padding: 20px;
-  z-index: 100; /*Make sure sidebar is above content*/
-  /* Smooth sliding transition */
-  transition: right 0.3s ease;
-  -webkit-transition: right 0.3s ease;
-  -moz-transition: right 0.3s ease;
-  -ms-transition: right 0.3s ease;
-  -o-transition: right 0.3s ease;
+  z-index: 100;
+  transition: right 0.3s ease; /* Make sure transition is applied here */
+}
+
+.sidebar-container.open {
+  right: 0px;
 }
 
 .sidebar {
@@ -37,7 +33,6 @@
   text-decoration: none;
 }
 
-/* Button to toggle sidebar */
 .toggle-btn {
   position: fixed;
   bottom: 30px;
@@ -47,15 +42,41 @@
   border: none;
   padding: 10px;
   cursor: pointer;
-  z-index: 200;
-  transition: right 0.3s ease; /*Smooth transition when sidebar expands*/
-  -webkit-transition: right 0.3s ease;
-  -moz-transition: right 0.3s ease;
-  -ms-transition: right 0.3s ease;
-  -o-transition: right 0.3s ease;
-  -webkit-transition: right 0.3s ease;
+  z-index: 200; /* Ensure it's above everything else */
+  transition: right 0.3s ease; /* Smooth transition */
 }
 
 .toggle-btn:hover {
   background-color: #555;
+}
+
+.toggle-btn.open {
+  right: 250px;
+}
+
+.hamburger {
+  display: inline-block;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+}
+
+.hamburger div {
+  width: 30px;
+  height: 4px;
+  background-color: #fff;
+  margin: 5px 0;
+  transition: all 0.3s ease;
+}
+
+.hamburger.active div:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger.active div:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active div:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
 }

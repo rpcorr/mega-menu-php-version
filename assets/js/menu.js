@@ -916,12 +916,6 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         // call removeActiveClass
         removeActiveClass();
-
-        // close sidebar
-        const sidebar = document.getElementById('sidebar');
-        const button = document.querySelector('.toggle-btn');
-        sidebar.style.right = '-250px';
-        button.style.right = '0px';
       });
 
       perserveMenuColour();

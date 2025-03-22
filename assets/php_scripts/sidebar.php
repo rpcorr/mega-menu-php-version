@@ -1,4 +1,10 @@
-<button class="toggle-btn" onclick="toggleSidebar()" aria-label="Click to open sidebar">☰</button>
+<button class="toggle-btn" onclick="toggleSidebar()" aria-label="Click to open sidebar">
+    <div class="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</button>
 <div id="sidebar" class="sidebar-container">
     <nav class="sidebar" aria-label="sidebar">
         <h2>Default Menu Items</h2>
