@@ -817,7 +817,6 @@ document.addEventListener('DOMContentLoaded', () => {
             )
           ) {
             // More menu is closed
-            console.log('more menu is closed');
 
             this.setAttribute(
               'aria-label',
@@ -826,6 +825,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // call removeActiveClass
             removeActiveClass();
+
+            // call populate sidebar
+            populateSidebar(this);
           }
 
           if (
@@ -1285,6 +1287,7 @@ function toggleTopLevelMenu(menuLink) {
 
 function populateSidebar(menuLink) {
   // Extract the text content of the clicked menu link (e.g., "Services", "Profile", etc.)
+
   const menuItem = menuLink.textContent;
 
   // Define menu items and their associated links.
@@ -1416,7 +1419,6 @@ function populateSidebar(menuLink) {
   if (topMenuItem === 'support') topLevelMenuData = menuData.support;
 
   if (topMenuItem === 'more') {
-    console.log(topMenuItem);
     const expandedLinks = document.querySelectorAll('a[aria-expanded="true"]');
     const lastExpandedLink = expandedLinks[expandedLinks.length - 1];
 
