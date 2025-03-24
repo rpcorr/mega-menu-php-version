@@ -817,6 +817,12 @@ document.addEventListener('DOMContentLoaded', () => {
             )
           ) {
             // More menu is closed
+            console.log('more menu is closed');
+
+            this.setAttribute(
+              'aria-label',
+              'More has a sub menu. Click enter to open'
+            );
 
             // call removeActiveClass
             removeActiveClass();
@@ -1410,6 +1416,7 @@ function populateSidebar(menuLink) {
   if (topMenuItem === 'support') topLevelMenuData = menuData.support;
 
   if (topMenuItem === 'more') {
+    console.log(topMenuItem);
     const expandedLinks = document.querySelectorAll('a[aria-expanded="true"]');
     const lastExpandedLink = expandedLinks[expandedLinks.length - 1];
 
