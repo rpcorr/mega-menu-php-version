@@ -2010,16 +2010,20 @@ function renderExtraContent(contentData, menuContainer) {
 function setTabsContainer() {
   // Select the main tabs container
   const tabsContainer = document.querySelector('.tabs-container');
+  if (!tabsContainer) return; // Exit if the container is not found
 
   // Get the unordered list (<ul>) inside the tabs container
   const tabsList = tabsContainer.querySelector('ul');
+  if (tabsList) {
+    // Set ARIA role to define this as a tab list for accessibility
+    tabsList.setAttribute('role', 'tablist');
+  }
 
-  // Set ARIA role to define this as a tab list for accessibility
-  tabsList.setAttribute('role', 'tablist');
-
-  const firstTab = document.querySelector('.menu-list li:first-child a');
-  // firstTab.setAttribute('aria-selected', 'true');
-  firstTab.removeAttribute('tabindex');
+  // Select the first tab and update its tabindex for accessibility
+  const firstTab = tabsContainer.querySelector('.menu-list li:first-child a');
+  if (firstTab) {
+    firstTab.removeAttribute('tabindex');
+  }
 }
 
 function moveLeft(clickedTab, menuContainer, type) {
