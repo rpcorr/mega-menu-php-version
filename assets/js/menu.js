@@ -1286,10 +1286,8 @@ function toggleTopLevelMenu(menuLink) {
 }
 
 function populateSidebar(menuLink) {
-  // Extract the text content of the clicked menu link (e.g., "Services", "Profile", etc.)
-
-  const menuItem = menuLink.textContent;
-
+  console.log(`inside populateSidebar`);
+  console.log(menuLink);
   // Define menu items and their associated links.
   // Each section contains a title and a list of items with names and URLs
   const menuData = {
@@ -1375,25 +1373,70 @@ function populateSidebar(menuLink) {
     },
   };
 
-  // Normalize menuItem text for case-insensitive comparison
-  const normalizedMenuItem = menuItem.trim().toLowerCase();
+  let selectedAnchor = '';
 
-  const selectedItem = Object.values(tabData).find((data) => {
-    return normalizedMenuItem.toLowerCase().includes(data.title.toLowerCase());
-  });
+  if (menuLink && menuLink.getAttribute('aria-expanded') === 'true') {
+    const currentMenu = menuLink.closest('.menu-item-has-children');
+
+    const menuList = currentMenu.querySelector('.menu-list');
+
+    // determine what element is the selectedAnchor
+    if (menuList != null) {
+      selectedAnchor = menuList.querySelector('a[aria-selected="true"]');
+    } else {
+      selectedAnchor = currentMenu;
+    }
+  }
+
+  let selectedItem;
+
+  if (menuLink) {
+    // Normalize selected anchor text for case-insensitive comparison
+    selectedItem = menuLink;
+  } else {
+    selectedItem = Object.values(tabData).find((data) => {
+      return selectedAnchor.includes(data.title.toLowerCase());
+    });
+  }
+
+  if (selectedAnchor) {
+    // Normalize selected anchor text for case-insensitive comparison
+    selectedAnchor = document
+      .querySelector('a[aria-selected="true"]')
+      .textContent.toLowerCase();
+
+    selectedItem = Object.values(tabData).find((data) => {
+      return selectedAnchor.includes(data.title.toLowerCase());
+    });
+  }
 
   let extraContent = selectedItem;
 
   if (extraContent === undefined) extraContent = tabData.libPas;
 
+  if (extraContent.tagName === 'A') {
+    if (extraContent) {
+      const hrefValue = extraContent.getAttribute('href').replace('#', '');
+
+      const matchedKey = Object.keys(tabData).find((key) =>
+        hrefValue.toLowerCase().includes(key.toLowerCase())
+      );
+
+      if (matchedKey) {
+        const matchedObject = tabData[matchedKey];
+        extraContent = matchedObject;
+      }
+    }
+  }
+
   // If the menu item includes the word 'profile', display the profile menu
-  if (normalizedMenuItem.includes('profile')) {
+  if (selectedAnchor.includes('profile')) {
     createSidebarSection(menuData.profile, '');
     return; // exit early since sidebar is known
   }
 
   // if menu is admin
-  if (normalizedMenuItem === 'admin') {
+  if (selectedAnchor === 'admin') {
     createSidebarSection(menuData.admin, '');
     return; // exit early since sidebar is known
   }
@@ -1754,7 +1797,6 @@ function removeActiveClass() {
 }
 
 function getMegaMenu(menuContainer, type, menu) {
-  // console.log(menuContainer, type);
   if (!menuContainer) return; // Exit if no menu container is found
 
   // Render the default menu items and content for 'LibPAS' when the menu initializes
@@ -1794,8 +1836,15 @@ function getMegaMenu(menuContainer, type, menu) {
           if (!clickedTab) return;
 
           // switch tabs if a tab is clicked
-          if (clickedTab.getAttribute('role') === 'tab')
+          if (clickedTab.getAttribute('role') === 'tab') {
+            // Remove aria-selected from all tabs within the container
+            menuContainer.querySelectorAll('[role="tab"]').forEach((tab) => {
+              tab.setAttribute('aria-selected', 'false');
+            });
+            clickedTab.setAttribute('aria-selected', 'true');
+
             switchTab(clickedTab, menuContainer, type);
+          }
         }
       },
       true // Run the event listener in the capture phase
@@ -1844,7 +1893,6 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
   menuContainer.innerHTML = '';
 
   const menuList = document.createElement('ul');
-  //menuList.setAttribute('role', 'tablist');
   menuList.classList.add('menu-list');
 
   if (menuData) {
@@ -1875,25 +1923,33 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
       // Set menuItem id for identification
       menuItem.setAttribute('id', item.menuTitle);
 
-      // Check if this is the current menu item
-      if (item.menuTitle === currentMenuItem) {
-        anchor.setAttribute('aria-selected', 'true');
-        anchor.setAttribute('tabindex', '0');
-      }
-
       fragment.appendChild(menuContent);
     });
 
     menuList.appendChild(fragment);
     menuContainer.appendChild(menuList);
 
-    // Set focus to the current menu item
-    const currentAnchor = menuContainer.querySelector(
-      'a[aria-selected="true"]'
-    );
-    if (currentAnchor) {
-      currentAnchor.focus();
-    }
+    // Select all <strong> elements inside the menu-list
+    const menuItems = document.querySelectorAll('.menu-list li a strong');
+
+    menuItems.forEach((item) => {
+      const tab = item.closest('a');
+      if (item.textContent.trim() === currentMenuItem) {
+        // Match found
+        console.log(tab);
+
+        // Example: Set aria-selected to true on the matching tab
+        tab.setAttribute('aria-selected', 'true');
+        tab.setAttribute('tabindex', '0');
+        tab.focus(); // Optionally focus the element
+
+        //populateSidebar(tab);
+      } else {
+        // deactive the inactive tabs
+        tab.removeAttribute('aria-selected');
+        tab.setAttribute('tabindex', '-1');
+      }
+    });
   }
 }
 
@@ -2017,7 +2073,7 @@ function setTabsContainer(selectedTab) {
   tabsList.setAttribute('role', 'tablist');
 
   const firstTab = document.querySelector('.menu-list li:first-child a');
-  firstTab.setAttribute('aria-selected', 'true');
+  // firstTab.setAttribute('aria-selected', 'true');
   firstTab.removeAttribute('tabindex');
 }
 
@@ -2089,12 +2145,6 @@ function switchTab(clickedTab, menuContainer, type) {
   const tabsList = tabsContainer.querySelector('ul');
   const tabButtons = tabsList.querySelectorAll('a');
 
-  // Reset all tabs to unselected state
-  tabButtons.forEach((button) => {
-    button.setAttribute('aria-selected', false);
-    button.setAttribute('tabindex', '-1');
-  });
-
   // Only switch tabs if a tab has been clicked
   if (clickedTab.closest('li').id !== '') {
     //Render content based on the clicked menu item
@@ -2122,13 +2172,6 @@ function switchTab(clickedTab, menuContainer, type) {
       default:
         console.log('Something went wrong'); // Debugging: Log an error if no match is found
     }
-
-    clickedTab.setAttribute('aria-selected', 'true');
-    clickedTab.setAttribute('tabindex', '0');
-    clickedTab.focus();
-
-    // call populate sidebar function
-    populateSidebar(clickedTab);
   }
 }
 

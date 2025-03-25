@@ -22,7 +22,7 @@
     
     <!-- ///// The Templates ///// -->
     <template id="menuTemplate">
-      <li role="presentation"><img src="" /><p><a href="" role="tab" tabindex='-1'><strong></strong><br/><span></span></a></p> <div class="circle">
+      <li role="presentation"><img src="" /><p><a href="" role="tab"><strong></strong><br/><span></span></a></p> <div class="circle">
           <div class="caret"></div>
         </div></li>
     </template> 
