@@ -11,6 +11,27 @@ let output = '';
 let megaMenuLinks = '';
 let initialColumns = '';
 
+const menuMap = {
+  2: {
+    graphic: 'pie.gif',
+    width: '36',
+    height: '33',
+    subText: 'Periodic data',
+  },
+  5: {
+    graphic: 'puzzle-pieces.gif',
+    width: '40',
+    height: '40',
+    subText: 'Survey data',
+  },
+  1: {
+    graphic: 'medal.gif',
+    width: '43',
+    height: '43',
+    subText: 'Qualitative data',
+  },
+};
+
 const menuSingle = [
   {
     graphic: 'pie.gif',
@@ -703,8 +724,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
-
-      console.log(finalGroupedArray);
 
       populateMegaMenu(finalGroupedArray);
 
@@ -2043,118 +2062,68 @@ function moveTab(menuContainer, type, direction) {
 }
 
 function switchTab(clickedTab, menuContainer, type) {
-  const menu = [
-    {
-      graphic: 'pie.gif',
-      width: '36',
-      height: '33',
-      url: '#libPas',
-      menuTitle: 'LibPAS',
-      subText: 'Periodic data',
-    },
-    {
-      graphic: 'puzzle-pieces.gif',
-      width: '40',
-      height: '40',
-      url: '#InformsUs',
-      menuTitle: 'InformsUs',
-      subText: 'Survey data',
-    },
-    {
-      graphic: 'medal.gif',
-      width: '43',
-      height: '43',
-      url: '#libSAT',
-      menuTitle: 'LibSAT',
-      subText: 'Qualitative data',
-    },
-  ];
-
-  // Select the tabs container
-  const tabsContainer = document.querySelector('.tabs-container');
-
-  // Select the list of tabs and tab panels
-  const tabsList = tabsContainer.querySelector('ul');
-  const tabButtons = tabsList.querySelectorAll('a');
-
   // Only switch tabs if a tab has been clicked
-  if (clickedTab.closest('li').id !== '') {
-    //Render content based on the clicked menu item
-    switch (clickedTab.closest('li').id.toLowerCase()) {
+  const id = clickedTab.closest('li').id.toLowerCase();
+  if (id) {
+    const menu = createMenuItems([
+      { section_id: '2', section_prompt: 'LibPAS' },
+      { section_id: '5', section_prompt: 'InformsUs' },
+      { section_id: '1', section_prompt: 'LibSAT' },
+    ]);
+
+    switch (id) {
       case 'libpas':
         if (type === 'multiple')
           renderMenu(menu, menuContainer, type, 'LibPAS');
-
         if (type === 'single')
           renderMenu(menuSingle, menuContainer, type, 'LibPAS');
 
         renderBodyContent(libPasBodyContent, menuContainer, type);
         renderExtraContent(libPasExtraContent, menuContainer);
         break;
+
       case 'libsat':
         renderMenu(menu, menuContainer, type, 'LibSAT');
         renderBodyContent(libSATBodyContent, menuContainer, type);
         renderExtraContent(libSatExtraContent, menuContainer);
         break;
+
       case 'informsus':
         renderMenu(menu, menuContainer, type, 'InformsUs');
         renderBodyContent(informsUsBodyContent, menuContainer, type);
         renderExtraContent(informsUsExtraContent, menuContainer);
         break;
+
       default:
-        console.log('Something went wrong'); // Debugging: Log an error if no match is found
+        console.log('Something went wrong'); // Debugging
     }
   }
 }
 
 function populateMegaMenu(menuData) {
-  // extra enteries where section_id equals 2, 5, or 1
-  const libPasInformsUSLibSat = menuData.filter((item) =>
-    ['2', '5', '1'].includes(item.section_id)
-  );
-
-  console.log(libPasInformsUSLibSat);
-
-  // create the menu object
-  const menu = libPasInformsUSLibSat
-    .map((item) => {
-      switch (item.section_id) {
-        case '2':
-          return {
-            graphic: 'pie.gif',
-            width: '36',
-            height: '33',
-            url: `#${item.section_prompt.toLowerCase()}`,
-            menuTitle: item.section_prompt,
-            subText: 'Periodic data',
-          };
-        case '5':
-          return {
-            graphic: 'puzzle-pieces.gif',
-            width: '40',
-            height: '40',
-            url: `#${item.section_prompt.toLowerCase()}`,
-            menuTitle: item.section_prompt,
-            subText: 'Survey data',
-          };
-        case '1':
-          return {
-            graphic: 'medal.gif',
-            width: '43',
-            height: '43',
-            url: `#${item.section_prompt.toLowerCase()}`,
-            menuTitle: item.section_prompt,
-            subText: 'Qualitative data',
-          };
-        default:
-          return null;
-      }
-    })
-    .filter(Boolean);
+  console.log(menuData); // Logs the raw data
+  const menu = createMenuItems(menuData);
+  console.log(menu); // Logs the final menu object
 
   document
     .querySelectorAll('.grid-container-multiple')
     .forEach((menuContainer) => {
       getMegaMenu(menuContainer, 'multiple', menu);
+    });
+}
+
+function createMenuItems(data) {
+  return data
+    .filter((item) => menuMap[item.section_id])
+    .map((item) => {
+      const { graphic, width, height, subText } = menuMap[item.section_id];
+      return {
+        graphic,
+        width,
+        height,
+        url: `#${item.section_prompt.toLowerCase()}`,
+        menuTitle: item.section_prompt,
+        subText,
+      };
     });
 }
