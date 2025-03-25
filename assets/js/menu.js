@@ -1306,24 +1306,6 @@ function populateSidebar() {
         { name: 'Admin 3', url: '#admin-3' },
       ],
     },
-    'item 3': {
-      title: 'Item 3',
-      items: [
-        { name: 'Item 3-1', url: '#item-3-1' },
-        { name: 'Item 3-2', url: '#item-3-2' },
-        { name: 'Item 3-3', url: '#item-3-3' },
-        { name: 'Item 3-4', url: '#item-3-4' },
-      ],
-    },
-    support: {
-      title: 'Support',
-      items: [
-        { name: 'Support-1', url: '#support-3-1' },
-        { name: 'Support-2', url: '#support-3-2' },
-        { name: 'Support-3', url: '#support-3-3' },
-        { name: 'Support-4', url: '#support-3-4' },
-      ],
-    },
     profile: {
       title: 'Profile',
       items: [
