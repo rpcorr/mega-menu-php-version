@@ -1286,8 +1286,6 @@ function toggleTopLevelMenu(menuLink) {
 }
 
 function populateSidebar(menuLink) {
-  console.log(`inside populateSidebar`);
-  console.log(menuLink);
   // Define menu items and their associated links.
   // Each section contains a title and a list of items with names and URLs
   const menuData = {
@@ -1447,18 +1445,16 @@ function populateSidebar(menuLink) {
     return; // Exit the function early since the default menu is shown
   }
 
-  // get the top selected menu item
-  const topMenuItem = document
-    .querySelector('a[aria-expanded="true"]')
-    .textContent.toLocaleLowerCase()
-    .trim();
+  // Get the top selected menu item
+  const topMenuElement = document.querySelector('a[aria-expanded="true"]');
+  const topMenuItem = topMenuElement
+    ? topMenuElement.textContent.toLowerCase().trim()
+    : '';
 
-  let topLevelMenuData = '';
+  let topLevelMenuData = menuData.default; // Fallback to default menu
 
   if (topMenuItem === 'services') topLevelMenuData = menuData.services;
-
   if (topMenuItem === 'item 3') topLevelMenuData = menuData['item 3'];
-
   if (topMenuItem === 'support') topLevelMenuData = menuData.support;
 
   if (topMenuItem === 'more') {
@@ -1466,13 +1462,23 @@ function populateSidebar(menuLink) {
     const lastExpandedLink = expandedLinks[expandedLinks.length - 1];
 
     if (lastExpandedLink) {
-      if (lastExpandedLink.textContent.toLowerCase().trim() == 'services') {
+      if (lastExpandedLink.textContent.toLowerCase().trim() === 'services') {
         topLevelMenuData = menuData.services;
       }
     }
   }
 
-  createSidebarSection(topLevelMenuData, extraContent);
+  // Ensure extraContent is not undefined
+  if (topLevelMenuData.title === 'Default Menu Items') {
+    extraContent = '';
+  }
+
+  // Only call createSidebarSection if both objects and their items are defined
+  if (topLevelMenuData && topLevelMenuData.items) {
+    createSidebarSection(topLevelMenuData, extraContent);
+  } else {
+    console.warn('Sidebar data is missing or incomplete');
+  }
 }
 
 // Helper function to create and append sidebar content
@@ -1936,14 +1942,12 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
       const tab = item.closest('a');
       if (item.textContent.trim() === currentMenuItem) {
         // Match found
-        console.log(tab);
 
         // Example: Set aria-selected to true on the matching tab
         tab.setAttribute('aria-selected', 'true');
         tab.setAttribute('tabindex', '0');
         tab.focus(); // Optionally focus the element
-
-        //populateSidebar(tab);
+        populateSidebar(tab);
       } else {
         // deactive the inactive tabs
         tab.removeAttribute('aria-selected');
