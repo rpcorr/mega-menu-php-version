@@ -11,6 +11,7 @@ let output = '';
 let megaMenuLinks = '';
 let initialColumns = '';
 
+// LibPAS, InformUS, LibSat menu items
 const menuMap = {
   2: {
     graphic: 'pie.gif',
@@ -267,6 +268,72 @@ const libSatExtraContent = [
     ],
   },
 ];
+
+// sideMenu Data
+const sideMenuData = {
+  services: {
+    title: 'Services',
+    items: [
+      { name: 'Service 1', url: '#service-1' },
+      { name: 'Service 2', url: '#service-2' },
+      { name: 'Service 3', url: '#service-3' },
+      { name: 'Service 4', url: '#service-4' },
+      { name: 'Service 5', url: '#service-5' },
+    ],
+  },
+  admin: {
+    title: 'Admin',
+    items: [
+      { name: 'Admin 1', url: '#admin-1' },
+      { name: 'Admin 2', url: '#admin-2' },
+      { name: 'Admin 3', url: '#admin-3' },
+    ],
+  },
+  profile: {
+    title: 'Profile',
+    items: [
+      { name: 'Profile-1', url: '#profile-1' },
+      { name: 'Profile-2', url: '#profile-2' },
+      { name: 'Profile-3', url: '#profile-3' },
+    ],
+  },
+  default: {
+    title: 'Default Menu Items',
+    items: [
+      { name: 'Menu Item 1', url: '#menu-item-1' },
+      { name: 'Menu Item 2', url: '#menu-item-2' },
+      { name: 'Menu Item 3', url: '#menu-item-3' },
+      { name: 'Menu Item 4', url: '#menu-item-4' },
+    ],
+  },
+};
+
+const tabData = {
+  libPas: {
+    title: 'LibPAS',
+    items: [
+      { name: 'LibPAS 1', url: '#libPas-1' },
+      { name: 'LibPAS 2', url: '#libPas-2' },
+    ],
+  },
+  libSat: {
+    title: 'LibSat',
+    items: [
+      { name: 'LibSat 1', url: '#libSat-1' },
+      { name: 'LibSat 2', url: '#libSat-2' },
+      { name: 'LibSat 3', url: '#libSat-3' },
+    ],
+  },
+  informsUs: {
+    title: 'InformsUs',
+    items: [
+      { name: 'InformsUs 1', url: '#informsUs-1' },
+      { name: 'InformsUs 2', url: '#informsUs-2' },
+      { name: 'InformsUs 3', url: '#informsUs-3' },
+      { name: 'InformsUs 4', url: '#informsUs-4' },
+    ],
+  },
+};
 
 console.log(`I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}.`);
 
@@ -1280,73 +1347,6 @@ function toggleTopLevelMenu(menuLink) {
 }
 
 function populateSidebar() {
-  // Define the available menu data for different sections
-  const menuData = {
-    services: {
-      title: 'Services',
-      items: [
-        { name: 'Service 1', url: '#service-1' },
-        { name: 'Service 2', url: '#service-2' },
-        { name: 'Service 3', url: '#service-3' },
-        { name: 'Service 4', url: '#service-4' },
-        { name: 'Service 5', url: '#service-5' },
-      ],
-    },
-    admin: {
-      title: 'Admin',
-      items: [
-        { name: 'Admin 1', url: '#admin-1' },
-        { name: 'Admin 2', url: '#admin-2' },
-        { name: 'Admin 3', url: '#admin-3' },
-      ],
-    },
-    profile: {
-      title: 'Profile',
-      items: [
-        { name: 'Profile-1', url: '#profile-1' },
-        { name: 'Profile-2', url: '#profile-2' },
-        { name: 'Profile-3', url: '#profile-3' },
-      ],
-    },
-    default: {
-      title: 'Default Menu Items',
-      items: [
-        { name: 'Menu Item 1', url: '#menu-item-1' },
-        { name: 'Menu Item 2', url: '#menu-item-2' },
-        { name: 'Menu Item 3', url: '#menu-item-3' },
-        { name: 'Menu Item 4', url: '#menu-item-4' },
-      ],
-    },
-  };
-
-  // Define additional tab-based menu data
-  const tabData = {
-    libPas: {
-      title: 'LibPAS',
-      items: [
-        { name: 'LibPAS 1', url: '#libPas-1' },
-        { name: 'LibPAS 2', url: '#libPas-2' },
-      ],
-    },
-    libSat: {
-      title: 'LibSat',
-      items: [
-        { name: 'LibSat 1', url: '#libSat-1' },
-        { name: 'LibSat 2', url: '#libSat-2' },
-        { name: 'LibSat 3', url: '#libSat-3' },
-      ],
-    },
-    informsUs: {
-      title: 'InformsUs',
-      items: [
-        { name: 'InformsUs 1', url: '#informsUs-1' },
-        { name: 'InformsUs 2', url: '#informsUs-2' },
-        { name: 'InformsUs 3', url: '#informsUs-3' },
-        { name: 'InformsUs 4', url: '#informsUs-4' },
-      ],
-    },
-  };
-
   // Get the currently selected anchor (if available) based on aria-selected attribute
   let selectedAnchor = document
     .querySelector('a[aria-selected="true"]')
@@ -1358,8 +1358,9 @@ function populateSidebar() {
     selectedAnchor?.includes(data.title.toLowerCase())
   );
 
+  console.log(selectedItem);
+
   // Initialize extra content to an empty string
-  // (Prevents displaying content when default menu is used)
   let extraContent = '';
 
   // If the selected item is an anchor element, try to match it to tabData keys
@@ -1371,16 +1372,16 @@ function populateSidebar() {
       ) ?? '';
   }
 
+  console.log(selectedAnchor);
+
   // Handle special cases for known menu items directly
   if (selectedAnchor === 'profile') {
-    // Display the Profile menu and exit early
-    createSidebarSection(menuData.profile, '');
+    createSidebarSection(sideMenuData.profile, '');
     return;
   }
 
   if (selectedAnchor === 'admin') {
-    // Display the Admin menu and exit early
-    createSidebarSection(menuData.admin, '');
+    createSidebarSection(sideMenuData.admin, '');
     return;
   }
 
@@ -1392,7 +1393,7 @@ function populateSidebar() {
       .trim() || '';
 
   // Set the top-level menu data based on the selected item, fallback to default
-  let topLevelMenuData = menuData[topMenuItem] || menuData.default;
+  let topLevelMenuData = sideMenuData[topMenuItem] || sideMenuData.default;
 
   // Handle 'more' case (e.g., submenus under a "More" option)
   if (topMenuItem === 'more') {
@@ -1404,13 +1405,13 @@ function populateSidebar() {
       .trim();
 
     if (lastExpanded === 'services') {
-      createSidebarSection(menuData.services, selectedItem);
+      createSidebarSection(sideMenuData.services, selectedItem);
       return;
     }
   }
 
   // Ensure that extraContent is NOT shown for the default menu
-  if (topLevelMenuData === menuData.default) {
+  if (topLevelMenuData === sideMenuData.default) {
     extraContent = '';
   }
 
