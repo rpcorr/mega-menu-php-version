@@ -886,9 +886,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // call removeActiveClass
             removeActiveClass();
-
-            // call populate sidebar
-            populateSidebar();
           }
 
           if (
