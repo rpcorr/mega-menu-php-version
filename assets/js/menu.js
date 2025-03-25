@@ -827,7 +827,7 @@ document.addEventListener('DOMContentLoaded', () => {
             removeActiveClass();
 
             // call populate sidebar
-            populateSidebar(this);
+            populateSidebar();
           }
 
           if (
@@ -1282,12 +1282,11 @@ function toggleTopLevelMenu(menuLink) {
   }
 
   // populate sidebar base on the top menu link
-  populateSidebar(menuLink);
+  populateSidebar();
 }
 
-function populateSidebar(menuLink) {
-  // Define menu items and their associated links.
-  // Each section contains a title and a list of items with names and URLs
+function populateSidebar() {
+  // Define the available menu data for different sections
   const menuData = {
     services: {
       title: 'Services',
@@ -1344,6 +1343,7 @@ function populateSidebar(menuLink) {
     },
   };
 
+  // Define additional tab-based menu data
   const tabData = {
     libPas: {
       title: 'LibPAS',
@@ -1371,111 +1371,76 @@ function populateSidebar(menuLink) {
     },
   };
 
-  let selectedAnchor = '';
+  // Get the currently selected anchor (if available) based on aria-selected attribute
+  let selectedAnchor = document
+    .querySelector('a[aria-selected="true"]')
+    ?.textContent?.toLowerCase()
+    .trim();
 
-  if (menuLink && menuLink.getAttribute('aria-expanded') === 'true') {
-    const currentMenu = menuLink.closest('.menu-item-has-children');
+  // Try to match the selected anchor to a tab item (case-insensitive)
+  let selectedItem = Object.values(tabData).find((data) =>
+    selectedAnchor?.includes(data.title.toLowerCase())
+  );
 
-    const menuList = currentMenu.querySelector('.menu-list');
+  // Initialize extra content to an empty string
+  // (Prevents displaying content when default menu is used)
+  let extraContent = '';
 
-    // determine what element is the selectedAnchor
-    if (menuList != null) {
-      selectedAnchor = menuList.querySelector('a[aria-selected="true"]');
-    } else {
-      selectedAnchor = currentMenu;
-    }
+  // If the selected item is an anchor element, try to match it to tabData keys
+  if (selectedItem?.tagName === 'A') {
+    const hrefValue = selectedItem.getAttribute('href')?.replace('#', '');
+    selectedItem =
+      Object.values(tabData).find((data) =>
+        hrefValue?.includes(data.title.toLowerCase())
+      ) ?? '';
   }
 
-  let selectedItem;
-
-  if (menuLink) {
-    // Normalize selected anchor text for case-insensitive comparison
-    selectedItem = menuLink;
-  } else {
-    selectedItem = Object.values(tabData).find((data) => {
-      return selectedAnchor.includes(data.title.toLowerCase());
-    });
-  }
-
-  if (selectedAnchor) {
-    // Normalize selected anchor text for case-insensitive comparison
-    selectedAnchor = document
-      .querySelector('a[aria-selected="true"]')
-      .textContent.toLowerCase();
-
-    selectedItem = Object.values(tabData).find((data) => {
-      return selectedAnchor.includes(data.title.toLowerCase());
-    });
-  }
-
-  let extraContent = selectedItem;
-
-  if (extraContent === undefined) extraContent = tabData.libPas;
-
-  if (extraContent.tagName === 'A') {
-    if (extraContent) {
-      const hrefValue = extraContent.getAttribute('href').replace('#', '');
-
-      const matchedKey = Object.keys(tabData).find((key) =>
-        hrefValue.toLowerCase().includes(key.toLowerCase())
-      );
-
-      if (matchedKey) {
-        const matchedObject = tabData[matchedKey];
-        extraContent = matchedObject;
-      }
-    }
-  }
-
-  // If the menu item includes the word 'profile', display the profile menu
-  if (selectedAnchor.includes('profile')) {
+  // Handle special cases for known menu items directly
+  if (selectedAnchor === 'profile') {
+    // Display the Profile menu and exit early
     createSidebarSection(menuData.profile, '');
-    return; // exit early since sidebar is known
+    return;
   }
 
-  // if menu is admin
   if (selectedAnchor === 'admin') {
+    // Display the Admin menu and exit early
     createSidebarSection(menuData.admin, '');
-    return; // exit early since sidebar is known
+    return;
   }
 
-  // If no menu is open (aria-expanded is 'false'), show the default menu
-  if (menuLink.getAttribute('aria-expanded') === 'false') {
-    createSidebarSection(menuData.default, '');
-    return; // Exit the function early since the default menu is shown
-  }
+  // Determine the top-level menu item (based on aria-expanded)
+  const topMenuItem =
+    document
+      .querySelector('a[aria-expanded="true"]')
+      ?.textContent?.toLowerCase()
+      .trim() || '';
 
-  // Get the top selected menu item
-  const topMenuElement = document.querySelector('a[aria-expanded="true"]');
-  const topMenuItem = topMenuElement
-    ? topMenuElement.textContent.toLowerCase().trim()
-    : '';
+  // Set the top-level menu data based on the selected item, fallback to default
+  let topLevelMenuData = menuData[topMenuItem] || menuData.default;
 
-  let topLevelMenuData = menuData.default; // Fallback to default menu
-
-  if (topMenuItem === 'services') topLevelMenuData = menuData.services;
-  if (topMenuItem === 'item 3') topLevelMenuData = menuData['item 3'];
-  if (topMenuItem === 'support') topLevelMenuData = menuData.support;
-
+  // Handle 'more' case (e.g., submenus under a "More" option)
   if (topMenuItem === 'more') {
-    const expandedLinks = document.querySelectorAll('a[aria-expanded="true"]');
-    const lastExpandedLink = expandedLinks[expandedLinks.length - 1];
+    const lastExpanded = [
+      ...document.querySelectorAll('a[aria-expanded="true"]'),
+    ]
+      .pop()
+      ?.textContent?.toLowerCase()
+      .trim();
 
-    if (lastExpandedLink) {
-      if (lastExpandedLink.textContent.toLowerCase().trim() === 'services') {
-        topLevelMenuData = menuData.services;
-      }
+    if (lastExpanded === 'services') {
+      createSidebarSection(menuData.services, selectedItem);
+      return;
     }
   }
 
-  // Ensure extraContent is not undefined
-  if (topLevelMenuData.title === 'Default Menu Items') {
+  // Ensure that extraContent is NOT shown for the default menu
+  if (topLevelMenuData === menuData.default) {
     extraContent = '';
   }
 
-  // Only call createSidebarSection if both objects and their items are defined
-  if (topLevelMenuData && topLevelMenuData.items) {
-    createSidebarSection(topLevelMenuData, extraContent);
+  // Create sidebar only if valid menu data and items are available
+  if (topLevelMenuData.items) {
+    createSidebarSection(topLevelMenuData, extraContent || '');
   } else {
     console.warn('Sidebar data is missing or incomplete');
   }
@@ -1947,7 +1912,7 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
         tab.setAttribute('aria-selected', 'true');
         tab.setAttribute('tabindex', '0');
         tab.focus(); // Optionally focus the element
-        populateSidebar(tab);
+        populateSidebar();
       } else {
         // deactive the inactive tabs
         tab.removeAttribute('aria-selected');
