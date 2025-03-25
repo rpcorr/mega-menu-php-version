@@ -35,7 +35,7 @@
 
 .toggle-btn {
   position: fixed;
-  bottom: 30px;
+  top: 110px;
   right: 0px; /*Positioned to the right of the sidebar when collapsed*/
   background-color: #444;
   color: white;
