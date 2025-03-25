@@ -1806,10 +1806,10 @@ function getMegaMenu(menuContainer, type, menu) {
     menuContainer.addEventListener('keydown', (event) => {
       switch (event.key) {
         case 'ArrowLeft':
-          moveLeft(menuContainer, type);
+          moveTab(menuContainer, type, -1);
           break;
         case 'ArrowRight':
-          moveRight(menuContainer, type);
+          moveTab(menuContainer, type, 1);
           break;
         case 'Home':
           event.preventDefault();
@@ -2025,24 +2025,7 @@ function setTabsContainer() {
   }
 }
 
-function moveLeft(menuContainer, type) {
-  // Select the tabs container and list
-  const tabsContainer = document.querySelector('.tabs-container');
-  const tabsList = tabsContainer.querySelector('ul');
-  const tabButtons = Array.from(tabsList.querySelectorAll('a'));
-  const currentTab = document.activeElement;
-
-  // Find the index of the currently focused tab
-  const currentIndex = tabButtons.findIndex((tab) => tab === currentTab);
-  if (currentIndex === -1) return;
-
-  // Calculate the previous index in a circular manner
-  const previousIndex =
-    (currentIndex - 1 + tabButtons.length) % tabButtons.length;
-  switchTab(tabButtons[previousIndex], menuContainer, type);
-}
-
-function moveRight(menuContainer, type) {
+function moveTab(menuContainer, type, direction) {
   // Select the tabs container and list
   const tabsContainer = document.querySelector('.tabs-container');
   const tabsList = tabsContainer.querySelector('ul');
@@ -2054,7 +2037,8 @@ function moveRight(menuContainer, type) {
   if (currentIndex === -1) return;
 
   // Calculate the next index in a circular manner
-  const nextIndex = (currentIndex + 1) % tabButtons.length;
+  const nextIndex =
+    (currentIndex + direction + tabButtons.length) % tabButtons.length;
   switchTab(tabButtons[nextIndex], menuContainer, type);
 }
 
