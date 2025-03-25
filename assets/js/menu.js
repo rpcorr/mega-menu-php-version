@@ -1772,7 +1772,7 @@ function getMegaMenu(menuContainer, type, menu) {
     renderExtraContent(libPasExtraContent, menuContainer);
   }
 
-  setTabsContainer(null);
+  setTabsContainer();
 
   // Prevent adding multiple event listeners to the same menu container
   if (!menuContainer.dataset.listenerAdded) {
@@ -2007,18 +2007,12 @@ function renderExtraContent(contentData, menuContainer) {
 
 ///////  Navigation through tabs /////////////////
 
-function setTabsContainer(selectedTab) {
+function setTabsContainer() {
   // Select the main tabs container
   const tabsContainer = document.querySelector('.tabs-container');
 
   // Get the unordered list (<ul>) inside the tabs container
   const tabsList = tabsContainer.querySelector('ul');
-
-  // Select all tab buttons (anchor elements) inside the list
-  const tabButtons = tabsList.querySelectorAll('a');
-
-  // Select all tab panels inside the container
-  const tabPanels = tabsContainer.querySelectorAll('.tabs__panels > div');
 
   // Set ARIA role to define this as a tab list for accessibility
   tabsList.setAttribute('role', 'tablist');
