@@ -1804,13 +1804,12 @@ function getMegaMenu(menuContainer, type, menu) {
     );
 
     menuContainer.addEventListener('keydown', (event) => {
-      const clickedTab = event.target.closest('a');
       switch (event.key) {
         case 'ArrowLeft':
-          moveLeft(clickedTab, menuContainer, type);
+          moveLeft(menuContainer, type);
           break;
         case 'ArrowRight':
-          moveRight(clickedTab, menuContainer, type);
+          moveRight(menuContainer, type);
           break;
         case 'Home':
           event.preventDefault();
@@ -2026,7 +2025,7 @@ function setTabsContainer() {
   }
 }
 
-function moveLeft(clickedTab, menuContainer, type) {
+function moveLeft(menuContainer, type) {
   // Select the tabs container and list
   const tabsContainer = document.querySelector('.tabs-container');
   const tabsList = tabsContainer.querySelector('ul');
@@ -2043,7 +2042,7 @@ function moveLeft(clickedTab, menuContainer, type) {
   switchTab(tabButtons[previousIndex], menuContainer, type);
 }
 
-function moveRight(clickedTab, menuContainer, type) {
+function moveRight(menuContainer, type) {
   // Select the tabs container and list
   const tabsContainer = document.querySelector('.tabs-container');
   const tabsList = tabsContainer.querySelector('ul');
