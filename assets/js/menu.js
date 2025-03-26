@@ -773,112 +773,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
       moreWidth = document.getElementById('menu-more').offsetWidth;
 
-      // toggle sub-menu on click
+      // toggle More menu
       document
         .getElementById('menuMoreLink')
         .addEventListener('click', function (event) {
           event.preventDefault();
 
-          // Select the container by its ID
-          const container = document.getElementById('moreSubMenu');
+          const moreMenu = this.closest('.menu-item-has-children');
+          const isVisible = moreMenu.classList.contains('visible');
+          const icon = this.querySelector('i');
+          const moreSubMenu = document.getElementById('moreSubMenu');
 
-          // open moreSubmenu
-          // close moreSubmenu
-          if (this.classList.contains('active')) {
-            // remove opacity inline style
-            setTimeout(() => {
-              // Remove the specific inline style property
-              document
-                .getElementById('moreSubMenu')
-                .style.removeProperty('opacity');
-            }, 100);
-          }
-
-          // close all other open menus
+          // Close all other open menus
           document
             .querySelectorAll('li.menu-item-has-children > a')
-            .forEach((a) => {
-              a.setAttribute('aria-expanded', 'false');
-              a.classList.remove('active');
+            .forEach((anchor) => {
+              anchor.setAttribute('aria-expanded', 'false');
+              anchor.classList.remove('active');
             });
 
-          // display the More menu content
-          this.closest('.menu-item-has-children').classList.toggle('visible');
+          // Toggle visibility of More menu
+          moreMenu.classList.toggle('visible');
 
-          // remove active class from anchor elements
-          if (
-            !this.closest('.menu-item-has-children').classList.contains(
-              'visible'
-            )
-          ) {
-            // More menu is closed
-
-            this.setAttribute(
-              'aria-label',
-              'More has a sub menu. Click enter to open'
-            );
-
-            // call removeActiveClass
-            removeActiveClass();
-
-            // fill sidebar with default content
-            populateSidebar();
-          }
-
-          if (
-            this.closest('.menu-item-has-children').classList.contains(
-              'visible'
-            )
-          ) {
-            // set the arrow to the up position (open)
-            const icon = this.querySelector('i');
-            if (icon) {
-              icon.classList.remove('angle-down');
-              icon.classList.add('angle-up');
-            }
-
-            // update aria-label to close menu
+          if (moreMenu.classList.contains('visible')) {
+            // Open state
             this.setAttribute(
               'aria-label',
               'Click Enter to close More sub menu'
             );
-
-            // set the More sub menu aria-expanded attr to true
-            this.setAttribute('aria-expanded', true);
-
-            // set active class
+            this.setAttribute('aria-expanded', 'true');
             this.classList.add('active');
+
+            // Adjust icon if available
+            if (icon) {
+              icon.classList.replace('angle-down', 'angle-up');
+            }
           } else {
-            // set the arrow to the down position (close)
-            resetArrows();
-
-            const anchors = document.querySelectorAll('#moreSubMenu a');
-
-            anchors.forEach(function (anchor) {
-              // check if anchor has aria-expaneded
-              if (anchor.hasAttribute('aria-expanded')) {
-                // set aria-expanded to false
-                anchor.setAttribute('aria-expanded', false);
-              }
-
-              // check if anchor has aria-label
-              if (anchor.hasAttribute('aria-label')) {
-                // set aria label to open open menu
-                anchor.setAttribute(
-                  'aria-label',
-                  `${anchor.textContent} has a sub menu. Click enter to open`
-                );
-              }
-            });
-
-            // set the More link aria-expanded attr to false
-            this.setAttribute('aria-expanded', false);
-
-            // remove active class
+            // Close state
+            this.setAttribute(
+              'aria-label',
+              'More has a sub menu. Click enter to open'
+            );
+            this.setAttribute('aria-expanded', 'false');
             this.classList.remove('active');
-            if (this && this.className.trim() === '')
-              this.removeAttribute('class');
+
+            // Reset icon if available
+            if (icon) {
+              icon.classList.replace('angle-up', 'angle-down');
+            }
+
+            // Remove inline opacity after a short delay
+            setTimeout(() => {
+              moreSubMenu.style.removeProperty('opacity');
+            }, 100);
+
+            // Reset submenu links
+            document.querySelectorAll('#moreSubMenu a').forEach((anchor) => {
+              anchor.setAttribute('aria-expanded', 'false');
+              anchor.setAttribute(
+                'aria-label',
+                `${anchor.textContent} has a sub menu. Click enter to open`
+              );
+            });
           }
+
+          // Remove empty class attribute
+          if (this.className.trim() === '') {
+            this.removeAttribute('class');
+          }
+
+          // Update sidebar content
+          populateSidebar();
         });
 
       // toggle More menu sub-menu on key up
