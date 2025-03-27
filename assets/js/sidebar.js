@@ -150,39 +150,42 @@ document
   });
 
 function populateSidebar() {
-  // Find the first expanded anchor element
-  let selectedAnchorElement = document.querySelector('a[aria-expanded="true"]');
+  // Find all expanded anchor elements
+  let expandedAnchors = Array.from(
+    document.querySelectorAll('a[aria-expanded="true"]')
+  );
+  let selectedAnchorElement = expandedAnchors[0];
   let selectedAnchor = selectedAnchorElement?.textContent?.toLowerCase().trim();
 
-  // If the first expanded anchor is "more", try to find the next expanded element
-  if (selectedAnchor === 'more') {
-    const expandedAnchors = Array.from(
-      document.querySelectorAll('a[aria-expanded="true"]')
-    ).slice(1);
-
-    if (expandedAnchors.length > 0) {
-      selectedAnchorElement = expandedAnchors[0]; // Use the next expanded element
-      selectedAnchor = selectedAnchorElement.textContent.toLowerCase().trim();
-    }
+  // If no expanded anchor is found, default to "default" menu
+  if (!selectedAnchorElement) {
+    createSidebarSection(sideMenuData.default, '');
+    return;
   }
 
-  // Exit early if no valid anchor is found
-  if (!selectedAnchor) return;
+  // If the first expanded anchor is "more", try to find the next expanded element
+  if (selectedAnchor === 'more' && expandedAnchors.length > 1) {
+    selectedAnchorElement = expandedAnchors[1]; // Use the next expanded element
+    selectedAnchor = selectedAnchorElement.textContent.toLowerCase().trim();
+  }
 
   // Get the submenu div directly following the selected anchor
   const subMenuDiv = selectedAnchorElement?.nextElementSibling;
-  if (!subMenuDiv || !subMenuDiv.classList.contains('sub-menu-div')) return;
+  if (!subMenuDiv || !subMenuDiv.classList.contains('sub-menu-div')) {
+    createSidebarSection(sideMenuData.default, '');
+    return;
+  }
 
   // Find the menu list within the submenu div
   const menuList = subMenuDiv.querySelector('ul.menu-list');
-  if (!menuList) return;
+  if (!menuList) {
+    createSidebarSection(sideMenuData.default, '');
+    return;
+  }
 
   // Find the selected list item within the menu list
   const selectedListItem = menuList.querySelector('a[aria-selected="true"]');
-  if (!selectedListItem) return;
-
-  // Extract the content inside the <strong> tag and convert to lowercase
-  const strTab = selectedListItem.innerHTML
+  const strTab = selectedListItem?.innerHTML
     .match(/<strong>(.*?)<\/strong>/)?.[1]
     ?.toLowerCase();
 
@@ -198,66 +201,59 @@ function populateSidebar() {
   // Select the appropriate menu based on the anchor or use the default menu
   const selectedMenu = sideMenuData[selectedAnchor] || sideMenuData.default;
 
-  console.log(selectedMenu);
   // Populate the sidebar with the selected menu and tab
   createSidebarSection(selectedMenu, selectedTab);
 }
 
 // Helper function to create and append sidebar content
 function createSidebarSection(menuSection, extraContent) {
-  // Get the sidebar element from the document
   const sidebar = document.querySelector('.sidebar');
+  sidebar.innerHTML = ''; // Clear out the current sidebar content
 
-  // Clear out the current sidebar content
-  sidebar.innerHTML = '';
+  // Create and append section heading
+  if (menuSection?.title) {
+    const heading = document.createElement('h2');
+    heading.textContent = menuSection.title;
+    sidebar.appendChild(heading);
+  }
 
-  // Create a heading element for the section title
-  const heading = document.createElement('h2');
-  heading.textContent = menuSection.title;
+  // Create and append menu items
+  if (menuSection?.items?.length) {
+    const ul = document.createElement('ul');
 
-  // Create an unordered list to hold the menu items
-  const ul = document.createElement('ul');
+    menuSection.items.forEach((item) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.textContent = item.name;
+      a.href = item.url;
+      a.style.textDecoration = 'underline';
+      a.setAttribute('aria-label', `Learn more about ${item.name}`);
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
 
-  // Loop through the items in the current menu section and add them as list items
-  menuSection.items.forEach((item) => {
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.textContent = item.name; // Set link text to the menu item's name
-    a.href = item.url; // Set the URL for the menu item
-    a.style.textDecoration = 'underline'; // Underline the link
-    a.setAttribute('aria-label', `Learn more about ${item.name}`); // Add accessibility label
-    li.appendChild(a); // Append the link to the list item
-    ul.appendChild(li); // Append the list item to the unordered list
-  });
+    sidebar.appendChild(ul);
+  }
 
-  // Append the heading and list to the sidebar
-  sidebar.appendChild(heading);
-  sidebar.appendChild(ul);
-
-  // Only render extra content if it's a valid object with title and items
-  if (
-    extraContent &&
-    typeof extraContent === 'object' &&
-    extraContent.title &&
-    extraContent.items
-  ) {
+  // Render extra content if it's a valid object with title and items
+  if (extraContent?.title && extraContent?.items?.length) {
     const extraHeading = document.createElement('h2');
     extraHeading.textContent = extraContent.title;
+    sidebar.appendChild(extraHeading);
 
     const extraContentUl = document.createElement('ul');
 
     extraContent.items.forEach((item) => {
       const li = document.createElement('li');
       const a = document.createElement('a');
-      a.textContent = item.name; // Set link text to the menu item's name
-      a.href = item.url; // Set the URL for the menu item
-      a.style.textDecoration = 'underline'; // Underline the link
-      a.setAttribute('aria-label', `Learn more about ${item.name}`); // Add accessibility label
-      li.appendChild(a); // Append the link to the list item
-      extraContentUl.appendChild(li); // Append the list item to the unordered list
+      a.textContent = item.name;
+      a.href = item.url;
+      a.style.textDecoration = 'underline';
+      a.setAttribute('aria-label', `Learn more about ${item.name}`);
+      li.appendChild(a);
+      extraContentUl.appendChild(li);
     });
 
-    sidebar.appendChild(extraHeading);
     sidebar.appendChild(extraContentUl);
   }
 }
