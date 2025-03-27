@@ -150,80 +150,57 @@ document
   });
 
 function populateSidebar() {
-  // Get the currently selected anchor (if available) based on aria-selected attribute
-  let selectedAnchor = document
-    .querySelector('a[aria-selected="true"]')
-    ?.textContent?.toLowerCase()
-    .trim();
+  // Find the first expanded anchor element
+  let selectedAnchorElement = document.querySelector('a[aria-expanded="true"]');
+  let selectedAnchor = selectedAnchorElement?.textContent?.toLowerCase().trim();
 
-  // Try to match the selected anchor to a tab item (case-insensitive)
-  let selectedItem = Object.values(tabData).find((data) =>
-    selectedAnchor?.includes(data.title.toLowerCase())
-  );
+  // If the first expanded anchor is "more", try to find the next expanded element
+  if (selectedAnchor === 'more') {
+    const expandedAnchors = Array.from(
+      document.querySelectorAll('a[aria-expanded="true"]')
+    ).slice(1);
 
-  console.log(selectedItem);
-
-  // Initialize extra content to an empty string
-  let extraContent = '';
-
-  // If the selected item is an anchor element, try to match it to tabData keys
-  if (selectedItem?.tagName === 'A') {
-    const hrefValue = selectedItem.getAttribute('href')?.replace('#', '');
-    selectedItem =
-      Object.values(tabData).find((data) =>
-        hrefValue?.includes(data.title.toLowerCase())
-      ) ?? '';
-  }
-
-  console.log(selectedAnchor);
-
-  // Handle special cases for known menu items directly
-  if (selectedAnchor === 'profile') {
-    createSidebarSection(sideMenuData.profile, '');
-    return;
-  }
-
-  if (selectedAnchor === 'admin') {
-    createSidebarSection(sideMenuData.admin, '');
-    return;
-  }
-
-  // Determine the top-level menu item (based on aria-expanded)
-  const topMenuItem =
-    document
-      .querySelector('a[aria-expanded="true"]')
-      ?.textContent?.toLowerCase()
-      .trim() || '';
-
-  // Set the top-level menu data based on the selected item, fallback to default
-  let topLevelMenuData = sideMenuData[topMenuItem] || sideMenuData.default;
-
-  // Handle 'more' case (e.g., submenus under a "More" option)
-  if (topMenuItem === 'more') {
-    const lastExpanded = [
-      ...document.querySelectorAll('a[aria-expanded="true"]'),
-    ]
-      .pop()
-      ?.textContent?.toLowerCase()
-      .trim();
-
-    if (lastExpanded === 'services') {
-      createSidebarSection(sideMenuData.services, selectedItem);
-      return;
+    if (expandedAnchors.length > 0) {
+      selectedAnchorElement = expandedAnchors[0]; // Use the next expanded element
+      selectedAnchor = selectedAnchorElement.textContent.toLowerCase().trim();
     }
   }
 
-  // Ensure that extraContent is NOT shown for the default menu
-  if (topLevelMenuData === sideMenuData.default) {
-    extraContent = '';
-  }
+  // Exit early if no valid anchor is found
+  if (!selectedAnchor) return;
 
-  // Create sidebar only if valid menu data and items are available
-  if (topLevelMenuData.items) {
-    createSidebarSection(topLevelMenuData, extraContent || '');
-  } else {
-    console.warn('Sidebar data is missing or incomplete');
-  }
+  // Get the submenu div directly following the selected anchor
+  const subMenuDiv = selectedAnchorElement?.nextElementSibling;
+  if (!subMenuDiv || !subMenuDiv.classList.contains('sub-menu-div')) return;
+
+  // Find the menu list within the submenu div
+  const menuList = subMenuDiv.querySelector('ul.menu-list');
+  if (!menuList) return;
+
+  // Find the selected list item within the menu list
+  const selectedListItem = menuList.querySelector('a[aria-selected="true"]');
+  if (!selectedListItem) return;
+
+  // Extract the content inside the <strong> tag and convert to lowercase
+  const strTab = selectedListItem.innerHTML
+    .match(/<strong>(.*?)<\/strong>/)?.[1]
+    ?.toLowerCase();
+
+  // Match the extracted content against tabData keys (case-insensitive)
+  const selectedTab = strTab
+    ? tabData[
+        Object.keys(tabData).find(
+          (key) => key.toLowerCase() === strTab.toLowerCase()
+        )
+      ] || ''
+    : '';
+
+  // Select the appropriate menu based on the anchor or use the default menu
+  const selectedMenu = sideMenuData[selectedAnchor] || sideMenuData.default;
+
+  console.log(selectedMenu);
+  // Populate the sidebar with the selected menu and tab
+  createSidebarSection(selectedMenu, selectedTab);
 }
 
 // Helper function to create and append sidebar content
@@ -257,9 +234,13 @@ function createSidebarSection(menuSection, extraContent) {
   sidebar.appendChild(heading);
   sidebar.appendChild(ul);
 
-  // Loop through the items in the extra content section and add them as list items
-  if (extraContent !== '') {
-    // Create a heading element for the extra content title
+  // Only render extra content if it's a valid object with title and items
+  if (
+    extraContent &&
+    typeof extraContent === 'object' &&
+    extraContent.title &&
+    extraContent.items
+  ) {
     const extraHeading = document.createElement('h2');
     extraHeading.textContent = extraContent.title;
 
