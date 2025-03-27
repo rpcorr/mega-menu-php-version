@@ -169,6 +169,19 @@ function populateSidebar() {
     selectedAnchor = selectedAnchorElement.textContent.toLowerCase().trim();
   }
 
+  // Handle case where "Admin" link is expanded (case-insensitive)
+  
+  if (/^admin$/i.test(selectedAnchor)) {
+    createSidebarSection(sideMenuData.admin, '');
+    return;
+  }
+
+  // Handle case where "Profile" link is expanded (case-insensitive)
+  if (/profile/i.test(selectedAnchor?.trim())) {
+    createSidebarSection(sideMenuData.profile, '');
+    return;
+  }
+
   // Get the submenu div directly following the selected anchor
   const subMenuDiv = selectedAnchorElement?.nextElementSibling;
   if (!subMenuDiv || !subMenuDiv.classList.contains('sub-menu-div')) {
