@@ -49,37 +49,31 @@ const libPasBodyContent = [
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    subText: '{Brief description of the function of reports}',
   },
   {
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    subText: '{Brief description of the function of reports}',
   },
   {
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    subText: '{Brief description of the function of reports}',
   },
   {
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    subText: '{Brief description of the function of reports}',
   },
   {
     graphic: 'data-input.gif',
     width: '42',
     height: '55',
-    subText: '{Brief description of the function of data input}',
   },
   {
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    subText: '{Brief description of the function of reports}',
   },
 ];
 
@@ -1747,7 +1741,9 @@ function renderBodyContent(contentData, contentContainer, type, bodyContent) {
 
     // Set text content for the strong and span elements
     p.querySelector('strong').textContent = menuItem;
-    p.querySelector('span').textContent = item.subText;
+    p.querySelector(
+      'span'
+    ).textContent = `{Brief description of the function of ${menuItem}}`;
 
     // Add the populated content to the document fragment
     fragment.appendChild(menuContent);
