@@ -49,42 +49,36 @@ const libPasBodyContent = [
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    title: 'LibPAS Reports',
     subText: '{Brief description of the function of reports}',
   },
   {
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    title: 'Reports',
     subText: '{Brief description of the function of reports}',
   },
   {
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    title: 'Reports',
     subText: '{Brief description of the function of reports}',
   },
   {
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    title: 'Reports',
     subText: '{Brief description of the function of reports}',
   },
   {
     graphic: 'data-input.gif',
     width: '42',
     height: '55',
-    title: 'Data Input',
     subText: '{Brief description of the function of data input}',
   },
   {
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    title: 'Reports',
     subText: '{Brief description of the function of reports}',
   },
 ];
@@ -1511,8 +1505,21 @@ function removeActiveClass() {
   });
 }
 
-function getMegaMenu(menuContainer, type, menu) {
+function getMegaMenu(menuContainer, type, menuData) {
   if (!menuContainer) return; // Exit if no menu container is found
+  const menu = createMenuItems(menuData);
+  console.log(menu);
+
+  console.log(menuData);
+
+  const libPasPagePrompts =
+    menuData
+      .find(
+        (item) =>
+          item.section_prompt &&
+          item.section_prompt.toLowerCase() === 'libpas'.toLowerCase()
+      )
+      ?.pages.map((page) => page.page_prompt) || [];
 
   // Render the default menu items and content for 'LibPAS' when the menu initializes
   if (type === 'multiple') {
@@ -1524,13 +1531,23 @@ function getMegaMenu(menuContainer, type, menu) {
   }
 
   if (type === 'multiple' || type === 'single') {
-    renderBodyContent(libPasBodyContent, menuContainer, type);
+    renderBodyContent(
+      libPasBodyContent,
+      menuContainer,
+      type,
+      libPasPagePrompts
+    );
     renderExtraContent(libPasExtraContent, menuContainer);
   }
 
   if (type === 'pages') {
     renderMenu(null, menuContainer, type, '');
-    renderBodyContent(libPasBodyContent, menuContainer, type);
+    renderBodyContent(
+      libPasBodyContent,
+      menuContainer,
+      type,
+      libPasPagePrompts
+    );
     renderExtraContent(libPasExtraContent, menuContainer);
   }
 
@@ -1665,7 +1682,11 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
   }
 }
 
-function renderBodyContent(contentData, contentContainer, type) {
+function renderBodyContent(contentData, contentContainer, type, bodyContent) {
+  console.log(bodyContent);
+  console.log(contentData);
+
+  // Get the content template from the DOM
   const contentTemplate = document.querySelector('#menuContent');
 
   if (!contentTemplate || !contentContainer) {
@@ -1673,32 +1694,67 @@ function renderBodyContent(contentData, contentContainer, type) {
     return;
   }
 
+  // Create a document fragment to improve performance when adding elements to the DOM
   const fragment = document.createDocumentFragment();
 
+  // Track used items to prevent duplicates until all items are used
+  const usedItems = new Set();
+  let shuffled = [];
+
+  // Function to shuffle and filter out already used items
+  function shuffleItems() {
+    shuffled = bodyContent
+      .filter((item) => !usedItems.has(item)) // Remove used items from the pool
+      .sort(() => Math.random() - 0.5); // Shuffle remaining items randomly
+  }
+
+  // Function to get the next item from the shuffled list
+  function getNextItem() {
+    if (shuffled.length === 0) {
+      // If all items have been used, reset the used set and reshuffle
+      usedItems.clear();
+      shuffleItems();
+    }
+    const nextItem = shuffled.shift(); // Get the next item from the shuffled array
+    usedItems.add(nextItem); // Mark the item as used
+    return nextItem;
+  }
+
+  // Initial shuffle to prepare the list
+  shuffleItems();
+
+  // Loop through each content item and populate the template
   contentData.forEach((item) => {
+    // Get a unique next item from the shuffled list
+    const menuItem = getNextItem();
+
+    // Clone the content template to create a new instance
     const menuContent = contentTemplate.content.cloneNode(true);
     const img = menuContent.querySelector('img');
     const p = menuContent.querySelector('p');
     const span = menuContent.querySelector('span');
 
+    // Validate that the template contains the expected elements
     if (!img || !p || !span) {
       console.error('Error: Missing elements inside body content template.');
       return;
     }
 
-    // Set attributes
+    // Set attributes for the image and text elements
     img.src = `assets/imgs/${item.graphic}`;
     img.width = item.width;
     img.height = item.height;
 
-    p.querySelector('strong').textContent = item.title;
+    // Set text content for the strong and span elements
+    p.querySelector('strong').textContent = menuItem;
     p.querySelector('span').textContent = item.subText;
 
+    // Add the populated content to the document fragment
     fragment.appendChild(menuContent);
   });
 
   if (type !== 'pages') {
-    // Create the tabs__panels wrapper
+    // Create a wrapper for non-page content
     const tabsPanels = document.createElement('div');
     tabsPanels.classList.add('tabs__panels');
     tabsPanels.appendChild(fragment);
@@ -1706,6 +1762,7 @@ function renderBodyContent(contentData, contentContainer, type) {
   }
 
   if (type === 'pages') {
+    // Create a wrapper for page content
     const wrapper = document.createElement('div');
     wrapper.classList.add('left-content');
     wrapper.appendChild(fragment);
@@ -1844,14 +1901,11 @@ function switchTab(clickedTab, menuContainer, type) {
 }
 
 function populateMegaMenu(menuData) {
-  console.log(menuData); // Logs the raw data
-  const menu = createMenuItems(menuData);
-  console.log(menu); // Logs the final menu object
-
   document
     .querySelectorAll('.grid-container-multiple')
     .forEach((menuContainer) => {
-      getMegaMenu(menuContainer, 'multiple', menu);
+      //console.log(menu);
+      getMegaMenu(menuContainer, 'multiple', menuData);
     });
 }
 
