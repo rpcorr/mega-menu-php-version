@@ -1548,18 +1548,23 @@ function getMegaMenu(menuContainer, type, menuData) {
     menuContainer.addEventListener('keydown', (event) => {
       switch (event.key) {
         case 'ArrowLeft':
-          moveTab(menuContainer, type, -1);
+          moveTab(menuContainer, type, -1, menuData);
           break;
         case 'ArrowRight':
-          moveTab(menuContainer, type, 1);
+          moveTab(menuContainer, type, 1, menuData);
           break;
         case 'Home':
           event.preventDefault();
-          switchTab(tabButtons[0], menuContainer, type);
+          switchTab(tabButtons[0], menuContainer, type, menuData);
           break;
         case 'End':
           event.preventDefault();
-          switchTab(tabButtons[tabButtons.length - 1], menuContainer, type);
+          switchTab(
+            tabButtons[tabButtons.length - 1],
+            menuContainer,
+            type,
+            menuData
+          );
           break;
       }
     });
@@ -1849,7 +1854,7 @@ function setTabsContainer() {
   }
 }
 
-function moveTab(menuContainer, type, direction) {
+function moveTab(menuContainer, type, direction, menuData = []) {
   // Select the tabs container and list
   const tabsContainer = document.querySelector('.tabs-container');
   const tabsList = tabsContainer.querySelector('ul');
@@ -1863,10 +1868,10 @@ function moveTab(menuContainer, type, direction) {
   // Calculate the next index in a circular manner
   const nextIndex =
     (currentIndex + direction + tabButtons.length) % tabButtons.length;
-  switchTab(tabButtons[nextIndex], menuContainer, type);
+  switchTab(tabButtons[nextIndex], menuContainer, type, menuData);
 }
 
-// ✅ Ensure bodyContent is passed properly in switchTab:
+// Ensure bodyContent is passed properly in switchTab:
 function switchTab(clickedTab, menuContainer, type, menuData = []) {
   console.log('inside switchTab');
   console.log(menuData);
