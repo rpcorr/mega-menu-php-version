@@ -11,6 +11,8 @@ let output = '';
 let megaMenuLinks = '';
 let initialColumns = '';
 
+let allMenuItemsinArray;
+
 // LibPAS, InformUS, LibSat menu items
 const menuMap = {
   2: {
@@ -82,43 +84,31 @@ const libSATBodyContent = [
     graphic: 'data-input.gif',
     width: '42',
     height: '55',
-    title: 'libSAT Data Input',
-    subText: '{Brief description of the function of data input}',
   },
   {
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    title: 'Reports',
-    subText: '{Brief description of the function of reports}',
   },
   {
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    title: 'Reports',
-    subText: '{Brief description of the function of reports}',
   },
   {
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    title: 'Reports',
-    subText: '{Brief description of the function of reports}',
   },
   {
     graphic: 'data-input.gif',
     width: '42',
     height: '55',
-    title: 'Data Input',
-    subText: '{Brief description of the function of data input}',
   },
   {
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    title: 'Reports',
-    subText: '{Brief description of the function of reports}',
   },
 ];
 
@@ -127,43 +117,31 @@ const informsUsBodyContent = [
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    title: 'Reports InformsUs',
-    subText: '{Brief description of the function of reports}',
   },
   {
     graphic: 'data-input.gif',
     width: '42',
     height: '55',
-    title: 'Data Input',
-    subText: '{Brief description of the function of data input}',
   },
   {
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    title: 'Reports',
-    subText: '{Brief description of the function of reports}',
   },
   {
     graphic: 'data-input.gif',
     width: '42',
     height: '55',
-    title: 'Data Input',
-    subText: '{Brief description of the function of data input}',
   },
   {
     graphic: 'data-input.gif',
     width: '42',
     height: '55',
-    title: 'Data Input',
-    subText: '{Brief description of the function of data input}',
   },
   {
     graphic: 'reports.gif',
     width: '42',
     height: '55',
-    title: 'Reports',
-    subText: '{Brief description of the function of reports}',
   },
 ];
 
@@ -270,6 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return response.json();
     })
     .then((data) => {
+      allMenuItemsinArray = data;
       // Initialize an empty object to hold grouped pages
       const groupedSections = {};
 
@@ -1503,17 +1482,17 @@ function getMegaMenu(menuContainer, type, menuData) {
   if (!menuContainer) return; // Exit if no menu container is found
   const menu = createMenuItems(menuData);
   console.log(menu);
-
+  console.log('jjjjjjjjjjjjjjjjjjjjj');
   console.log(menuData);
 
-  const libPasPagePrompts =
-    menuData
-      .find(
-        (item) =>
-          item.section_prompt &&
-          item.section_prompt.toLowerCase() === 'libpas'.toLowerCase()
-      )
-      ?.pages.map((page) => page.page_prompt) || [];
+  // const pagePrompts =
+  //   menuData
+  //     .find(
+  //       (item) =>
+  //         item.section_prompt &&
+  //         item.section_prompt.toLowerCase() === 'libpas'.toLowerCase()
+  //     )
+  //     ?.pages.map((page) => page.page_prompt) || [];
 
   // Render the default menu items and content for 'LibPAS' when the menu initializes
   if (type === 'multiple') {
@@ -1525,23 +1504,13 @@ function getMegaMenu(menuContainer, type, menuData) {
   }
 
   if (type === 'multiple' || type === 'single') {
-    renderBodyContent(
-      libPasBodyContent,
-      menuContainer,
-      type,
-      libPasPagePrompts
-    );
+    renderBodyContent(libPasBodyContent, menuContainer, type, menuData);
     renderExtraContent(libPasExtraContent, menuContainer);
   }
 
   if (type === 'pages') {
     renderMenu(null, menuContainer, type, '');
-    renderBodyContent(
-      libPasBodyContent,
-      menuContainer,
-      type,
-      libPasPagePrompts
-    );
+    renderBodyContent(libPasBodyContent, menuContainer, type, menuData);
     renderExtraContent(libPasExtraContent, menuContainer);
   }
 
@@ -1569,7 +1538,7 @@ function getMegaMenu(menuContainer, type, menuData) {
             });
             clickedTab.setAttribute('aria-selected', 'true');
 
-            switchTab(clickedTab, menuContainer, type);
+            switchTab(clickedTab, menuContainer, type, menuData);
           }
         }
       },
@@ -1676,9 +1645,12 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
   }
 }
 
-function renderBodyContent(contentData, contentContainer, type, bodyContent) {
-  console.log(bodyContent);
-  console.log(contentData);
+function renderBodyContent(contentData, contentContainer, type, menuData) {
+  // Ensure menuData is an array
+  if (!Array.isArray(menuData) || menuData.length === 0) {
+    console.error('Error: menuData is missing or not an array.');
+    return;
+  }
 
   // Get the content template from the DOM
   const contentTemplate = document.querySelector('#menuContent');
@@ -1687,6 +1659,27 @@ function renderBodyContent(contentData, contentContainer, type, bodyContent) {
     console.error('Error: Body content template or container not found.');
     return;
   }
+
+  console.log(contentData);
+  console.log(contentContainer);
+  console.log(type);
+  console.log(menuData);
+
+  const selectedLi = document
+    .querySelector('a[aria-selected="true"]')
+    .closest('li');
+
+  const selectedText = selectedLi.id.toLowerCase();
+  console.log(selectedText);
+
+  const pagePrompts =
+    menuData
+      .find(
+        (item) =>
+          item.section_prompt &&
+          item.section_prompt.toLowerCase() === selectedText
+      )
+      ?.pages.map((page) => page.page_prompt) || [];
 
   // Create a document fragment to improve performance when adding elements to the DOM
   const fragment = document.createDocumentFragment();
@@ -1697,13 +1690,18 @@ function renderBodyContent(contentData, contentContainer, type, bodyContent) {
 
   // Function to shuffle and filter out already used items
   function shuffleItems() {
-    shuffled = bodyContent
-      .filter((item) => !usedItems.has(item)) // Remove used items from the pool
-      .sort(() => Math.random() - 0.5); // Shuffle remaining items randomly
+    if (pagePrompts && Array.isArray(pagePrompts)) {
+      shuffled = pagePrompts
+        .filter((item) => !usedItems.has(item)) // Remove used items from the pool
+        .sort(() => Math.random() - 0.5); // Shuffle remaining items randomly
+    } else {
+      console.error('Error: Invalid bodyContent data.');
+    }
   }
 
   // Function to get the next item from the shuffled list
   function getNextItem() {
+    console.log(shuffled);
     if (shuffled.length === 0) {
       // If all items have been used, reset the used set and reshuffle
       usedItems.clear();
@@ -1716,6 +1714,9 @@ function renderBodyContent(contentData, contentContainer, type, bodyContent) {
 
   // Initial shuffle to prepare the list
   shuffleItems();
+
+  console.log(allMenuItemsinArray);
+  console.log(contentData);
 
   // Loop through each content item and populate the template
   contentData.forEach((item) => {
@@ -1734,16 +1735,24 @@ function renderBodyContent(contentData, contentContainer, type, bodyContent) {
       return;
     }
 
+    console.log(menuItem);
+
+    // If menuItem is an object, use its `title` attribute
+    const displayText =
+      typeof menuItem === 'object' && menuItem.title
+        ? menuItem.title
+        : menuItem;
+
     // Set attributes for the image and text elements
     img.src = `assets/imgs/${item.graphic}`;
     img.width = item.width;
     img.height = item.height;
 
     // Set text content for the strong and span elements
-    p.querySelector('strong').textContent = menuItem;
+    p.querySelector('strong').textContent = displayText;
     p.querySelector(
       'span'
-    ).textContent = `{Brief description of the function of ${menuItem}}`;
+    ).textContent = `{Brief description of the function of ${displayText}}`;
 
     // Add the populated content to the document fragment
     fragment.appendChild(menuContent);
@@ -1857,9 +1866,12 @@ function moveTab(menuContainer, type, direction) {
   switchTab(tabButtons[nextIndex], menuContainer, type);
 }
 
-function switchTab(clickedTab, menuContainer, type) {
-  // Only switch tabs if a tab has been clicked
+// ✅ Ensure bodyContent is passed properly in switchTab:
+function switchTab(clickedTab, menuContainer, type, menuData = []) {
+  console.log('inside switchTab');
+  console.log(menuData);
   const id = clickedTab.closest('li').id.toLowerCase();
+
   if (id) {
     const menu = createMenuItems([
       { section_id: '2', section_prompt: 'LibPAS' },
@@ -1869,25 +1881,51 @@ function switchTab(clickedTab, menuContainer, type) {
 
     switch (id) {
       case 'libpas':
-        if (type === 'multiple')
+        if (type === 'multiple') {
           renderMenu(menu, menuContainer, type, 'LibPAS');
-        if (type === 'single')
+        }
+        if (type === 'single') {
           renderMenu(menuSingle, menuContainer, type, 'LibPAS');
+        }
 
-        renderBodyContent(libPasBodyContent, menuContainer, type);
-        renderExtraContent(libPasExtraContent, menuContainer);
+        // ✅ Ensure libPasBodyContent is defined and passed correctly
+        if (Array.isArray(libPasBodyContent)) {
+          renderBodyContent(libPasBodyContent, menuContainer, type, menuData);
+          renderExtraContent(libPasExtraContent, menuContainer);
+        } else {
+          console.error(
+            'Error: libPasBodyContent is undefined or not an array.'
+          );
+        }
         break;
 
       case 'libsat':
         renderMenu(menu, menuContainer, type, 'LibSAT');
-        renderBodyContent(libSATBodyContent, menuContainer, type);
-        renderExtraContent(libSatExtraContent, menuContainer);
+        if (Array.isArray(libSATBodyContent)) {
+          renderBodyContent(libSATBodyContent, menuContainer, type, menuData);
+          renderExtraContent(libSatExtraContent, menuContainer);
+        } else {
+          console.error(
+            'Error: libSATBodyContent is undefined or not an array.'
+          );
+        }
         break;
 
       case 'informsus':
         renderMenu(menu, menuContainer, type, 'InformsUs');
-        renderBodyContent(informsUsBodyContent, menuContainer, type);
-        renderExtraContent(informsUsExtraContent, menuContainer);
+        if (Array.isArray(informsUsBodyContent)) {
+          renderBodyContent(
+            informsUsBodyContent,
+            menuContainer,
+            type,
+            menuData
+          );
+          renderExtraContent(informsUsExtraContent, menuContainer);
+        } else {
+          console.error(
+            'Error: informsUsBodyContent is undefined or not an array.'
+          );
+        }
         break;
 
       default:
