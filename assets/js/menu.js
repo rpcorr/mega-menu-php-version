@@ -57,11 +57,6 @@ const bodyContentIcons = [
     width: '42',
     height: '55',
   },
-  {
-    graphic: 'documentation.gif',
-    width: '38',
-    height: '50',
-  },
 ];
 
 const libPasExtraContent = [
