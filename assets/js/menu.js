@@ -1480,19 +1480,8 @@ function removeActiveClass() {
 
 function getMegaMenu(menuContainer, type, menuData) {
   if (!menuContainer) return; // Exit if no menu container is found
-  const menu = createMenuItems(menuData);
-  console.log(menu);
-  console.log('jjjjjjjjjjjjjjjjjjjjj');
   console.log(menuData);
-
-  // const pagePrompts =
-  //   menuData
-  //     .find(
-  //       (item) =>
-  //         item.section_prompt &&
-  //         item.section_prompt.toLowerCase() === 'libpas'.toLowerCase()
-  //     )
-  //     ?.pages.map((page) => page.page_prompt) || [];
+  const menu = createMenuItems(menuData);
 
   // Render the default menu items and content for 'LibPAS' when the menu initializes
   if (type === 'multiple') {
@@ -1633,7 +1622,10 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
 
     menuItems.forEach((item) => {
       const tab = item.closest('a');
-      if (item.textContent.trim() === currentMenuItem) {
+      if (
+        item.textContent.trim().toLowerCase() ===
+        currentMenuItem.trim().toLowerCase()
+      ) {
         // Match found
 
         // Example: Set aria-selected to true on the matching tab
@@ -1665,17 +1657,29 @@ function renderBodyContent(contentData, contentContainer, type, menuData) {
     return;
   }
 
-  console.log(contentData);
-  console.log(contentContainer);
-  console.log(type);
-  console.log(menuData);
+  // Ensure a tab is selected
+  let selectedAnchor = document.querySelector('a[aria-selected="true"]');
+  if (!selectedAnchor) {
+    // If no element is found, select the last tab as a fallback
+    const allTabs = document.querySelectorAll('.menu-list a');
+    selectedAnchor = allTabs[allTabs.length - 1]; // Select last <a> element
 
-  const selectedLi = document
-    .querySelector('a[aria-selected="true"]')
-    .closest('li');
+    if (!selectedAnchor) {
+      console.error('Error: No selectable tab found.');
+      return;
+    }
+
+    // Set aria-selected="true" on the last tab
+    selectedAnchor.setAttribute('aria-selected', 'true');
+  }
+
+  const selectedLi = selectedAnchor.closest('li');
+  if (!selectedLi) {
+    console.error('Error: Selected anchor is not inside a <li> element.');
+    return;
+  }
 
   const selectedText = selectedLi.id.toLowerCase();
-  console.log(selectedText);
 
   const pagePrompts =
     menuData
@@ -1706,7 +1710,6 @@ function renderBodyContent(contentData, contentContainer, type, menuData) {
 
   // Function to get the next item from the shuffled list
   function getNextItem() {
-    console.log(shuffled);
     if (shuffled.length === 0) {
       // If all items have been used, reset the used set and reshuffle
       usedItems.clear();
@@ -1739,8 +1742,6 @@ function renderBodyContent(contentData, contentContainer, type, menuData) {
       console.error('Error: Missing elements inside body content template.');
       return;
     }
-
-    console.log(menuItem);
 
     // If menuItem is an object, use its `title` attribute
     const displayText =
@@ -1873,69 +1874,71 @@ function moveTab(menuContainer, type, direction, menuData = []) {
 
 // Ensure bodyContent is passed properly in switchTab:
 function switchTab(clickedTab, menuContainer, type, menuData = []) {
-  console.log('inside switchTab');
   console.log(menuData);
-  const id = clickedTab.closest('li').id.toLowerCase();
 
-  if (id) {
-    const menu = createMenuItems([
-      { section_id: '2', section_prompt: 'LibPAS' },
-      { section_id: '5', section_prompt: 'InformsUs' },
-      { section_id: '1', section_prompt: 'LibSAT' },
-    ]);
+  // Get the ID of the closest <li> element to the clicked tab
+  const id = clickedTab.closest('li')?.id?.toLowerCase();
 
-    switch (id) {
-      case 'libpas':
-        if (type === 'multiple') {
-          renderMenu(menu, menuContainer, type, 'LibPAS');
-        }
-        if (type === 'single') {
-          renderMenu(menuSingle, menuContainer, type, 'LibPAS');
-        }
+  // Ensure the ID exists before proceeding
+  if (!id) {
+    console.error('Error: Unable to determine tab ID.');
+    return;
+  }
 
-        // ✅ Ensure libPasBodyContent is defined and passed correctly
-        if (Array.isArray(libPasBodyContent)) {
-          renderBodyContent(libPasBodyContent, menuContainer, type, menuData);
-          renderExtraContent(libPasExtraContent, menuContainer);
-        } else {
-          console.error(
-            'Error: libPasBodyContent is undefined or not an array.'
-          );
-        }
-        break;
+  // Generate the menu items dynamically using the provided menuData
+  const menu = createMenuItems(menuData);
+  console.log(menu);
 
-      case 'libsat':
-        renderMenu(menu, menuContainer, type, 'LibSAT');
-        if (Array.isArray(libSATBodyContent)) {
-          renderBodyContent(libSATBodyContent, menuContainer, type, menuData);
-          renderExtraContent(libSatExtraContent, menuContainer);
-        } else {
-          console.error(
-            'Error: libSATBodyContent is undefined or not an array.'
-          );
-        }
-        break;
+  // Handle switching based on the selected tab ID
+  switch (id) {
+    case 'libpas':
+      // Render the menu with appropriate type
+      if (type === 'multiple') {
+        renderMenu(menu, menuContainer, type, 'LibPAS');
+      }
+      if (type === 'single') {
+        renderMenu(menuSingle, menuContainer, type, 'LibPAS');
+      }
 
-      case 'informsus':
-        renderMenu(menu, menuContainer, type, 'InformsUs');
-        if (Array.isArray(informsUsBodyContent)) {
-          renderBodyContent(
-            informsUsBodyContent,
-            menuContainer,
-            type,
-            menuData
-          );
-          renderExtraContent(informsUsExtraContent, menuContainer);
-        } else {
-          console.error(
-            'Error: informsUsBodyContent is undefined or not an array.'
-          );
-        }
-        break;
+      // Ensure libPasBodyContent is an array before rendering
+      if (Array.isArray(libPasBodyContent)) {
+        renderBodyContent(libPasBodyContent, menuContainer, type, menuData);
+        renderExtraContent(libPasExtraContent, menuContainer);
+      } else {
+        console.error('Error: libPasBodyContent is undefined or not an array.');
+      }
+      break;
 
-      default:
-        console.log('Something went wrong'); // Debugging
-    }
+    case 'libsat':
+      // Render the menu for LibSAT
+      renderMenu(menu, menuContainer, type, 'LibSAT');
+
+      // Ensure libSATBodyContent is an array before rendering
+      if (Array.isArray(libSATBodyContent)) {
+        renderBodyContent(libSATBodyContent, menuContainer, type, menuData);
+        renderExtraContent(libSatExtraContent, menuContainer);
+      } else {
+        console.error('Error: libSATBodyContent is undefined or not an array.');
+      }
+      break;
+
+    case 'informsus':
+      // Render the menu for InformsUs
+      renderMenu(menu, menuContainer, type, 'InformsUs');
+
+      // Ensure informsUsBodyContent is an array before rendering
+      if (Array.isArray(informsUsBodyContent)) {
+        renderBodyContent(informsUsBodyContent, menuContainer, type, menuData);
+        renderExtraContent(informsUsExtraContent, menuContainer);
+      } else {
+        console.error(
+          'Error: informsUsBodyContent is undefined or not an array.'
+        );
+      }
+      break;
+
+    default:
+      console.log('Something went wrong');
   }
 }
 
@@ -1943,7 +1946,6 @@ function populateMegaMenu(menuData) {
   document
     .querySelectorAll('.grid-container-multiple')
     .forEach((menuContainer) => {
-      //console.log(menu);
       getMegaMenu(menuContainer, 'multiple', menuData);
     });
 }
