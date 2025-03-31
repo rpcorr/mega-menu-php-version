@@ -46,22 +46,7 @@ const menuSingle = [
   },
 ];
 
-const libPasBodyContent = [
-  {
-    graphic: 'reports.gif',
-    width: '42',
-    height: '55',
-  },
-  {
-    graphic: 'reports.gif',
-    width: '42',
-    height: '55',
-  },
-  {
-    graphic: 'reports.gif',
-    width: '42',
-    height: '55',
-  },
+const bodyContentIcons = [
   {
     graphic: 'reports.gif',
     width: '42',
@@ -73,75 +58,9 @@ const libPasBodyContent = [
     height: '55',
   },
   {
-    graphic: 'reports.gif',
-    width: '42',
-    height: '55',
-  },
-];
-
-const libSATBodyContent = [
-  {
-    graphic: 'data-input.gif',
-    width: '42',
-    height: '55',
-  },
-  {
-    graphic: 'reports.gif',
-    width: '42',
-    height: '55',
-  },
-  {
-    graphic: 'reports.gif',
-    width: '42',
-    height: '55',
-  },
-  {
-    graphic: 'reports.gif',
-    width: '42',
-    height: '55',
-  },
-  {
-    graphic: 'data-input.gif',
-    width: '42',
-    height: '55',
-  },
-  {
-    graphic: 'reports.gif',
-    width: '42',
-    height: '55',
-  },
-];
-
-const informsUsBodyContent = [
-  {
-    graphic: 'reports.gif',
-    width: '42',
-    height: '55',
-  },
-  {
-    graphic: 'data-input.gif',
-    width: '42',
-    height: '55',
-  },
-  {
-    graphic: 'reports.gif',
-    width: '42',
-    height: '55',
-  },
-  {
-    graphic: 'data-input.gif',
-    width: '42',
-    height: '55',
-  },
-  {
-    graphic: 'data-input.gif',
-    width: '42',
-    height: '55',
-  },
-  {
-    graphic: 'reports.gif',
-    width: '42',
-    height: '55',
+    graphic: 'documentation.gif',
+    width: '38',
+    height: '50',
   },
 ];
 
@@ -1493,13 +1412,13 @@ function getMegaMenu(menuContainer, type, menuData) {
   }
 
   if (type === 'multiple' || type === 'single') {
-    renderBodyContent(libPasBodyContent, menuContainer, type, menuData);
+    renderBodyContent(menuContainer, type, menuData);
     renderExtraContent(libPasExtraContent, menuContainer);
   }
 
   if (type === 'pages') {
     renderMenu(null, menuContainer, type, '');
-    renderBodyContent(libPasBodyContent, menuContainer, type, menuData);
+    renderBodyContent(menuContainer, type, menuData);
     renderExtraContent(libPasExtraContent, menuContainer);
   }
 
@@ -1642,8 +1561,8 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
   }
 }
 
-function renderBodyContent(contentData, contentContainer, type, menuData) {
-  // Ensure menuData is an array
+function renderBodyContent(contentContainer, type, menuData) {
+  // Ensure menuData is an array and not empty
   if (!Array.isArray(menuData) || menuData.length === 0) {
     console.error('Error: menuData is missing or not an array.');
     return;
@@ -1673,14 +1592,17 @@ function renderBodyContent(contentData, contentContainer, type, menuData) {
     selectedAnchor.setAttribute('aria-selected', 'true');
   }
 
+  // Get the parent <li> of the selected anchor
   const selectedLi = selectedAnchor.closest('li');
   if (!selectedLi) {
     console.error('Error: Selected anchor is not inside a <li> element.');
     return;
   }
 
+  // Extract the selected tab's text and convert it to lowercase
   const selectedText = selectedLi.id.toLowerCase();
 
+  // Find the corresponding page prompts from menuData
   const pagePrompts =
     menuData
       .find(
@@ -1690,47 +1612,16 @@ function renderBodyContent(contentData, contentContainer, type, menuData) {
       )
       ?.pages.map((page) => page.page_prompt) || [];
 
+  // Limit to first six items if there are more than six
+  if (pagePrompts.length > 6) {
+    //pagePrompts = pagePrompts.slice(0, 6);
+  }
+
   // Create a document fragment to improve performance when adding elements to the DOM
   const fragment = document.createDocumentFragment();
 
-  // Track used items to prevent duplicates until all items are used
-  const usedItems = new Set();
-  let shuffled = [];
-
-  // Function to shuffle and filter out already used items
-  function shuffleItems() {
-    if (pagePrompts && Array.isArray(pagePrompts)) {
-      shuffled = pagePrompts
-        .filter((item) => !usedItems.has(item)) // Remove used items from the pool
-        .sort(() => Math.random() - 0.5); // Shuffle remaining items randomly
-    } else {
-      console.error('Error: Invalid bodyContent data.');
-    }
-  }
-
-  // Function to get the next item from the shuffled list
-  function getNextItem() {
-    if (shuffled.length === 0) {
-      // If all items have been used, reset the used set and reshuffle
-      usedItems.clear();
-      shuffleItems();
-    }
-    const nextItem = shuffled.shift(); // Get the next item from the shuffled array
-    usedItems.add(nextItem); // Mark the item as used
-    return nextItem;
-  }
-
-  // Initial shuffle to prepare the list
-  shuffleItems();
-
-  console.log(allMenuItemsinArray);
-  console.log(contentData);
-
-  // Loop through each content item and populate the template
-  contentData.forEach((item) => {
-    // Get a unique next item from the shuffled list
-    const menuItem = getNextItem();
-
+  // Loop through each page prompt and populate the template
+  pagePrompts.forEach((menuItem) => {
     // Clone the content template to create a new instance
     const menuContent = contentTemplate.content.cloneNode(true);
     const img = menuContent.querySelector('img');
@@ -1743,36 +1634,33 @@ function renderBodyContent(contentData, contentContainer, type, menuData) {
       return;
     }
 
-    // If menuItem is an object, use its `title` attribute
-    const displayText =
-      typeof menuItem === 'object' && menuItem.title
-        ? menuItem.title
-        : menuItem;
+    // select a random icon
+    const randomIcon =
+      bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
 
     // Set attributes for the image and text elements
-    img.src = `assets/imgs/${item.graphic}`;
-    img.width = item.width;
-    img.height = item.height;
+    img.src = `assets/imgs/${randomIcon.graphic}`;
+    img.width = randomIcon.width;
+    img.height = randomIcon.height;
 
     // Set text content for the strong and span elements
-    p.querySelector('strong').textContent = displayText;
+    p.querySelector('strong').textContent = menuItem;
     p.querySelector(
       'span'
-    ).textContent = `{Brief description of the function of ${displayText}}`;
+    ).textContent = `{Brief description of the function of ${menuItem}}`;
 
     // Add the populated content to the document fragment
     fragment.appendChild(menuContent);
   });
 
+  // Append content based on the type
   if (type !== 'pages') {
     // Create a wrapper for non-page content
     const tabsPanels = document.createElement('div');
     tabsPanels.classList.add('tabs__panels');
     tabsPanels.appendChild(fragment);
     contentContainer.appendChild(tabsPanels);
-  }
-
-  if (type === 'pages') {
+  } else {
     // Create a wrapper for page content
     const wrapper = document.createElement('div');
     wrapper.classList.add('left-content');
@@ -1874,8 +1762,6 @@ function moveTab(menuContainer, type, direction, menuData = []) {
 
 // Ensure bodyContent is passed properly in switchTab:
 function switchTab(clickedTab, menuContainer, type, menuData = []) {
-  console.log(menuData);
-
   // Get the ID of the closest <li> element to the clicked tab
   const id = clickedTab.closest('li')?.id?.toLowerCase();
 
@@ -1887,7 +1773,6 @@ function switchTab(clickedTab, menuContainer, type, menuData = []) {
 
   // Generate the menu items dynamically using the provided menuData
   const menu = createMenuItems(menuData);
-  console.log(menu);
 
   // Handle switching based on the selected tab ID
   switch (id) {
@@ -1900,12 +1785,14 @@ function switchTab(clickedTab, menuContainer, type, menuData = []) {
         renderMenu(menuSingle, menuContainer, type, 'LibPAS');
       }
 
-      // Ensure libPasBodyContent is an array before rendering
-      if (Array.isArray(libPasBodyContent)) {
-        renderBodyContent(libPasBodyContent, menuContainer, type, menuData);
+      // Ensure libPasExtraContent is an array before rendering
+      if (Array.isArray(libPasExtraContent)) {
+        renderBodyContent(menuContainer, type, menuData);
         renderExtraContent(libPasExtraContent, menuContainer);
       } else {
-        console.error('Error: libPasBodyContent is undefined or not an array.');
+        console.error(
+          'Error: libPasExtraContent is undefined or not an array.'
+        );
       }
       break;
 
@@ -1913,12 +1800,14 @@ function switchTab(clickedTab, menuContainer, type, menuData = []) {
       // Render the menu for LibSAT
       renderMenu(menu, menuContainer, type, 'LibSAT');
 
-      // Ensure libSATBodyContent is an array before rendering
-      if (Array.isArray(libSATBodyContent)) {
-        renderBodyContent(libSATBodyContent, menuContainer, type, menuData);
+      // Ensure libSatExtraContent is an array before rendering
+      if (Array.isArray(libSatExtraContent)) {
+        renderBodyContent(menuContainer, type, menuData);
         renderExtraContent(libSatExtraContent, menuContainer);
       } else {
-        console.error('Error: libSATBodyContent is undefined or not an array.');
+        console.error(
+          'Error: libSatExtraContent is undefined or not an array.'
+        );
       }
       break;
 
@@ -1926,13 +1815,13 @@ function switchTab(clickedTab, menuContainer, type, menuData = []) {
       // Render the menu for InformsUs
       renderMenu(menu, menuContainer, type, 'InformsUs');
 
-      // Ensure informsUsBodyContent is an array before rendering
-      if (Array.isArray(informsUsBodyContent)) {
-        renderBodyContent(informsUsBodyContent, menuContainer, type, menuData);
+      // Ensure informsUsExtraContent is an array before rendering
+      if (Array.isArray(informsUsExtraContent)) {
+        renderBodyContent(menuContainer, type, menuData);
         renderExtraContent(informsUsExtraContent, menuContainer);
       } else {
         console.error(
-          'Error: informsUsBodyContent is undefined or not an array.'
+          'Error: informsUsExtraContent is undefined or not an array.'
         );
       }
       break;
