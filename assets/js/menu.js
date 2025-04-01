@@ -1597,55 +1597,63 @@ function renderBodyContent(contentContainer, type, menuData) {
   // Extract the selected tab's text and convert it to lowercase
   const selectedText = selectedLi.id.toLowerCase();
 
-  // Find the corresponding page prompts from menuData
-  const pagePrompts =
+  // Find the corresponding page prompts and links from menuData
+  const pagePromptsAndLinks =
     menuData
       .find(
         (item) =>
           item.section_prompt &&
           item.section_prompt.toLowerCase() === selectedText
       )
-      ?.pages.map((page) => page.page_prompt) || [];
+      ?.pages.map((page) => ({
+        prompt: page.page_prompt,
+        link: page.page_link,
+      })) || [];
 
   // Limit to first six items if there are more than six
-  if (pagePrompts.length > 6) {
-    //pagePrompts = pagePrompts.slice(0, 6);
+  if (pagePromptsAndLinks.length > 6) {
+    //pagePromptsAndLinks = pagePromptsAndLinks.slice(0, 6);
   }
 
   // Create a document fragment to improve performance when adding elements to the DOM
   const fragment = document.createDocumentFragment();
 
   // Loop through each page prompt and populate the template
-  pagePrompts.forEach((menuItem) => {
-    // Clone the content template to create a new instance
-    const menuContent = contentTemplate.content.cloneNode(true);
-    const img = menuContent.querySelector('img');
-    const p = menuContent.querySelector('p');
-    const span = menuContent.querySelector('span');
+  pagePromptsAndLinks.forEach((menuItem) => {
+    if (menuItem.link.trim() !== '') {
+      // Clone the content template to create a new instance
+      const menuContent = contentTemplate.content.cloneNode(true);
+      const img = menuContent.querySelector('img');
+      const p = menuContent.querySelector('p');
+      const anchor = menuContent.querySelector('a');
+      const span = menuContent.querySelector('span');
 
-    // Validate that the template contains the expected elements
-    if (!img || !p || !span) {
-      console.error('Error: Missing elements inside body content template.');
-      return;
+      // Validate that the template contains the expected elements
+      if (!img || !p || !anchor || !span) {
+        console.error('Error: Missing elements inside body content template.');
+        return;
+      }
+
+      // select a random icon
+      const randomIcon =
+        bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
+
+      // Set attributes for the image and text elements
+      img.src = `assets/imgs/${randomIcon.graphic}`;
+      img.width = randomIcon.width;
+      img.height = randomIcon.height;
+
+      // Set text content for the strong and span elements
+      p.querySelector('strong').textContent = menuItem.prompt;
+      p.querySelector(
+        'span'
+      ).textContent = `{Brief description of the function of ${menuItem.prompt}}`;
+
+      anchor.href = menuItem.link;
+
+      // Add the populated content to the document fragment
+      fragment.appendChild(menuContent);
     }
-
-    // select a random icon
-    const randomIcon =
-      bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
-
-    // Set attributes for the image and text elements
-    img.src = `assets/imgs/${randomIcon.graphic}`;
-    img.width = randomIcon.width;
-    img.height = randomIcon.height;
-
-    // Set text content for the strong and span elements
-    p.querySelector('strong').textContent = menuItem;
-    p.querySelector(
-      'span'
-    ).textContent = `{Brief description of the function of ${menuItem}}`;
-
-    // Add the populated content to the document fragment
-    fragment.appendChild(menuContent);
   });
 
   // Append content based on the type
