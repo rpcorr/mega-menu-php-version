@@ -1618,8 +1618,58 @@ function renderBodyContent(contentContainer, type, menuData) {
   // Create a document fragment to improve performance when adding elements to the DOM
   const fragment = document.createDocumentFragment();
 
+  console.log(pagePromptsAndLinks);
+
   // Loop through each page prompt and populate the template
+  // pagePromptsAndLinks.forEach((menuItem) => {
+  //   if (menuItem.link.trim() !== '') {
+  //     // Clone the content template to create a new instance
+  //     const menuContent = contentTemplate.content.cloneNode(true);
+  //     const img = menuContent.querySelector('img');
+  //     const p = menuContent.querySelector('p');
+  //     const anchor = menuContent.querySelector('a');
+  //     const span = menuContent.querySelector('span');
+
+  //     // Validate that the template contains the expected elements
+  //     if (!img || !p || !anchor || !span) {
+  //       console.error('Error: Missing elements inside body content template.');
+  //       return;
+  //     }
+
+  //     // select a random icon
+  //     const randomIcon =
+  //       bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
+
+  //     // Set attributes for the image and text elements
+  //     img.src = `assets/imgs/${randomIcon.graphic}`;
+  //     img.width = randomIcon.width;
+  //     img.height = randomIcon.height;
+
+  //     // Set text content for the strong and span elements
+  //     p.querySelector('strong').textContent = menuItem.prompt;
+  //     p.querySelector(
+  //       'span'
+  //     ).textContent = `{Brief description of the function of ${menuItem.prompt}}`;
+
+  //     anchor.href = menuItem.link;
+
+  //     // Add the populated content to the document fragment
+  //     fragment.appendChild(menuContent);
+  //   }
+  // });
+
   pagePromptsAndLinks.forEach((menuItem) => {
+    if (
+      menuItem.prompt.toLowerCase().trim() !==
+        selectedText.toLowerCase().trim() &&
+      menuItem.link.trim() === ''
+    ) {
+      // Create an h4 element
+      const heading = document.createElement('h4');
+      heading.textContent = menuItem.prompt;
+      fragment.appendChild(heading);
+    }
+
     if (menuItem.link.trim() !== '') {
       // Clone the content template to create a new instance
       const menuContent = contentTemplate.content.cloneNode(true);
@@ -1634,7 +1684,7 @@ function renderBodyContent(contentContainer, type, menuData) {
         return;
       }
 
-      // select a random icon
+      // Select a random icon
       const randomIcon =
         bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
 
@@ -1647,7 +1697,7 @@ function renderBodyContent(contentContainer, type, menuData) {
       p.querySelector('strong').textContent = menuItem.prompt;
       p.querySelector(
         'span'
-      ).textContent = `{Brief description of the function of ${menuItem.prompt}}`;
+      ).textContent = `Brief description of the function of ${menuItem.prompt}`;
 
       anchor.href = menuItem.link;
 
