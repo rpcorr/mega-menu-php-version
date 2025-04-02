@@ -1394,7 +1394,6 @@ function removeActiveClass() {
 
 function getMegaMenu(menuContainer, type, menuData) {
   if (!menuContainer) return; // Exit if no menu container is found
-  console.log(menuData);
   const menu = createMenuItems(menuData);
 
   // Render the default menu items and content for 'LibPAS' when the menu initializes
@@ -1617,8 +1616,6 @@ function renderBodyContent(contentContainer, type, menuData) {
 
   // Create a document fragment to improve performance when adding elements to the DOM
   const fragment = document.createDocumentFragment();
-
-  console.log(pagePromptsAndLinks);
 
   // Loop through each page prompt and populate the template
 
