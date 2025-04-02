@@ -1731,12 +1731,18 @@ function renderBodyContent(contentContainer, type, menuData) {
     tabsPanels.classList.add('tabs__panels');
     tabsPanels.appendChild(fragment);
     contentContainer.appendChild(tabsPanels);
+
+    // Reorder elements under "Custom Reports" after appending
+    reorderCustomReportsSection(tabsPanels);
   } else {
     // Create a wrapper for page content
     const wrapper = document.createElement('div');
     wrapper.classList.add('left-content');
     wrapper.appendChild(fragment);
     contentContainer.appendChild(wrapper);
+
+    // Reorder elements under "Custom Reports" after appending
+    reorderCustomReportsSection(wrapper);
   }
 
   // Get all h4 elements on the page
@@ -1750,6 +1756,39 @@ function renderBodyContent(contentContainer, type, menuData) {
   // If more than one exists, remove all except the first one
   if (matchingHeadings.length > 1) {
     matchingHeadings.slice(1).forEach((h4) => h4.remove());
+  }
+
+  // Function to reorder the Custom Reports section
+  function reorderCustomReportsSection(container) {
+    // Find the h4 element that specifically contains "Custom Reports"
+    const customReportsHeading = Array.from(
+      container.querySelectorAll('h4')
+    ).find((h4) => h4.textContent.trim().toLowerCase() === 'custom reports');
+
+    // Ensure the Custom Reports heading exists
+    if (customReportsHeading) {
+      // Find all divs that are under the "Custom Reports" section, which should be siblings of the h4
+      const divs = Array.from(
+        customReportsHeading.parentElement.querySelectorAll(
+          'div[style="display: contents;"]'
+        )
+      );
+
+      // Find the div containing "Custom Report"
+      const customReportDiv = divs.find((div) => {
+        const strong = div.querySelector('strong');
+        return strong && strong.textContent.trim() === 'Custom Report';
+      });
+
+      // If we found the "Custom Report" div, move it to the top
+      if (customReportDiv) {
+        // Move the customReportDiv to the top of the section (after the heading)
+        customReportsHeading.parentElement.insertBefore(
+          customReportDiv,
+          customReportsHeading.nextElementSibling
+        );
+      }
+    }
   }
 }
 
