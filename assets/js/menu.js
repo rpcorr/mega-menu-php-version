@@ -1661,7 +1661,14 @@ function renderBodyContent(contentContainer, type, menuData) {
         );
 
       if (!nextIsEmptyLink || nextIsExcludedPrompt) {
-        const heading = document.createElement('h4');
+        // Check if the grouped heading should be `h5` instead of `h4`
+        const heading = document.createElement(
+          groupedHeading.match(
+            /benchmarking reports|postal reports|email reports/i
+          )
+            ? 'h5'
+            : 'h4'
+        );
         heading.textContent = groupedHeading;
         heading.style.gridColumn = '1 / -1'; // Span full grid width
         fragment.appendChild(heading);

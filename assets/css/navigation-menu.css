@@ -720,6 +720,17 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   /* text-transform: uppercase; */
 }
 
+.mega-menu-column-4 .tabs__panels h5 {
+  font-size: 1.4rem; /* Adjust font size */
+  font-weight: bold; /* Make the font bold */
+  color: #007bff; /* Blue color for the heading */
+  margin-top: 20px; /* Add some space before the heading */
+  margin-bottom: 10px; /* Add some space after the heading */
+  text-transform: capitalize; /* Capitalize the first letter of each word */
+  border-bottom: 2px solid #007bff; /* Add a blue border below the heading */
+  padding-bottom: 5px; /* Add some padding below the heading */
+}
+
 .mega-menu-column-4 .tabs__panels div {
   display: flex;
   align-items: center;
