@@ -1630,9 +1630,12 @@ function renderBodyContent(contentContainer, type, menuData) {
     const isEmptyLink = menuItem.link.toLowerCase().trim() === ''; // Check if menuItem has no link
     const isDifferentPrompt =
       menuItem.prompt.toLowerCase().trim() !== selectedText; // Ensure it's not the selected tab
+    const isExcludedPrompt = ['maphat trends', 'maphat rankings'].includes(
+      menuItem.prompt.toLowerCase().trim()
+    ); // Exclude specific prompts
 
     // Group consecutive prompts with empty links under a single <h4>
-    if (isDifferentPrompt && isEmptyLink) {
+    if (isDifferentPrompt && isEmptyLink && !isExcludedPrompt) {
       if (!isGrouping) {
         // Start a new group
         groupedHeading = menuItem.prompt;
@@ -1646,9 +1649,14 @@ function renderBodyContent(contentContainer, type, menuData) {
       const nextItem = pagePromptsAndLinks[index + 1];
       const nextIsEmptyLink =
         nextItem && nextItem.link.toLowerCase().trim() === '';
+      const nextIsExcludedPrompt =
+        nextItem &&
+        ['maphat trends', 'maphat rankings'].includes(
+          nextItem.prompt.toLowerCase().trim()
+        );
 
-      // If the next item has a valid link or doesn't exist, finalize the grouped heading
-      if (!nextIsEmptyLink) {
+      // If the next item has a valid link, doesn't exist, or is excluded, finalize the grouped heading
+      if (!nextIsEmptyLink || nextIsExcludedPrompt) {
         const heading = document.createElement('h4');
         heading.textContent = groupedHeading;
         heading.style.gridColumn = '1 / -1'; // Span full grid width
@@ -1657,8 +1665,8 @@ function renderBodyContent(contentContainer, type, menuData) {
       }
     }
 
-    // Handle menu items with valid links
-    if (menuItem.link.trim() !== '') {
+    // Handle menu items with valid links or excluded prompts
+    if (menuItem.link.trim() !== '' || isExcludedPrompt) {
       // Clone the content template for this menu item
       const menuContent = contentTemplate.content.cloneNode(true);
       const img = menuContent.querySelector('img');
