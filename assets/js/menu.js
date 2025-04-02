@@ -1623,25 +1623,33 @@ function renderBodyContent(contentContainer, type, menuData) {
   // Loop through each page prompt and populate the template
 
   // Variables to track grouped headers
-  let groupedHeading = ''; // Stores concatenated prompts for headers
+  let groupedHeading = ''; // Stores concatenated prompts for grouped headings
   let isGrouping = false; // Tracks whether we are currently grouping prompts
+  let customReportsAdded = false; // Ensures "Custom Reports" is only added once
+  let surveyReportsStored = null; // Temporarily store "Survey Reports" content
 
   pagePromptsAndLinks.forEach((menuItem, index) => {
+    const promptText = menuItem.prompt.toLowerCase().trim();
     const isEmptyLink = menuItem.link.toLowerCase().trim() === ''; // Check if menuItem has no link
-    const isDifferentPrompt =
-      menuItem.prompt.toLowerCase().trim() !== selectedText; // Ensure it's not the selected tab
+    const isDifferentPrompt = promptText !== selectedText; // Ensure it's not the selected tab
     const isExcludedPrompt = ['maphat trends', 'maphat rankings'].includes(
-      menuItem.prompt.toLowerCase().trim()
+      promptText
     ); // Exclude specific prompts
+    const isSurveyReports = promptText === 'survey reports'; // Identify "Survey Reports"
+    const isCustomReports = promptText === 'custom reports'; // Identify "Custom Reports"
 
-    // Group consecutive prompts with empty links under a single <h4>
+    // Store "Survey Reports" to be placed under "Custom Reports" later
+    if (isSurveyReports) {
+      surveyReportsStored = menuItem;
+      return; // Skip adding it immediately
+    }
+
+    // Group consecutive unlinked prompts under a single <h4> (except Survey Reports)
     if (isDifferentPrompt && isEmptyLink && !isExcludedPrompt) {
       if (!isGrouping) {
-        // Start a new group
         groupedHeading = menuItem.prompt;
         isGrouping = true;
       } else {
-        // Add to existing group, separating prompts with a comma
         groupedHeading += `, ${menuItem.prompt}`;
       }
 
@@ -1655,57 +1663,69 @@ function renderBodyContent(contentContainer, type, menuData) {
           nextItem.prompt.toLowerCase().trim()
         );
 
-      // If the next item has a valid link, doesn't exist, or is excluded, finalize the grouped heading
       if (!nextIsEmptyLink || nextIsExcludedPrompt) {
         const heading = document.createElement('h4');
         heading.textContent = groupedHeading;
         heading.style.gridColumn = '1 / -1'; // Span full grid width
         fragment.appendChild(heading);
-        isGrouping = false; // Reset grouping state
+        isGrouping = false;
+      }
+    }
+
+    // Handle "Custom Reports" (add "Survey Reports" under it)
+    if (isCustomReports && !customReportsAdded) {
+      const customReportsHeading = document.createElement('h4');
+      customReportsHeading.textContent = 'Custom Reports';
+      customReportsHeading.style.gridColumn = '1 / -1';
+      fragment.appendChild(customReportsHeading);
+      customReportsAdded = true;
+
+      // If "Survey Reports" was stored, add it now under "Custom Reports"
+      if (surveyReportsStored) {
+        createMenuContent(surveyReportsStored);
+        surveyReportsStored = null; // Clear stored value
       }
     }
 
     // Handle menu items with valid links or excluded prompts
     if (menuItem.link.trim() !== '' || isExcludedPrompt) {
-      // Clone the content template for this menu item
-      const menuContent = contentTemplate.content.cloneNode(true);
-      const img = menuContent.querySelector('img');
-      const p = menuContent.querySelector('p');
-      const anchor = menuContent.querySelector('a');
-      const span = menuContent.querySelector('span');
-
-      // Ensure all expected elements exist in the template
-      if (!img || !p || !anchor || !span) {
-        console.error('Error: Missing elements inside body content template.');
-        return;
-      }
-
-      // Select a random icon from the available list
-      const randomIcon =
-        bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
-
-      // Set image source, width, and height
-      img.src = `assets/imgs/${randomIcon.graphic}`;
-      img.width = randomIcon.width;
-      img.height = randomIcon.height;
-
-      // Populate the template with menu item data
-      p.querySelector('strong').textContent = menuItem.prompt;
-      p.querySelector(
-        'span'
-      ).textContent = `Brief description of the function of ${menuItem.prompt}`;
-
-      anchor.href = menuItem.link; // Set link URL
-
-      // Wrap content in a div to ensure correct grid behavior
-      const wrapperDiv = document.createElement('div');
-      wrapperDiv.appendChild(menuContent);
-      wrapperDiv.style.display = 'contents'; // Allows it to follow grid layout without extra div styling
-
-      // Append the structured content to the document fragment
-      fragment.appendChild(wrapperDiv);
+      createMenuContent(menuItem);
     }
   });
+
+  // Function to create and append menu content
+  function createMenuContent(menuItem) {
+    const menuContent = contentTemplate.content.cloneNode(true);
+    const img = menuContent.querySelector('img');
+    const p = menuContent.querySelector('p');
+    const anchor = menuContent.querySelector('a');
+    const span = menuContent.querySelector('span');
+
+    if (!img || !p || !anchor || !span) {
+      console.error('Error: Missing elements inside body content template.');
+      return;
+    }
+
+    // Select a random icon
+    const randomIcon =
+      bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
+
+    // Set image and text values
+    img.src = `assets/imgs/${randomIcon.graphic}`;
+    img.width = randomIcon.width;
+    img.height = randomIcon.height;
+    p.querySelector('strong').textContent = menuItem.prompt;
+    p.querySelector(
+      'span'
+    ).textContent = `Brief description of the function of ${menuItem.prompt}`;
+    anchor.href = menuItem.link;
+
+    // Append structured content to fragment
+    const wrapperDiv = document.createElement('div');
+    wrapperDiv.appendChild(menuContent);
+    wrapperDiv.style.display = 'contents';
+    fragment.appendChild(wrapperDiv);
+  }
 
   // Append content based on the type
   if (type !== 'pages') {
