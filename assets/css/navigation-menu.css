@@ -709,6 +709,17 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   padding: 1em 0;
 }
 
+.mega-menu-column-4 .tabs__panels h4 {
+  grid-column: 1 / -1; /* Makes it span all columns */
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 0.5em 2rem;
+  margin: 0;
+  background-color: #333; /* Darker background */
+  color: #fff; /* White text for contrast */
+  /* text-transform: uppercase; */
+}
+
 .mega-menu-column-4 .tabs__panels div {
   display: flex;
   align-items: center;

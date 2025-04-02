@@ -1660,13 +1660,13 @@ function renderBodyContent(contentContainer, type, menuData) {
 
   pagePromptsAndLinks.forEach((menuItem) => {
     if (
-      menuItem.prompt.toLowerCase().trim() !==
-        selectedText.toLowerCase().trim() &&
-      menuItem.link.trim() === ''
+      menuItem.prompt.toLowerCase().trim() !== selectedText &&
+      menuItem.link.toLowerCase().trim() === ''
     ) {
       // Create an h4 element
       const heading = document.createElement('h4');
       heading.textContent = menuItem.prompt;
+      heading.style.gridColumn = '1 / -1'; // Span across all columns
       fragment.appendChild(heading);
     }
 
@@ -1701,8 +1701,13 @@ function renderBodyContent(contentContainer, type, menuData) {
 
       anchor.href = menuItem.link;
 
+      // Add grid properties for correct placement
+      const wrapperDiv = document.createElement('div');
+      wrapperDiv.appendChild(menuContent);
+      wrapperDiv.style.display = 'contents'; // Keeps div structure but follows grid layout
+
       // Add the populated content to the document fragment
-      fragment.appendChild(menuContent);
+      fragment.appendChild(wrapperDiv);
     }
   });
 
