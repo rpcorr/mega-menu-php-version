@@ -1621,92 +1621,80 @@ function renderBodyContent(contentContainer, type, menuData) {
   console.log(pagePromptsAndLinks);
 
   // Loop through each page prompt and populate the template
-  // pagePromptsAndLinks.forEach((menuItem) => {
-  //   if (menuItem.link.trim() !== '') {
-  //     // Clone the content template to create a new instance
-  //     const menuContent = contentTemplate.content.cloneNode(true);
-  //     const img = menuContent.querySelector('img');
-  //     const p = menuContent.querySelector('p');
-  //     const anchor = menuContent.querySelector('a');
-  //     const span = menuContent.querySelector('span');
 
-  //     // Validate that the template contains the expected elements
-  //     if (!img || !p || !anchor || !span) {
-  //       console.error('Error: Missing elements inside body content template.');
-  //       return;
-  //     }
+  // Variables to track grouped headers
+  let groupedHeading = ''; // Stores concatenated prompts for headers
+  let isGrouping = false; // Tracks whether we are currently grouping prompts
 
-  //     // select a random icon
-  //     const randomIcon =
-  //       bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
+  pagePromptsAndLinks.forEach((menuItem, index) => {
+    const isEmptyLink = menuItem.link.toLowerCase().trim() === ''; // Check if menuItem has no link
+    const isDifferentPrompt =
+      menuItem.prompt.toLowerCase().trim() !== selectedText; // Ensure it's not the selected tab
 
-  //     // Set attributes for the image and text elements
-  //     img.src = `assets/imgs/${randomIcon.graphic}`;
-  //     img.width = randomIcon.width;
-  //     img.height = randomIcon.height;
+    // Group consecutive prompts with empty links under a single <h4>
+    if (isDifferentPrompt && isEmptyLink) {
+      if (!isGrouping) {
+        // Start a new group
+        groupedHeading = menuItem.prompt;
+        isGrouping = true;
+      } else {
+        // Add to existing group, separating prompts with a comma
+        groupedHeading += `, ${menuItem.prompt}`;
+      }
 
-  //     // Set text content for the strong and span elements
-  //     p.querySelector('strong').textContent = menuItem.prompt;
-  //     p.querySelector(
-  //       'span'
-  //     ).textContent = `{Brief description of the function of ${menuItem.prompt}}`;
+      // Check the next item in the array
+      const nextItem = pagePromptsAndLinks[index + 1];
+      const nextIsEmptyLink =
+        nextItem && nextItem.link.toLowerCase().trim() === '';
 
-  //     anchor.href = menuItem.link;
-
-  //     // Add the populated content to the document fragment
-  //     fragment.appendChild(menuContent);
-  //   }
-  // });
-
-  pagePromptsAndLinks.forEach((menuItem) => {
-    if (
-      menuItem.prompt.toLowerCase().trim() !== selectedText &&
-      menuItem.link.toLowerCase().trim() === ''
-    ) {
-      // Create an h4 element
-      const heading = document.createElement('h4');
-      heading.textContent = menuItem.prompt;
-      heading.style.gridColumn = '1 / -1'; // Span across all columns
-      fragment.appendChild(heading);
+      // If the next item has a valid link or doesn't exist, finalize the grouped heading
+      if (!nextIsEmptyLink) {
+        const heading = document.createElement('h4');
+        heading.textContent = groupedHeading;
+        heading.style.gridColumn = '1 / -1'; // Span full grid width
+        fragment.appendChild(heading);
+        isGrouping = false; // Reset grouping state
+      }
     }
 
+    // Handle menu items with valid links
     if (menuItem.link.trim() !== '') {
-      // Clone the content template to create a new instance
+      // Clone the content template for this menu item
       const menuContent = contentTemplate.content.cloneNode(true);
       const img = menuContent.querySelector('img');
       const p = menuContent.querySelector('p');
       const anchor = menuContent.querySelector('a');
       const span = menuContent.querySelector('span');
 
-      // Validate that the template contains the expected elements
+      // Ensure all expected elements exist in the template
       if (!img || !p || !anchor || !span) {
         console.error('Error: Missing elements inside body content template.');
         return;
       }
 
-      // Select a random icon
+      // Select a random icon from the available list
       const randomIcon =
         bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
 
-      // Set attributes for the image and text elements
+      // Set image source, width, and height
       img.src = `assets/imgs/${randomIcon.graphic}`;
       img.width = randomIcon.width;
       img.height = randomIcon.height;
 
-      // Set text content for the strong and span elements
+      // Populate the template with menu item data
       p.querySelector('strong').textContent = menuItem.prompt;
       p.querySelector(
         'span'
       ).textContent = `Brief description of the function of ${menuItem.prompt}`;
 
-      anchor.href = menuItem.link;
+      anchor.href = menuItem.link; // Set link URL
 
-      // Add grid properties for correct placement
+      // Wrap content in a div to ensure correct grid behavior
       const wrapperDiv = document.createElement('div');
       wrapperDiv.appendChild(menuContent);
-      wrapperDiv.style.display = 'contents'; // Keeps div structure but follows grid layout
+      wrapperDiv.style.display = 'contents'; // Allows it to follow grid layout without extra div styling
 
-      // Add the populated content to the document fragment
+      // Append the structured content to the document fragment
       fragment.appendChild(wrapperDiv);
     }
   });
