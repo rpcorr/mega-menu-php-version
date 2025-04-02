@@ -1741,6 +1741,19 @@ function renderBodyContent(contentContainer, type, menuData) {
     wrapper.appendChild(fragment);
     contentContainer.appendChild(wrapper);
   }
+
+  // Get all h4 elements on the page
+  const h4Elements = document.querySelectorAll('h4');
+
+  // Filter elements that match the text "Custom Reports" (case insensitive)
+  const matchingHeadings = Array.from(h4Elements).filter(
+    (h4) => h4.textContent.trim().toLowerCase() === 'custom reports'
+  );
+
+  // If more than one exists, remove all except the first one
+  if (matchingHeadings.length > 1) {
+    matchingHeadings.slice(1).forEach((h4) => h4.remove());
+  }
 }
 
 function renderExtraContent(contentData, menuContainer) {
