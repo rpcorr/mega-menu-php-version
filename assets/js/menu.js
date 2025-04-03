@@ -1671,6 +1671,10 @@ function renderBodyContent(contentContainer, type, menuData) {
         );
         heading.textContent = groupedHeading;
         heading.style.gridColumn = '1 / -1'; // Span full grid width
+
+        // Add tabindex="0" to make the heading focusable
+        heading.setAttribute('tabindex', '0');
+
         fragment.appendChild(heading);
         isGrouping = false;
       }
@@ -1697,37 +1701,48 @@ function renderBodyContent(contentContainer, type, menuData) {
     }
   });
 
-  // Function to create and append menu content
+  // Function to create and append menu content dynamically
   function createMenuContent(menuItem) {
+    // Clone the template content to create a new menu item instance
     const menuContent = contentTemplate.content.cloneNode(true);
+
+    // Select key elements within the cloned template
     const img = menuContent.querySelector('img');
     const p = menuContent.querySelector('p');
     const anchor = menuContent.querySelector('a');
     const span = menuContent.querySelector('span');
 
+    // Ensure all required elements exist; log an error and exit if any are missing
     if (!img || !p || !anchor || !span) {
       console.error('Error: Missing elements inside body content template.');
       return;
     }
 
-    // Select a random icon
+    // Select a random icon from the available body content icons
     const randomIcon =
       bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
 
-    // Set image and text values
+    // Set image attributes: source, dimensions, and an empty alt for decorative images
     img.src = `assets/imgs/${randomIcon.graphic}`;
     img.width = randomIcon.width;
     img.height = randomIcon.height;
+    img.alt = ''; // Ensures the image is ignored by screen readers if it's purely decorative
+
+    // Populate text content for the menu item
     p.querySelector('strong').textContent = menuItem.prompt;
     p.querySelector(
       'span'
     ).textContent = `Brief description of the function of ${menuItem.prompt}`;
+
+    // Set the anchor link to the provided menu item link
     anchor.href = menuItem.link;
 
-    // Append structured content to fragment
+    // Wrap the menu content in a container div and set display to 'contents'
     const wrapperDiv = document.createElement('div');
     wrapperDiv.appendChild(menuContent);
-    wrapperDiv.style.display = 'contents';
+    wrapperDiv.style.display = 'contents'; // Ensures the wrapper doesn't affect layout
+
+    // Append the structured menu item to the main fragment
     fragment.appendChild(wrapperDiv);
   }
 
