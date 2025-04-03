@@ -1736,6 +1736,11 @@ function renderBodyContent(contentContainer, type, menuData) {
     // Create a wrapper for non-page content
     const tabsPanels = document.createElement('div');
     tabsPanels.classList.add('tabs__panels');
+
+    // Add accessibility attributes
+    tabsPanels.setAttribute('role', 'list');
+    tabsPanels.setAttribute('aria-label', 'Menu Options');
+
     tabsPanels.appendChild(fragment);
     contentContainer.appendChild(tabsPanels);
 

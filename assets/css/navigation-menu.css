@@ -731,7 +731,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   padding-bottom: 5px; /* Add some padding below the heading */
 }
 
-.mega-menu-column-4 .tabs__panels div {
+.mega-menu-column-4 .tabs__panels [role='listitem'] {
   display: flex;
   align-items: center;
   padding-left: 2rem;

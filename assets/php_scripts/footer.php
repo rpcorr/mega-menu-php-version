@@ -32,8 +32,8 @@
     </template> 
 
     <template id="menuContent">
-      <div>
-        <img src="" width="" height="" />
+      <div role="listitem">
+        <img src="" width="" alt="" height=""  />
         <p><a href="#"><strong></strong><br/><span></span></a></p>
       </div>
     </template>
