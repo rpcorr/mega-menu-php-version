@@ -25,10 +25,6 @@
   margin: 0.625rem;
   border-radius: 0.313rem;
   box-shadow: 0 0 0.313rem rgba(0, 0, 0, 0.3);
-  -webkit-border-radius: 0.313rem;
-  -moz-border-radius: 0.313rem;
-  -ms-border-radius: 0.313rem;
-  -o-border-radius: 0.313rem;
 }
 
 input {

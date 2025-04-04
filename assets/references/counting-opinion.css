@@ -104,11 +104,7 @@ p#copyright {
 }
 .row-offcanvas {
   position: relative;
-  -webkit-transition: all 0.15s ease-out;
-  -o-transition: all 0.15s ease-out;
   transition: all 0.15s ease-out;
-  -moz-transition: all 0.15s ease-out;
-  -ms-transition: all 0.15s ease-out;
 }
 .row-offcanvas-left {
   left: 0;
@@ -125,11 +121,7 @@ p#copyright {
 .sidebar-offcanvas {
   top: 0;
   width: 212px;
-  -webkit-transition: all 0.15s ease-out;
-  -o-transition: all 0.15s ease-out;
   transition: all 0.15s ease-out;
-  -moz-transition: all 0.15s ease-out;
-  -ms-transition: all 0.15s ease-out;
 }
 #sidebar {
   z-index: 1000;
@@ -212,10 +204,6 @@ p#copyright {
   position: absolute;
   left: 50%;
   z-index: -1;
-  -webkit-border-radius: 110px 110px 0px 0px;
-  -moz-border-radius: 110px 110px 0px 0px;
-  -ms-border-radius: 110px 110px 0px 0px;
-  -o-border-radius: 110px 110px 0px 0px;
 }
 .navbar-header .contact-shortcut {
   background-color: #1fb7f1;
@@ -258,10 +246,6 @@ p#copyright {
   width: 16.66%;
   text-align: center;
   transition: all 0.15s;
-  -webkit-transition: all 0.15s;
-  -moz-transition: all 0.15s;
-  -ms-transition: all 0.15s;
-  -o-transition: all 0.15s;
 }
 /* Tab anchor */
 .r-tabs .r-tabs-nav .r-tabs-anchor {
@@ -274,10 +258,6 @@ p#copyright {
 }
 .r-tabs-accordion-title a {
   transition: all 0.15s;
-  -webkit-transition: all 0.15s;
-  -moz-transition: all 0.15s;
-  -ms-transition: all 0.15s;
-  -o-transition: all 0.15s;
 }
 .r-tabs .r-tabs-nav .r-tabs-tab:hover,
 #navbar .r-tabs-accordion-title:hover a {
@@ -419,10 +399,6 @@ p#copyright {
   width: 10px;
   background: lightgrey;
   height: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
 }
 .rslides_tabs li.rslides_here {
   background: grey;
