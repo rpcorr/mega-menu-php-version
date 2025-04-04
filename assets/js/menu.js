@@ -59,7 +59,7 @@ const bodyContentIcons = [
   },
 ];
 
-const libPasExtraContent = [
+const extraContent = [
   {
     graphic: 'light-bulb.gif',
     width: '32',
@@ -67,67 +67,7 @@ const libPasExtraContent = [
     heading: 'Did you know that you can do this if you do that?',
     extraBodyContent: [
       {
-        bodyText: 'LibPAS Extra Content',
-        htmlElement: 'p',
-      },
-      {
-        bodyText:
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        htmlElement: 'p',
-      },
-      {
-        listItems: [
-          {
-            li: 'Ut enim ad minim veniam, quis nostrud exercitation',
-          },
-          {
-            li: 'Ullamco laboris nisi ut aliquip ex ea commodo consequat',
-          },
-        ],
-      },
-    ],
-  },
-];
-
-const informsUsExtraContent = [
-  {
-    graphic: 'light-bulb.gif',
-    width: '32',
-    height: '37',
-    heading: 'Did you know that you can do this if you do that?',
-    extraBodyContent: [
-      {
-        bodyText: 'InformsUs Extra Content',
-        htmlElement: 'p',
-      },
-      {
-        bodyText:
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        htmlElement: 'p',
-      },
-      {
-        listItems: [
-          {
-            li: 'Ut enim ad minim veniam, quis nostrud exercitation',
-          },
-          {
-            li: 'Ullamco laboris nisi ut aliquip ex ea commodo consequat',
-          },
-        ],
-      },
-    ],
-  },
-];
-
-const libSatExtraContent = [
-  {
-    graphic: 'light-bulb.gif',
-    width: '32',
-    height: '37',
-    heading: 'Did you know that you can do this if you do that?',
-    extraBodyContent: [
-      {
-        bodyText: 'LibSAT Extra Content',
+        bodyText: 'Extra Content',
         htmlElement: 'p',
       },
       {
@@ -1407,13 +1347,13 @@ function getMegaMenu(menuContainer, type, menuData) {
 
   if (type === 'multiple' || type === 'single') {
     renderBodyContent(menuContainer, type, menuData);
-    renderExtraContent(libPasExtraContent, menuContainer);
+    renderExtraContent(extraContent, menuContainer);
   }
 
   if (type === 'pages') {
     renderMenu(null, menuContainer, type, '');
     renderBodyContent(menuContainer, type, menuData);
-    renderExtraContent(libPasExtraContent, menuContainer);
+    renderExtraContent(extraContent, menuContainer);
   }
 
   setTabsContainer();
@@ -1870,6 +1810,28 @@ function renderExtraContent(contentData, menuContainer) {
   });
 
   menuContainer.appendChild(fragment);
+
+  // Find the <a> element with aria-selected="true"
+  const selectedAnchor = document.querySelector('a[aria-selected="true"]');
+
+  // Find the closest parent <li> of the selected <a>
+  const parentLi = selectedAnchor.closest('li');
+
+  // Get the ID of that <li>, or null if not found
+  const liId = parentLi ? parentLi.id : null;
+
+  if (liId) {
+    // Get the <div> that contains the body content
+    const bodyContentDiv = document.getElementById('bodyContent');
+
+    // Find the first <p> tag inside that div
+    const firstParagraph = bodyContentDiv.querySelector('p');
+
+    if (firstParagraph) {
+      // Prepend the liId followed by a dash to the existing paragraph text
+      firstParagraph.innerHTML = liId + ' - ' + firstParagraph.innerHTML;
+    }
+  }
 }
 
 ///////  Navigation through tabs /////////////////
@@ -1934,50 +1896,28 @@ function switchTab(clickedTab, menuContainer, type, menuData = []) {
       if (type === 'single') {
         renderMenu(menuSingle, menuContainer, type, 'LibPAS');
       }
-
-      // Ensure libPasExtraContent is an array before rendering
-      if (Array.isArray(libPasExtraContent)) {
-        renderBodyContent(menuContainer, type, menuData);
-        renderExtraContent(libPasExtraContent, menuContainer);
-      } else {
-        console.error(
-          'Error: libPasExtraContent is undefined or not an array.'
-        );
-      }
       break;
 
     case 'libsat':
       // Render the menu for LibSAT
       renderMenu(menu, menuContainer, type, 'LibSAT');
-
-      // Ensure libSatExtraContent is an array before rendering
-      if (Array.isArray(libSatExtraContent)) {
-        renderBodyContent(menuContainer, type, menuData);
-        renderExtraContent(libSatExtraContent, menuContainer);
-      } else {
-        console.error(
-          'Error: libSatExtraContent is undefined or not an array.'
-        );
-      }
       break;
 
     case 'informsus':
       // Render the menu for InformsUs
       renderMenu(menu, menuContainer, type, 'InformsUs');
-
-      // Ensure informsUsExtraContent is an array before rendering
-      if (Array.isArray(informsUsExtraContent)) {
-        renderBodyContent(menuContainer, type, menuData);
-        renderExtraContent(informsUsExtraContent, menuContainer);
-      } else {
-        console.error(
-          'Error: informsUsExtraContent is undefined or not an array.'
-        );
-      }
       break;
 
     default:
       console.log('Something went wrong');
+  }
+
+  // Ensure libSatExtraContent is an array before rendering
+  if (Array.isArray(extraContent)) {
+    renderBodyContent(menuContainer, type, menuData);
+    renderExtraContent(extraContent, menuContainer);
+  } else {
+    console.error('Error: extraContent is undefined or not an array.');
   }
 }
 
