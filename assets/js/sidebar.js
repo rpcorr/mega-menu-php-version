@@ -160,8 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   sidebar.setAttribute('aria-hidden', 'true');
   button.setAttribute('aria-label', 'Open sidebar');
-
-  links.forEach((link) => link.setAttribute('tabindex', '-1'));
 });
 
 // Event listeners
@@ -259,6 +257,7 @@ function createSidebarSection(menuSection, extraContent) {
       a.textContent = item.name;
       a.href = item.url;
       a.setAttribute('aria-label', `Learn more about ${item.name}`);
+      a.setAttribute('tabindex', '-1');
       li.appendChild(a);
       ul.appendChild(li);
     });
