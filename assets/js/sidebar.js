@@ -258,7 +258,6 @@ function createSidebarSection(menuSection, extraContent) {
       const a = document.createElement('a');
       a.textContent = item.name;
       a.href = item.url;
-      a.style.textDecoration = 'underline';
       a.setAttribute('aria-label', `Learn more about ${item.name}`);
       li.appendChild(a);
       ul.appendChild(li);
