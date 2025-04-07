@@ -1,5 +1,5 @@
 <button class="toggle-btn" aria-controls="sidebar" aria-expanded="false" aria-label="Open sidebar">
-    <div class="hamburger">
+    <div class="hamburger" aria-hidden="true">
         <div></div>
         <div></div>
         <div></div>
@@ -7,7 +7,7 @@
 </button>
 
 <div id="sidebar" class="sidebar-container">
-<nav class="sidebar" role="navigation" aria-label="Main menu" aria-hidden="true">
+<nav class="sidebar" role="navigation" aria-label="Sidebar" aria-hidden="true">
 
         <h2>Default Menu Items</h2>
         <ul>
