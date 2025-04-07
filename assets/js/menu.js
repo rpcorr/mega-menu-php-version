@@ -534,9 +534,14 @@ document.addEventListener('DOMContentLoaded', () => {
           // open current menu when enter key is pressed
           if (e.keyCode === 13) {
             // open menu - determine the type of menu
-            const bContainsSubMenuDiv =
-              this.nextElementSibling.classList.contains('sub-menu-div');
-            openMenu(bContainsSubMenuDiv, null);
+            const nextSibling = this.nextElementSibling;
+
+            // Check if nextSibling exists and has the class 'sub-menu-div'
+            if (nextSibling && nextSibling.classList.contains('sub-menu-div')) {
+              openMenu(true, null); // Modify this if you need to pass a different argument
+            } else {
+              openMenu(false, null);
+            }
           }
         });
       }
