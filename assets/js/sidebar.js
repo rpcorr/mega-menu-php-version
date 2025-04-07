@@ -1,6 +1,6 @@
 'use strict';
 
-// sideMenu Data
+// Side menu data
 const sideMenuData = {
   services: {
     title: 'Services',
@@ -66,88 +66,107 @@ const tabData = {
   },
 };
 
+// Focus trap helper
+let trapFocusHandler = null;
+
+function trapFocus(container) {
+  const focusableEls = container.querySelectorAll(
+    'a, button, input, [tabindex]:not([tabindex="-1"])'
+  );
+  const firstEl = focusableEls[0];
+  const lastEl = focusableEls[focusableEls.length - 1];
+
+  const handleTab = (e) => {
+    if (e.key === 'Tab') {
+      if (e.shiftKey) {
+        if (document.activeElement === firstEl) {
+          e.preventDefault();
+          lastEl.focus();
+        }
+      } else {
+        if (document.activeElement === lastEl) {
+          e.preventDefault();
+          firstEl.focus();
+        }
+      }
+    }
+  };
+
+  removeFocusTrap(); // Clean up old trap before adding a new one
+  trapFocusHandler = handleTab;
+  document.addEventListener('keydown', trapFocusHandler);
+}
+
+function removeFocusTrap() {
+  if (trapFocusHandler) {
+    document.removeEventListener('keydown', trapFocusHandler);
+    trapFocusHandler = null;
+  }
+}
+
 // Function to toggle sidebar visibility
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   const button = document.querySelector('.toggle-btn');
-  const links = sidebar.querySelectorAll('a');
+  const links = sidebar.querySelectorAll(
+    'a, button, input, [tabindex]:not([tabindex="-1"])'
+  );
   const hamburger = button.querySelector('.hamburger');
 
-  // Check if the sidebar is open based on the presence of the 'open' class
   const isOpen = button.classList.contains('open');
 
-  // Toggle the 'open' class on button and sidebar
-  button.classList.toggle('open');
-  sidebar.classList.toggle('open');
-  hamburger.classList.toggle('active');
-
-  // Accessibility adjustments
+  // Update sidebar visibility
+  sidebar.classList.toggle('open', !isOpen);
+  button.setAttribute('aria-expanded', !isOpen);
   sidebar.setAttribute('aria-hidden', isOpen ? 'true' : 'false');
-  button.setAttribute('aria-expanded', String(!isOpen));
+  button.setAttribute('aria-label', isOpen ? 'Open sidebar' : 'Close sidebar');
 
-  // Update aria-label based on sidebar state
-  button.setAttribute(
-    'aria-label',
-    isOpen ? 'Click to open sidebar' : 'Click to close sidebar'
-  );
+  // Update focusable links
+  links.forEach((el) => el.setAttribute('tabindex', isOpen ? '-1' : '0'));
 
-  // Toggle focusability of links
-  links.forEach((link) => {
-    if (isOpen) {
-      link.setAttribute('tabindex', '-1');
-    } else {
-      link.removeAttribute('tabindex');
-    }
-  });
+  if (!isOpen) {
+    links[0]?.focus();
+    trapFocus(sidebar);
+  } else {
+    removeFocusTrap();
+  }
+
+  // Toggle button state and hamburger animation
+  button.classList.toggle('open', !isOpen);
+  hamburger.classList.toggle('active', !isOpen);
+}
+
+// Close sidebar on Escape key press
+function handleEscapeKey(e) {
+  const sidebar = document.getElementById('sidebar');
+  const button = document.querySelector('.toggle-btn');
+
+  if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+    toggleSidebar();
+    button.focus(); // Return focus to toggle button
+  }
 }
 
 // Initialize state based on aria-expanded value
 document.addEventListener('DOMContentLoaded', () => {
   const button = document.querySelector('.toggle-btn');
   const sidebar = document.getElementById('sidebar');
-  const isOpen = button.getAttribute('aria-expanded') === 'true';
-
-  if (isOpen) {
-    button.classList.add('open');
-    sidebar.classList.add('open');
-  }
-});
-
-// Initialize state based on aria-expanded value
-// Ensure links are not reachable initially
-document.addEventListener('DOMContentLoaded', () => {
-  const sidebar = document.getElementById('sidebar');
-  const button = document.querySelector('.toggle-btn');
-  const isOpen = button.getAttribute('aria-expanded') === 'true';
   const links = sidebar.querySelectorAll('a');
 
-  if (isOpen) {
-    button.classList.add('open');
-    sidebar.classList.add('open');
-  }
+  const isOpen = button.getAttribute('aria-expanded') === 'true';
 
-  // Initially hide sidebar from screen readers
+  button.classList.toggle('open', isOpen);
+  sidebar.classList.toggle('open', isOpen);
+
   sidebar.setAttribute('aria-hidden', 'true');
+  button.setAttribute('aria-label', 'Open sidebar');
 
-  // Set all links to not be keyboard focusable initially
   links.forEach((link) => link.setAttribute('tabindex', '-1'));
-
-  // Set the initial aria-label on the button
-  button.setAttribute('aria-label', 'Click to open sidebar');
 });
 
-// Close the sidebar when focus moves out of it
-document
-  .getElementById('sidebar')
-  .addEventListener('focusout', function (event) {
-    const sidebar = document.getElementById('sidebar');
-    const isOpen = sidebar.style.right === '0px';
-
-    // If focus moves outside of the sidebar, close it
-    if (!sidebar.contains(event.relatedTarget) && isOpen) {
-      toggleSidebar(); // Close the sidebar if no element inside has focus
-    }
-  });
+// Event listeners
+document.querySelector('.toggle-btn').addEventListener('click', toggleSidebar);
+document.addEventListener('keydown', handleEscapeKey);
 
 function populateSidebar() {
   // Find all expanded anchor elements
@@ -170,7 +189,7 @@ function populateSidebar() {
   }
 
   // Handle case where "Admin" link is expanded (case-insensitive)
-  
+
   if (/^admin$/i.test(selectedAnchor)) {
     createSidebarSection(sideMenuData.admin, '');
     return;

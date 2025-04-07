@@ -15,11 +15,13 @@
   color: var(--sidebar-color);
   padding: 20px;
   z-index: 100;
-  transition: right 0.3s ease; /* Make sure transition is applied here */
+  transition: right 0.3s ease, opacity 0.3s ease; /* Make sure transition is applied here */
+  opacity: 0;
 }
 
 .sidebar-container.open {
-  right: 0px;
+  opacity: 1;
+  right: 0;
 }
 
 .sidebar {
@@ -37,7 +39,7 @@
 
 .sidebar a {
   color: var(--sidebar-color);
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .toggle-btn {
