@@ -7,6 +7,8 @@
 </button>
 
 <div id="sidebar" class="sidebar-container">
+<div id="sidebar-announcement" class="visually-hidden-live" aria-live="polite" role="status"></div>
+
 <nav class="sidebar" role="navigation" aria-label="Sidebar" aria-hidden="true">
 
         <h2>Default Menu Items</h2>

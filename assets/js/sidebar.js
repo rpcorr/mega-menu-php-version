@@ -112,6 +112,7 @@ function toggleSidebar() {
     'a, button, input, [tabindex]:not([tabindex="-1"])'
   );
   const hamburger = button.querySelector('.hamburger');
+  const announcement = document.getElementById('sidebar-announcement');
 
   const isOpen = button.classList.contains('open');
 
@@ -124,11 +125,24 @@ function toggleSidebar() {
   // Update focusable links
   links.forEach((el) => el.setAttribute('tabindex', isOpen ? '-1' : '0'));
 
+  // Update screen reader message
   if (!isOpen) {
     links[0]?.focus();
     trapFocus(sidebar);
+    if (announcement) {
+      announcement.textContent = ''; // clear first
+      setTimeout(() => {
+        announcement.textContent = 'Sidebar opened. Press Escape to close it.';
+      }, 100); // delay helps with DOM mutation detection
+    }
   } else {
     removeFocusTrap();
+    if (announcement) {
+      announcement.textContent = ''; // clear first
+      setTimeout(() => {
+        announcement.textContent = 'Sidebar closed.';
+      }, 100); // delay helps with DOM mutation detection
+    }
   }
 
   // Toggle button state and hamburger animation
