@@ -1,11 +1,18 @@
+:root {
+  --sidebar-width: 250px;
+  --sidebar-bg: #444;
+  --sidebar-hover: #555;
+  --sidebar-color: #fff;
+}
+
 .sidebar-container {
   position: fixed;
   top: 87px;
-  right: -250px; /* Start hidden */
+  right: calc(-1 * var(--sidebar-width)); /* Start hidden */
   height: calc(100vh - 82px);
-  width: 250px;
-  background-color: #444;
-  color: white;
+  width: var(--sidebar-width);
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-color);
   padding: 20px;
   z-index: 100;
   transition: right 0.3s ease; /* Make sure transition is applied here */
@@ -29,16 +36,17 @@
 }
 
 .sidebar a {
-  color: white;
+  color: var(--sidebar-color);
   text-decoration: none;
 }
 
 .toggle-btn {
   position: fixed;
   top: 110px;
-  right: 0px; /*Positioned to the right of the sidebar when collapsed*/
-  background-color: #444;
-  color: white;
+  right: 0px;
+  /*Positionedtotherightofthesidebarwhencollapsed*/
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-color);
   border: none;
   padding: 10px;
   cursor: pointer;
@@ -47,11 +55,21 @@
 }
 
 .toggle-btn:hover {
-  background-color: #555;
+  background-color: var(--sidebar-hover);
+}
+
+.toggle-btn:focus {
+  outline: 2px solid var(--sidebar-color);
+  outline-offset: -5px;
+}
+
+.sidebar a:focus {
+  outline: 2px solid var(--sidebar-color);
+  outline-offset: 2px;
 }
 
 .toggle-btn.open {
-  right: 250px;
+  right: var(--sidebar-width);
 }
 
 .hamburger {
@@ -64,7 +82,7 @@
 .hamburger div {
   width: 30px;
   height: 4px;
-  background-color: #fff;
+  background-color: var(--sidebar-color);
   margin: 5px 0;
   transition: all 0.3s ease;
 }
@@ -79,4 +97,15 @@
 
 .hamburger.active div:nth-child(3) {
   transform: translateY(-9px) rotate(-45deg);
+}
+
+@media (max-width: 650px) {
+  .sidebar-container {
+    width: 80%;
+    right: -80%;
+  }
+
+  .toggle-btn.open {
+    right: 80%;
+  }
 }
