@@ -98,12 +98,16 @@
     } ?>
 </head>
 <body>
+<p>
+      <a href="#skipMenu" class="skip-nav-link" id="skip-top-nav-link"
+        >Skip to main content</a
+      >
+    </p>
 
     <header id="header" role="banner">
       <div id="mainNavigation" class="group">
         <div class="max-width">
             <section id="branding">
-                <a href="#skipMenu" class="screen-reader-text">Skip to Content</a>
                 <div id="siteIdentity">
                 <div class="logo">
                     <a href="index.php" rel="home"> <img src="<?php echo getRelativePath(''); ?>assets/imgs/CO_logo.svg" alt="Counting Opinions" height="60"> </a>
@@ -118,7 +122,7 @@
               <ul id="menu-main-menu" class="menu"></ul>  
             </div>
           </nav>
-          <a id="skipMenu" class="screen-reader-text"></a>
+          
         </div>
       </div>
     </header>
@@ -126,4 +130,5 @@
     <nav aria-label="breadcrumbs">
       <ul class="breadcrumbs" id="breadcrumbs"></ul>
     </nav>
+    <a id="skipMenu" class="screen-reader-text"></a>
     

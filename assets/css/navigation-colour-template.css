@@ -4,6 +4,11 @@ html {
   color: var(--defaultTextColour);
 }
 
+.skip-nav-link {
+  background-color: var(--skipNavBgColour);
+  color: var(--skipNavTextColour);
+}
+
 /* h1 text colour */
 h1 {
   color: var(--headingOneTextColour);
