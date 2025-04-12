@@ -2,15 +2,12 @@
 // start the session
 session_start();
 
-// Read the posted data
-//$_SESSION['newtheme'] = $_GET['theme'];
 
 // Load the JSON file
 $jsonFile = '../json/users.json';
 $jsonData = file_get_contents($jsonFile);
 $users = json_decode($jsonData, true);
 
-echo "<script>console.log('here I am');</script>";
 // Find the current logged in user and update the style preference
 foreach ($users['users'] as &$user) {
 
