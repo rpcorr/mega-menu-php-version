@@ -9,7 +9,7 @@ if (!ukey) {
 }
 
 // Local host
-JSONfile = 'http://localhost/mega-menu/assets/json/';
+JSONfile = 'http://localhost/mmenu/assets/json/';
 if (!ukey && !user) {
   JSONfile += 'co-pages.json';
 } else {
@@ -43,6 +43,6 @@ if (!ukey && !user) {
     else if (ukey === 'b0b95b071bc61c3a524984d8c2810d0f')
       JSONfile += 'belleview-libsat-de-da-rm.json';
   } else if (user) {
-    JSONfile = 'http://localhost/mega-menu/assets/json/admin.json';
+    JSONfile = 'http://localhost/mmenu/assets/json/admin.json';
   }
 }

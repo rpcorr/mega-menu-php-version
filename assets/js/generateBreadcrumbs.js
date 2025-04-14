@@ -5,16 +5,16 @@ function generateBreadcrumbs() {
   // Clear any existing breadcrumbs to avoid duplication
   breadcrumbContainer.innerHTML = '';
 
-  const basePath = '/mega-menu'; // Base path for all links
+  const basePath = '/mmenu'; // Base path for all links
 
   // Split the current pathname into parts, filter out empty strings
   let pathArray = window.location.pathname
     .split('/')
     .filter((el) => el.length > 0);
 
-  // Remove 'index.php' and 'mega-menu' from the path array
+  // Remove 'index.php' and 'mmenu' from the path array
   pathArray = pathArray.filter(
-    (item) => item !== 'index.php' && item !== 'mega-menu'
+    (item) => item !== 'index.php' && item !== 'mmenu'
   );
 
   // Try to get page title from the H1 element, fallback to document.title
