@@ -177,14 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Event listeners
-if (document.querySelector('.toggle-btn'))
-  document
-    .querySelector('.toggle-btn')
-    .addEventListener('click', toggleSidebar);
-
-document.addEventListener('keydown', handleEscapeKey);
-
 function populateSidebar() {
   // Find all expanded anchor elements
   let expandedAnchors = Array.from(
@@ -308,3 +300,11 @@ function createSidebarSection(menuSection, extraContent) {
     }
   }
 }
+
+// Event listeners
+document.addEventListener('keydown', handleEscapeKey);
+
+if (document.querySelector('.toggle-btn'))
+  document
+    .querySelector('.toggle-btn')
+    .addEventListener('click', toggleSidebar);
