@@ -3,11 +3,11 @@
 session_start();
 
 // Include the session check file
-include_once ($_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\session_check.php');
+include('assets/php_scripts/session_check.php');
 
 $title = "Admin Access Page - Priority Mega Menu";
 
-include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.php');
+include('assets/php_scripts/header.php');
 ?>
     <main>
       <div class="container">
@@ -21,4 +21,4 @@ include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.
       </div>
     </main>
 
-<?php include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\footer.php'); ?>
+<?php include('assets/php_scripts/footer.php');?>
