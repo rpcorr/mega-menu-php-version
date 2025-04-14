@@ -1459,7 +1459,7 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
       }
 
       // Set attributes
-      img.src = `assets/imgs/${item.graphic}`;
+      img.src = `/mmenu/assets/imgs/${item.graphic}`;
       img.width = item.width;
       img.height = item.height;
       anchor.href = item.url;
@@ -1668,7 +1668,8 @@ function renderBodyContent(contentContainer, type, menuData) {
       bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
 
     // Set image attributes: source, dimensions, and an empty alt for decorative images
-    img.src = `assets/imgs/${randomIcon.graphic}`;
+
+    img.src = `/mmenu/assets/imgs/${randomIcon.graphic}`;
     img.width = randomIcon.width;
     img.height = randomIcon.height;
     img.alt = ''; // Ensures the image is ignored by screen readers if it's purely decorative
@@ -1786,7 +1787,7 @@ function renderExtraContent(contentData, menuContainer) {
     }
 
     // Set attributes
-    img.src = `assets/imgs/${item.graphic}`;
+    img.src = `/mmenu/assets/imgs/${item.graphic}`;
     img.width = item.width;
     img.height = item.height;
 
