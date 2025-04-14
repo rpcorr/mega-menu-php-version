@@ -163,21 +163,26 @@ function handleEscapeKey(e) {
 
 // Initialize state based on aria-expanded value
 document.addEventListener('DOMContentLoaded', () => {
-  const button = document.querySelector('.toggle-btn');
-  const sidebar = document.getElementById('sidebar');
-  const links = sidebar.querySelectorAll('a');
+  if (document.querySelector('.toggle-btn')) {
+    const button = document.querySelector('.toggle-btn');
+    const sidebar = document.getElementById('sidebar');
 
-  const isOpen = button.getAttribute('aria-expanded') === 'true';
+    const isOpen = button.getAttribute('aria-expanded') === 'true';
 
-  button.classList.toggle('open', isOpen);
-  sidebar.classList.toggle('open', isOpen);
+    button.classList.toggle('open', isOpen);
+    sidebar.classList.toggle('open', isOpen);
 
-  sidebar.setAttribute('aria-hidden', 'true');
-  button.setAttribute('aria-label', 'Open sidebar');
+    sidebar.setAttribute('aria-hidden', 'true');
+    button.setAttribute('aria-label', 'Open sidebar');
+  }
 });
 
 // Event listeners
-document.querySelector('.toggle-btn').addEventListener('click', toggleSidebar);
+if (document.querySelector('.toggle-btn'))
+  document
+    .querySelector('.toggle-btn')
+    .addEventListener('click', toggleSidebar);
+
 document.addEventListener('keydown', handleEscapeKey);
 
 function populateSidebar() {
@@ -251,53 +256,55 @@ function populateSidebar() {
 
 // Helper function to create and append sidebar content
 function createSidebarSection(menuSection, extraContent) {
-  const sidebar = document.querySelector('.sidebar');
-  sidebar.innerHTML = ''; // Clear out the current sidebar content
+  if (document.querySelector('.sidebar')) {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.innerHTML = ''; // Clear out the current sidebar content
 
-  // Create and append section heading
-  if (menuSection?.title) {
-    const heading = document.createElement('h2');
-    heading.textContent = menuSection.title;
-    sidebar.appendChild(heading);
-  }
+    // Create and append section heading
+    if (menuSection?.title) {
+      const heading = document.createElement('h2');
+      heading.textContent = menuSection.title;
+      sidebar.appendChild(heading);
+    }
 
-  // Create and append menu items
-  if (menuSection?.items?.length) {
-    const ul = document.createElement('ul');
+    // Create and append menu items
+    if (menuSection?.items?.length) {
+      const ul = document.createElement('ul');
 
-    menuSection.items.forEach((item) => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.textContent = item.name;
-      a.href = item.url;
-      a.setAttribute('aria-label', `Learn more about ${item.name}`);
-      a.setAttribute('tabindex', '-1');
-      li.appendChild(a);
-      ul.appendChild(li);
-    });
+      menuSection.items.forEach((item) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.textContent = item.name;
+        a.href = item.url;
+        a.setAttribute('aria-label', `Learn more about ${item.name}`);
+        a.setAttribute('tabindex', '-1');
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
 
-    sidebar.appendChild(ul);
-  }
+      sidebar.appendChild(ul);
+    }
 
-  // Render extra content if it's a valid object with title and items
-  if (extraContent?.title && extraContent?.items?.length) {
-    const extraHeading = document.createElement('h2');
-    extraHeading.textContent = extraContent.title;
-    sidebar.appendChild(extraHeading);
+    // Render extra content if it's a valid object with title and items
+    if (extraContent?.title && extraContent?.items?.length) {
+      const extraHeading = document.createElement('h2');
+      extraHeading.textContent = extraContent.title;
+      sidebar.appendChild(extraHeading);
 
-    const extraContentUl = document.createElement('ul');
+      const extraContentUl = document.createElement('ul');
 
-    extraContent.items.forEach((item) => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.textContent = item.name;
-      a.href = item.url;
-      a.style.textDecoration = 'underline';
-      a.setAttribute('aria-label', `Learn more about ${item.name}`);
-      li.appendChild(a);
-      extraContentUl.appendChild(li);
-    });
+      extraContent.items.forEach((item) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.textContent = item.name;
+        a.href = item.url;
+        a.style.textDecoration = 'underline';
+        a.setAttribute('aria-label', `Learn more about ${item.name}`);
+        li.appendChild(a);
+        extraContentUl.appendChild(li);
+      });
 
-    sidebar.appendChild(extraContentUl);
+      sidebar.appendChild(extraContentUl);
+    }
   }
 }
