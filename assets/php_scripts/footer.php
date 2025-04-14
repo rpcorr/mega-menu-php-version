@@ -7,7 +7,7 @@
       const user = <?php echo json_encode($user); ?>;
 
       console.log(`I am outside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}.`);
-      console.log(`I an outside of breadcrumbs.js. Querystring is ${queryString}`);
+      console.log(`I am outside of breadcrumbs.js. Querystring is ${queryString}`);
       
     </script>
     <script src='<?php echo getRelativePath(''); ?>assets/js/user.js' defer></script>
