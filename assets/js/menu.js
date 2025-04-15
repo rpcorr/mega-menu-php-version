@@ -109,6 +109,9 @@ document.addEventListener('DOMContentLoaded', () => {
           0: Object.values(cloneGroupedArray).find((value) => value.pages),
         };
 
+        console.log('LibSat pages:');
+        console.log(libSatPages);
+
         // if libSatPages are present, build LibSat menu
         if (libSatPages[0] !== undefined) {
           // filter out all entries that has maphat in it's page.prompt and store in variable maphatEntries; and all the others in a variable named libSatPagesNoMAPHAT
@@ -428,6 +431,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return menuHTML;
       }
 
+      console.log('All the other pages:');
+      console.log(finalGroupedArray);
       // Call the function to create the menu
       let menuHTML = createMenu(finalGroupedArray);
 
