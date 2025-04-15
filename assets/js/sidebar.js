@@ -77,6 +77,12 @@ function trapFocus(container) {
   const lastEl = focusableEls[focusableEls.length - 1];
 
   const handleTab = (e) => {
+    if (e.key === 'Escape') {
+      toggleSidebar(); // close on escape
+      document.querySelector('.toggle-btn').focus();
+      return;
+    }
+
     if (e.key === 'Tab') {
       if (e.shiftKey) {
         if (document.activeElement === firstEl) {
@@ -127,8 +133,8 @@ function toggleSidebar() {
 
   // Update screen reader message
   if (!isOpen) {
-    links[0]?.focus();
     trapFocus(sidebar);
+    links[0]?.focus();
     if (announcement) {
       announcement.textContent = ''; // clear first
       setTimeout(() => {
