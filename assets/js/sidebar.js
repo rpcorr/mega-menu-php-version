@@ -252,6 +252,9 @@ function createSidebarSection(menuSection, extraContent) {
     const sidebar = document.querySelector('.sidebar');
     sidebar.innerHTML = ''; // Clear out the current sidebar content
 
+    sidebar.setAttribute('role', 'region');
+    sidebar.setAttribute('aria-label', 'Sidebar navigation');
+
     // Create and append section heading
     if (menuSection?.title) {
       const heading = document.createElement('h2');
