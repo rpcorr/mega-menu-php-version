@@ -522,6 +522,7 @@ header nav ul.menu > li > .mega-menu.mega-menu-column-4 {
   justify-content: space-evenly;
   flex-wrap: wrap;
   padding: 1.25rem 0;
+  overflow: auto;
 }
 
 /* Basic CSS for breadcrumbs */
