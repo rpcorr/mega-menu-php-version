@@ -447,22 +447,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
       function createMenu(menuData) {
         let menuHTML = '';
+        let createdPagesMenu = false;
         let createdServicesMenu = false;
 
         menuData.forEach((section) => {
           // If section_id is 0, create top-level menu items
           if (section.section_id === '0') {
-            section.pages.forEach((page) => {
-              // Only show Login in when user is not logged in
-              if (
-                ukey === '' ||
-                (ukey !== '' && page.page_prompt.toLowerCase() !== 'login')
-              ) {
-                menuHTML += '<li>';
-                menuHTML += `<a href="${page.page_link}">${page.page_prompt}</a>`;
-                menuHTML += '</li>';
-              }
-            });
+            if (createdPagesMenu === false) {
+              createdPagesMenu = true;
+              menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Pages has a sub menu. Click enter to open">Pages <i class="caret angle-down"></i></a>
+            <div class="sub-menu-div mega-menu mega-menu-column-4">
+            <div class="grid-container-pages tabs-container"></div>
+            </div>
+          </li>`;
+
+              // section.pages.forEach((page) => {
+              //   // Only show Login in when user is not logged in
+              //   if (
+              //     ukey === '' ||
+              //     (ukey !== '' && page.page_prompt.toLowerCase() !== 'login')
+              //   ) {
+              //     menuHTML += '<li>';
+              //     menuHTML += `<a href="${page.page_link}">${page.page_prompt}</a>`;
+              //     menuHTML += '</li>';
+              //   }
+              // });
+            }
           } else if (
             section.section_id === '2' ||
             section.section_id === '5' ||
@@ -1642,6 +1652,7 @@ function renderBodyContent(contentContainer, type, menuData) {
 
     // Handle menu items with valid links or excluded prompts
     if (menuItem.link.trim() !== '' || isExcludedPrompt) {
+      console.log(menuItem);
       createMenuContent(menuItem);
     }
   });
