@@ -735,11 +735,9 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 }
 
 .mega-menu-column-4 .grid-container-pages > .left-content {
-  grid-column: span 2; /* Forces the left section to take 2 columns */
   display: grid;
+  grid-column: span 2; /* Forces the left section to take 2 columns */
   grid-template-columns: repeat(3, 1fr); /* Three columns */
-  grid-auto-flow: column; /* Fills items in columns first */
-  grid-template-rows: repeat(3, auto); /* Allows up to 3 items per column */
   gap: 10px;
   padding: 1rem;
   background-color: #fff;
