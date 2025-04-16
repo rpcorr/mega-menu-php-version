@@ -1550,112 +1550,129 @@ function renderBodyContent(contentContainer, type, menuData) {
 
   // Extract the selected tab's text and convert it to lowercase
   const selectedText = selectedLi.id.toLowerCase();
+  //let pagePromptsAndLinks = '';
 
-  // Find the corresponding page prompts and links from menuData
-  const pagePromptsAndLinks =
-    menuData
-      .find(
-        (item) =>
-          item.section_prompt &&
-          item.section_prompt.toLowerCase() === selectedText
-      )
-      ?.pages.map((page) => ({
-        prompt: page.page_prompt,
-        link: page.page_link,
-      })) || [];
-
-  // Limit to first six items if there are more than six
-  if (pagePromptsAndLinks.length > 6) {
-    //pagePromptsAndLinks = pagePromptsAndLinks.slice(0, 6);
-  }
-
-  // Create a document fragment to improve performance when adding elements to the DOM
   const fragment = document.createDocumentFragment();
 
-  // Loop through each page prompt and populate the template
+  if (type == 'pages') {
+    const pagePromptsAndLinks = menuData[0].pages
+      .filter((page) => page.section_id === '0' && page.section_prompt === null)
+      .map((page) => ({
+        prompt: page.page_prompt,
+        link: page.page_link,
+      }));
 
-  // Variables to track grouped headers
-  let groupedHeading = ''; // Stores concatenated prompts for grouped headings
-  let isGrouping = false; // Tracks whether we are currently grouping prompts
-  let customReportsAdded = false; // Ensures "Custom Reports" is only added once
-  let surveyReportsStored = null; // Temporarily store "Survey Reports" content
-
-  pagePromptsAndLinks.forEach((menuItem, index) => {
-    const promptText = menuItem.prompt.toLowerCase().trim();
-    const isEmptyLink = menuItem.link.toLowerCase().trim() === ''; // Check if menuItem has no link
-    const isDifferentPrompt = promptText !== selectedText; // Ensure it's not the selected tab
-    const isExcludedPrompt = ['maphat trends', 'maphat rankings'].includes(
-      promptText
-    ); // Exclude specific prompts
-    const isSurveyReports = promptText === 'survey reports'; // Identify "Survey Reports"
-    const isCustomReports = promptText === 'custom reports'; // Identify "Custom Reports"
-
-    // Store "Survey Reports" to be placed under "Custom Reports" later
-    if (isSurveyReports) {
-      surveyReportsStored = menuItem;
-      return; // Skip adding it immediately
-    }
-
-    // Group consecutive unlinked prompts under a single <h4> (except Survey Reports)
-    if (isDifferentPrompt && isEmptyLink && !isExcludedPrompt) {
-      if (!isGrouping) {
-        groupedHeading = menuItem.prompt;
-        isGrouping = true;
-      } else {
-        groupedHeading += `, ${menuItem.prompt}`;
-      }
-
-      // Check the next item in the array
-      const nextItem = pagePromptsAndLinks[index + 1];
-      const nextIsEmptyLink =
-        nextItem && nextItem.link.toLowerCase().trim() === '';
-      const nextIsExcludedPrompt =
-        nextItem &&
-        ['maphat trends', 'maphat rankings'].includes(
-          nextItem.prompt.toLowerCase().trim()
-        );
-
-      if (!nextIsEmptyLink || nextIsExcludedPrompt) {
-        // Check if the grouped heading should be `h5` instead of `h4`
-        const heading = document.createElement(
-          groupedHeading.match(
-            /benchmarking reports|postal reports|email reports/i
-          )
-            ? 'h5'
-            : 'h4'
-        );
-        heading.textContent = groupedHeading;
-        heading.style.gridColumn = '1 / -1'; // Span full grid width
-
-        // Add tabindex="0" to make the heading focusable
-        heading.setAttribute('tabindex', '0');
-
-        fragment.appendChild(heading);
-        isGrouping = false;
-      }
-    }
-
-    // Handle "Custom Reports" (add "Survey Reports" under it)
-    if (isCustomReports && !customReportsAdded) {
-      const customReportsHeading = document.createElement('h4');
-      customReportsHeading.textContent = 'Custom Reports';
-      customReportsHeading.style.gridColumn = '1 / -1';
-      fragment.appendChild(customReportsHeading);
-      customReportsAdded = true;
-
-      // If "Survey Reports" was stored, add it now under "Custom Reports"
-      if (surveyReportsStored) {
-        createMenuContent(surveyReportsStored);
-        surveyReportsStored = null; // Clear stored value
-      }
-    }
-
-    // Handle menu items with valid links or excluded prompts
-    if (menuItem.link.trim() !== '' || isExcludedPrompt) {
-      console.log(menuItem);
+    pagePromptsAndLinks.forEach((menuItem) => {
       createMenuContent(menuItem);
+    });
+  }
+
+  // Find the corresponding page prompts and links from menuData for multiple
+  if (type == 'multiple') {
+    const pagePromptsAndLinks =
+      menuData
+        .find(
+          (item) =>
+            item.section_prompt &&
+            item.section_prompt.toLowerCase() === selectedText
+        )
+        ?.pages.map((page) => ({
+          prompt: page.page_prompt,
+          link: page.page_link,
+        })) || [];
+
+    // Limit to first six items if there are more than six
+    if (pagePromptsAndLinks.length > 6) {
+      //pagePromptsAndLinks = pagePromptsAndLinks.slice(0, 6);
     }
-  });
+
+    // Create a document fragment to improve performance when adding elements to the DOM
+    //const fragment = document.createDocumentFragment();
+
+    // Loop through each page prompt and populate the template
+
+    // Variables to track grouped headers
+    let groupedHeading = ''; // Stores concatenated prompts for grouped headings
+    let isGrouping = false; // Tracks whether we are currently grouping prompts
+    let customReportsAdded = false; // Ensures "Custom Reports" is only added once
+    let surveyReportsStored = null; // Temporarily store "Survey Reports" content
+
+    pagePromptsAndLinks.forEach((menuItem, index) => {
+      const promptText = menuItem.prompt.toLowerCase().trim();
+      const isEmptyLink = menuItem.link.toLowerCase().trim() === ''; // Check if menuItem has no link
+      const isDifferentPrompt = promptText !== selectedText; // Ensure it's not the selected tab
+      const isExcludedPrompt = ['maphat trends', 'maphat rankings'].includes(
+        promptText
+      ); // Exclude specific prompts
+      const isSurveyReports = promptText === 'survey reports'; // Identify "Survey Reports"
+      const isCustomReports = promptText === 'custom reports'; // Identify "Custom Reports"
+
+      // Store "Survey Reports" to be placed under "Custom Reports" later
+      if (isSurveyReports) {
+        surveyReportsStored = menuItem;
+        return; // Skip adding it immediately
+      }
+
+      // Group consecutive unlinked prompts under a single <h4> (except Survey Reports)
+      if (isDifferentPrompt && isEmptyLink && !isExcludedPrompt) {
+        if (!isGrouping) {
+          groupedHeading = menuItem.prompt;
+          isGrouping = true;
+        } else {
+          groupedHeading += `, ${menuItem.prompt}`;
+        }
+
+        // Check the next item in the array
+        const nextItem = pagePromptsAndLinks[index + 1];
+        const nextIsEmptyLink =
+          nextItem && nextItem.link.toLowerCase().trim() === '';
+        const nextIsExcludedPrompt =
+          nextItem &&
+          ['maphat trends', 'maphat rankings'].includes(
+            nextItem.prompt.toLowerCase().trim()
+          );
+
+        if (!nextIsEmptyLink || nextIsExcludedPrompt) {
+          // Check if the grouped heading should be `h5` instead of `h4`
+          const heading = document.createElement(
+            groupedHeading.match(
+              /benchmarking reports|postal reports|email reports/i
+            )
+              ? 'h5'
+              : 'h4'
+          );
+          heading.textContent = groupedHeading;
+          heading.style.gridColumn = '1 / -1'; // Span full grid width
+
+          // Add tabindex="0" to make the heading focusable
+          heading.setAttribute('tabindex', '0');
+
+          fragment.appendChild(heading);
+          isGrouping = false;
+        }
+      }
+
+      // Handle "Custom Reports" (add "Survey Reports" under it)
+      if (isCustomReports && !customReportsAdded) {
+        const customReportsHeading = document.createElement('h4');
+        customReportsHeading.textContent = 'Custom Reports';
+        customReportsHeading.style.gridColumn = '1 / -1';
+        fragment.appendChild(customReportsHeading);
+        customReportsAdded = true;
+
+        // If "Survey Reports" was stored, add it now under "Custom Reports"
+        if (surveyReportsStored) {
+          createMenuContent(surveyReportsStored);
+          surveyReportsStored = null; // Clear stored value
+        }
+      }
+
+      // Handle menu items with valid links or excluded prompts
+      if (menuItem.link.trim() !== '' || isExcludedPrompt) {
+        createMenuContent(menuItem);
+      }
+    });
+  }
 
   // Function to create and append menu content dynamically
   function createMenuContent(menuItem) {
