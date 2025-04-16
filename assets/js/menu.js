@@ -1944,6 +1944,12 @@ function populateMegaMenu(menuData) {
     .forEach((menuContainer) => {
       getMegaMenu(menuContainer, 'multiple', menuData);
     });
+
+  document
+    .querySelectorAll('.grid-container-pages')
+    .forEach((menuContainer) => {
+      getMegaMenu(menuContainer, 'pages', menuData);
+    });
 }
 
 function createMenuItems(data) {
