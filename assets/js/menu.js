@@ -1672,6 +1672,7 @@ function renderBodyContent(contentContainer, type, menuData) {
 
   // Function to create and append menu content dynamically
   function createMenuContent(menuItem) {
+    console.log(menuItem);
     // Clone the template content to create a new menu item instance
     const menuContent = contentTemplate.content.cloneNode(true);
 
@@ -1693,27 +1694,29 @@ function renderBodyContent(contentContainer, type, menuData) {
 
     // Set image attributes: source, dimensions, and an empty alt for decorative images
 
-    img.src = `/mmenu/assets/imgs/${randomIcon.graphic}`;
-    img.width = randomIcon.width;
-    img.height = randomIcon.height;
-    img.alt = ''; // Ensures the image is ignored by screen readers if it's purely decorative
+    if (ukey && menuItem.prompt.toLowerCase().trim() !== 'login') {
+      img.src = `/mmenu/assets/imgs/${randomIcon.graphic}`;
+      img.width = randomIcon.width;
+      img.height = randomIcon.height;
+      img.alt = ''; // Ensures the image is ignored by screen readers if it's purely decorative
 
-    // Populate text content for the menu item
-    p.querySelector('strong').textContent = menuItem.prompt;
-    p.querySelector(
-      'span'
-    ).textContent = `Brief description of the function of ${menuItem.prompt}`;
+      // Populate text content for the menu item
+      p.querySelector('strong').textContent = menuItem.prompt;
+      p.querySelector(
+        'span'
+      ).textContent = `Brief description of the function of ${menuItem.prompt}`;
 
-    // Set the anchor link to the provided menu item link
-    anchor.href = menuItem.link;
+      // Set the anchor link to the provided menu item link
+      anchor.href = menuItem.link;
 
-    // Wrap the menu content in a container div and set display to 'contents'
-    const wrapperDiv = document.createElement('div');
-    wrapperDiv.appendChild(menuContent);
-    wrapperDiv.style.display = 'contents'; // Ensures the wrapper doesn't affect layout
+      // Wrap the menu content in a container div and set display to 'contents'
+      const wrapperDiv = document.createElement('div');
+      wrapperDiv.appendChild(menuContent);
+      wrapperDiv.style.display = 'contents'; // Ensures the wrapper doesn't affect layout
 
-    // Append the structured menu item to the main fragment
-    fragment.appendChild(wrapperDiv);
+      // Append the structured menu item to the main fragment
+      fragment.appendChild(wrapperDiv);
+    }
   }
 
   // Append content based on the type
