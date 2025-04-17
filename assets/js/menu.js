@@ -1817,13 +1817,28 @@ function renderExtraContent(contentData, menuContainer) {
 
     strong.textContent = item.heading;
 
+    let firstBodyTextHandled = false;
+
     item.extraBodyContent.forEach((content) => {
       if (content.bodyText !== undefined) {
-        bodyContent.innerHTML += `<p>${content.bodyText}</p>`;
+        let liId = '';
+
+        if (!firstBodyTextHandled) {
+          // Only for the first time
+          const selectedAnchor = document.querySelector(
+            'a[aria-selected="true"]'
+          );
+          if (selectedAnchor) {
+            const parentLi = selectedAnchor.closest('li');
+            liId = parentLi ? `${parentLi.id} - ` : '';
+          }
+          firstBodyTextHandled = true; // Mark that we've handled the first one
+        }
+
+        bodyContent.innerHTML += `<p>${liId}${content.bodyText}</p>`;
       }
 
       if (content.listItems !== undefined && content.listItems.length > 0) {
-        // Create UL element properly
         const ul = document.createElement('ul');
 
         content.listItems.forEach((li) => {
@@ -1836,36 +1851,10 @@ function renderExtraContent(contentData, menuContainer) {
       }
     });
 
-    console.log(bodyContent);
-
     fragment.appendChild(menuContent);
   });
 
   menuContainer.appendChild(fragment);
-
-  // Find the <a> element with aria-selected="true"
-  const selectedAnchor = document.querySelector('a[aria-selected="true"]');
-
-  if (selectedAnchor) {
-    // Find the closest parent <li> of the selected <a>
-    const parentLi = selectedAnchor.closest('li');
-
-    // Get the ID of that <li>, or null if not found
-    const liId = parentLi ? parentLi.id : null;
-
-    if (liId) {
-      // Get the <div> that contains the body content
-      const bodyContentDiv = document.getElementById('bodyContent');
-
-      // Find the first <p> tag inside that div
-      const firstParagraph = bodyContentDiv.querySelector('p');
-
-      if (firstParagraph) {
-        // Prepend the liId followed by a dash to the existing paragraph text
-        firstParagraph.innerHTML = liId + ' - ' + firstParagraph.innerHTML;
-      }
-    }
-  }
 }
 
 ///////  Navigation through tabs /////////////////
