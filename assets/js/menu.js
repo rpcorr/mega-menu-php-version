@@ -1672,7 +1672,6 @@ function renderBodyContent(contentContainer, type, menuData) {
 
   // Function to create and append menu content dynamically
   function createMenuContent(menuItem) {
-    console.log(menuItem);
     // Clone the template content to create a new menu item instance
     const menuContent = contentTemplate.content.cloneNode(true);
 
@@ -1891,19 +1890,25 @@ function setTabsContainer() {
 }
 
 function moveTab(menuContainer, type, direction, menuData = []) {
-  // Select the tabs container and list
-  const tabsContainer = document.querySelector('.tabs-container');
-  const tabsList = tabsContainer.querySelector('ul');
+  // Select the tab list
+  const tabsList = menuContainer.querySelector('ul');
+  if (!tabsList) {
+    console.error('No <ul> found inside menuContainer');
+    return;
+  }
+
   const tabButtons = Array.from(tabsList.querySelectorAll('a'));
   const currentTab = document.activeElement;
 
   // Find the index of the currently focused tab
   const currentIndex = tabButtons.findIndex((tab) => tab === currentTab);
+
   if (currentIndex === -1) return;
 
   // Calculate the next index in a circular manner
   const nextIndex =
     (currentIndex + direction + tabButtons.length) % tabButtons.length;
+
   switchTab(tabButtons[nextIndex], menuContainer, type, menuData);
 }
 
