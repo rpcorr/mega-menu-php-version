@@ -10,6 +10,7 @@ let winWidth = 0;
 let output = '';
 let megaMenuLinks = '';
 let initialColumns = '';
+const sidebar = document.getElementById('sidebar');
 
 let allMenuItemsinArray;
 
@@ -679,7 +680,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
 
           // Update sidebar content
-          populateSidebar();
+          if (sidebar) populateSidebar();
         });
 
       // toggle More menu sub-menu on key up
@@ -1078,7 +1079,7 @@ function toggleTopLevelMenu(menuLink) {
   }
 
   // populate sidebar base on the top menu link
-  populateSidebar();
+  if (sidebar) populateSidebar();
 }
 
 function setAriaLabel(link, isOpen) {
@@ -1500,7 +1501,8 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
         tab.setAttribute('aria-selected', 'true');
         tab.setAttribute('tabindex', '0');
         tab.focus(); // Optionally focus the element
-        populateSidebar();
+
+        if (sidebar) populateSidebar();
       } else {
         // deactive the inactive tabs
         tab.removeAttribute('aria-selected');
