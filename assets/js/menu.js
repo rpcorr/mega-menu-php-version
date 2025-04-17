@@ -1850,22 +1850,24 @@ function renderExtraContent(contentData, menuContainer) {
   // Find the <a> element with aria-selected="true"
   const selectedAnchor = document.querySelector('a[aria-selected="true"]');
 
-  // Find the closest parent <li> of the selected <a>
-  const parentLi = selectedAnchor.closest('li');
+  if (selectedAnchor) {
+    // Find the closest parent <li> of the selected <a>
+    const parentLi = selectedAnchor.closest('li');
 
-  // Get the ID of that <li>, or null if not found
-  const liId = parentLi ? parentLi.id : null;
+    // Get the ID of that <li>, or null if not found
+    const liId = parentLi ? parentLi.id : null;
 
-  if (liId) {
-    // Get the <div> that contains the body content
-    const bodyContentDiv = document.getElementById('bodyContent');
+    if (liId) {
+      // Get the <div> that contains the body content
+      const bodyContentDiv = document.getElementById('bodyContent');
 
-    // Find the first <p> tag inside that div
-    const firstParagraph = bodyContentDiv.querySelector('p');
+      // Find the first <p> tag inside that div
+      const firstParagraph = bodyContentDiv.querySelector('p');
 
-    if (firstParagraph) {
-      // Prepend the liId followed by a dash to the existing paragraph text
-      firstParagraph.innerHTML = liId + ' - ' + firstParagraph.innerHTML;
+      if (firstParagraph) {
+        // Prepend the liId followed by a dash to the existing paragraph text
+        firstParagraph.innerHTML = liId + ' - ' + firstParagraph.innerHTML;
+      }
     }
   }
 }
