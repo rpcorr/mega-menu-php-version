@@ -1789,42 +1789,51 @@ function renderBodyContent(contentContainer, type, menuData) {
   }
 }
 
+/**
+ * Renders extra content into a menu container based on provided data.
+ *
+ * @param {Array} contentData - Array of content objects to render.
+ * @param {HTMLElement} menuContainer - The container where content will be inserted.
+ */
 function renderExtraContent(contentData, menuContainer) {
   const contentTemplate = document.querySelector('#menuExtraContent');
 
+  // Check if required template or container elements exist
   if (!contentTemplate || !menuContainer) {
     console.error('Error: Body content template or container not found.');
     return;
   }
 
-  const fragment = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment(); // Use a fragment for better performance
 
   contentData.forEach((item) => {
-    const menuContent = contentTemplate.content.cloneNode(true);
+    const menuContent = contentTemplate.content.cloneNode(true); // Clone template content
     const img = menuContent.querySelector('img');
     const strong = menuContent.querySelector('p > strong');
     const bodyContent = menuContent.querySelector('#bodyContent');
 
+    // Ensure all required elements exist in the template
     if (!img || !strong || !bodyContent) {
       console.error('Error: Missing elements inside body content template.');
       return;
     }
 
-    // Set attributes
+    // Set image attributes based on the provided item data
     img.src = `/mmenu/assets/imgs/${item.graphic}`;
     img.width = item.width;
     img.height = item.height;
 
+    // Set heading text
     strong.textContent = item.heading;
 
-    let firstBodyTextHandled = false;
+    let firstBodyTextHandled = false; // Flag to handle ID prefixing only once
 
     item.extraBodyContent.forEach((content) => {
       if (content.bodyText !== undefined) {
         let liId = '';
 
         if (!firstBodyTextHandled) {
-          // Only for the first time
+          // Only prefix the first paragraph with the selected menu item's ID
           const selectedAnchor = document.querySelector(
             'a[aria-selected="true"]'
           );
@@ -1832,29 +1841,31 @@ function renderExtraContent(contentData, menuContainer) {
             const parentLi = selectedAnchor.closest('li');
             liId = parentLi ? `${parentLi.id} - ` : '';
           }
-          firstBodyTextHandled = true; // Mark that we've handled the first one
+          firstBodyTextHandled = true; // Avoid repeating ID prefix for subsequent paragraphs
         }
 
+        // Append paragraph with or without ID prefix
         bodyContent.innerHTML += `<p>${liId}${content.bodyText}</p>`;
       }
 
+      // If there are list items, create a list and append them
       if (content.listItems !== undefined && content.listItems.length > 0) {
         const ul = document.createElement('ul');
 
         content.listItems.forEach((li) => {
           const listItem = document.createElement('li');
-          listItem.textContent = li.li; // Assign text correctly
-          ul.appendChild(listItem); // Append to UL
+          listItem.textContent = li.li; // Set list item text
+          ul.appendChild(listItem); // Append list item to UL
         });
 
-        bodyContent.appendChild(ul); // Append UL to the container
+        bodyContent.appendChild(ul); // Append UL to body content
       }
     });
 
-    fragment.appendChild(menuContent);
+    fragment.appendChild(menuContent); // Add the populated template to the fragment
   });
 
-  menuContainer.appendChild(fragment);
+  menuContainer.appendChild(fragment); // Insert all content at once for better performance
 }
 
 ///////  Navigation through tabs /////////////////
