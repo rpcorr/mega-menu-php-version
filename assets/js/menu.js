@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then((data) => {
       allMenuItemsinArray = data;
+
       // Initialize an empty object to hold grouped pages
       const groupedSections = {};
 
@@ -453,7 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         menuData.forEach((section) => {
           // If section_id is 0, create top-level menu items
-          if (section.section_id === '0') {
+          if (section.section_id === '0' && ukey !== '') {
             if (createdPagesMenu === false) {
               createdPagesMenu = true;
               menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Pages has a sub menu. Click enter to open">Pages <i class="caret angle-down"></i></a>
@@ -461,18 +462,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="grid-container-pages tabs-container"></div>
             </div>
           </li>`;
-
-              // section.pages.forEach((page) => {
-              //   // Only show Login in when user is not logged in
-              //   if (
-              //     ukey === '' ||
-              //     (ukey !== '' && page.page_prompt.toLowerCase() !== 'login')
-              //   ) {
-              //     menuHTML += '<li>';
-              //     menuHTML += `<a href="${page.page_link}">${page.page_prompt}</a>`;
-              //     menuHTML += '</li>';
-              //   }
-              // });
             }
           } else if (
             section.section_id === '2' ||
@@ -487,6 +476,11 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </li>`;
             }
+          } else if (section.section_id === '0' && ukey == '') {
+            // Logout state
+            data.pages.forEach((page) => {
+              menuHTML += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
+            });
           } else {
             if (section.section_prompt != 'LibSat') {
               let openSubmenu = false;
