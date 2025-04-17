@@ -69,12 +69,10 @@ const extraContent = [
     extraBodyContent: [
       {
         bodyText: 'Extra Content',
-        htmlElement: 'p',
       },
       {
         bodyText:
           'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        htmlElement: 'p',
       },
       {
         listItems: [
@@ -1821,7 +1819,7 @@ function renderExtraContent(contentData, menuContainer) {
 
     item.extraBodyContent.forEach((content) => {
       if (content.bodyText !== undefined) {
-        bodyContent.innerHTML += `<${content.htmlElement}>${content.bodyText}</${content.htmlElement}>`;
+        bodyContent.innerHTML += `<p>${content.bodyText}</p>`;
       }
 
       if (content.listItems !== undefined && content.listItems.length > 0) {
@@ -1837,6 +1835,8 @@ function renderExtraContent(contentData, menuContainer) {
         bodyContent.appendChild(ul); // Append UL to the container
       }
     });
+
+    console.log(bodyContent);
 
     fragment.appendChild(menuContent);
   });
