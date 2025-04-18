@@ -783,30 +783,6 @@ function handleLinkClick(e) {
   }
 }
 
-/**
- * Retrieves the value of a URL parameter from the current page's URL.
- *
- * @param {string} name - The name of the URL parameter to retrieve.
- * @returns {string|null} The value of the specified URL parameter, or null if not found.
- *
- * This function uses a regular expression to search the URL for a specific query parameter.
- * If the parameter is found, it decodes the value and returns it. If not found, it returns null.
- */
-function getUrlParam(name) {
-  // Create a regular expression to match the parameter in the URL query string
-  var results = new RegExp('[?&]' + name + '=([^&#]*)').exec(
-    window.location.href
-  );
-
-  // If the parameter is not found, return null
-  if (results == null) {
-    return null;
-  }
-
-  // Decode the URI component and return the value of the parameter
-  return decodeURI(results[1]) || 0; // Defaulting to 0 if decoding fails or parameter value is empty
-}
-
 // Event listener to format navigation when the window is resized
 let id;
 
