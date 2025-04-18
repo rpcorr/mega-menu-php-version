@@ -715,7 +715,7 @@ document.addEventListener('DOMContentLoaded', () => {
         removeActiveClass();
       });
 
-      perserveMenuColour();
+      preserveMenuColour();
 
       // stop propagation for .menu-item-has-children a
       document
@@ -768,108 +768,143 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 ///// FUNCTIONS /////
 
+/**
+ * Handles click events on menu links.
+ * If the clicked link belongs to a menu item that has child items,
+ * it toggles the corresponding top-level submenu.
+ *
+ * @param {Event} e - The click event object.
+ */
 function handleLinkClick(e) {
-  // link has sub menu
+  // Check if the clicked link is inside a menu item that has children
   if (this.closest('.menu-item-has-children')) {
+    // Toggle the display of the submenu for this top-level menu item
     toggleTopLevelMenu(this);
   }
 }
 
-// get params for determining the current user
-// input: userType
-// returns: userType value (string)
-
+/**
+ * Retrieves the value of a URL parameter from the current page's URL.
+ *
+ * @param {string} name - The name of the URL parameter to retrieve.
+ * @returns {string|null} The value of the specified URL parameter, or null if not found.
+ *
+ * This function uses a regular expression to search the URL for a specific query parameter.
+ * If the parameter is found, it decodes the value and returns it. If not found, it returns null.
+ */
 function getUrlParam(name) {
+  // Create a regular expression to match the parameter in the URL query string
   var results = new RegExp('[?&]' + name + '=([^&#]*)').exec(
     window.location.href
   );
 
+  // If the parameter is not found, return null
   if (results == null) {
     return null;
   }
-  return decodeURI(results[1]) || 0;
+
+  // Decode the URI component and return the value of the parameter
+  return decodeURI(results[1]) || 0; // Defaulting to 0 if decoding fails or parameter value is empty
 }
 
-// format navigation on page resize
+// Event listener to format navigation when the window is resized
 let id;
+
+// Add event listener for window resize event
 window.addEventListener('resize', function () {
+  // Clear any previously set timeout to prevent multiple calls
   clearTimeout(id);
+
+  // Set a new timeout to call the onResize function after 10 milliseconds
+  // This ensures the onResize function is only called once after resizing finishes
   id = setTimeout(onResize, 10);
 });
 
-// close all open menus
-// input: current menu item or a string
-// returns: void
+/**
+ * Closes all open menus and toggles the aria-expanded attribute for accessibility.
+ *
+ * @param {HTMLElement|string} menuItem - The current menu item or a string.
+ *                                   This parameter is not currently used in the function but could be utilized for targeting a specific menu item in the future.
+ * @returns {void} This function doesn't return anything. It modifies the aria-expanded attributes of menu links.
+ */
 function closeAllMenus(menuItem) {
+  // Select all anchor elements that are within menu items containing children
   const links = document.querySelectorAll('.menu-item-has-children a');
 
+  // Initialize variables to track the closest link to the top of the viewport
   let closestLink = null;
   let minDistance = Infinity;
 
+  // Loop through all links to determine which one is closest to the top of the viewport
   links.forEach((link) => {
-    const rect = link.getBoundingClientRect();
-    const distance = Math.abs(rect.top);
+    const rect = link.getBoundingClientRect(); // Get the position and size of each link
+    const distance = Math.abs(rect.top); // Calculate the distance from the top of the viewport
 
+    // If this link is closer to the top than the previously found closest link, update closestLink
     if (distance < minDistance) {
       minDistance = distance;
       closestLink = link;
     }
   });
 
+  // Loop through all links again to toggle the aria-expanded attribute
   links.forEach((link) => {
+    // If the link is the closest one to the top, set aria-expanded to 'true' (open)
     if (link === closestLink) {
       link.setAttribute('aria-expanded', 'true');
     } else {
+      // Otherwise, set aria-expanded to 'false' (closed)
       link.setAttribute('aria-expanded', 'false');
     }
   });
 }
 
 function formatNav() {
-  // initial variables
-  let room = true;
-  let count = 0;
-  let tempWidth = 0;
-  let totalWidth = 0;
+  // Initialize variables
+  let room = true; // Flag to track if there's space for more items
+  let count = 0; // Counter for menu item index
+  let tempWidth = 0; // Temporary width calculation for current menu
+  let totalWidth = 0; // Total width of the menu items
   const containerWidth = Math.round(
     document.querySelector('.menu-main-menu-container').getBoundingClientRect()
       .width
-  );
+  ); // Get the width of the container
 
-  const navPadding = 5; // for spacing around items
-  const numItems = 5;
+  const navPadding = 5; // Padding to be added around each item for spacing
+  const numItems = 5; // Number of items to be displayed before "More" dropdown
 
-  // for each menu item
+  // Loop through each menu item and apply logic for showing or hiding based on available space
   navItems.forEach(function (item) {
-    // Check if the navItem contains the specific div
+    // Check if the navItem contains a specific mega menu
     const hasMegaMenu = item.querySelector(
       'div.sub-menu-div.mega-menu.mega-menu-column-4'
     );
 
-    // get width of menu with that item
+    // Calculate the width of the menu with the current item added
     tempWidth = totalWidth + navItemWidth[count] + navPadding;
 
-    // if the menu item will fit
+    // If the menu item fits within the container width (considering 'More' dropdown)
     if (
       (tempWidth < containerWidth - moreWidth - navPadding ||
-        (tempWidth < containerWidth && count == numItems)) &&
-      room == true
+        (tempWidth < containerWidth && count === numItems)) &&
+      room === true
     ) {
-      // update current menu width
+      // Update the total width after adding this item
       totalWidth = tempWidth;
 
-      // show menu item
-      if (navItemVisible[count] != true) {
-        // move back to main menu
+      // Show the menu item if it's not visible already
+      if (navItemVisible[count] !== true) {
+        // Move the first child of the "More" submenu back to the main menu
         const menuMore = document.getElementById('menu-more');
         const moreSubMenu = document.getElementById('moreSubMenu');
         const firstChild = moreSubMenu.firstElementChild;
 
+        // If there is a first child, insert it before the 'More' menu
         if (firstChild) {
           menuMore.parentNode.insertBefore(firstChild, menuMore);
         }
 
-        // clear the inner text
+        // Clear inner text of 'More' menu if no submenu links are visible
         if (menuMore.children[1].children.length === 0) {
           document.getElementById('menuMoreLink').innerHTML = '';
           document
@@ -877,103 +912,121 @@ function formatNav() {
             .setAttribute('tabindex', '-1');
         }
 
-        // if (!document.getElementById('moreSubMenu').length > 1) {
-        //   console.log('has no links');
-        // }
-
+        // Mark the current item as visible
         navItemVisible[count] = true;
       }
     }
-    // if the menu item will not fit
+    // If the menu item does not fit within the container
     else {
-      // if there is now no room, show more dropdown
-      if (room == true) {
+      // If this is the first item that doesn't fit, enable the "More" dropdown
+      if (room === true) {
         room = false;
 
-        // change text to "Menu" if no links are showing
-        if (count == 0) {
-          // Add the 'all-hidden' class to the <nav> element
+        // Change text to "Menu" if no items are visible
+        if (count === 0) {
+          // Add a class to hide the navigation items initially
           document.querySelector('nav').classList.add('all-hidden');
 
-          // Set the HTML content of the element with the ID 'menuMoreLink'
+          // Set the HTML content for the 'More' dropdown link
           document.getElementById('menuMoreLink').innerHTML =
             'Menu <i class="caret angle-down"></i>';
         } else {
-          // Remove the 'all-hidden' class from the <nav> element
+          // Remove the class to show navigation items when more are revealed
           document.querySelector('nav').classList.remove('all-hidden');
 
-          // Set the HTML content of the element with the ID 'menuMoreLink'
+          // Update the 'More' dropdown link content
           document.getElementById('menuMoreLink').innerHTML =
             'More <i class="caret angle-down"></i>';
         }
       }
 
-      // remove hover class for items under "More"
+      // Remove the hover effect for items that are moved to the "More" dropdown
       item.classList.remove('hover');
 
-      // move menu item to More dropdown
+      // Move the current item to the "More" dropdown submenu
       const moreSubMenu = document.getElementById('moreSubMenu');
       moreSubMenu.appendChild(item);
 
+      // Mark the current item as not visible
       navItemVisible[count] = false;
     }
 
-    // update count
+    // Increment the count for the next iteration
     count += 1;
   });
 
-  // Select the container by its ID
+  // Select the container for the "More" submenu by its ID (if needed for further use)
   const container = document.getElementById('moreSubMenu');
 }
 
+/**
+ * Resets the direction of all arrows by switching their classes from 'angle-up' to 'angle-down'.
+ * This is typically used for collapsing or resetting UI elements like dropdown menus or accordions.
+ */
 function resetArrows() {
+  // Select all elements with the class '.caret'
   document.querySelectorAll('.caret').forEach(function (element) {
+    // Remove the 'angle-up' class, indicating the arrow is pointing upwards
     element.classList.remove('angle-up');
+
+    // Add the 'angle-down' class, indicating the arrow is pointing downwards
     element.classList.add('angle-down');
   });
 }
 
 function onResize() {
+  // Only proceed if the window's width has actually changed
   if (winWidth != window.innerWidth) {
-    // get width of each item, and list each as visible
     let count = 0;
+
+    // Loop through each navigation item
     navItems.forEach(function (item) {
-      // add hover class to those with class menu-item-has-children
+      // If the item has a submenu, add a 'hover' class to enable hover behavior
       if (item.classList.contains('menu-item-has-children')) {
         item.classList.add('hover');
       }
 
+      // Get and store the width of each visible item
       let itemWidth = item.offsetWidth;
-
       if (itemWidth > 0) {
         navItemWidth[count] = itemWidth;
       }
     });
 
-    // hide all submenus
+    // Close all open submenus to reset the navigation state
     closeAllMenus(null);
 
-    // reset arrows to down position
+    // Reset any toggled arrows back to the default (downward) position
     resetArrows();
 
-    // reset menus aria-labels
+    // Update ARIA labels for all menu items for better accessibility
     updateAllAriaLabels();
 
+    // Update tab indices to manage focusability of dynamic menu items
     updateMenuMoreTabIndex();
 
+    // Reformat navigation layout, e.g., move overflowing items into "More" dropdown
     formatNav();
 
+    // Adjust mega menu positioning if necessary based on new window size
     determineMegaMenuPosition();
 
+    // Update stored window width for the next resize event
     winWidth = window.innerWidth;
   }
 }
 
+/**
+ * Toggles the open/close state of a top-level menu item, updates accessibility attributes,
+ * manages submenus, and dynamically adjusts mega menu positioning.
+ *
+ * @param {HTMLElement} menuLink - The <a> element inside a top-level menu item that was clicked.
+ */
 function toggleTopLevelMenu(menuLink) {
   const allMenuItems = document.querySelectorAll('.menu-item-has-children > a');
   const isExpanded = menuLink.getAttribute('aria-expanded') === 'true';
 
-  // Close all other menus
+  // Close all other open menus (set aria-expanded to false and update icons)
   allMenuItems.forEach((link) => {
     if (link !== menuLink) {
       link.setAttribute('aria-expanded', 'false');
@@ -984,22 +1037,22 @@ function toggleTopLevelMenu(menuLink) {
     }
   });
 
-  // Only call setAriaLabel if menuLink is NOT inside a sub-menu-div
+  // Update all aria-labels if the clicked link is not inside a submenu
   if (!menuLink.closest('.sub-menu-div')) {
-    setAriaLabel(menuLink, !isExpanded);
+    updateAllAriaLabels();
   }
 
-  // Toggle aria-expanded and aria-label for clicked menu
+  // Toggle the aria-expanded state of the clicked menu item
   menuLink.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
 
-  // Toggle icon class
+  // Toggle the arrow icon direction based on expanded/collapsed state
   const icon = menuLink.querySelector('i');
   if (icon) {
     icon.classList.toggle('angle-down', isExpanded);
     icon.classList.toggle('angle-up', !isExpanded);
   }
 
-  // Keep parent (More) link open when a child submenu is open
+  // If inside "More" menu, keep the parent "More" link open
   const li = menuLink.closest('li');
   if (li?.closest('#moreSubMenu')) {
     document
@@ -1007,7 +1060,7 @@ function toggleTopLevelMenu(menuLink) {
       ?.setAttribute('aria-expanded', 'true');
   }
 
-  // Prevent sub-menu from closing when interacting with it
+  // Allow interaction with the submenu without closing it
   const subMenu = li?.querySelector('.sub-menu-div');
   if (subMenu) {
     subMenu.addEventListener('click', (event) => {
@@ -1023,14 +1076,16 @@ function toggleTopLevelMenu(menuLink) {
         if (icon) icon.classList.replace('angle-down', 'angle-up');
       });
     });
+
+    // Adjust mega menu position after submenu interaction
     determineMegaMenuPosition();
   }
 
-  // get the subMenu div
+  // Handle showing or hiding the submenu div based on expanded state
   const subMenuDiv = menuLink.nextElementSibling;
   if (menuLink.getAttribute('aria-expanded') === 'false') {
-    // if subMenuDiv exist remove styles
-    if (subMenuDiv.classList.contains('sub-menu-div')) {
+    // If submenu exists, remove inline styles to reset its display
+    if (subMenuDiv?.classList.contains('sub-menu-div')) {
       subMenuDiv.style.removeProperty('opacity');
       subMenuDiv.style.removeProperty('pointer-events');
       subMenuDiv.style.removeProperty('transform');
@@ -1038,20 +1093,19 @@ function toggleTopLevelMenu(menuLink) {
   }
 
   if (menuLink.getAttribute('aria-expanded') === 'true') {
-    // slide in sub mega menu and show
+    // Slide in and show the submenu (mega menu)
     displaySubMegaMenu(subMenuDiv);
   }
 
-  // see if mega menu spills over to the left, if so set container width
+  // Check if the mega menu overflows off the left side of the screen
+  // Adjust the width dynamically based on viewport size
   const menuMore = document.getElementById('menu-more');
-
   if (menuMore) {
     const subMenuDivs = menuMore.querySelectorAll('.sub-menu-div');
-    const viewportWidth = window.innerWidth; // Get the viewport width
+    const viewportWidth = window.innerWidth;
 
     subMenuDivs.forEach((div) => {
       const rect = div.getBoundingClientRect();
-
       if (rect.left < 0) {
         if (viewportWidth >= 2500) {
           div.style.width = '77vw';
@@ -1070,24 +1124,33 @@ function toggleTopLevelMenu(menuLink) {
     });
   }
 
-  // populate sidebar base on the top menu link
+  // Update the sidebar content based on the selected top-level menu
   if (sidebar) populateSidebar();
 }
 
+/**
+ * Updates the aria-label of a link based on its open or closed state
+ * to improve screen reader accessibility.
+ *
+ * @param {HTMLElement} link - The link element whose aria-label will be updated.
+ * @param {boolean} isOpen - Indicates whether the submenu is currently open (true) or closed (false).
+ */
 function setAriaLabel(link, isOpen) {
-  // Create a temporary element to parse the link content
+  // Create a temporary container to safely parse the link's HTML content
   const tempElement = document.createElement('div');
   tempElement.innerHTML = link.innerHTML;
 
-  // Remove any text inside the <div class="profile"> element
+  // Remove the <div class="profile"> element if it exists,
+  // so it doesn't get included in the aria-label text
   const profileElement = tempElement.querySelector('.profile');
   if (profileElement) {
     profileElement.remove();
   }
 
-  // Get the text content excluding the profile element
+  // Extract the visible menu text after removing the profile element
   const menuText = tempElement.textContent.trim();
 
+  // Set an appropriate aria-label based on whether the submenu is open or closed
   link.setAttribute(
     'aria-label',
     isOpen
@@ -1096,75 +1159,94 @@ function setAriaLabel(link, isOpen) {
   );
 }
 
+/**
+ * Updates the aria-label for all parent menu links based on their current expanded state.
+ *
+ * This function finds all anchor tags (<a>) that are direct children of elements
+ * with the class 'menu-item-has-children'. It checks if each link is currently expanded
+ * (aria-expanded="true") and updates its aria-label accordingly using the setAriaLabel function.
+ */
 function updateAllAriaLabels() {
+  // Select all menu links that have submenus
   document.querySelectorAll('.menu-item-has-children > a').forEach((link) => {
+    // Check if the menu item is expanded
     const isExpanded = link.getAttribute('aria-expanded') === 'true';
+    // Update the aria-label to reflect the current state (expanded or collapsed)
     setAriaLabel(link, isExpanded);
   });
 }
 
-// Listen for the ESC key press to toggle menu
+// Add an event listener to detect keydown events across the document
 document.addEventListener('keydown', function (event) {
+  // Check if the pressed key is the Escape key
   if (event.key === 'Escape') {
-    // Find the currently expanded menu item
+    // Locate the first top-level menu item that is currently expanded
     const expandedMenuItem = document.querySelector(
       '.menu-item-has-children > a[aria-expanded="true"]'
     );
+
+    // If an expanded menu item is found
     if (expandedMenuItem) {
-      // Trigger the same toggle function to close the expanded menu
+      // Call the toggle function to collapse/close the expanded menu
       toggleTopLevelMenu(expandedMenuItem);
     }
   }
 });
 
 function determineMegaMenuPosition() {
-  // Get the main menu element and its children
+  // Get the "More" menu item and all main menu items
   const menuMore = document.getElementById('menu-more');
   const menuItems = document.querySelectorAll('#menu-main-menu > li');
+
+  // Get the screen width (specifically, the header width)
   const screenWidth = Math.round(
     document.querySelector('#header').getBoundingClientRect().width
   );
 
-  let count = 0; // Keep track of number of menu items before "More"
+  let count = 0; // Counter for number of processed menu items before hitting "More"
 
-  // Process each menu item before "More"
+  // Loop through each menu item up to the "More" item
   for (const li of menuItems) {
     count++;
-    if (li === menuMore) break; // Stop when reaching #menu-more
+    if (li === menuMore) break; // Stop once we reach the "More" menu item
 
+    // Check if this menu item has an expanded submenu
     let ariaExpanded = li.querySelector('a').getAttribute('aria-expanded');
 
-    const subMenuDiv = li.querySelector('.sub-menu-div'); // Find mega sub-menu element
+    // Find the mega menu container inside the current menu item (if any)
+    const subMenuDiv = li.querySelector('.sub-menu-div');
 
     if (ariaExpanded === 'true') {
       if (subMenuDiv) {
+        // Only position it if it hasn't been positioned yet
         if (!subMenuDiv.dataset.positioned) {
-          // Initially, keep it hidden and positioned above
+          // Hide and move the submenu initially (pre-animation)
           subMenuDiv.style.opacity = '0';
           subMenuDiv.style.pointerEvents = 'none';
-          subMenuDiv.style.transform = 'translateY(-200px)'; // Start further above
+          subMenuDiv.style.transform = 'translateY(-200px)'; // Position it above view
 
+          // Measure submenu's position relative to viewport
           const rect = subMenuDiv.getBoundingClientRect();
           const distanceFromRight = screenWidth - rect.right;
 
-          // Determine mega menu sub-menu offset based on browser
+          // Browser-specific offset adjustments
           let offset = 110; // Default offset
           const userAgent = navigator.userAgent.toLowerCase();
           if (userAgent.includes('chrome')) {
-            offset -= 10; // Chrome
+            offset -= 10; // Adjust for Chrome rendering
           } else if (userAgent.includes('edg')) {
-            offset -= 8; // Edge
+            offset -= 8; // Adjust for Edge
           } else if (userAgent.includes('opr') || userAgent.includes('opera')) {
-            offset -= 10; // Opera
+            offset -= 10; // Adjust for Opera
           }
 
-          // Position it properly
+          // Set the correct right positioning to align submenu
           subMenuDiv.style.right = -distanceFromRight + offset + 'px';
 
-          // Mark it as positioned
+          // Mark this submenu as already positioned to avoid repositioning
           subMenuDiv.dataset.positioned = 'true';
 
-          // Wait for positioning to apply, then slide in and show
+          // Animate and reveal the submenu
           displaySubMegaMenu(subMenuDiv);
         }
       }
@@ -1270,31 +1352,34 @@ function isCurrentPage(page) {
     return true;
 }
 
-// enable openMenu using the keyboard for accessibility
+// Enable openMenu using the keyboard for accessibility
 function openMenu(bContainsSubMenuDiv, targetElement) {
-  // handle downdown
+  // Handle updating the "More" link's active state based on aria-expanded attribute
+  const moreLink = document.getElementById('menuMoreLink');
 
-  // add active class to "More" link to keep background colour when menu is open
-  if (targetElement && targetElement.getAttribute('aria-expanded') === 'true') {
-    document.getElementById('menuMoreLink').classList.add('active');
-  }
+  if (targetElement && moreLink) {
+    const isExpanded = targetElement.getAttribute('aria-expanded') === 'true';
 
-  // remove active class from "More" to remove the background colour on close
-  if (targetElement && targetElement.getAttribute('aria-expanded') !== 'true') {
-    document.getElementById('menuMoreLink').classList.remove('active');
-    if (
-      document.getElementById('menuMoreLink') &&
-      document.getElementById('menuMoreLink').className.trim() === ''
-    )
-      document.getElementById('menuMoreLink').removeAttribute('class');
+    if (isExpanded) {
+      // If the menu is expanded, add 'active' class to the "More" link
+      moreLink.classList.add('active');
+    } else {
+      // If the menu is collapsed, remove the 'active' class
+      moreLink.classList.remove('active');
+
+      // If no classes remain, remove the class attribute entirely
+      if (moreLink.className.trim() === '') {
+        moreLink.removeAttribute('class');
+      }
+    }
   }
 
   let elements;
 
-  // Select the elements matching the CSS selector
+  // Select submenu elements depending on whether they are wrapped in a <div> or a <ul>
   if (!bContainsSubMenuDiv) {
     elements = document.querySelectorAll(
-      'ul#menu-main-menu li.menu-item-has-children.visible>ul:not(:hover)'
+      'ul#menu-main-menu li.menu-item-has-children.visible > ul:not(:hover)'
     );
   } else {
     elements = document.querySelectorAll(
@@ -1302,31 +1387,41 @@ function openMenu(bContainsSubMenuDiv, targetElement) {
     );
   }
 
-  // Loop through each matched element and change its opacity to 1
+  // Loop through each matched submenu element
   elements.forEach(function (element) {
-    //element.style.opacity = '1';
+    // Intended to set submenu visibility (commented out for now)
+    // element.style.opacity = '1';
   });
 }
 
-function perserveMenuColour() {
-  document.getElementById('menu-more').addEventListener('mouseenter', () => {
-    // Get the anchor element by its ID
-    const menuMoreLink = document.getElementById('menuMoreLink');
+/**
+ * Preserve the active menu link color when hovering over the "More" menu item.
+ *
+ * - Adds 'active' class if the submenu is already expanded when mouse enters.
+ * - Removes 'active' class when mouse leaves.
+ * - Cleans up by removing the class attribute if no other classes remain.
+ */
+function preserveMenuColour() {
+  const menuMore = document.getElementById('menu-more');
+  const menuMoreLink = document.getElementById('menuMoreLink');
 
-    // Check if the element exists and if it has aria-expanded set to "true"
-    if (menuMoreLink && menuMoreLink.getAttribute('aria-expanded') === 'true') {
-      document.getElementById('menuMoreLink').classList.add('active');
+  if (!menuMore || !menuMoreLink) return; // Exit if required elements are not found
+
+  menuMore.addEventListener('mouseenter', () => {
+    // If the submenu is expanded, add the 'active' class to highlight it
+    if (menuMoreLink.getAttribute('aria-expanded') === 'true') {
+      menuMoreLink.classList.add('active');
     }
   });
 
-  document.getElementById('menu-more').addEventListener('mouseleave', () => {
-    document.getElementById('menuMoreLink').classList.remove('active');
+  menuMore.addEventListener('mouseleave', () => {
+    // Remove 'active' class on mouse leave
+    menuMoreLink.classList.remove('active');
 
-    if (
-      document.getElementById('menuMoreLink') &&
-      document.getElementById('menuMoreLink').className.trim() === ''
-    )
-      document.getElementById('menuMoreLink').removeAttribute('class');
+    // If no classes are left, remove the entire class attribute
+    if (menuMoreLink.className.trim() === '') {
+      menuMoreLink.removeAttribute('class');
+    }
   });
 }
 
@@ -1340,107 +1435,134 @@ function removeActiveClass() {
   });
 }
 
+/**
+ * Initializes and renders a dynamic mega menu with accessibility features.
+ * @param {HTMLElement} menuContainer - The container where the menu should be rendered.
+ * @param {string} type - The menu type ('multiple', 'single', or 'pages').
+ * @param {Array} menuData - The menu data used to generate menu items and content.
+ */
 function getMegaMenu(menuContainer, type, menuData) {
-  if (!menuContainer) return; // Exit if no menu container is found
-  const menu = createMenuItems(menuData);
+  if (!menuContainer) return; // Exit early if the menu container is missing
 
-  // Render the default menu items and content for 'LibPAS' when the menu initializes
+  const menu = createMenuItems(menuData); // Create menu items from the provided data
+
+  // Render menu based on type
   if (type === 'multiple') {
+    // Render a multi-level menu and initialize it with 'LibPAS' tab selected
     renderMenu(menu, menuContainer, type, 'LibPAS');
   }
 
   if (type === 'single') {
+    // Render a single-level menu and initialize it with 'LibPAS' tab selected
     renderMenu(menuSingle, menuContainer, type, 'LibPAS');
   }
 
   if (type === 'multiple' || type === 'single') {
+    // Render associated body content and additional sections
     renderBodyContent(menuContainer, type, menuData);
     renderExtraContent(extraContent, menuContainer);
   }
 
   if (type === 'pages') {
+    // For 'pages' type, render static content without menu items
     renderMenu(null, menuContainer, type, '');
     renderBodyContent(menuContainer, type, menuData);
     renderExtraContent(extraContent, menuContainer);
   }
 
-  setTabsContainer();
+  setTabsContainer(); // Initialize the tab container if necessary
 
-  // Prevent adding multiple event listeners to the same menu container
+  // Prevent multiple event listeners from being attached
   if (!menuContainer.dataset.listenerAdded) {
+    // Handle click events within the menu
     menuContainer.addEventListener(
       'click',
       function (event) {
-        event.stopPropagation(); // Prevents unintended event bubbling
-        const anchor = event.target.closest('a'); // Check if a link was clicked
+        event.stopPropagation(); // Stop event from bubbling up
+        const anchor = event.target.closest('a'); // Check if a link or tab was clicked
+
         if (anchor) {
-          event.preventDefault(); // Prevent default link behavior
+          event.preventDefault(); // Prevent default link behavior (e.g., page reload)
 
           const clickedTab = event.target.closest('a');
-
           if (!clickedTab) return;
 
-          // switch tabs if a tab is clicked
+          // If a tab is clicked, update the selected tab
           if (clickedTab.getAttribute('role') === 'tab') {
-            // Remove aria-selected from all tabs within the container
+            // Deselect all tabs
             menuContainer.querySelectorAll('[role="tab"]').forEach((tab) => {
               tab.setAttribute('aria-selected', 'false');
             });
+
+            // Select the clicked tab
             clickedTab.setAttribute('aria-selected', 'true');
 
+            // Switch content to the clicked tab
             switchTab(clickedTab, menuContainer, type, menuData);
           }
         }
       },
-      true // Run the event listener in the capture phase
+      true // Capture phase to handle events before they reach child elements
     );
 
+    // Handle keyboard navigation within tabs
     menuContainer.addEventListener('keydown', (event) => {
       switch (event.key) {
         case 'ArrowLeft':
-          moveTab(menuContainer, type, -1, menuData);
+          moveTab(menuContainer, type, -1, menuData); // Move focus to the previous tab
           break;
         case 'ArrowRight':
-          moveTab(menuContainer, type, 1, menuData);
+          moveTab(menuContainer, type, 1, menuData); // Move focus to the next tab
           break;
         case 'Home':
-          event.preventDefault();
-          switchTab(tabButtons[0], menuContainer, type, menuData);
+          event.preventDefault(); // Prevent default scrolling behavior
+          switchTab(tabButtons[0], menuContainer, type, menuData); // Move focus to the first tab
           break;
         case 'End':
-          event.preventDefault();
+          event.preventDefault(); // Prevent default scrolling behavior
           switchTab(
             tabButtons[tabButtons.length - 1],
             menuContainer,
             type,
             menuData
-          );
+          ); // Move focus to the last tab
           break;
       }
     });
 
-    // Mark the menu container as initialized to prevent duplicate listeners
+    // Mark the menu container to indicate listeners have been added
     menuContainer.dataset.listenerAdded = 'true';
   }
 }
 
+/**
+ * Renders a dynamic menu based on provided data and type.
+ *
+ * @param {Array} menuData - Array of menu items to render.
+ * @param {HTMLElement} menuContainer - The container element where the menu will be injected.
+ * @param {string} type - Type of menu ('multiple', 'single', or 'pages') to determine which template to use.
+ * @param {string} currentMenuItem - The currently selected menu item to highlight.
+ */
 function renderMenu(menuData, menuContainer, type, currentMenuItem) {
   let menuTemplate;
 
+  // Select the appropriate menu template based on the type
   if (type === 'multiple') {
     menuTemplate = document.querySelector('#menuTemplate');
   } else if (type === 'single' || type === 'pages') {
     menuTemplate = document.querySelector('#oneMenuTemplate');
   }
 
+  // Ensure both template and container exist before proceeding
   if (!menuTemplate || !menuContainer) {
     console.error('Error: Menu template or container not found.');
     return;
   }
 
-  // Clear existing content before appending new elements
+  // Clear existing content from the container
   menuContainer.innerHTML = '';
 
+  // Create a new unordered list to hold the menu items
   const menuList = document.createElement('ul');
   menuList.classList.add('menu-list');
 
@@ -1449,11 +1571,14 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
     const templateContent = menuTemplate.content;
 
     menuData.forEach((item) => {
+      // Clone the template content for each menu item
       const menuContent = templateContent.cloneNode(true);
+
+      // Query relevant elements inside the template
       const img = menuContent.querySelector('img');
       const anchor = menuContent.querySelector('a');
-      const strong = anchor.querySelector('strong');
-      const span = anchor.querySelector('span');
+      const strong = anchor?.querySelector('strong');
+      const span = anchor?.querySelector('span');
       const menuItem = menuContent.querySelector('li');
 
       if (!anchor || !strong || !span) {
@@ -1461,7 +1586,7 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
         return;
       }
 
-      // Set attributes
+      // Populate the template elements with item data
       img.src = `/mmenu/assets/imgs/${item.graphic}`;
       img.width = item.width;
       img.height = item.height;
@@ -1469,16 +1594,18 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
       strong.textContent = item.menuTitle;
       span.textContent = item.subText;
 
-      // Set menuItem id for identification
+      // Assign a unique ID to each menu item based on its title
       menuItem.setAttribute('id', item.menuTitle);
 
+      // Append the populated menu item to the fragment
       fragment.appendChild(menuContent);
     });
 
+    // Append all menu items at once for better performance
     menuList.appendChild(fragment);
     menuContainer.appendChild(menuList);
 
-    // Select all <strong> elements inside the menu-list
+    // Highlight the current menu item
     const menuItems = document.querySelectorAll('.menu-list li a strong');
 
     menuItems.forEach((item) => {
@@ -1487,16 +1614,15 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
         item.textContent.trim().toLowerCase() ===
         currentMenuItem.trim().toLowerCase()
       ) {
-        // Match found
+        // Found the matching menu item
 
-        // Example: Set aria-selected to true on the matching tab
         tab.setAttribute('aria-selected', 'true');
         tab.setAttribute('tabindex', '0');
-        tab.focus(); // Optionally focus the element
+        tab.focus(); // Focus on the selected tab for accessibility
 
-        if (sidebar) populateSidebar();
+        if (sidebar) populateSidebar(); // Populate sidebar if available
       } else {
-        // deactive the inactive tabs
+        // Deactivate non-selected tabs
         tab.removeAttribute('aria-selected');
         tab.setAttribute('tabindex', '-1');
       }
@@ -1504,14 +1630,23 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
   }
 }
 
+/**
+ * Renders body content into a specified container based on menu data and type.
+ * @param {HTMLElement} contentContainer - The container where content will be rendered.
+ * @param {string} type - The type of rendering ("pages" or "multiple").
+ * @param {Array} menuData - Array of menu data objects used to generate the content.
+ */
 function renderBodyContent(contentContainer, type, menuData) {
-  // Ensure menuData is an array and not empty
+  // Helper function to check if a value is empty or not
+  const isEmpty = (value) => !value || value.trim() === '';
+
+  // Validate menuData input
   if (!Array.isArray(menuData) || menuData.length === 0) {
     console.error('Error: menuData is missing or not an array.');
     return;
   }
 
-  // Get the content template from the DOM
+  // Retrieve the content template from the DOM
   const contentTemplate = document.querySelector('#menuContent');
 
   if (!contentTemplate || !contentContainer) {
@@ -1519,122 +1654,129 @@ function renderBodyContent(contentContainer, type, menuData) {
     return;
   }
 
-  // Ensure a tab is selected
-  let selectedAnchor = document.querySelector('a[aria-selected="true"]');
+  // Ensure a tab is selected; fallback to the last tab if none is selected
+  let selectedAnchor =
+    document.querySelector('a[aria-selected="true"]') ||
+    [...document.querySelectorAll('.menu-list a')].pop();
+
   if (!selectedAnchor) {
-    // If no element is found, select the last tab as a fallback
-    const allTabs = document.querySelectorAll('.menu-list a');
-    selectedAnchor = allTabs[allTabs.length - 1]; // Select last <a> element
-
-    if (!selectedAnchor) {
-      console.error('Error: No selectable tab found.');
-      return;
-    }
-
-    // Set aria-selected="true" on the last tab
-    selectedAnchor.setAttribute('aria-selected', 'true');
+    console.error('Error: No selectable tab found.');
+    return;
   }
 
-  // Get the parent <li> of the selected anchor
+  selectedAnchor.setAttribute('aria-selected', 'true');
+
   const selectedLi = selectedAnchor.closest('li');
   if (!selectedLi) {
     console.error('Error: Selected anchor is not inside a <li> element.');
     return;
   }
 
-  // Extract the selected tab's text and convert it to lowercase
   const selectedText = selectedLi.id.toLowerCase();
-  //let pagePromptsAndLinks = '';
-
   const fragment = document.createDocumentFragment();
 
-  if (type == 'pages') {
-    const pagePromptsAndLinks = menuData[0].pages
-      .filter((page) => page.section_id === '0' && page.section_prompt === null)
-      .map((page) => ({
-        prompt: page.page_prompt,
-        link: page.page_link,
-      }));
+  /**
+   * Creates and appends a menu content item based on a given menu item object.
+   * @param {Object} menuItem - Object containing 'prompt' and 'link' properties.
+   */
+  function createMenuContent(menuItem) {
+    const menuContent = contentTemplate.content.cloneNode(true);
+    const img = menuContent.querySelector('img');
+    const p = menuContent.querySelector('p');
+    const anchor = menuContent.querySelector('a');
 
-    pagePromptsAndLinks.forEach((menuItem) => {
-      createMenuContent(menuItem);
-    });
+    if (!img || !p || !anchor) {
+      console.error('Error: Missing elements inside body content template.');
+      return;
+    }
+
+    const randomIcon =
+      bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
+
+    if (ukey && menuItem.prompt.toLowerCase() !== 'login') {
+      img.src = `/mmenu/assets/imgs/${randomIcon.graphic}`;
+      img.width = randomIcon.width;
+      img.height = randomIcon.height;
+      img.alt = '';
+
+      p.querySelector('strong').textContent = menuItem.prompt;
+      p.querySelector(
+        'span'
+      ).textContent = `Brief description of the function of ${menuItem.prompt}`;
+
+      anchor.href = menuItem.link;
+
+      const wrapperDiv = document.createElement('div');
+      wrapperDiv.style.display = 'contents';
+      wrapperDiv.appendChild(menuContent);
+
+      fragment.appendChild(wrapperDiv);
+    }
   }
 
-  // Find the corresponding page prompts and links from menuData for multiple
-  if (type == 'multiple') {
+  if (type === 'pages') {
+    // Handle simple 'pages' type content rendering
+    const pagePromptsAndLinks = menuData[0].pages
+      .filter((page) => page.section_id === '0' && page.section_prompt === null)
+      .map((page) => ({ prompt: page.page_prompt, link: page.page_link }));
+
+    pagePromptsAndLinks.forEach(createMenuContent);
+  }
+
+  if (type === 'multiple') {
+    // Handle grouped 'multiple' type content rendering
     const pagePromptsAndLinks =
       menuData
-        .find(
-          (item) =>
-            item.section_prompt &&
-            item.section_prompt.toLowerCase() === selectedText
-        )
+        .find((item) => item.section_prompt?.toLowerCase() === selectedText)
         ?.pages.map((page) => ({
           prompt: page.page_prompt,
           link: page.page_link,
         })) || [];
 
-    // Limit to first six items if there are more than six
-    if (pagePromptsAndLinks.length > 6) {
-      //pagePromptsAndLinks = pagePromptsAndLinks.slice(0, 6);
-    }
-
-    // Create a document fragment to improve performance when adding elements to the DOM
-    //const fragment = document.createDocumentFragment();
-
-    // Loop through each page prompt and populate the template
-
-    // Variables to track grouped headers
-    let groupedHeading = ''; // Stores concatenated prompts for grouped headings
-    let isGrouping = false; // Tracks whether we are currently grouping prompts
-    let customReportsAdded = false; // Ensures "Custom Reports" is only added once
-    let surveyReportsStored = null; // Temporarily store "Survey Reports" content
+    let groupedHeading = '';
+    let isGrouping = false;
+    let customReportsAdded = false;
+    let surveyReportsStored = null;
 
     pagePromptsAndLinks.forEach((menuItem, index) => {
-      const promptText = menuItem.prompt.toLowerCase().trim();
-      const isEmptyLink = menuItem.link.toLowerCase().trim() === ''; // Check if menuItem has no link
-      const isDifferentPrompt = promptText !== selectedText; // Ensure it's not the selected tab
+      const promptText = menuItem.prompt.toLowerCase();
+      const isDifferentPrompt = promptText !== selectedText;
       const isExcludedPrompt = ['maphat trends', 'maphat rankings'].includes(
         promptText
-      ); // Exclude specific prompts
-      const isSurveyReports = promptText === 'survey reports'; // Identify "Survey Reports"
-      const isCustomReports = promptText === 'custom reports'; // Identify "Custom Reports"
+      );
+      const isSurveyReports = promptText === 'survey reports';
+      const isCustomReports = promptText === 'custom reports';
 
-      // Store "Survey Reports" to be placed under "Custom Reports" later
       if (isSurveyReports) {
         surveyReportsStored = menuItem;
-        return; // Skip adding it immediately
+        return;
       }
 
-      // Group consecutive unlinked prompts under a single <h4> (except Survey Reports)
-      if (isDifferentPrompt && isEmptyLink && !isExcludedPrompt) {
-        if (!isGrouping) {
-          groupedHeading = menuItem.prompt;
-          isGrouping = true;
-        } else {
-          groupedHeading += `, ${menuItem.prompt}`;
-        }
+      // Group unlinked prompts together
+      if (isDifferentPrompt && isEmpty(menuItem.link) && !isExcludedPrompt) {
+        groupedHeading += groupedHeading
+          ? `, ${menuItem.prompt}`
+          : menuItem.prompt;
+        isGrouping = true;
 
         // Check the next item in the array
         const nextItem = pagePromptsAndLinks[index + 1];
-        const nextIsEmptyLink =
-          nextItem && nextItem.link.toLowerCase().trim() === '';
-        const nextIsExcludedPrompt =
-          nextItem &&
+        const shouldEndGrouping =
+          !nextItem ||
+          !isEmpty(nextItem.link) ||
           ['maphat trends', 'maphat rankings'].includes(
-            nextItem.prompt.toLowerCase().trim()
+            nextItem.prompt?.toLowerCase()
           );
 
-        if (!nextIsEmptyLink || nextIsExcludedPrompt) {
+        if (shouldEndGrouping) {
           // Check if the grouped heading should be `h5` instead of `h4`
-          const heading = document.createElement(
-            groupedHeading.match(
-              /benchmarking reports|postal reports|email reports/i
+          const headingTag =
+            /benchmarking reports|postal reports|email reports/i.test(
+              groupedHeading
             )
               ? 'h5'
-              : 'h4'
-          );
+              : 'h4';
+          const heading = document.createElement(headingTag);
           heading.textContent = groupedHeading;
           heading.style.gridColumn = '1 / -1'; // Span full grid width
 
@@ -1642,11 +1784,12 @@ function renderBodyContent(contentContainer, type, menuData) {
           heading.setAttribute('tabindex', '0');
 
           fragment.appendChild(heading);
+          groupedHeading = '';
           isGrouping = false;
         }
       }
 
-      // Handle "Custom Reports" (add "Survey Reports" under it)
+      // Handle Custom Reports section separately
       if (isCustomReports && !customReportsAdded) {
         const customReportsHeading = document.createElement('h4');
         customReportsHeading.textContent = 'Custom Reports';
@@ -1654,132 +1797,64 @@ function renderBodyContent(contentContainer, type, menuData) {
         fragment.appendChild(customReportsHeading);
         customReportsAdded = true;
 
-        // If "Survey Reports" was stored, add it now under "Custom Reports"
         if (surveyReportsStored) {
           createMenuContent(surveyReportsStored);
-          surveyReportsStored = null; // Clear stored value
+          surveyReportsStored = null;
         }
       }
-
       // Handle menu items with valid links or excluded prompts
-      if (menuItem.link.trim() !== '' || isExcludedPrompt) {
+      if (!isEmpty(menuItem.link) || isExcludedPrompt) {
         createMenuContent(menuItem);
       }
     });
   }
 
-  // Function to create and append menu content dynamically
-  function createMenuContent(menuItem) {
-    // Clone the template content to create a new menu item instance
-    const menuContent = contentTemplate.content.cloneNode(true);
+  // Append constructed fragment to content container
+  const containerWrapper = document.createElement('div');
+  containerWrapper.classList.add(
+    type !== 'pages' ? 'tabs__panels' : 'left-content'
+  );
 
-    // Select key elements within the cloned template
-    const img = menuContent.querySelector('img');
-    const p = menuContent.querySelector('p');
-    const anchor = menuContent.querySelector('a');
-    const span = menuContent.querySelector('span');
+  containerWrapper.setAttribute('role', 'list');
+  containerWrapper.setAttribute('aria-label', 'Menu Options');
 
-    // Ensure all required elements exist; log an error and exit if any are missing
-    if (!img || !p || !anchor || !span) {
-      console.error('Error: Missing elements inside body content template.');
-      return;
-    }
+  containerWrapper.appendChild(fragment);
+  contentContainer.appendChild(containerWrapper);
 
-    // Select a random icon from the available body content icons
-    const randomIcon =
-      bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
+  reorderCustomReportsSection(containerWrapper);
 
-    // Set image attributes: source, dimensions, and an empty alt for decorative images
-
-    if (ukey && menuItem.prompt.toLowerCase().trim() !== 'login') {
-      img.src = `/mmenu/assets/imgs/${randomIcon.graphic}`;
-      img.width = randomIcon.width;
-      img.height = randomIcon.height;
-      img.alt = ''; // Ensures the image is ignored by screen readers if it's purely decorative
-
-      // Populate text content for the menu item
-      p.querySelector('strong').textContent = menuItem.prompt;
-      p.querySelector(
-        'span'
-      ).textContent = `Brief description of the function of ${menuItem.prompt}`;
-
-      // Set the anchor link to the provided menu item link
-      anchor.href = menuItem.link;
-
-      // Wrap the menu content in a container div and set display to 'contents'
-      const wrapperDiv = document.createElement('div');
-      wrapperDiv.appendChild(menuContent);
-      wrapperDiv.style.display = 'contents'; // Ensures the wrapper doesn't affect layout
-
-      // Append the structured menu item to the main fragment
-      fragment.appendChild(wrapperDiv);
-    }
-  }
-
-  // Append content based on the type
-  if (type !== 'pages') {
-    // Create a wrapper for non-page content
-    const tabsPanels = document.createElement('div');
-    tabsPanels.classList.add('tabs__panels');
-
-    // Add accessibility attributes
-    tabsPanels.setAttribute('role', 'list');
-    tabsPanels.setAttribute('aria-label', 'Menu Options');
-
-    tabsPanels.appendChild(fragment);
-    contentContainer.appendChild(tabsPanels);
-
-    // Reorder elements under "Custom Reports" after appending
-    reorderCustomReportsSection(tabsPanels);
-  } else {
-    // Create a wrapper for page content
-    const wrapper = document.createElement('div');
-    wrapper.classList.add('left-content');
-    wrapper.appendChild(fragment);
-    contentContainer.appendChild(wrapper);
-
-    // Reorder elements under "Custom Reports" after appending
-    reorderCustomReportsSection(wrapper);
-  }
-
-  // Get all h4 elements on the page
+  // Remove duplicate 'Custom Reports' headings if necessary
   const h4Elements = document.querySelectorAll('h4');
-
-  // Filter elements that match the text "Custom Reports" (case insensitive)
-  const matchingHeadings = Array.from(h4Elements).filter(
+  const matchingHeadings = [...h4Elements].filter(
     (h4) => h4.textContent.trim().toLowerCase() === 'custom reports'
   );
 
-  // If more than one exists, remove all except the first one
   if (matchingHeadings.length > 1) {
     matchingHeadings.slice(1).forEach((h4) => h4.remove());
   }
 
-  // Function to reorder the Custom Reports section
+  /**
+   * Reorders the 'Custom Reports' section to ensure correct positioning after rendering.
+   * @param {HTMLElement} container - The container element that holds the rendered content.
+   */
   function reorderCustomReportsSection(container) {
-    // Find the h4 element that specifically contains "Custom Reports"
-    const customReportsHeading = Array.from(
-      container.querySelectorAll('h4')
-    ).find((h4) => h4.textContent.trim().toLowerCase() === 'custom reports');
+    const customReportsHeading = [...container.querySelectorAll('h4')].find(
+      (h4) => h4.textContent.trim().toLowerCase() === 'custom reports'
+    );
 
-    // Ensure the Custom Reports heading exists
     if (customReportsHeading) {
-      // Find all divs that are under the "Custom Reports" section, which should be siblings of the h4
-      const divs = Array.from(
-        customReportsHeading.parentElement.querySelectorAll(
+      const divs = [
+        ...customReportsHeading.parentElement.querySelectorAll(
           'div[style="display: contents;"]'
-        )
+        ),
+      ];
+
+      const customReportDiv = divs.find(
+        (div) =>
+          div.querySelector('strong')?.textContent.trim() === 'Custom Report'
       );
 
-      // Find the div containing "Custom Report"
-      const customReportDiv = divs.find((div) => {
-        const strong = div.querySelector('strong');
-        return strong && strong.textContent.trim() === 'Custom Report';
-      });
-
-      // If we found the "Custom Report" div, move it to the top
       if (customReportDiv) {
-        // Move the customReportDiv to the top of the section (after the heading)
         customReportsHeading.parentElement.insertBefore(
           customReportDiv,
           customReportsHeading.nextElementSibling
@@ -1868,68 +1943,75 @@ function renderExtraContent(contentData, menuContainer) {
   menuContainer.appendChild(fragment); // Insert all content at once for better performance
 }
 
-///////  Navigation through tabs /////////////////
+///////  Navigation through tabs begin /////////////////
 
 function setTabsContainer() {
-  // Select the main tabs container
+  // Find the main tabs container element
   const tabsContainer = document.querySelector('.tabs-container');
-  if (!tabsContainer) return; // Exit if the container is not found
+  if (!tabsContainer) return; // If no container is found, exit early
 
-  // Get the unordered list (<ul>) inside the tabs container
+  // Find the <ul> element inside the tabs container (assumed to be the list of tabs)
   const tabsList = tabsContainer.querySelector('ul');
   if (tabsList) {
-    // Set ARIA role to define this as a tab list for accessibility
+    // Set the ARIA role to 'tablist' to improve accessibility for assistive technologies
     tabsList.setAttribute('role', 'tablist');
   }
 
-  // Select the first tab and update its tabindex for accessibility
+  // Find the first tab link inside the menu list
   const firstTab = tabsContainer.querySelector('.menu-list li:first-child a');
   if (firstTab) {
+    // Remove tabindex to make the first tab focusable by default (for keyboard navigation)
     firstTab.removeAttribute('tabindex');
   }
 }
 
 function moveTab(menuContainer, type, direction, menuData = []) {
-  // Select the tab list
+  // Find the list of tabs (assumes tabs are contained within a <ul> element)
   const tabsList = menuContainer.querySelector('ul');
   if (!tabsList) {
     console.error('No <ul> found inside menuContainer');
     return;
   }
 
+  // Get all tab buttons (assumes tabs are anchor <a> elements inside the <ul>)
   const tabButtons = Array.from(tabsList.querySelectorAll('a'));
+
+  // Get the currently focused tab (element with active focus)
   const currentTab = document.activeElement;
 
-  // Find the index of the currently focused tab
+  // Find the index of the currently focused tab among the tab buttons
   const currentIndex = tabButtons.findIndex((tab) => tab === currentTab);
 
+  // If the currently focused element is not a tab button, exit early
   if (currentIndex === -1) return;
 
-  // Calculate the next index in a circular manner
+  // Calculate the next tab index based on direction (-1 for previous, +1 for next)
+  // Wrap around if moving beyond the first or last tab
   const nextIndex =
     (currentIndex + direction + tabButtons.length) % tabButtons.length;
 
+  // Move focus to the next tab and update its corresponding content
   switchTab(tabButtons[nextIndex], menuContainer, type, menuData);
 }
 
-// Ensure bodyContent is passed properly in switchTab:
+// Handles tab switching and menu rendering based on the clicked tab
 function switchTab(clickedTab, menuContainer, type, menuData = []) {
-  // Get the ID of the closest <li> element to the clicked tab
+  // Find the closest parent <li> element and retrieve its ID in lowercase
   const id = clickedTab.closest('li')?.id?.toLowerCase();
 
-  // Ensure the ID exists before proceeding
+  // Exit early if no valid ID is found
   if (!id) {
     console.error('Error: Unable to determine tab ID.');
     return;
   }
 
-  // Generate the menu items dynamically using the provided menuData
+  // Dynamically create menu items based on provided menuData
   const menu = createMenuItems(menuData);
 
-  // Handle switching based on the selected tab ID
+  // Determine which tab was clicked and render the corresponding menu
   switch (id) {
     case 'libpas':
-      // Render the menu with appropriate type
+      // For 'LibPAS', render the menu according to the type ('multiple' or 'single')
       if (type === 'multiple') {
         renderMenu(menu, menuContainer, type, 'LibPAS');
       }
@@ -1939,20 +2021,20 @@ function switchTab(clickedTab, menuContainer, type, menuData = []) {
       break;
 
     case 'libsat':
-      // Render the menu for LibSAT
+      // For 'LibSAT', render the full menu
       renderMenu(menu, menuContainer, type, 'LibSAT');
       break;
 
     case 'informsus':
-      // Render the menu for InformsUs
+      // For 'InformsUs', render the full menu
       renderMenu(menu, menuContainer, type, 'InformsUs');
       break;
 
     default:
-      console.log('Something went wrong');
+      console.log('Error: Unknown tab ID.');
   }
 
-  // Ensure libSatExtraContent is an array before rendering
+  // After rendering the menu, attempt to render any extra body content
   if (Array.isArray(extraContent)) {
     renderBodyContent(menuContainer, type, menuData);
     renderExtraContent(extraContent, menuContainer);
@@ -1961,6 +2043,18 @@ function switchTab(clickedTab, menuContainer, type, menuData = []) {
   }
 }
 
+///////  Navigation through tabs ends /////////////////
+
+/**
+ * Populates multiple mega menu containers with provided menu data.
+ *
+ * - For each container with the class 'grid-container-multiple',
+ *   initializes a mega menu of type 'multiple'.
+ * - For each container with the class 'grid-container-pages',
+ *   initializes a mega menu of type 'pages'.
+ *
+ * @param {Object} menuData - The data used to build the mega menus.
+ */
 function populateMegaMenu(menuData) {
   document
     .querySelectorAll('.grid-container-multiple')
@@ -1975,18 +2069,30 @@ function populateMegaMenu(menuData) {
     });
 }
 
+/**
+ * Transforms raw menu data into a structured format for rendering.
+ *
+ * - Filters out items without a corresponding entry in the `menuMap`.
+ * - Maps each valid item to a new object containing graphic metadata and URL info.
+ *
+ * @param {Array} data - Array of menu item objects, each containing a section_id and section_prompt.
+ * @returns {Array} - Array of formatted menu item objects ready for display.
+ */
 function createMenuItems(data) {
-  return data
-    .filter((item) => menuMap[item.section_id])
-    .map((item) => {
-      const { graphic, width, height, subText } = menuMap[item.section_id];
-      return {
-        graphic,
-        width,
-        height,
-        url: `#${item.section_prompt.toLowerCase()}`,
-        menuTitle: item.section_prompt,
-        subText,
-      };
-    });
+  return (
+    data
+      // Only keep items that have a matching entry in the menuMap
+      .filter((item) => menuMap[item.section_id])
+      .map((item) => {
+        const { graphic, width, height, subText } = menuMap[item.section_id];
+        return {
+          graphic, // Path or name of the graphic associated with this menu item
+          width, // Graphic width (used for layout/styling)
+          height, // Graphic height (used for layout/styling)
+          url: `#${item.section_prompt.toLowerCase()}`, // Anchor link generated from the section prompt
+          menuTitle: item.section_prompt, // Display text for the menu item
+          subText, // Optional subtitle or description for the menu item
+        };
+      })
+  );
 }
