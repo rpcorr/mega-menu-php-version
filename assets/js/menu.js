@@ -557,7 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .getElementById('menu-main-menu')
         .addEventListener('keydown', function (e) {
           if (e.key === 'Escape') {
-            closeAllMenus('esc');
+            closeAllMenus();
           }
         });
 
@@ -803,7 +803,7 @@ window.addEventListener('resize', function () {
  *                                   This parameter is not currently used in the function but could be utilized for targeting a specific menu item in the future.
  * @returns {void} This function doesn't return anything. It modifies the aria-expanded attributes of menu links.
  */
-function closeAllMenus(menuItem) {
+function closeAllMenus() {
   // Select all anchor elements that are within menu items containing children
   const links = document.querySelectorAll('.menu-item-has-children a');
 
@@ -970,7 +970,7 @@ function onResize() {
     });
 
     // Close all open submenus to reset the navigation state
-    closeAllMenus(null);
+    closeAllMenus();
 
     // Reset any toggled arrows back to the default (downward) position
     resetArrows();
