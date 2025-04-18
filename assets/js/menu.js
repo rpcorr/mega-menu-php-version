@@ -1311,23 +1311,6 @@ function watchForHover() {
   enableHover();
 }
 
-function determineHREFTarget(mI) {
-  if (mI.hasOwnProperty('target')) {
-    return `target="${mI.target}"`;
-  } else {
-    console.log('in determineHREFTarget else block');
-    // return mI.link.charAt(0) !== '#' &&
-    //   (mI.link.indexOf('http') !== -1 || mI.link.indexOf('.pdf') !== -1)
-    //   ? 'target="_blank"'
-    //   : '';
-  }
-}
-
-function isCurrentPage(page) {
-  if (window.location.href.indexOf(page) !== -1 || page === 'index.php')
-    return true;
-}
-
 // Enable openMenu using the keyboard for accessibility
 function openMenu(bContainsSubMenuDiv, targetElement) {
   // Handle updating the "More" link's active state based on aria-expanded attribute
