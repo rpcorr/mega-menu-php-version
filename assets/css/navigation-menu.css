@@ -141,7 +141,8 @@ ul#menu-main-menu li.menu-item-has-children > a.class::after {
 
 /* header and main menu bar styles */
 header {
-  border-bottom: 0.15rem solid #555;
+  border-bottom: 0.15rem solid transparent;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
 }
 
 #mainNavigation {
