@@ -1,4 +1,4 @@
-/* CSS reset - http://meyerweb.com/eric/tools/css/reset/ */
+/* Reset styles */
 html,
 body,
 div,
@@ -87,42 +87,27 @@ video {
   vertical-align: baseline;
 }
 
+/* Global box-sizing */
 * {
   box-sizing: border-box;
 }
 
-html {
+/* Base typography */
+html,
+input,
+button,
+select,
+textarea {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 100%;
   line-height: 1.5;
-  min-height: 100vh;
 }
 
 body {
+  min-height: 100vh;
   -webkit-text-size-adjust: 100%;
 }
 
-ol,
-ul {
-  list-style: none;
-}
-
-header,
-nav,
-section {
-  display: block;
-}
-
-/* base classes */
-.screen-reader-text {
-  clip: rect(1px, 1px, 1px, 1px);
-  position: absolute !important;
-  margin: 0 0 0 0;
-  padding: 0 0 0 0;
-}
-
-/* basic styles */
-body,
 p,
 ul,
 ol,
@@ -134,29 +119,40 @@ input[type='submit'] {
   font-size: 1rem;
 }
 
-input {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+/* Lists */
+ol,
+ul {
+  list-style: none;
 }
 
-nav li,
-nav li li,
-nav li li li,
-nav li li li li,
-nav li li li li li,
-nav li li li li li li {
+/* Structural elements */
+header,
+nav,
+section {
+  display: block;
+}
+
+/* Accessibility */
+.screen-reader-text {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px);
+  margin: 0;
+  padding: 0;
+}
+
+/* Navigation */
+nav li {
   margin-left: 0;
 }
 
-/* basic styles */
-/* https://css-tricks.com/snippets/css/clear-fix/ */
-.group:after {
+/* Utility classes */
+.group::after {
   content: '';
   display: table;
   clear: both;
 }
 
 .max-width {
-  width: 93.75rem;
   max-width: 90%;
   margin: 0 auto;
 }
