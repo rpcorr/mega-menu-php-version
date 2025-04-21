@@ -294,7 +294,8 @@ ul#menu-main-menu
 /* link styles */
 
 #menu-main-menu > li > a {
-  text-transform: uppercase;
+  text-transform: capitalize;
+  text-decoration: none;
 }
 
 .menu-main-menu-container > #menu-main-menu > li > a,
