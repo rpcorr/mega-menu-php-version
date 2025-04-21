@@ -110,7 +110,7 @@
             <section id="branding">
                 <div id="siteIdentity">
                 <div class="logo">
-                    <a href="index.php" rel="home"> <img src="<?php echo getRelativePath(''); ?>assets/imgs/CO_logo.svg" alt="Counting Opinions" height="60"> </a>
+                    <a href="index.php" rel="home"> <img src="<?php echo getRelativePath(''); ?>assets/imgs/CO_logo.png" alt="Counting Opinions" height="50"> </a>
                 </div>
                 <div class="simple-logo">
                     <a href="index.php" rel="home"> <img src="<?php echo getRelativePath(''); ?>assets/imgs/CO_simple_logo.svg" alt="Counting Opinions" height="60"> </a>
