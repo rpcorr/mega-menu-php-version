@@ -819,12 +819,17 @@ function toggleTopLevelMenu(menuLink) {
       if (icon) icon.classList.replace('angle-down', 'angle-up');
     });
 
+    // Toggle tabindex and pointer-events
     subMenu.querySelectorAll('a').forEach((subMenuLink) => {
-      subMenuLink.addEventListener('click', (event) => {
-        event.stopPropagation();
-        menuLink.setAttribute('aria-expanded', 'true');
-        if (icon) icon.classList.replace('angle-down', 'angle-up');
-      });
+      if (!isExpanded) {
+        // Menu is now open
+        subMenuLink.removeAttribute('tabindex');
+        subMenuLink.removeAttribute('style');
+      } else {
+        // Menu is now closed
+        subMenuLink.setAttribute('tabindex', '-1');
+        subMenuLink.style.pointerEvents = 'none';
+      }
     });
 
     // Adjust mega menu position after submenu interaction
@@ -839,6 +844,7 @@ function toggleTopLevelMenu(menuLink) {
       subMenuDiv.style.removeProperty('opacity');
       subMenuDiv.style.removeProperty('pointer-events');
       subMenuDiv.style.removeProperty('transform');
+      subMenuDiv.removeAttribute('style');
     }
   }
 
@@ -1262,6 +1268,21 @@ function getMegaMenu(menuContainer, type, menuData) {
     // Mark the menu container to indicate listeners have been added
     menuContainer.dataset.listenerAdded = 'true';
   }
+
+  // Select all the main <a> elements
+  document.querySelectorAll('a[aria-expanded]').forEach((mainLink) => {
+    if (mainLink.getAttribute('aria-expanded') === 'false') {
+      // Find the next .sub-menu-div sibling (or adjust selector if structure is different)
+      const subMenuDiv = mainLink.nextElementSibling;
+      if (subMenuDiv && subMenuDiv.classList.contains('sub-menu-div')) {
+        // Add tabindex="-1" and disable pointer events for all <a> inside this .sub-menu-div
+        subMenuDiv.querySelectorAll('a').forEach((subLink) => {
+          subLink.setAttribute('tabindex', '-1');
+          subLink.style.pointerEvents = 'none'; // Prevent mouse interaction
+        });
+      }
+    }
+  });
 }
 
 /**
