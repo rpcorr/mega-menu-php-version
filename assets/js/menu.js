@@ -816,7 +816,6 @@ function toggleTopLevelMenu(menuLink) {
     subMenu.addEventListener('click', (event) => {
       event.stopPropagation();
       menuLink.setAttribute('aria-expanded', 'true');
-      if (icon) icon.classList.replace('angle-down', 'angle-up');
     });
 
     // Toggle tabindex and pointer-events
@@ -837,16 +836,16 @@ function toggleTopLevelMenu(menuLink) {
   }
 
   // Handle showing or hiding the submenu div based on expanded state
-  const subMenuDiv = menuLink.nextElementSibling;
-  if (menuLink.getAttribute('aria-expanded') === 'false') {
-    // If submenu exists, remove inline styles to reset its display
-    if (subMenuDiv?.classList.contains('sub-menu-div')) {
-      subMenuDiv.style.removeProperty('opacity');
-      subMenuDiv.style.removeProperty('pointer-events');
-      subMenuDiv.style.removeProperty('transform');
-      subMenuDiv.removeAttribute('style');
-    }
-  }
+  // const subMenuDiv = menuLink.nextElementSibling;
+  // if (menuLink.getAttribute('aria-expanded') === 'false') {
+  //   // If submenu exists, remove inline styles to reset its display
+  //   if (subMenuDiv?.classList.contains('sub-menu-div')) {
+  //     subMenuDiv.style.removeProperty('opacity');
+  //     subMenuDiv.style.removeProperty('pointer-events');
+  //     subMenuDiv.style.removeProperty('transform');
+  //     subMenuDiv.removeAttribute('style');
+  //   }
+  // }
 
   if (menuLink.getAttribute('aria-expanded') === 'true') {
     // Slide in and show the submenu (mega menu)
