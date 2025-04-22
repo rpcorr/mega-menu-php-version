@@ -222,36 +222,17 @@ nav {
   }
 }
 
-#adminMenu {
-  position: relative;
-}
-
-#adminMenu > .sub-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: #fff;
-  display: none;
-  min-width: 12rem;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-#adminMenu[aria-expanded='true'] > .sub-menu {
-  display: block;
-}
-
-/* Profile Menu - Sub Menu Container */
+/* Admin & Profile Menu - Sub Menu Container */
+#adminMenu,
 #profileMenu {
   position: relative;
 }
 
+#adminMenu > .sub-menu,
 #profileMenu > .sub-menu {
   position: absolute;
   top: 100%; /* Position the sub-menu below the profile link */
   left: 0;
-  width: 100%; /* Ensure sub-menu takes full width of the profile menu */
   background-color: #fff; /* Match your design background */
   display: none; /* Hidden by default */
   border: 1px solid #ccc; /* Optional: for visibility */
@@ -261,23 +242,22 @@ nav {
 }
 
 /* Show sub-menu when parent is expanded */
+#adminMenu[aria-expanded='true'] > .sub-menu,
 #profileMenu[aria-expanded='true'] > .sub-menu {
   display: block;
 }
 
 /* Additional styles for the sub-menu links */
+#adminMenu .sub-menu li,
 #profileMenu .sub-menu li {
   padding: 0.5rem 1rem;
 }
 
+#adminMenu .sub-menu li a,
 #profileMenu .sub-menu li a {
   display: block;
   text-decoration: none;
   color: #333; /* Change color as needed */
-}
-
-#profileMenu .sub-menu li a:hover {
-  background-color: #f4f4f4; /* Highlight on hover */
 }
 
 /* Profile menu icon when open */
@@ -285,27 +265,11 @@ nav {
   /*transform: rotate(180deg);*/ /* Rotate the caret icon */
 }
 
-.profile {
-  width: 30px; /* Adjust size as needed */
-  height: 30px; /* Must be equal to width for a perfect circle */
-  float: left;
-  background-color: white;
-  color: #60bd68;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%; /* Makes it a circle */
-  border: 2px solid #60bd68; /* Optional border */
-  font-weight: bold; /* Optional styling */
-  text-align: center;
-}
-
 .hidden-text {
   position: absolute;
   left: -9999px;
 }
 
-/* function */
 /* Initial state of the submenu (hidden or collapsed) */
 #moreSubMenu {
   max-height: 0;
@@ -396,10 +360,15 @@ ul#menu-main-menu li.menu-item-has-children > a.active > a::after {
   right: 0.25rem;
   /* top: 5rem; */
   top: 5.4rem;
-  min-width: 20rem;
+  /* min-width: 20rem; */
   box-shadow: 0 0 0.2rem 0 rgba(50, 50, 50, 0.75);
   overflow-y: auto;
   max-height: 90vh;
+}
+
+#adminMenu > .sub-menu,
+#profileMenu > .sub-menu {
+  min-width: 15rem;
 }
 
 ul.sub-menu li > ul.sub-menu {
