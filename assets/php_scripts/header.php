@@ -75,6 +75,7 @@
     <!-- stylesheets -->
     <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/reset.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-menu.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/mega-menu.css" />
     <!-- <link rel="stylesheet" type="text/css" href="<?php //echo getRelativePath(''); ?>assets/css/sidebar.css" /> -->
     <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/default.css" />
     
@@ -119,7 +120,7 @@
             </section>
           <nav id="menu" aria-label="Menu will change once you log in">
             <div class="menu-main-menu-container">
-              <ul id="menu-main-menu" class="menu"></ul>  
+              <ul id="menu-main-menu"></ul>  
             </div>
           </nav>
           

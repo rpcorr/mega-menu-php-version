@@ -32,28 +32,27 @@ nav ul > li ul > li ul > li ul > li {
 }
 
 #menu-main-menu {
-  flex: 1 1 85%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-weight: 600;
+  height: 98px;
+}
+
+#menu-main-menu > li {
+  height: 98px;
   display: flex;
   align-items: center;
 }
 
-#menu-main-menu > li {
-  position: relative;
-  text-align: center;
-  width: 0 0 auto;
-  flex: 0 0 auto;
-  padding: 1.75rem 0;
-}
-
-#menu-main-menu > li:not(.hidden-links),
-.menu-main-menu-container button {
+#menu-main-menu > li:not(.hidden-links) {
   white-space: nowrap;
 }
 
 /* https://codepen.io/scottb/pen/gixIv */
 ul#menu-main-menu li > ul {
   opacity: 0;
-  position: absolute;
+  /* position: absolute; */
   top: 100%;
   background: #fff;
   padding: 0;
@@ -120,7 +119,7 @@ ul#menu-main-menu li > ul > li a {
 }
 
 ul#menu-main-menu li.menu-item-has-children > a {
-  padding-right: 1.75rem;
+  padding: 0 1rem;
 }
 
 ul#menu-main-menu li.menu-item-has-children > a.class::after {
@@ -130,12 +129,27 @@ ul#menu-main-menu li.menu-item-has-children > a.class::after {
 
 /* header and main menu bar styles */
 header {
+  position: fixed;
+  width: 100%;
   border-bottom: 0.15rem solid transparent;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
 }
 
+/* Make sure the LI (parent) is positioned relatively */
+header nav ul.menu > li.menu-item-has-children {
+  position: relative;
+}
+
+/* Make sure the submenu is positioned absolutely */
+header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
+  top: 100%; /* right below the top-level menu item */
+  left: 0;
+  z-index: 999; /* make sure it appears over other elements */
+}
+
 #mainNavigation {
   position: relative;
+  height: 98px;
   z-index: 99;
   background-color: #60bd68;
 }
@@ -208,9 +222,67 @@ nav {
   }
 }
 
-#menu-main-menu {
-  justify-content: flex-start;
-  font-weight: 600;
+#adminMenu {
+  position: relative;
+}
+
+#adminMenu > .sub-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  display: none;
+  min-width: 12rem;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+#adminMenu[aria-expanded='true'] > .sub-menu {
+  display: block;
+}
+
+/* Profile Menu - Sub Menu Container */
+#profileMenu {
+  position: relative;
+}
+
+#profileMenu > .sub-menu {
+  position: absolute;
+  top: 100%; /* Position the sub-menu below the profile link */
+  left: 0;
+  width: 100%; /* Ensure sub-menu takes full width of the profile menu */
+  background-color: #fff; /* Match your design background */
+  display: none; /* Hidden by default */
+  border: 1px solid #ccc; /* Optional: for visibility */
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Optional: for visibility */
+  z-index: 1000; /* Ensure it's on top of other elements */
+}
+
+/* Show sub-menu when parent is expanded */
+#profileMenu[aria-expanded='true'] > .sub-menu {
+  display: block;
+}
+
+/* Additional styles for the sub-menu links */
+#profileMenu .sub-menu li {
+  padding: 0.5rem 1rem;
+}
+
+#profileMenu .sub-menu li a {
+  display: block;
+  text-decoration: none;
+  color: #333; /* Change color as needed */
+}
+
+#profileMenu .sub-menu li a:hover {
+  background-color: #f4f4f4; /* Highlight on hover */
+}
+
+/* Profile menu icon when open */
+#profileMenu[aria-expanded='true'] a .caret {
+  /*transform: rotate(180deg);*/ /* Rotate the caret icon */
 }
 
 .profile {
@@ -261,10 +333,6 @@ ul#menu-main-menu li.menu-item-has-children > a.active > ul ul.sub-menu {
   position: relative;
 }
 
-ul#menu-main-menu li.menu-item-has-children > a {
-  padding-right: 1.75rem;
-}
-
 ul#menu-main-menu li.menu-item-has-children > a.active::after {
   top: calc(50% - 0.4rem);
   transform: rotate(225deg) translate(-25%, -25%);
@@ -284,28 +352,17 @@ ul#menu-main-menu
 /* link styles */
 
 #menu-main-menu > li > a {
+  display: flex;
+  align-items: center;
+  height: 100%;
   text-transform: capitalize;
   text-decoration: none;
 }
 
-.menu-main-menu-container > #menu-main-menu > li > a,
-.menu-main-menu-container > #menu-main-menu > li > button {
-  padding: 2rem 1.25rem;
-}
-
 @media (max-width: 27em) {
-  .menu-main-menu-container > #menu-main-menu > li > a,
-  .menu-main-menu-container > #menu-main-menu > li > button {
+  .menu-main-menu-container > #menu-main-menu > li > a {
     padding: 1.5rem 1.25rem;
   }
-}
-
-.menu-main-menu-container > #menu-main-menu > li.menu-item-has-children > a,
-.menu-main-menu-container
-  > #menu-main-menu
-  > li.menu-item-has-children
-  > button {
-  padding-right: 0.45em;
 }
 
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a {
@@ -416,9 +473,4 @@ ul.sub-menu li > ul.sub-menu {
   clip: rect(0, 0, 0, 0);
   border: 0;
   white-space: nowrap;
-}
-
-header {
-  position: fixed;
-  width: 100%;
 }

@@ -184,6 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let menuHTML = '';
         let createdPagesMenu = false;
         let createdServicesMenu = false;
+        let createdAdminMenu = false;
 
         menuData.forEach((section) => {
           // If section_id is 0, create top-level menu items
@@ -215,27 +216,31 @@ document.addEventListener('DOMContentLoaded', () => {
               menuHTML += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
             });
           } else {
+            console.log(section.section_prompt);
             if (section.section_prompt != 'LibSat') {
               let openSubmenu = false;
               // Create submenus for other sections
               if (section.section_prompt) {
-                menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="${section.section_prompt} has a sub menu. Click enter to open">${section.section_prompt} <i class="caret angle-down"></i></a>`;
-
+                let adminId = '';
+                if (section.section_prompt === 'Admin' && !createdAdminMenu) {
+                  adminId = ' id="adminMenu"';
+                  createdAdminMenu = true;
+                }
+                menuHTML += `<li class="menu-item-has-children"${adminId} aria-expanded="false"><a href="#" aria-label="${section.section_prompt} has a sub menu. Click enter to open">${section.section_prompt} <i class="caret angle-down"></i></a>`;
                 menuHTML += '<ul class="sub-menu">';
-
                 section.pages.forEach((page, index) => {
                   if (
                     page.page_prompt.toLowerCase() !==
                     section.section_prompt.toLowerCase()
-                  )
+                  ) {
                     if (page.page_link === '') {
-                      menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="${page.page_prompt} has a sub menu. Click enter to open">${page.page_prompt} <i class="caret angle-down"></i></a>`;
+                      menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="${page.page_prompt} has a sub menu. Click enter to open">${page.page_prompt} <i class="caret angle-down"></i></a>`;
                       menuHTML += '<ul class="sub-menu">';
                       openSubmenu = true;
                     } else {
                       menuHTML += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
                     }
-
+                  }
                   // close sub menu if index is at the end of section and openSubmenu is true
                   if (index === section.pages.length - 1 && openSubmenu) {
                     menuHTML += '</ul></li>';
@@ -252,15 +257,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Call the function to create the menu
       let menuHTML = createMenu(finalGroupedArray);
+      //let menuHTML = '';
 
       // if logged in, show profile
       if (ukey.trim() !== '') {
-        menuHTML += `<li class="menu-item-has-children hover"><a href="#" aria-expanded="false" aria-label="John Smith profile has a sub menu. Click enter to open">John Smith <span class="hidden-text">profile</span> <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="#">My Profile</a></li><li><a href="#">Settings</a></li><li><a href="#">Notifications</a></li><li><a href="#">Help &amp; Support</a></li><li><a href="logout.php">Sign Out</a></li></ul></li>`;
+        menuHTML += `<li class="menu-item-has-children hover" id="profileMenu">
+        <a href="#" aria-expanded="false" aria-label="John Smith profile has a sub menu. Click enter to open">
+        John Smith <span class="hidden-text">profile</span> 
+        <i class="caret angle-down"></i>
+
+        </a>
+        <ul class="sub-menu" aria-hidden="true">
+        <li><a href="#">My Profile</a></li>
+        <li><a href="#">Settings</a></li>
+        <li><a href="#">Notifications</a></li>
+        <li><a href="#">Help &amp; Support</a></li>
+        <li><a href="logout.php">Sign Out</a></li>
+        </ul>
+        
+        </li>`;
       }
 
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
 
       populateMegaMenu(finalGroupedArray);
+
+      const profileMenu = document.getElementById('profileMenu');
+      const profileMenuLink = profileMenu.querySelector('a');
+      const subMenu = profileMenu.querySelector('.sub-menu');
+
+      profileMenuLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        const isExpanded = profileMenu.getAttribute('aria-expanded') === 'true';
+
+        // Toggle the aria-expanded attribute
+        profileMenu.setAttribute('aria-expanded', !isExpanded);
+
+        // Toggle the sub-menu visibility
+        subMenu.style.display = isExpanded ? 'none' : 'block';
+      });
 
       navItems = document.querySelectorAll('#menu-main-menu > li');
 
@@ -755,6 +790,10 @@ function toggleTopLevelMenu(menuLink) {
 
   // Toggle the aria-expanded state of the clicked menu item
   menuLink.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+  menuLink.parentElement.setAttribute(
+    'aria-expanded',
+    isExpanded ? 'false' : 'true'
+  );
 
   // Toggle the arrow icon direction based on expanded/collapsed state
   const icon = menuLink.querySelector('i');
@@ -997,10 +1036,6 @@ function updateMenuMoreTabIndex() {
         const menuItem = menuItems[menuItems.length - 2];
         if (menuItem.textContent.trim().includes('Profile')) {
           menuItem.style.marginLeft = 'auto';
-
-          // override padding left
-          const anchor = menuItem.querySelector('a');
-          anchor.style.paddingLeft = '0.5rem';
         }
       }
     } else {
