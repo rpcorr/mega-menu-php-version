@@ -755,7 +755,7 @@ function onResize() {
     formatNav();
 
     // Adjust mega menu positioning if necessary based on new window size
-    determineMegaMenuPosition();
+    //determineMegaMenuPosition();
 
     // Update stored window width for the next resize event
     winWidth = window.innerWidth;
@@ -828,7 +828,7 @@ function toggleTopLevelMenu(menuLink) {
     });
 
     // Adjust mega menu position after submenu interaction
-    determineMegaMenuPosition();
+    //determineMegaMenuPosition();
   }
 
   // Handle showing or hiding the submenu div based on expanded state

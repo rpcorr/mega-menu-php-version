@@ -15,7 +15,7 @@
 
 /* When aria-expanded is true, show the sub-menu */
 a[aria-expanded='true'] + div.sub-menu-div {
-  opacity: 1;
+  opacity: 1 !important;
   visibility: visible;
   display: block; /* Make it visible */
 }
