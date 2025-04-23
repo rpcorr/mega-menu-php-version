@@ -141,7 +141,7 @@ header nav ul.menu > li.menu-item-has-children {
 }
 
 /* Make sure the submenu is positioned absolutely */
-header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
+header nav ul.menu > li.menu-item-has-children > .mega-menu {
   top: 100%; /* right below the top-level menu item */
   left: 0;
 }

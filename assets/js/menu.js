@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (createdPagesMenu === false) {
               createdPagesMenu = true;
               menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Pages has a sub menu. Click enter to open">Pages <i class="caret angle-down"></i></a>
-            <div class="sub-menu-div">
+            <div class="mega-menu">
             <div class="grid-container-pages tabs-container"></div>
             </div>
           </li>`;
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (createdServicesMenu === false) {
               createdServicesMenu = true;
               menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
-            <div class="sub-menu-div">
+            <div class="mega-menu">
             <div class="grid-container-multiple tabs-container"></div>
             </div>
           </li>`;
@@ -309,8 +309,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // open menu - determine the type of menu
             const nextSibling = this.nextElementSibling;
 
-            // Check if nextSibling exists and has the class 'sub-menu-div'
-            if (nextSibling && nextSibling.classList.contains('sub-menu-div')) {
+            // Check if nextSibling exists and has the class 'mega-menu'
+            if (nextSibling && nextSibling.classList.contains('mega-menu')) {
               openMenu(true, null); // Modify this if you need to pass a different argument
             } else {
               openMenu(false, null);
@@ -603,7 +603,7 @@ function closeAllMenus() {
     const nextElem = link.nextElementSibling;
     if (
       nextElem &&
-      (nextElem.classList.contains('sub-menu-div') ||
+      (nextElem.classList.contains('mega-menu') ||
         nextElem.classList.contains('sub-menu'))
     ) {
       nextElem.removeAttribute('style');
@@ -628,7 +628,7 @@ function formatNav() {
   // Loop through each menu item and apply logic for showing or hiding based on available space
   navItems.forEach(function (item) {
     // Check if the navItem contains a specific mega menu
-    const hasMegaMenu = item.querySelector('div.sub-menu-div');
+    const hasMegaMenu = item.querySelector('div.mega-menu');
 
     // Calculate the width of the menu with the current item added
     tempWidth = totalWidth + navItemWidth[count] + navPadding;
@@ -788,7 +788,7 @@ function toggleTopLevelMenu(menuLink) {
   });
 
   // Update all aria-labels if the clicked link is not inside a submenu
-  if (!menuLink.closest('.sub-menu-div')) {
+  if (!menuLink.closest('.mega-menu')) {
     updateAllAriaLabels();
   }
 
@@ -815,7 +815,7 @@ function toggleTopLevelMenu(menuLink) {
   }
 
   // Allow interaction with the submenu without closing it
-  const subMenu = li?.querySelector('.sub-menu-div');
+  const subMenu = li?.querySelector('.mega-menu');
   if (subMenu) {
     subMenu.addEventListener('click', (event) => {
       event.stopPropagation();
@@ -843,7 +843,7 @@ function toggleTopLevelMenu(menuLink) {
   const subMenuDiv = menuLink.nextElementSibling;
   if (menuLink.getAttribute('aria-expanded') === 'false') {
     // If submenu exists, remove inline styles to reset its display
-    if (subMenuDiv?.classList.contains('sub-menu-div')) {
+    if (subMenuDiv?.classList.contains('mega-menu')) {
       subMenuDiv.style.removeProperty('opacity');
       subMenuDiv.style.removeProperty('pointer-events');
       subMenuDiv.style.removeProperty('transform');
@@ -860,7 +860,7 @@ function toggleTopLevelMenu(menuLink) {
   // Adjust the width dynamically based on viewport size
   const menuMore = document.getElementById('menu-more');
   if (menuMore) {
-    const subMenuDivs = menuMore.querySelectorAll('.sub-menu-div');
+    const subMenuDivs = menuMore.querySelectorAll('.mega-menu');
     const viewportWidth = window.innerWidth;
 
     subMenuDivs.forEach((div) => {
@@ -973,7 +973,7 @@ function determineMegaMenuPosition() {
     let ariaExpanded = li.querySelector('a').getAttribute('aria-expanded');
 
     // Find the mega menu container inside the current menu item (if any)
-    const subMenuDiv = li.querySelector('.sub-menu-div');
+    const subMenuDiv = li.querySelector('.mega-menu');
 
     if (ariaExpanded === 'true') {
       if (subMenuDiv) {
@@ -1275,10 +1275,10 @@ function getMegaMenu(menuContainer, type, menuData) {
   // Select all the main <a> elements
   document.querySelectorAll('a[aria-expanded]').forEach((mainLink) => {
     if (mainLink.getAttribute('aria-expanded') === 'false') {
-      // Find the next .sub-menu-div sibling (or adjust selector if structure is different)
+      // Find the next .mega-menu sibling (or adjust selector if structure is different)
       const subMenuDiv = mainLink.nextElementSibling;
-      if (subMenuDiv && subMenuDiv.classList.contains('sub-menu-div')) {
-        // Add tabindex="-1" and disable pointer events for all <a> inside this .sub-menu-div
+      if (subMenuDiv && subMenuDiv.classList.contains('mega-menu')) {
+        // Add tabindex="-1" and disable pointer events for all <a> inside this .mega-menu
         subMenuDiv.querySelectorAll('a').forEach((subLink) => {
           subLink.setAttribute('tabindex', '-1');
           subLink.style.pointerEvents = 'none'; // Prevent mouse interaction

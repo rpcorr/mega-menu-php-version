@@ -4,7 +4,7 @@
 }
 
 /* Position the sub-menu absolutely */
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu-div {
+.menu-main-menu-container > #menu-main-menu > li > .mega-menu {
   position: absolute;
   top: 100%; /* Position it directly below the top-level item */
   left: 0;
@@ -13,13 +13,13 @@
 }
 
 /* When aria-expanded is true, show the sub-menu */
-a[aria-expanded='true'] + div.sub-menu-div {
+a[aria-expanded='true'] + div.mega-menu {
   opacity: 1 !important;
   visibility: visible;
   display: block; /* Make it visible */
 }
 
-/* When submenu is not showing, set pointer-events to none on all elements within the sub-menu-div */
-a[aria-expanded='false'] + .sub-menu-div {
+/* When submenu is not showing, set pointer-events to none on all elements within the mega-menu */
+a[aria-expanded='false'] + .mega-menu {
   pointer-events: none;
 }
