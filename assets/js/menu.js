@@ -593,14 +593,20 @@ function closeAllMenus() {
     }
   });
 
-  // Loop through all links again to toggle the aria-expanded attribute
+  // Loop through all links again to set the aria-expanded attribute to false
   links.forEach((link) => {
-    // If the link is the closest one to the top, set aria-expanded to 'true' (open)
-    if (link === closestLink) {
-      link.setAttribute('aria-expanded', 'true');
-    } else {
-      // Otherwise, set aria-expanded to 'false' (closed)
-      link.setAttribute('aria-expanded', 'false');
+    link.setAttribute('aria-expanded', 'false');
+
+    if (link.parentElement.hasAttribute('aria-expanded'))
+      link.parentElement.setAttribute('aria-expanded', 'false');
+
+    const nextElem = link.nextElementSibling;
+    if (
+      nextElem &&
+      (nextElem.classList.contains('sub-menu-div') ||
+        nextElem.classList.contains('sub-menu'))
+    ) {
+      nextElem.removeAttribute('style');
     }
   });
 }
@@ -836,16 +842,16 @@ function toggleTopLevelMenu(menuLink) {
   }
 
   // Handle showing or hiding the submenu div based on expanded state
-  // const subMenuDiv = menuLink.nextElementSibling;
-  // if (menuLink.getAttribute('aria-expanded') === 'false') {
-  //   // If submenu exists, remove inline styles to reset its display
-  //   if (subMenuDiv?.classList.contains('sub-menu-div')) {
-  //     subMenuDiv.style.removeProperty('opacity');
-  //     subMenuDiv.style.removeProperty('pointer-events');
-  //     subMenuDiv.style.removeProperty('transform');
-  //     subMenuDiv.removeAttribute('style');
-  //   }
-  // }
+  const subMenuDiv = menuLink.nextElementSibling;
+  if (menuLink.getAttribute('aria-expanded') === 'false') {
+    // If submenu exists, remove inline styles to reset its display
+    if (subMenuDiv?.classList.contains('sub-menu-div')) {
+      subMenuDiv.style.removeProperty('opacity');
+      subMenuDiv.style.removeProperty('pointer-events');
+      subMenuDiv.style.removeProperty('transform');
+      subMenuDiv.removeAttribute('style');
+    }
+  }
 
   if (menuLink.getAttribute('aria-expanded') === 'true') {
     // Slide in and show the submenu (mega menu)
