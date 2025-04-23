@@ -216,7 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
               menuHTML += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
             });
           } else {
-            console.log(section.section_prompt);
             if (section.section_prompt != 'LibSat') {
               let openSubmenu = false;
               // Create submenus for other sections
@@ -851,11 +850,6 @@ function toggleTopLevelMenu(menuLink) {
     }
   }
 
-  if (menuLink.getAttribute('aria-expanded') === 'true') {
-    // Slide in and show the submenu (mega menu)
-    displaySubMegaMenu(subMenuDiv);
-  }
-
   // Check if the mega menu overflows off the left side of the screen
   // Adjust the width dynamically based on viewport size
   const menuMore = document.getElementById('menu-more');
@@ -1004,21 +998,10 @@ function determineMegaMenuPosition() {
 
           // Mark this submenu as already positioned to avoid repositioning
           subMenuDiv.dataset.positioned = 'true';
-
-          // Animate and reveal the submenu
-          displaySubMegaMenu(subMenuDiv);
         }
       }
     }
   }
-}
-
-function displaySubMegaMenu(subMenuDiv) {
-  requestAnimationFrame(() => {
-    subMenuDiv.style.opacity = '1'; // Fade it in
-    subMenuDiv.style.pointerEvents = 'auto'; // Enable interaction
-    subMenuDiv.style.transform = 'translateY(0)'; // Slide it into place
-  });
 }
 
 function updateMenuMoreTabIndex() {
