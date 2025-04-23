@@ -120,7 +120,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 }
 
 /* title within a mega menu font colour */
-header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
+header nav ul.menu > li > .mega-menu > .list-item .title {
   color: var(--defaultTextColour);
 }
 

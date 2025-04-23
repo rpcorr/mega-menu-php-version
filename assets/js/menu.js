@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (createdPagesMenu === false) {
               createdPagesMenu = true;
               menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Pages has a sub menu. Click enter to open">Pages <i class="caret angle-down"></i></a>
-            <div class="sub-menu-div mega-menu mega-menu-column-4">
+            <div class="sub-menu-div">
             <div class="grid-container-pages tabs-container"></div>
             </div>
           </li>`;
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (createdServicesMenu === false) {
               createdServicesMenu = true;
               menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
-            <div class="sub-menu-div mega-menu mega-menu-column-4">
+            <div class="sub-menu-div">
             <div class="grid-container-multiple tabs-container"></div>
             </div>
           </li>`;
@@ -628,9 +628,7 @@ function formatNav() {
   // Loop through each menu item and apply logic for showing or hiding based on available space
   navItems.forEach(function (item) {
     // Check if the navItem contains a specific mega menu
-    const hasMegaMenu = item.querySelector(
-      'div.sub-menu-div.mega-menu.mega-menu-column-4'
-    );
+    const hasMegaMenu = item.querySelector('div.sub-menu-div');
 
     // Calculate the width of the menu with the current item added
     tempWidth = totalWidth + navItemWidth[count] + navPadding;
