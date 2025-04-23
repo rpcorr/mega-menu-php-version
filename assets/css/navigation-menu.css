@@ -144,13 +144,11 @@ header nav ul.menu > li.menu-item-has-children {
 header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   top: 100%; /* right below the top-level menu item */
   left: 0;
-  z-index: 999; /* make sure it appears over other elements */
 }
 
 #mainNavigation {
   position: relative;
   height: 98px;
-  z-index: 99;
   background-color: #60bd68;
 }
 
