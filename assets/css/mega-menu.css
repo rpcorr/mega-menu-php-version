@@ -18,3 +18,8 @@ a[aria-expanded='true'] + div.sub-menu-div {
   visibility: visible;
   display: block; /* Make it visible */
 }
+
+/* When submenu is not showing, set pointer-events to none on all elements within the sub-menu-div */
+a[aria-expanded='false'] + .sub-menu-div {
+  pointer-events: none;
+}
