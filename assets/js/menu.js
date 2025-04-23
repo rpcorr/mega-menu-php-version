@@ -786,9 +786,9 @@ function toggleTopLevelMenu(menuLink) {
     }
   });
 
-  // Update all aria-labels if the clicked link is not inside a submenu
+  // toggle menuLink aria-label if the clicked link is not inside a submenu
   if (!menuLink.closest('.mega-menu')) {
-    updateAllAriaLabels();
+    toggleLinkArialLabel(menuLink);
   }
 
   // Toggle the aria-expanded state of the clicked menu item
@@ -912,6 +912,10 @@ function setAriaLabel(link, isOpen) {
   );
 }
 
+function toggleLinkArialLabel(menuLink) {
+  const isExpanded = menuLink.getAttribute('aria-expanded') === 'true';
+  setAriaLabel(menuLink, !isExpanded);
+}
 /**
  * Updates the aria-label for all parent menu links based on their current expanded state.
  *
@@ -925,7 +929,7 @@ function updateAllAriaLabels() {
     // Check if the menu item is expanded
     const isExpanded = link.getAttribute('aria-expanded') === 'true';
     // Update the aria-label to reflect the current state (expanded or collapsed)
-    setAriaLabel(link, isExpanded);
+    setAriaLabel(link, !isExpanded);
   });
 }
 
