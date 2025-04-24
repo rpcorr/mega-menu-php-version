@@ -859,10 +859,27 @@ function toggleTopLevelMenu(menuLink) {
   if (sidebar) populateSidebar();
 
   function toggleAriaExpanded(menuLink) {
-    menuLink.parentElement.setAttribute(
-      'aria-expanded',
-      isExpanded ? 'false' : 'true'
-    );
+    const parentLi = menuLink.closest('.menu-item-has-children');
+    const isExpanded = parentLi.getAttribute('aria-expanded') === 'true';
+    const newState = !isExpanded;
+
+    // Toggle aria-expanded attribute
+    parentLi.setAttribute('aria-expanded', newState.toString());
+
+    // Find the mega-menu within this list item
+    const megaMenu = parentLi.querySelector('.mega-menu');
+
+    if (megaMenu) {
+      const links = megaMenu.querySelectorAll('a');
+
+      links.forEach((link) => {
+        if (newState) {
+          link.removeAttribute('tabindex');
+        } else {
+          link.setAttribute('tabindex', '-1');
+        }
+      });
+    }
   }
 
   function toggleArrowIcon(menuLink) {
