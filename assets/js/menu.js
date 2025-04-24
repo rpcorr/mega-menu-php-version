@@ -771,25 +771,8 @@ function onResize() {
  * @param {HTMLElement} menuLink - The <a> element inside a top-level menu item that was clicked.
  */
 function toggleTopLevelMenu(menuLink) {
-  const allMenuItems = document.querySelectorAll('.menu-item-has-children > a');
   const isExpanded =
     menuLink.parentElement.getAttribute('aria-expanded') === 'true';
-
-  // Close all other open menus (set aria-expanded to false and update icons)
-  // allMenuItems.forEach((link) => {
-  //   if (link !== menuLink) {
-  //     //link.setAttribute('aria-expanded', 'false');
-  //     const icon = link.querySelector('i');
-  //     if (icon) {
-  //       icon.classList.replace('angle-up', 'angle-down');
-  //     }
-  //   }
-  // });
-
-  // toggle menuLink aria-label if the clicked link is not inside a submenu
-  // if (!menuLink.closest('.mega-menu')) {
-  //   //toggleLinkArialLabel(menuLink);
-  // }
 
   // Toggle the aria-expanded state of the clicked menu item
   menuLink.parentElement.setAttribute(
@@ -803,6 +786,9 @@ function toggleTopLevelMenu(menuLink) {
     icon.classList.toggle('angle-down', isExpanded);
     icon.classList.toggle('angle-up', !isExpanded);
   }
+
+  // Toggle the aria-label state of the clicked menu item
+  toggleLinkAriaLabel(menuLink);
 
   // If inside "More" menu, keep the parent "More" link open
   // const li = menuLink.closest('li');
@@ -840,16 +826,16 @@ function toggleTopLevelMenu(menuLink) {
   //}
 
   // Handle showing or hiding the submenu div based on expanded state
-  const subMenuDiv = menuLink.nextElementSibling;
-  if (menuLink.getAttribute('aria-expanded') === 'false') {
-    // If submenu exists, remove inline styles to reset its display
-    if (subMenuDiv?.classList.contains('mega-menu')) {
-      subMenuDiv.style.removeProperty('opacity');
-      subMenuDiv.style.removeProperty('pointer-events');
-      subMenuDiv.style.removeProperty('transform');
-      subMenuDiv.removeAttribute('style');
-    }
-  }
+  // const subMenuDiv = menuLink.nextElementSibling;
+  // if (menuLink.getAttribute('aria-expanded') === 'false') {
+  //   // If submenu exists, remove inline styles to reset its display
+  //   if (subMenuDiv?.classList.contains('mega-menu')) {
+  //     subMenuDiv.style.removeProperty('opacity');
+  //     subMenuDiv.style.removeProperty('pointer-events');
+  //     subMenuDiv.style.removeProperty('transform');
+  //     subMenuDiv.removeAttribute('style');
+  //   }
+  // }
 
   // Check if the mega menu overflows off the left side of the screen
   // Adjust the width dynamically based on viewport size
@@ -880,43 +866,32 @@ function toggleTopLevelMenu(menuLink) {
 
   // Update the sidebar content based on the selected top-level menu
   if (sidebar) populateSidebar();
+
+  function toggleLinkAriaLabel(menuLink) {
+    const isExpanded =
+      menuLink.parentElement.getAttribute('aria-expanded') === 'true';
+    setAriaLabel(menuLink, isExpanded);
+  }
+
+  /**
+   * Updates the aria-label of a link based on its open or closed state
+   * to improve screen reader accessibility.
+   *
+   * @param {HTMLElement} link - The link element whose aria-label will be updated.
+   * @param {boolean} isOpen - Indicates whether the submenu is currently open (true) or closed (false).
+   */
+  function setAriaLabel(menuLink, isOpen) {
+    const menuText = menuLink.textContent.trim();
+    // Set an appropriate aria-label based on whether the submenu is open or closed
+    menuLink.setAttribute(
+      'aria-label',
+      isOpen
+        ? `Click enter to close ${menuText} sub menu`
+        : `${menuText} has a sub menu. Click enter to open`
+    );
+  }
 }
 
-/**
- * Updates the aria-label of a link based on its open or closed state
- * to improve screen reader accessibility.
- *
- * @param {HTMLElement} link - The link element whose aria-label will be updated.
- * @param {boolean} isOpen - Indicates whether the submenu is currently open (true) or closed (false).
- */
-// function setAriaLabel(link, isOpen) {
-//   // Create a temporary container to safely parse the link's HTML content
-//   const tempElement = document.createElement('div');
-//   tempElement.innerHTML = link.innerHTML;
-
-//   // Remove the <div class="profile"> element if it exists,
-//   // so it doesn't get included in the aria-label text
-//   const profileElement = tempElement.querySelector('.profile');
-//   if (profileElement) {
-//     profileElement.remove();
-//   }
-
-//   // Extract the visible menu text after removing the profile element
-//   const menuText = tempElement.textContent.trim();
-
-//   // Set an appropriate aria-label based on whether the submenu is open or closed
-//   link.setAttribute(
-//     'aria-label',
-//     isOpen
-//       ? `Click enter to close ${menuText} sub menu`
-//       : `${menuText} has a sub menu. Click enter to open`
-//   );
-// }
-
-// function toggleLinkArialLabel(menuLink) {
-//   const isExpanded = menuLink.getAttribute('aria-expanded') === 'true';
-//   setAriaLabel(menuLink, !isExpanded);
-// }
 /**
  * Updates the aria-label for all parent menu links based on their current expanded state.
  *
