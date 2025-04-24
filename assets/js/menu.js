@@ -773,17 +773,10 @@ function toggleTopLevelMenu(menuLink) {
     menuLink.parentElement.getAttribute('aria-expanded') === 'true';
 
   // Toggle the aria-expanded state of the clicked menu item
-  menuLink.parentElement.setAttribute(
-    'aria-expanded',
-    isExpanded ? 'false' : 'true'
-  );
+  toggleAriaExpanded(menuLink);
 
   // Toggle the arrow icon direction based on expanded/collapsed state
-  const icon = menuLink.querySelector('i');
-  if (icon) {
-    icon.classList.toggle('angle-down', isExpanded);
-    icon.classList.toggle('angle-up', !isExpanded);
-  }
+  toggleArrowIcon(menuLink);
 
   // Toggle the aria-label state of the clicked menu item
   toggleLinkAriaLabel(menuLink);
@@ -864,6 +857,21 @@ function toggleTopLevelMenu(menuLink) {
 
   // Update the sidebar content based on the selected top-level menu
   if (sidebar) populateSidebar();
+
+  function toggleAriaExpanded(menuLink) {
+    menuLink.parentElement.setAttribute(
+      'aria-expanded',
+      isExpanded ? 'false' : 'true'
+    );
+  }
+
+  function toggleArrowIcon(menuLink) {
+    const icon = menuLink.querySelector('i');
+    if (icon) {
+      icon.classList.toggle('angle-down', isExpanded);
+      icon.classList.toggle('angle-up', !isExpanded);
+    }
+  }
 
   function toggleLinkAriaLabel(menuLink) {
     const isExpanded =
