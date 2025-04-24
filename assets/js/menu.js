@@ -748,7 +748,7 @@ function onResize() {
     resetArrows();
 
     // Update ARIA labels for all menu items for better accessibility
-    updateAllAriaLabels();
+    //updateAllAriaLabels();
 
     // Update tab indices to manage focusability of dynamic menu items
     updateMenuMoreTabIndex();
@@ -805,37 +805,39 @@ function toggleTopLevelMenu(menuLink) {
   }
 
   // If inside "More" menu, keep the parent "More" link open
-  const li = menuLink.closest('li');
-  if (li?.closest('#moreSubMenu')) {
-    document
-      .querySelector('#menuMoreLink')
-      ?.setAttribute('aria-expanded', 'true');
-  }
+  // const li = menuLink.closest('li');
+  // if (li?.closest('#moreSubMenu')) {
+  //   document
+  //     .querySelector('#menuMoreLink')
+  //     ?.setAttribute('aria-expanded', 'true');
+  // }
 
   // Allow interaction with the submenu without closing it
-  const subMenu = li?.querySelector('.mega-menu');
-  if (subMenu) {
-    subMenu.addEventListener('click', (event) => {
-      event.stopPropagation();
-      menuLink.setAttribute('aria-expanded', 'true');
-    });
+  // const subMenu = li?.querySelector('.mega-menu');
+  // if (subMenu) {
+  //   console.log('here');
+  //   subMenu.addEventListener('click', (event) => {
+  //     event.stopPropagation();
+  //     menuLink.setAttribute('aria-expanded', 'true');
+  //   });
 
-    // Toggle tabindex and pointer-events
-    subMenu.querySelectorAll('a').forEach((subMenuLink) => {
-      if (!isExpanded) {
-        // Menu is now open
-        subMenuLink.removeAttribute('tabindex');
-        subMenuLink.removeAttribute('style');
-      } else {
-        // Menu is now closed
-        subMenuLink.setAttribute('tabindex', '-1');
-        subMenuLink.style.pointerEvents = 'none';
-      }
-    });
+  // // Toggle tabindex and pointer-events
+  // subMenu.querySelectorAll('a').forEach((subMenuLink) => {
 
-    // Adjust mega menu position after submenu interaction
-    //determineMegaMenuPosition();
-  }
+  //   if (!isExpanded) {
+  //     // Menu is now open
+  //     subMenuLink.removeAttribute('tabindex');
+  //     subMenuLink.removeAttribute('style');
+  //   } else {
+  //     // Menu is now closed
+  //     subMenuLink.setAttribute('tabindex', '-1');
+  //     subMenuLink.style.pointerEvents = 'none';
+  //   }
+  // });
+
+  // Adjust mega menu position after submenu interaction
+  //determineMegaMenuPosition();
+  //}
 
   // Handle showing or hiding the submenu div based on expanded state
   const subMenuDiv = menuLink.nextElementSibling;
@@ -1349,19 +1351,22 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
 
     menuItems.forEach((item) => {
       const tab = item.closest('a');
-      if (
-        item.textContent.trim().toLowerCase() ===
-        currentMenuItem.trim().toLowerCase()
-      ) {
-        // Found the matching menu item
+      const li = tab.closest('li');
 
+      const isCurrentItem =
+        item.textContent.trim().toLowerCase() ===
+        currentMenuItem.trim().toLowerCase();
+      const isExpanded = li && li.getAttribute('aria-expanded') === 'true';
+
+      if (isCurrentItem && isExpanded) {
+        // Set accessibility attributes only if li has aria-expanded="true"
         tab.setAttribute('aria-selected', 'true');
         tab.setAttribute('tabindex', '0');
         tab.focus(); // Focus on the selected tab for accessibility
 
-        if (sidebar) populateSidebar(); // Populate sidebar if available
+        if (typeof sidebar !== 'undefined') populateSidebar(); // Populate sidebar if available
       } else {
-        // Deactivate non-selected tabs
+        // Deactivate non-selected or non-expanded tabs
         tab.removeAttribute('aria-selected');
         tab.setAttribute('tabindex', '-1');
       }
@@ -1403,7 +1408,8 @@ function renderBodyContent(contentContainer, type, menuData) {
     return;
   }
 
-  selectedAnchor.setAttribute('aria-selected', 'true');
+  console.log(`6: ${selectedAnchor}`);
+  //selectedAnchor.setAttribute('aria-selected', 'true');
 
   const selectedLi = selectedAnchor.closest('li');
   if (!selectedLi) {
@@ -1432,7 +1438,11 @@ function renderBodyContent(contentContainer, type, menuData) {
     const randomIcon =
       bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
 
-    if (ukey && menuItem.prompt.toLowerCase() !== 'login') {
+    if (
+      typeof ukey !== 'undefined' &&
+      ukey &&
+      menuItem.prompt.toLowerCase() !== 'login'
+    ) {
       img.src = `/mmenu/assets/imgs/${randomIcon.graphic}`;
       img.width = randomIcon.width;
       img.height = randomIcon.height;
@@ -1519,8 +1529,13 @@ function renderBodyContent(contentContainer, type, menuData) {
           heading.textContent = groupedHeading;
           heading.style.gridColumn = '1 / -1'; // Span full grid width
 
-          // Add tabindex="0" to make the heading focusable
-          heading.setAttribute('tabindex', '0');
+          // Conditionally make heading focusable
+          if (
+            selectedLi.classList.contains('menu-item-has-children') &&
+            selectedLi.getAttribute('aria-expanded') === 'true'
+          ) {
+            heading.setAttribute('tabindex', '0');
+          }
 
           fragment.appendChild(heading);
           groupedHeading = '';

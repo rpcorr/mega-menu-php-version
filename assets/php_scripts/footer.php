@@ -27,13 +27,13 @@
     </template> 
 
     <template id="oneMenuTemplate">
-      <li><img src="" /><p><a href="" role="tab" aria-selected="true"><strong></strong><br/><span></span></a></p> </li>
+      <li><img src="" /><p><a href="" role="tab"><strong></strong><br/><span></span></a></p> </li>
     </template> 
 
     <template id="menuContent">
       <div role="listitem">
         <img src="" width="" alt="" height=""  />
-        <p><a href="#"><strong></strong><br/><span></span></a></p>
+        <p><a href="#" tabindex="-1"><strong></strong><br/><span></span></a></p>
       </div>
     </template>
 
