@@ -479,8 +479,6 @@ document.addEventListener('DOMContentLoaded', () => {
             );
             element.setAttribute('aria-expanded', 'false');
           });
-        // call removeActiveClass
-        removeActiveClass();
       });
 
       preserveMenuColour();
@@ -1123,16 +1121,6 @@ function preserveMenuColour() {
     if (menuMoreLink.className.trim() === '') {
       menuMoreLink.removeAttribute('class');
     }
-  });
-}
-
-function removeActiveClass() {
-  // Select all anchor elements within the Menu more
-  const moreAnchorLinks = document.querySelectorAll('#menu-more a');
-
-  // Remove 'active' class from each element
-  moreAnchorLinks.forEach((link) => {
-    link.classList.remove('active');
   });
 }
 
