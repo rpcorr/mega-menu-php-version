@@ -10,16 +10,16 @@
   left: 0;
   right: auto;
   opacity: 0;
+  pointer-events: none;
 }
 
 /* When aria-expanded is true, show the sub-menu */
-a[aria-expanded='true'] + div.mega-menu {
-  opacity: 1 !important;
+.menu-main-menu-container
+  > #menu-main-menu
+  > li[aria-expanded='true']
+  > .mega-menu {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
   visibility: visible;
-  display: block; /* Make it visible */
-}
-
-/* When submenu is not showing, set pointer-events to none on all elements within the mega-menu */
-a[aria-expanded='false'] + .mega-menu {
-  pointer-events: none;
 }

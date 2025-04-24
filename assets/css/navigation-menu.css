@@ -50,31 +50,6 @@ nav ul > li ul > li ul > li ul > li {
 }
 
 /* https://codepen.io/scottb/pen/gixIv */
-ul#menu-main-menu li > ul {
-  opacity: 0;
-  /* position: absolute; */
-  top: 100%;
-  background: #fff;
-  padding: 0;
-}
-
-a[aria-expanded='true'] + ul.sub-menu {
-  /* Add your desired styles here */
-  opacity: 1 !important;
-  display: block; /* Example: Make the submenu visible */
-}
-
-/* position sub-menu under moreSubMenu to relative in order to display */
-#moreSubMenu a[aria-expanded='true'] + ul.sub-menu {
-  position: relative;
-  display: block;
-  opacity: 1;
-}
-
-a[aria-expanded='false'] + ul.sub-menu {
-  opacity: 0;
-  display: none; /* Example: Hide the submenu */
-}
 
 /* initially hide sub menus */
 ul#menu-main-menu li > ul > li > ul {

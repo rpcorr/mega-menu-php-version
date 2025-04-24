@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (section.section_id === '0' && ukey !== '') {
             if (createdPagesMenu === false) {
               createdPagesMenu = true;
-              menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Pages has a sub menu. Click enter to open">Pages <i class="caret angle-down"></i></a>
+              menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="Pages has a sub menu. Click enter to open">Pages <i class="caret angle-down"></i></a>
             <div class="mega-menu">
             <div class="grid-container-pages tabs-container"></div>
             </div>
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ) {
             if (createdServicesMenu === false) {
               createdServicesMenu = true;
-              menuHTML += `<li class="menu-item-has-children"><a href="#" aria-expanded="false" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
+              menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
             <div class="mega-menu">
             <div class="grid-container-multiple tabs-container"></div>
             </div>
@@ -260,8 +260,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // if logged in, show profile
       if (ukey.trim() !== '') {
-        menuHTML += `<li class="menu-item-has-children hover" id="profileMenu">
-        <a href="#" aria-expanded="false" aria-label="John Smith profile has a sub menu. Click enter to open">
+        menuHTML += `<li class="menu-item-has-children hover" id="profileMenu" aria-expanded="false">
+        <a href="#" aria-label="John Smith profile has a sub menu. Click enter to open">
         John Smith <span class="hidden-text">profile</span> 
         <i class="caret angle-down"></i>
 
@@ -281,20 +281,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
       populateMegaMenu(finalGroupedArray);
 
-      const profileMenu = document.getElementById('profileMenu');
-      const profileMenuLink = profileMenu.querySelector('a');
-      const subMenu = profileMenu.querySelector('.sub-menu');
+      // const profileMenu = document.getElementById('profileMenu');
+      // const profileMenuLink = profileMenu.querySelector('a');
+      // const subMenu = profileMenu.querySelector('.sub-menu');
 
-      profileMenuLink.addEventListener('click', function (e) {
-        e.preventDefault();
-        const isExpanded = profileMenu.getAttribute('aria-expanded') === 'true';
+      // profileMenuLink.addEventListener('click', function (e) {
+      //   e.preventDefault();
+      //   const isExpanded = profileMenu.getAttribute('aria-expanded') === 'true';
 
-        // Toggle the aria-expanded attribute
-        profileMenu.setAttribute('aria-expanded', !isExpanded);
+      //   // Toggle the aria-expanded attribute
+      //   profileMenu.setAttribute('aria-expanded', !isExpanded);
 
-        // Toggle the sub-menu visibility
-        subMenu.style.display = isExpanded ? 'none' : 'block';
-      });
+      //   // Toggle the sub-menu visibility
+      //   subMenu.style.display = isExpanded ? 'none' : 'block';
+      // });
 
       navItems = document.querySelectorAll('#menu-main-menu > li');
 
@@ -304,17 +304,16 @@ document.addEventListener('DOMContentLoaded', () => {
         megaMenuLinks[i].addEventListener('click', handleLinkClick);
         megaMenuLinks[i].addEventListener('keyup', function (e) {
           // open current menu when enter key is pressed
-          if (e.keyCode === 13) {
-            // open menu - determine the type of menu
-            const nextSibling = this.nextElementSibling;
-
-            // Check if nextSibling exists and has the class 'mega-menu'
-            if (nextSibling && nextSibling.classList.contains('mega-menu')) {
-              openMenu(true, null); // Modify this if you need to pass a different argument
-            } else {
-              openMenu(false, null);
-            }
-          }
+          //if (e.keyCode === 13) {
+          // open menu - determine the type of menu
+          //const nextSibling = this.nextElementSibling;
+          // Check if nextSibling exists and has the class 'mega-menu'
+          // if (nextSibling && nextSibling.classList.contains('mega-menu')) {
+          //   openMenu(true, null); // Modify this if you need to pass a different argument
+          // } else {
+          //   openMenu(false, null);
+          // }
+          //}
         });
       }
 
@@ -451,7 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // open "More" menu when enter key is pressed
           if (event.key === 'Enter') {
             // open current regular menu, there param is false
-            openMenu(false, this);
+            //openMenu(false, this);
           }
         });
 
@@ -594,7 +593,7 @@ function closeAllMenus() {
 
   // Loop through all links again to set the aria-expanded attribute to false
   links.forEach((link) => {
-    link.setAttribute('aria-expanded', 'false');
+    //link.setAttribute('aria-expanded', 'false');
 
     if (link.parentElement.hasAttribute('aria-expanded'))
       link.parentElement.setAttribute('aria-expanded', 'false');
@@ -773,26 +772,26 @@ function onResize() {
  */
 function toggleTopLevelMenu(menuLink) {
   const allMenuItems = document.querySelectorAll('.menu-item-has-children > a');
-  const isExpanded = menuLink.getAttribute('aria-expanded') === 'true';
+  const isExpanded =
+    menuLink.parentElement.getAttribute('aria-expanded') === 'true';
 
   // Close all other open menus (set aria-expanded to false and update icons)
-  allMenuItems.forEach((link) => {
-    if (link !== menuLink) {
-      link.setAttribute('aria-expanded', 'false');
-      const icon = link.querySelector('i');
-      if (icon) {
-        icon.classList.replace('angle-up', 'angle-down');
-      }
-    }
-  });
+  // allMenuItems.forEach((link) => {
+  //   if (link !== menuLink) {
+  //     //link.setAttribute('aria-expanded', 'false');
+  //     const icon = link.querySelector('i');
+  //     if (icon) {
+  //       icon.classList.replace('angle-up', 'angle-down');
+  //     }
+  //   }
+  // });
 
   // toggle menuLink aria-label if the clicked link is not inside a submenu
-  if (!menuLink.closest('.mega-menu')) {
-    toggleLinkArialLabel(menuLink);
-  }
+  // if (!menuLink.closest('.mega-menu')) {
+  //   //toggleLinkArialLabel(menuLink);
+  // }
 
   // Toggle the aria-expanded state of the clicked menu item
-  menuLink.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
   menuLink.parentElement.setAttribute(
     'aria-expanded',
     isExpanded ? 'false' : 'true'
@@ -888,34 +887,34 @@ function toggleTopLevelMenu(menuLink) {
  * @param {HTMLElement} link - The link element whose aria-label will be updated.
  * @param {boolean} isOpen - Indicates whether the submenu is currently open (true) or closed (false).
  */
-function setAriaLabel(link, isOpen) {
-  // Create a temporary container to safely parse the link's HTML content
-  const tempElement = document.createElement('div');
-  tempElement.innerHTML = link.innerHTML;
+// function setAriaLabel(link, isOpen) {
+//   // Create a temporary container to safely parse the link's HTML content
+//   const tempElement = document.createElement('div');
+//   tempElement.innerHTML = link.innerHTML;
 
-  // Remove the <div class="profile"> element if it exists,
-  // so it doesn't get included in the aria-label text
-  const profileElement = tempElement.querySelector('.profile');
-  if (profileElement) {
-    profileElement.remove();
-  }
+//   // Remove the <div class="profile"> element if it exists,
+//   // so it doesn't get included in the aria-label text
+//   const profileElement = tempElement.querySelector('.profile');
+//   if (profileElement) {
+//     profileElement.remove();
+//   }
 
-  // Extract the visible menu text after removing the profile element
-  const menuText = tempElement.textContent.trim();
+//   // Extract the visible menu text after removing the profile element
+//   const menuText = tempElement.textContent.trim();
 
-  // Set an appropriate aria-label based on whether the submenu is open or closed
-  link.setAttribute(
-    'aria-label',
-    isOpen
-      ? `Click enter to close ${menuText} sub menu`
-      : `${menuText} has a sub menu. Click enter to open`
-  );
-}
+//   // Set an appropriate aria-label based on whether the submenu is open or closed
+//   link.setAttribute(
+//     'aria-label',
+//     isOpen
+//       ? `Click enter to close ${menuText} sub menu`
+//       : `${menuText} has a sub menu. Click enter to open`
+//   );
+// }
 
-function toggleLinkArialLabel(menuLink) {
-  const isExpanded = menuLink.getAttribute('aria-expanded') === 'true';
-  setAriaLabel(menuLink, !isExpanded);
-}
+// function toggleLinkArialLabel(menuLink) {
+//   const isExpanded = menuLink.getAttribute('aria-expanded') === 'true';
+//   setAriaLabel(menuLink, !isExpanded);
+// }
 /**
  * Updates the aria-label for all parent menu links based on their current expanded state.
  *
@@ -923,15 +922,15 @@ function toggleLinkArialLabel(menuLink) {
  * with the class 'menu-item-has-children'. It checks if each link is currently expanded
  * (aria-expanded="true") and updates its aria-label accordingly using the setAriaLabel function.
  */
-function updateAllAriaLabels() {
-  // Select all menu links that have submenus
-  document.querySelectorAll('.menu-item-has-children > a').forEach((link) => {
-    // Check if the menu item is expanded
-    const isExpanded = link.getAttribute('aria-expanded') === 'true';
-    // Update the aria-label to reflect the current state (expanded or collapsed)
-    setAriaLabel(link, !isExpanded);
-  });
-}
+// function updateAllAriaLabels() {
+//   // Select all menu links that have submenus
+//   document.querySelectorAll('.menu-item-has-children > a').forEach((link) => {
+//     // Check if the menu item is expanded
+//     const isExpanded = link.getAttribute('aria-expanded') === 'true';
+//     // Update the aria-label to reflect the current state (expanded or collapsed)
+//     setAriaLabel(link, !isExpanded);
+//   });
+// }
 
 // Add an event listener to detect keydown events across the document
 document.addEventListener('keydown', function (event) {
@@ -1078,46 +1077,46 @@ function watchForHover() {
 }
 
 // Enable openMenu using the keyboard for accessibility
-function openMenu(bContainsSubMenuDiv, targetElement) {
-  // Handle updating the "More" link's active state based on aria-expanded attribute
-  const moreLink = document.getElementById('menuMoreLink');
+// function openMenu(bContainsSubMenuDiv, targetElement) {
+//   // Handle updating the "More" link's active state based on aria-expanded attribute
+//   const moreLink = document.getElementById('menuMoreLink');
 
-  if (targetElement && moreLink) {
-    const isExpanded = targetElement.getAttribute('aria-expanded') === 'true';
+//   if (targetElement && moreLink) {
+//     const isExpanded = targetElement.getAttribute('aria-expanded') === 'true';
 
-    if (isExpanded) {
-      // If the menu is expanded, add 'active' class to the "More" link
-      moreLink.classList.add('active');
-    } else {
-      // If the menu is collapsed, remove the 'active' class
-      moreLink.classList.remove('active');
+//     if (isExpanded) {
+//       // If the menu is expanded, add 'active' class to the "More" link
+//       moreLink.classList.add('active');
+//     } else {
+//       // If the menu is collapsed, remove the 'active' class
+//       moreLink.classList.remove('active');
 
-      // If no classes remain, remove the class attribute entirely
-      if (moreLink.className.trim() === '') {
-        moreLink.removeAttribute('class');
-      }
-    }
-  }
+//       // If no classes remain, remove the class attribute entirely
+//       if (moreLink.className.trim() === '') {
+//         moreLink.removeAttribute('class');
+//       }
+//     }
+//   }
 
-  let elements;
+//   let elements;
 
-  // Select submenu elements depending on whether they are wrapped in a <div> or a <ul>
-  if (!bContainsSubMenuDiv) {
-    elements = document.querySelectorAll(
-      'ul#menu-main-menu li.menu-item-has-children.visible > ul:not(:hover)'
-    );
-  } else {
-    elements = document.querySelectorAll(
-      'ul#menu-main-menu li.menu-item-has-children.visible > div:not(:hover)'
-    );
-  }
+//   // Select submenu elements depending on whether they are wrapped in a <div> or a <ul>
+//   if (!bContainsSubMenuDiv) {
+//     elements = document.querySelectorAll(
+//       'ul#menu-main-menu li.menu-item-has-children.visible > ul:not(:hover)'
+//     );
+//   } else {
+//     elements = document.querySelectorAll(
+//       'ul#menu-main-menu li.menu-item-has-children.visible > div:not(:hover)'
+//     );
+//   }
 
-  // Loop through each matched submenu element
-  elements.forEach(function (element) {
-    // Intended to set submenu visibility (commented out for now)
-    // element.style.opacity = '1';
-  });
-}
+//   // Loop through each matched submenu element
+//   elements.forEach(function (element) {
+//     // Intended to set submenu visibility (commented out for now)
+//     // element.style.opacity = '1';
+//   });
+// }
 
 /**
  * Preserve the active menu link color when hovering over the "More" menu item.
