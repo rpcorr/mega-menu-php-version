@@ -746,7 +746,7 @@ function onResize() {
     resetArrows();
 
     // Update ARIA labels for all menu items for better accessibility
-    //updateAllAriaLabels();
+    updateAllAriaLabels();
 
     // Update tab indices to manage focusability of dynamic menu items
     updateMenuMoreTabIndex();
@@ -878,24 +878,24 @@ function toggleTopLevelMenu(menuLink) {
       menuLink.parentElement.getAttribute('aria-expanded') === 'true';
     setAriaLabel(menuLink, isExpanded);
   }
+}
 
-  /**
-   * Updates the aria-label of a link based on its open or closed state
-   * to improve screen reader accessibility.
-   *
-   * @param {HTMLElement} link - The link element whose aria-label will be updated.
-   * @param {boolean} isOpen - Indicates whether the submenu is currently open (true) or closed (false).
-   */
-  function setAriaLabel(menuLink, isOpen) {
-    const menuText = menuLink.textContent.trim();
-    // Set an appropriate aria-label based on whether the submenu is open or closed
-    menuLink.setAttribute(
-      'aria-label',
-      isOpen
-        ? `Click enter to close ${menuText} sub menu`
-        : `${menuText} has a sub menu. Click enter to open`
-    );
-  }
+/**
+ * Updates the aria-label of a link based on its open or closed state
+ * to improve screen reader accessibility.
+ *
+ * @param {HTMLElement} link - The link element whose aria-label will be updated.
+ * @param {boolean} isOpen - Indicates whether the submenu is currently open (true) or closed (false).
+ */
+function setAriaLabel(menuLink, isOpen) {
+  const menuText = menuLink.textContent.trim();
+  // Set an appropriate aria-label based on whether the submenu is open or closed
+  menuLink.setAttribute(
+    'aria-label',
+    isOpen
+      ? `Click enter to close ${menuText} sub menu`
+      : `${menuText} has a sub menu. Click enter to open`
+  );
 }
 
 /**
@@ -905,15 +905,15 @@ function toggleTopLevelMenu(menuLink) {
  * with the class 'menu-item-has-children'. It checks if each link is currently expanded
  * (aria-expanded="true") and updates its aria-label accordingly using the setAriaLabel function.
  */
-// function updateAllAriaLabels() {
-//   // Select all menu links that have submenus
-//   document.querySelectorAll('.menu-item-has-children > a').forEach((link) => {
-//     // Check if the menu item is expanded
-//     const isExpanded = link.getAttribute('aria-expanded') === 'true';
-//     // Update the aria-label to reflect the current state (expanded or collapsed)
-//     setAriaLabel(link, !isExpanded);
-//   });
-// }
+function updateAllAriaLabels() {
+  // Select all menu links that have submenus
+  document.querySelectorAll('.menu-item-has-children > a').forEach((link) => {
+    // Check if the menu item is expanded
+    const isExpanded = link.getAttribute('aria-expanded') === 'true';
+    // Update the aria-label to reflect the current state (expanded or collapsed)
+    setAriaLabel(link, isExpanded);
+  });
+}
 
 // Add an event listener to detect keydown events across the document
 document.addEventListener('keydown', function (event) {
