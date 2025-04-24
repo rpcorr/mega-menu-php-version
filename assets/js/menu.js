@@ -863,10 +863,40 @@ function toggleTopLevelMenu(menuLink) {
     const isExpanded = parentLi.getAttribute('aria-expanded') === 'true';
     const newState = !isExpanded;
 
-    // Toggle aria-expanded attribute
+    if (newState) {
+      // Collapse all other open menu items
+      const allMenuItems = document.querySelectorAll(
+        '.menu-item-has-children[aria-expanded="true"]'
+      );
+      allMenuItems.forEach((item) => {
+        if (item !== parentLi) {
+          item.setAttribute('aria-expanded', 'false');
+          const otherMegaMenu = item.querySelector('.mega-menu');
+          if (otherMegaMenu) {
+            const allLinks = otherMegaMenu.querySelectorAll('a');
+            allLinks.forEach((link) => {
+              link.setAttribute('tabindex', '-1');
+            });
+          }
+
+          // Reset arrow icons and aria-labels of other collapsed items
+          const otherMenuLink = item.querySelector('a');
+          if (otherMenuLink) {
+            const otherIcon = otherMenuLink.querySelector('i');
+            if (otherIcon) {
+              otherIcon.classList.add('angle-down');
+              otherIcon.classList.remove('angle-up');
+            }
+            setAriaLabel(otherMenuLink, false);
+          }
+        }
+      });
+    }
+
+    // Toggle aria-expanded for the clicked item
     parentLi.setAttribute('aria-expanded', newState.toString());
 
-    // Find the mega-menu within this list item
+    // Manage focusability in the opened/closed menu
     const megaMenu = parentLi.querySelector('.mega-menu');
 
     if (megaMenu) {
@@ -882,21 +912,15 @@ function toggleTopLevelMenu(menuLink) {
           });
 
           // Remove tabindex -1 from all panel links
-          listItems.forEach((link) => {
-            link.removeAttribute('tabindex');
-          });
+          listItems.forEach((link) => link.removeAttribute('tabindex'));
         } else {
           // Flat structure:  Remove tabindex -1 from all list item anchors
-          listItems.forEach((link) => {
-            link.removeAttribute('tabindex');
-          });
+          listItems.forEach((link) => link.removeAttribute('tabindex'));
         }
       } else {
         // Collapse state: remove all links from tab order
         const allLinks = megaMenu.querySelectorAll('a');
-        allLinks.forEach((link) => {
-          link.setAttribute('tabindex', '-1');
-        });
+        allLinks.forEach((link) => link.setAttribute('tabindex', '-1'));
       }
     }
   }
