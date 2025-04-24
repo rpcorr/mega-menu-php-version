@@ -870,15 +870,34 @@ function toggleTopLevelMenu(menuLink) {
     const megaMenu = parentLi.querySelector('.mega-menu');
 
     if (megaMenu) {
-      const links = megaMenu.querySelectorAll('a');
+      const tabList = megaMenu.querySelector('.menu-list');
+      const listItems = megaMenu.querySelectorAll('[role="listitem"] a');
 
-      links.forEach((link) => {
-        if (newState) {
-          link.removeAttribute('tabindex');
+      if (newState) {
+        if (tabList) {
+          // Tabbed structure: only one <a> should be focusable in the tablist
+          const tabLinks = tabList.querySelectorAll('a[role="tab"]');
+          tabLinks.forEach((link, index) => {
+            link.setAttribute('tabindex', index === 0 ? '0' : '-1');
+          });
+
+          // Remove tabindex -1 from all panel links
+          listItems.forEach((link) => {
+            link.removeAttribute('tabindex');
+          });
         } else {
-          link.setAttribute('tabindex', '-1');
+          // Flat structure:  Remove tabindex -1 from all list item anchors
+          listItems.forEach((link) => {
+            link.removeAttribute('tabindex');
+          });
         }
-      });
+      } else {
+        // Collapse state: remove all links from tab order
+        const allLinks = megaMenu.querySelectorAll('a');
+        allLinks.forEach((link) => {
+          link.setAttribute('tabindex', '-1');
+        });
+      }
     }
   }
 
@@ -1386,10 +1405,10 @@ function renderBodyContent(contentContainer, type, menuData) {
     return;
   }
 
-  // Ensure a tab is selected; fallback to the last tab if none is selected
+  // Ensure a tab is selected; fallback to the first tab if none is selected
   let selectedAnchor =
     document.querySelector('a[aria-selected="true"]') ||
-    [...document.querySelectorAll('.menu-list a')].pop();
+    [...document.querySelectorAll('.menu-list a')][0];
 
   if (!selectedAnchor) {
     console.error('Error: No selectable tab found.');
