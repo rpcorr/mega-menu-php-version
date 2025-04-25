@@ -273,7 +273,6 @@ document.addEventListener('DOMContentLoaded', () => {
         <li><a href="#">Help &amp; Support</a></li>
         <li><a href="logout.php">Sign Out</a></li>
         </ul>
-        
         </li>`;
       }
 
@@ -1049,9 +1048,11 @@ function updateMenuMoreTabIndex() {
       menuLink.removeAttribute('tabindex');
       menuLink.removeAttribute('aria-hidden');
 
-      // add a margin right of 0.5rem to the profile class
+      // Safely add a margin right of 0.5rem to the profile class
       const profile = document.querySelector('.profile');
-      profile.style.marginRight = '0.5rem';
+      if (profile) {
+        profile.style.marginRight = '0.5rem';
+      }
     }
   }
 }
