@@ -358,7 +358,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'aria-label',
         'More has a sub menu. Click enter to open'
       );
-      newMenuLink.setAttribute('aria-expanded', 'false');
 
       const newSubMenu = document.createElement('ul');
       newSubMenu.id = 'moreSubMenu';
@@ -382,12 +381,12 @@ document.addEventListener('DOMContentLoaded', () => {
           const moreSubMenu = document.getElementById('moreSubMenu');
 
           // Close all other open menus
-          document
-            .querySelectorAll('li.menu-item-has-children > a')
-            .forEach((anchor) => {
-              anchor.setAttribute('aria-expanded', 'false');
-              anchor.classList.remove('active');
-            });
+          // document
+          //   .querySelectorAll('li.menu-item-has-children > a')
+          //   .forEach((anchor) => {
+          //     // anchor.setAttribute('aria-expanded', 'false');
+          //     //anchor.classList.remove('active');
+          //   });
 
           // Toggle visibility of More menu
           moreMenu.classList.toggle('visible');
@@ -399,7 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
               'Click Enter to close More sub menu'
             );
             this.setAttribute('aria-expanded', 'true');
-            this.classList.add('active');
+            //this.classList.add('active');
 
             // Adjust icon if available
             if (icon) {
@@ -411,8 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
               'aria-label',
               'More has a sub menu. Click enter to open'
             );
-            this.setAttribute('aria-expanded', 'false');
-            this.classList.remove('active');
+            //this.classList.remove('active');
 
             // Reset icon if available
             if (icon) {
@@ -426,7 +424,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Reset submenu links
             document.querySelectorAll('#moreSubMenu a').forEach((anchor) => {
-              anchor.setAttribute('aria-expanded', 'false');
               anchor.setAttribute(
                 'aria-label',
                 `${anchor.textContent} has a sub menu. Click enter to open`
@@ -453,33 +450,6 @@ document.addEventListener('DOMContentLoaded', () => {
             //openMenu(false, this);
           }
         });
-
-      // collapse all sub-menus when user clicks off
-      document.body.addEventListener('click', function (event) {
-        if (event.target.getAttribute('onClick') === 'toggleSidebar()') return;
-
-        if (!event.target.closest('li')) {
-          document
-            .querySelectorAll('.menu-item-has-children')
-            .forEach(function (element) {
-              element.classList.remove('visible');
-            });
-        }
-
-        // reset arrows to down position
-        resetArrows();
-
-        //  reset aria-labels to Click enter to open
-        document
-          .querySelectorAll('.menu-item-has-children > a')
-          .forEach(function (element) {
-            element.setAttribute(
-              'aria-label',
-              `${element.textContent} has a sub menu. Click enter to open`
-            );
-            element.setAttribute('aria-expanded', 'false');
-          });
-      });
 
       preserveMenuColour();
 
@@ -591,8 +561,6 @@ function closeAllMenus() {
 
   // Loop through all links again to set the aria-expanded attribute to false
   links.forEach((link) => {
-    //link.setAttribute('aria-expanded', 'false');
-
     if (link.parentElement.hasAttribute('aria-expanded'))
       link.parentElement.setAttribute('aria-expanded', 'false');
 
