@@ -41,8 +41,8 @@ nav ul > li ul > li ul > li ul > li {
 
 #menu-main-menu > li {
   height: 98px;
-  display: flex;
-  align-items: center;
+  /* display: flex; */
+  /* align-items: center; */
 }
 
 #menu-main-menu > li:not(.hidden-links) {
@@ -199,7 +199,8 @@ nav {
 }
 
 #adminMenu > .sub-menu,
-#profileMenu > .sub-menu {
+#profileMenu > .sub-menu,
+#menu-more > .sub-menu {
   position: absolute;
   top: 100%; /* Position the sub-menu below the profile link */
   left: 0;
@@ -213,8 +214,13 @@ nav {
 
 /* Show sub-menu when parent is expanded */
 #adminMenu[aria-expanded='true'] > .sub-menu,
-#profileMenu[aria-expanded='true'] > .sub-menu {
+#profileMenu[aria-expanded='true'] > .sub-menu,
+#menu-more[aria-expanded='true'] > .sub-menu {
   display: block;
+}
+
+li[aria-expanded='false'] > .mega-menu {
+  display: none;
 }
 
 /* Additional styles for the sub-menu links */

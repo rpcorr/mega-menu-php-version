@@ -349,6 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       newMenuItem.id = 'menu-more';
       newMenuItem.className = 'menu-item menu-item-has-children';
+      newMenuItem.setAttribute('aria-expanded', 'false');
 
       const newMenuLink = document.createElement('a');
       newMenuLink.id = 'menuMoreLink';
@@ -375,9 +376,19 @@ document.addEventListener('DOMContentLoaded', () => {
           event.preventDefault();
 
           const moreMenu = this.closest('.menu-item-has-children');
-          const isVisible = moreMenu.classList.contains('visible');
-          const icon = this.querySelector('i');
-          const moreSubMenu = document.getElementById('moreSubMenu');
+
+          // Toggle the aria-expanded state of the clicked menu item
+          toggleAriaExpanded(this);
+
+          // Toggle the arrow icon direction based on expanded/collapsed state
+          toggleArrowIcon(this);
+
+          // Toggle the aria-label state of the clicked menu item
+          toggleLinkAriaLabel(this);
+
+          //const isVisible = moreMenu.classList.contains('visible');
+          //const icon = this.querySelector('i');
+          //const moreSubMenu = document.getElementById('moreSubMenu');
 
           // Close all other open menus
           // document
@@ -388,55 +399,55 @@ document.addEventListener('DOMContentLoaded', () => {
           //   });
 
           // Toggle visibility of More menu
-          moreMenu.classList.toggle('visible');
+          //moreMenu.classList.toggle('visible');
 
-          if (moreMenu.classList.contains('visible')) {
-            // Open state
-            this.setAttribute(
-              'aria-label',
-              'Click Enter to close More sub menu'
-            );
-            this.setAttribute('aria-expanded', 'true');
-            //this.classList.add('active');
+          // if (moreMenu.classList.contains('visible')) {
+          //   // Open state
+          //   this.setAttribute(
+          //     'aria-label',
+          //     'Click Enter to close More sub menu'
+          //   );
+          //   this.setAttribute('aria-expanded', 'true');
+          //   //this.classList.add('active');
 
-            // Adjust icon if available
-            if (icon) {
-              icon.classList.replace('angle-down', 'angle-up');
-            }
-          } else {
-            // Close state
-            this.setAttribute(
-              'aria-label',
-              'More has a sub menu. Click enter to open'
-            );
-            //this.classList.remove('active');
+          //   // Adjust icon if available
+          //   if (icon) {
+          //     icon.classList.replace('angle-down', 'angle-up');
+          //   }
+          // } else {
+          //   // Close state
+          //   this.setAttribute(
+          //     'aria-label',
+          //     'More has a sub menu. Click enter to open'
+          //   );
+          //   //this.classList.remove('active');
 
-            // Reset icon if available
-            if (icon) {
-              icon.classList.replace('angle-up', 'angle-down');
-            }
+          //   // Reset icon if available
+          //   if (icon) {
+          //     icon.classList.replace('angle-up', 'angle-down');
+          //   }
 
-            // Remove inline opacity after a short delay
-            setTimeout(() => {
-              moreSubMenu.style.removeProperty('opacity');
-            }, 100);
+          //   // Remove inline opacity after a short delay
+          //   setTimeout(() => {
+          //     moreSubMenu.style.removeProperty('opacity');
+          //   }, 100);
 
-            // Reset submenu links
-            document.querySelectorAll('#moreSubMenu a').forEach((anchor) => {
-              anchor.setAttribute(
-                'aria-label',
-                `${anchor.textContent} has a sub menu. Click enter to open`
-              );
-            });
-          }
+          //   // Reset submenu links
+          //   document.querySelectorAll('#moreSubMenu a').forEach((anchor) => {
+          //     anchor.setAttribute(
+          //       'aria-label',
+          //       `${anchor.textContent} has a sub menu. Click enter to open`
+          //     );
+          //   });
+          // }
 
-          // Remove empty class attribute
-          if (this.className.trim() === '') {
-            this.removeAttribute('class');
-          }
+          // // Remove empty class attribute
+          // if (this.className.trim() === '') {
+          //   this.removeAttribute('class');
+          // }
 
-          // Update sidebar content
-          if (sidebar) populateSidebar();
+          // // Update sidebar content
+          // if (sidebar) populateSidebar();
         });
 
       // toggle More menu sub-menu on key up
@@ -824,87 +835,90 @@ function toggleTopLevelMenu(menuLink) {
 
   // Update the sidebar content based on the selected top-level menu
   if (sidebar) populateSidebar();
+}
 
-  function toggleAriaExpanded(menuLink) {
-    const parentLi = menuLink.closest('.menu-item-has-children');
-    const isExpanded = parentLi.getAttribute('aria-expanded') === 'true';
-    const newState = !isExpanded;
+function toggleAriaExpanded(menuLink) {
+  const parentLi = menuLink.closest('.menu-item-has-children');
+  const isExpanded = parentLi.getAttribute('aria-expanded') === 'true';
+  const newState = !isExpanded;
+
+  if (newState) {
+    // Collapse all other open menu items
+    const allMenuItems = document.querySelectorAll(
+      '.menu-item-has-children[aria-expanded="true"]'
+    );
+    allMenuItems.forEach((item) => {
+      if (item !== parentLi) {
+        item.setAttribute('aria-expanded', 'false');
+        const otherMegaMenu = item.querySelector('.mega-menu');
+        if (otherMegaMenu) {
+          const allLinks = otherMegaMenu.querySelectorAll('a');
+          allLinks.forEach((link) => {
+            link.setAttribute('tabindex', '-1');
+          });
+        }
+
+        // Reset arrow icons and aria-labels of other collapsed items
+        const otherMenuLink = item.querySelector('a');
+        if (otherMenuLink) {
+          const otherIcon = otherMenuLink.querySelector('i');
+          if (otherIcon) {
+            otherIcon.classList.add('angle-down');
+            otherIcon.classList.remove('angle-up');
+          }
+          setAriaLabel(otherMenuLink, false);
+        }
+      }
+    });
+  }
+
+  // Toggle aria-expanded for the clicked item
+  parentLi.setAttribute('aria-expanded', newState.toString());
+
+  // Manage focusability in the opened/closed menu
+  const megaMenu = parentLi.querySelector('.mega-menu');
+
+  if (megaMenu) {
+    const tabList = megaMenu.querySelector('.menu-list');
+    const listItems = megaMenu.querySelectorAll('[role="listitem"] a');
 
     if (newState) {
-      // Collapse all other open menu items
-      const allMenuItems = document.querySelectorAll(
-        '.menu-item-has-children[aria-expanded="true"]'
-      );
-      allMenuItems.forEach((item) => {
-        if (item !== parentLi) {
-          item.setAttribute('aria-expanded', 'false');
-          const otherMegaMenu = item.querySelector('.mega-menu');
-          if (otherMegaMenu) {
-            const allLinks = otherMegaMenu.querySelectorAll('a');
-            allLinks.forEach((link) => {
-              link.setAttribute('tabindex', '-1');
-            });
-          }
+      if (tabList) {
+        // Tabbed structure: only one <a> should be focusable in the tablist
+        const tabLinks = tabList.querySelectorAll('a[role="tab"]');
+        tabLinks.forEach((link, index) => {
+          link.setAttribute('tabindex', index === 0 ? '0' : '-1');
+        });
 
-          // Reset arrow icons and aria-labels of other collapsed items
-          const otherMenuLink = item.querySelector('a');
-          if (otherMenuLink) {
-            const otherIcon = otherMenuLink.querySelector('i');
-            if (otherIcon) {
-              otherIcon.classList.add('angle-down');
-              otherIcon.classList.remove('angle-up');
-            }
-            setAriaLabel(otherMenuLink, false);
-          }
-        }
-      });
-    }
-
-    // Toggle aria-expanded for the clicked item
-    parentLi.setAttribute('aria-expanded', newState.toString());
-
-    // Manage focusability in the opened/closed menu
-    const megaMenu = parentLi.querySelector('.mega-menu');
-
-    if (megaMenu) {
-      const tabList = megaMenu.querySelector('.menu-list');
-      const listItems = megaMenu.querySelectorAll('[role="listitem"] a');
-
-      if (newState) {
-        if (tabList) {
-          // Tabbed structure: only one <a> should be focusable in the tablist
-          const tabLinks = tabList.querySelectorAll('a[role="tab"]');
-          tabLinks.forEach((link, index) => {
-            link.setAttribute('tabindex', index === 0 ? '0' : '-1');
-          });
-
-          // Remove tabindex -1 from all panel links
-          listItems.forEach((link) => link.removeAttribute('tabindex'));
-        } else {
-          // Flat structure:  Remove tabindex -1 from all list item anchors
-          listItems.forEach((link) => link.removeAttribute('tabindex'));
-        }
+        // Remove tabindex -1 from all panel links
+        listItems.forEach((link) => link.removeAttribute('tabindex'));
       } else {
-        // Collapse state: remove all links from tab order
-        const allLinks = megaMenu.querySelectorAll('a');
-        allLinks.forEach((link) => link.setAttribute('tabindex', '-1'));
+        // Flat structure:  Remove tabindex -1 from all list item anchors
+        listItems.forEach((link) => link.removeAttribute('tabindex'));
       }
+    } else {
+      // Collapse state: remove all links from tab order
+      const allLinks = megaMenu.querySelectorAll('a');
+      allLinks.forEach((link) => link.setAttribute('tabindex', '-1'));
     }
   }
+}
 
-  function toggleArrowIcon(menuLink) {
-    const icon = menuLink.querySelector('i');
-    if (icon) {
-      icon.classList.toggle('angle-down', isExpanded);
-      icon.classList.toggle('angle-up', !isExpanded);
-    }
-  }
+function toggleArrowIcon(menuLink) {
+  const isExpanded =
+    menuLink.parentElement.getAttribute('aria-expanded') === 'true';
+  const icon = menuLink.querySelector('i');
 
-  function toggleLinkAriaLabel(menuLink) {
-    const isExpanded =
-      menuLink.parentElement.getAttribute('aria-expanded') === 'true';
-    setAriaLabel(menuLink, isExpanded);
+  if (icon) {
+    icon.classList.toggle('angle-down', !isExpanded);
+    icon.classList.toggle('angle-up', isExpanded);
   }
+}
+
+function toggleLinkAriaLabel(menuLink) {
+  const isExpanded =
+    menuLink.parentElement.getAttribute('aria-expanded') === 'true';
+  setAriaLabel(menuLink, isExpanded);
 }
 
 /**
