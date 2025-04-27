@@ -759,6 +759,15 @@ function toggleTopLevelMenu(menuLink) {
   // Toggle the aria-label state of the clicked menu item
   toggleLinkAriaLabel(menuLink);
 
+  //If inside #moreSubMenu, force #menu-more aria-expanded to stay true
+  const li = menuLink.closest('li');
+  if (li?.closest('#moreSubMenu')) {
+    const menuMore = document.getElementById('menu-more');
+    if (menuMore) {
+      menuMore.setAttribute('aria-expanded', 'true');
+    }
+  }
+
   // If inside "More" menu, keep the parent "More" link open
   // const li = menuLink.closest('li');
   // if (li?.closest('#moreSubMenu')) {
