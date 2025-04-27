@@ -505,12 +505,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   moreWidth = document.getElementById('menu-main-menu').offsetWidth;
 
-  // Select moreSubMenu
-  const container = document.getElementById('moreSubMenu');
+  // // Select moreSubMenu
+  // const container = document.getElementById('moreSubMenu');
 
-  if (!container === null) {
-    console.log('here');
-  }
+  // if (!container === null) {
+  //   console.log('here');
+  // }
 });
 ///// FUNCTIONS /////
 
