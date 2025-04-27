@@ -201,9 +201,6 @@ nav {
 #adminMenu > .sub-menu,
 #profileMenu > .sub-menu,
 #menu-more > .sub-menu {
-  position: absolute;
-  top: 100%; /* Position the sub-menu below the profile link */
-  left: 0;
   background-color: #fff; /* Match your design background */
   display: none; /* Hidden by default */
   border: 1px solid #ccc; /* Optional: for visibility */
