@@ -248,9 +248,26 @@ li[aria-expanded='false'] > .mega-menu {
 
 /* Initial state of the submenu (hidden or collapsed) */
 #moreSubMenu {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 1s ease-in-out;
+  position: absolute;
+  top: 5.4rem; /* same top spacing */
+  left: 0;
+  right: 0;
+  width: 100vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 0 0.2rem 0 rgba(50, 50, 50, 0.75);
+  transition: max-height 0.5s ease-in-out, width 0.5s ease-in-out;
+  z-index: 999; /* ensure it’s on top */
+}
+
+#menuMoreLink.active + #moreSubMenu {
+  max-height: 1000px; /* Large enough to fit content */
+  width: 100vw; /* Full width of the viewport */
+  position: absolute;
+  left: 0;
+  top: 100%; /* Position it just below the More link */
+  background: white; /* optional background */
+  z-index: 999; /* ensure it’s on top */
 }
 
 #menuMoreLink.active + #moreSubMenu:hover {
@@ -334,7 +351,6 @@ ul#menu-main-menu li.menu-item-has-children > a.active > a::after {
 
 #menu-main-menu > li.menu-item-has-children > ul.sub-menu {
   right: 0.25rem;
-  /* top: 5rem; */
   top: 5.4rem;
   /* min-width: 20rem; */
   box-shadow: 0 0 0.2rem 0 rgba(50, 50, 50, 0.75);
