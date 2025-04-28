@@ -213,10 +213,29 @@ nav {
   z-index: 1000; /* Ensure it's on top of other elements */
 }
 
+#profileMenu > .sub-menu {
+  border-radius: 0;
+}
+
 #profileMenu[aria-expanded='true'] > .sub-menu {
   display: flex;
   flex-direction: column;
   align-items: end;
+  width: 13.5rem;
+}
+
+#profileMenu[aria-expanded='true'] {
+  min-width: 13.5rem;
+}
+
+ul.overlap {
+  position: absolute;
+  top: 4.4rem !important; /* or a smaller value like 80% if you want it partly over the profile link */
+  right: 0;
+  background: white; /* optional, for visibility */
+  z-index: 1000; /* makes sure it stays on top */
+  min-width: 200px; /* optional: so submenu isn't too narrow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* optional: subtle dropdown shadow */
 }
 
 /* prevent a submenu parent container from expanding when open */
@@ -369,16 +388,18 @@ ul#menu-main-menu li.menu-item-has-children > a.active > a::after {
 }
 
 #menu-main-menu > li.menu-item-has-children > ul.sub-menu {
-  right: 0.25rem;
   top: 5.4rem;
+  /* right: 0.25rem; */
   /* min-width: 20rem; */
-  box-shadow: 0 0 0.2rem 0 rgba(50, 50, 50, 0.75);
   overflow-y: auto;
   max-height: 90vh;
+  /* box-shadow: 0 0 0.2rem 0 rgba(50, 50, 50, 0.75); */
+  box-shadow: 0 4px 6px -4px rgba(0, 0, 0, 0.3) /* bottom shadow */,
+    4px 0 6px -4px rgba(0, 0, 0, 0.2) /* right shadow */,
+    -4px 0 6px -4px rgba(0, 0, 0, 0.2); /* left shadow */
 }
 
-#adminMenu > .sub-menu,
-#profileMenu > .sub-menu {
+#adminMenu > .sub-menu {
   min-width: 15rem;
 }
 

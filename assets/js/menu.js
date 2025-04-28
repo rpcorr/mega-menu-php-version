@@ -496,6 +496,8 @@ document.addEventListener('DOMContentLoaded', () => {
       // Determin is Admin Menu under the More menu, if so add prevent-expand class
       isAdminMenuUnderMore();
 
+      isProfileMenuUnderMore();
+
       // set More Menu tabindex to -1 if there are no children
       updateMenuMoreTabIndex();
 
@@ -730,6 +732,8 @@ function onResize() {
 
     // Determin is Admin Menu under the More menu, if so add prevent-expand class
     isAdminMenuUnderMore();
+
+    isProfileMenuUnderMore();
 
     // Adjust mega menu positioning if necessary based on new window size
     //determineMegaMenuPosition();
@@ -1907,4 +1911,33 @@ function isAdminMenuUnderMore() {
 
   // Toggle the 'prevent-expand' class based on whether Admin is under More
   adminMenuLiSubMenu.classList.toggle('prevent-expand', !adminMenuLiUnderMore);
+}
+
+function isProfileMenuUnderMore() {
+  // Find the Admin menu list item
+  const profileMenuLi = document.querySelector('li#profileMenu');
+  if (!profileMenuLi) {
+    console.warn('Profile menu list item not found.');
+    return;
+  }
+
+  // Find the sub-menu inside Admin menu
+  const profileMenuLiSubMenu = profileMenuLi.querySelector('ul.sub-menu');
+  if (!profileMenuLiSubMenu) {
+    console.warn('Profile menu sub-menu not found.');
+    return;
+  }
+
+  // Find the "More" submenu container
+  const moreSubMenu = document.querySelector('ul#moreSubMenu');
+  if (!moreSubMenu) {
+    console.warn('"More" submenu not found.');
+    return;
+  }
+
+  // Check if Profile menu is under "More"
+  const profileMenuLiUnderMore = moreSubMenu.contains(profileMenuLi);
+
+  // Toggle the 'prevent-expand' class based on whether Profile is under More
+  profileMenuLiSubMenu.classList.toggle('overlap', !profileMenuLiUnderMore);
 }
