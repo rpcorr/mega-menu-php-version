@@ -213,6 +213,12 @@ nav {
   z-index: 1000; /* Ensure it's on top of other elements */
 }
 
+#profileMenu[aria-expanded='true'] > .sub-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
 /* prevent a submenu parent container from expanding when open */
 .prevent-expand {
   position: absolute;
@@ -222,8 +228,13 @@ nav {
 
 /* Show sub-menu when parent is expanded */
 #adminMenu[aria-expanded='true'] > .sub-menu,
-#profileMenu[aria-expanded='true'] > .sub-menu,
 #menu-more[aria-expanded='true'] > .sub-menu {
+  display: block;
+}
+
+#menu-more[aria-expanded='true']
+  #profileMenu[aria-expanded='true']
+  > .sub-menu {
   display: block;
 }
 
