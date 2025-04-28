@@ -209,6 +209,13 @@ nav {
   z-index: 1000; /* Ensure it's on top of other elements */
 }
 
+/* prevent a submenu parent container from expanding when open */
+.prevent-expand {
+  position: absolute;
+  top: 100%; /* Position the sub-menu below the profile link */
+  left: 0;
+}
+
 /* Show sub-menu when parent is expanded */
 #adminMenu[aria-expanded='true'] > .sub-menu,
 #profileMenu[aria-expanded='true'] > .sub-menu,

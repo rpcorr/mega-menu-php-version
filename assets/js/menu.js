@@ -493,6 +493,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // format navigation on page load
       formatNav();
 
+      // Determin is Admin Menu under the More menu, if so add prevent-expand class
+      isAdminMenuUnderMore();
+
       // set More Menu tabindex to -1 if there are no children
       updateMenuMoreTabIndex();
 
@@ -504,13 +507,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
   moreWidth = document.getElementById('menu-main-menu').offsetWidth;
-
-  // // Select moreSubMenu
-  // const container = document.getElementById('moreSubMenu');
-
-  // if (!container === null) {
-  //   console.log('here');
-  // }
 });
 ///// FUNCTIONS /////
 
@@ -731,6 +727,9 @@ function onResize() {
 
     // Reformat navigation layout, e.g., move overflowing items into "More" dropdown
     formatNav();
+
+    // Determin is Admin Menu under the More menu, if so add prevent-expand class
+    isAdminMenuUnderMore();
 
     // Adjust mega menu positioning if necessary based on new window size
     //determineMegaMenuPosition();
@@ -1431,9 +1430,6 @@ function renderBodyContent(contentContainer, type, menuData) {
     return;
   }
 
-  console.log(`6: ${selectedAnchor}`);
-  //selectedAnchor.setAttribute('aria-selected', 'true');
-
   const selectedLi = selectedAnchor.closest('li');
   if (!selectedLi) {
     console.error('Error: Selected anchor is not inside a <li> element.');
@@ -1872,4 +1868,43 @@ function createMenuItems(data) {
         };
       })
   );
+}
+
+/**
+ * Checks if the Admin menu item is under the "More" submenu,
+ * and toggles the 'prevent-expand' class on the Admin submenu accordingly.
+ *
+ * Variables:
+ * @const {HTMLElement|null} adminMenuLi - The main Admin menu <li> element.
+ * @const {HTMLElement|null} adminMenuLiSubMenu - The <ul> sub-menu inside the Admin menu item.
+ * @const {HTMLElement|null} moreSubMenu - The "More" submenu <ul> container.
+ * @const {boolean} adminMenuLiUnderMore - Whether the Admin menu <li> is inside the More submenu.
+ */
+function isAdminMenuUnderMore() {
+  // Find the Admin menu list item
+  const adminMenuLi = document.querySelector('li#adminMenu');
+  if (!adminMenuLi) {
+    console.warn('Admin menu list item not found.');
+    return;
+  }
+
+  // Find the sub-menu inside Admin menu
+  const adminMenuLiSubMenu = adminMenuLi.querySelector('ul.sub-menu');
+  if (!adminMenuLiSubMenu) {
+    console.warn('Admin menu sub-menu not found.');
+    return;
+  }
+
+  // Find the "More" submenu container
+  const moreSubMenu = document.querySelector('ul#moreSubMenu');
+  if (!moreSubMenu) {
+    console.warn('"More" submenu not found.');
+    return;
+  }
+
+  // Check if Admin menu is under "More"
+  const adminMenuLiUnderMore = moreSubMenu.contains(adminMenuLi);
+
+  // Toggle the 'prevent-expand' class based on whether Admin is under More
+  adminMenuLiSubMenu.classList.toggle('prevent-expand', !adminMenuLiUnderMore);
 }
