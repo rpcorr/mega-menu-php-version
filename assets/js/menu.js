@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <i class="caret angle-down"></i>
 
         </a>
-        <ul class="sub-menu" aria-hidden="true">
+        <ul class="sub-menu">
         <li><a href="#">My Profile</a></li>
         <li><a href="#">Settings</a></li>
         <li><a href="#">Notifications</a></li>
