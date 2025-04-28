@@ -198,6 +198,10 @@ nav {
   position: relative;
 }
 
+#profileMenu > a {
+  justify-content: flex-end;
+}
+
 #adminMenu > .sub-menu,
 #profileMenu > .sub-menu,
 #menu-more > .sub-menu {
