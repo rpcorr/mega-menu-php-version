@@ -292,6 +292,8 @@ li[aria-expanded='false'] > .mega-menu {
   right: 0;
   width: 100vw;
   max-height: 90vh;
+  max-width: calc(80vw - 1rem); /* 2rem gap on right */
+  margin-left: auto;
   overflow-y: auto;
   box-shadow: 0 0 0.2rem 0 rgba(50, 50, 50, 0.75);
   transition: max-height 0.5s ease-in-out, width 0.5s ease-in-out;
@@ -301,15 +303,10 @@ li[aria-expanded='false'] > .mega-menu {
 #menuMoreLink.active + #moreSubMenu {
   max-height: 1000px; /* Large enough to fit content */
   width: 100vw; /* Full width of the viewport */
-  position: absolute;
   left: 0;
   top: 100%; /* Position it just below the More link */
   background: white; /* optional background */
   z-index: 999; /* ensure it’s on top */
-}
-
-#menuMoreLink.active + #moreSubMenu:hover {
-  opacity: 1;
 }
 
 /* When the link is hovered and active, reveal the submenu */
