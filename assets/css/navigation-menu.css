@@ -47,7 +47,7 @@ nav ul > li ul > li ul > li ul > li {
 
 #menu-main-menu > li:not(.hidden-links),
 .menu-main-menu-container button {
-  white-space: nowrap;
+  /* white-space: nowrap; */
 }
 
 /* https://codepen.io/scottb/pen/gixIv */
@@ -572,7 +572,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 .mega-menu-column-4 .tabs-container {
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: 250px 2fr 1fr;
+  grid-template-columns: 250px 2fr 400px;
   border: 1px solid #000;
   background-color: #999;
   padding-bottom: 1rem;
@@ -629,11 +629,15 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
 .mega-menu-column-4 .tabs__panels {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, auto);
+  /*grid-template-columns: 250px 50% auto; */ /* Fixed, 50%, then remaining */
+  grid-template-columns: repeat(3, 1fr);
   background-color: #fff;
   row-gap: 1em;
+  column-gap: 1em;
   padding: 1em 0;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 .mega-menu-column-4 .tabs__panels h4 {
