@@ -629,7 +629,6 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
 .mega-menu-column-4 .tabs__panels {
   display: grid;
-  /*grid-template-columns: 250px 50% auto; */ /* Fixed, 50%, then remaining */
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(10, auto); /* Forces at least 10 rows */
   background-color: #fff;
@@ -639,6 +638,12 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   box-sizing: border-box;
   max-width: 100%;
   overflow-x: auto;
+}
+
+@media (max-width: 82rem) {
+  .mega-menu-column-4 .tabs__panels {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .mega-menu-column-4 .tabs__panels h4 {
