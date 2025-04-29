@@ -422,7 +422,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   box-shadow: -2px 2px 70px -25px rgba(0, 0, 0, 0.3);
   text-align: left;
   transition: all 0.5s ease;
-  margin-top: 1.563rem;
+  margin-top: 0.15rem;
   max-height: 85vh;
 }
 
