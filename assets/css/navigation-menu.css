@@ -668,6 +668,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   display: flex;
   align-items: center;
   padding-left: 2rem;
+  padding-right: 1rem;
   gap: 1rem;
 }
 
