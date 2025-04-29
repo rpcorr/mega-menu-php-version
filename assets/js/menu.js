@@ -928,38 +928,36 @@ function determineMegaMenuPosition() {
     const subMenuDiv = li.querySelector('.sub-menu-div');
 
     if (ariaExpanded === 'true') {
-      if (subMenuDiv) {
-        // Only position it if it hasn't been positioned yet
-        if (!subMenuDiv.dataset.positioned) {
-          // Hide and move the submenu initially (pre-animation)
-          subMenuDiv.style.opacity = '0';
-          subMenuDiv.style.pointerEvents = 'none';
-          subMenuDiv.style.transform = 'translateY(-200px)'; // Position it above view
+      if (subMenuDiv && !subMenuDiv.dataset.positioned) {
+        // Hide initially (for smooth animation later)
+        subMenuDiv.style.opacity = '0';
+        subMenuDiv.style.pointerEvents = 'none';
+        subMenuDiv.style.transform = 'translateY(-200px)';
 
-          // Measure submenu's position relative to viewport
-          const rect = subMenuDiv.getBoundingClientRect();
-          const distanceFromRight = screenWidth - rect.right;
+        // Get reference to the main nav
+        const mainNav = document.getElementById('mainNavigation');
+        const navRect = mainNav.getBoundingClientRect();
+        const subMenuRect = subMenuDiv.getBoundingClientRect();
 
-          // Browser-specific offset adjustments
-          let offset = 110; // Default offset
-          const userAgent = navigator.userAgent.toLowerCase();
-          if (userAgent.includes('chrome')) {
-            offset -= 10; // Adjust for Chrome rendering
-          } else if (userAgent.includes('edg')) {
-            offset -= 8; // Adjust for Edge
-          } else if (userAgent.includes('opr') || userAgent.includes('opera')) {
-            offset -= 10; // Adjust for Opera
-          }
+        // Calculate horizontal center
+        const viewportWidth = window.innerWidth;
+        const subMenuWidth = subMenuRect.width;
+        const leftPosition = (viewportWidth - subMenuWidth) / 2;
 
-          // Set the correct right positioning to align submenu
-          subMenuDiv.style.right = -distanceFromRight + offset + 'px';
+        // Position submenu just below the nav
+        const topPosition = navRect.bottom; // distance from top of viewport
 
-          // Mark this submenu as already positioned to avoid repositioning
-          subMenuDiv.dataset.positioned = 'true';
+        // Apply positioning
+        subMenuDiv.style.position = 'fixed'; // position relative to viewport
+        subMenuDiv.style.left = `${leftPosition}px`;
+        subMenuDiv.style.top = `${topPosition}px`;
+        subMenuDiv.style.right = 'auto'; // clear any conflicting style
 
-          // Animate and reveal the submenu
-          displaySubMegaMenu(subMenuDiv);
-        }
+        // Mark it as positioned
+        subMenuDiv.dataset.positioned = 'true';
+
+        // Show the submenu (your existing animation logic)
+        displaySubMegaMenu(subMenuDiv);
       }
     }
   }
