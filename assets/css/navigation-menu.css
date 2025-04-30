@@ -640,7 +640,8 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   overflow-x: auto;
 }
 
-@media (max-width: 82rem) {
+@media (max-width: 85.375rem) {
+  /* styles for viewports ≥ 1366px */
   .mega-menu-column-4 .tabs__panels {
     grid-template-columns: repeat(2, 1fr);
   }
