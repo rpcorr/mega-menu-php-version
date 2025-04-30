@@ -1398,11 +1398,7 @@ function renderBodyContent(contentContainer, type, menuData) {
 
       anchor.href = menuItem.link;
 
-      const wrapperDiv = document.createElement('div');
-      wrapperDiv.style.display = 'contents';
-      wrapperDiv.appendChild(menuContent);
-
-      fragment.appendChild(wrapperDiv);
+      fragment.appendChild(menuContent);
     }
   }
 
@@ -1513,8 +1509,6 @@ function renderBodyContent(contentContainer, type, menuData) {
   containerWrapper.appendChild(fragment);
   contentContainer.appendChild(containerWrapper);
 
-  reorderCustomReportsSection(containerWrapper);
-
   // Remove duplicate 'Custom Reports' headings if necessary
   const h4Elements = document.querySelectorAll('h4');
   const matchingHeadings = [...h4Elements].filter(
@@ -1523,36 +1517,6 @@ function renderBodyContent(contentContainer, type, menuData) {
 
   if (matchingHeadings.length > 1) {
     matchingHeadings.slice(1).forEach((h4) => h4.remove());
-  }
-
-  /**
-   * Reorders the 'Custom Reports' section to ensure correct positioning after rendering.
-   * @param {HTMLElement} container - The container element that holds the rendered content.
-   */
-  function reorderCustomReportsSection(container) {
-    const customReportsHeading = [...container.querySelectorAll('h4')].find(
-      (h4) => h4.textContent.trim().toLowerCase() === 'custom reports'
-    );
-
-    if (customReportsHeading) {
-      const divs = [
-        ...customReportsHeading.parentElement.querySelectorAll(
-          'div[style="display: contents;"]'
-        ),
-      ];
-
-      const customReportDiv = divs.find(
-        (div) =>
-          div.querySelector('strong')?.textContent.trim() === 'Custom Report'
-      );
-
-      if (customReportDiv) {
-        customReportsHeading.parentElement.insertBefore(
-          customReportDiv,
-          customReportsHeading.nextElementSibling
-        );
-      }
-    }
   }
 }
 
