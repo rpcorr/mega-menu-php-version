@@ -753,6 +753,14 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   overflow: hidden; /* Prevents content from overflowing */
 }
 
+@media (max-width: 37.5rem) {
+  /* Small devices (phones in landscape, larger phones) - 600px */
+  .mega-menu-column-4 .grid-container-pages {
+    grid-template-columns: 1fr;
+    padding-right: 0;
+  }
+}
+
 .mega-menu-column-4 .grid-container-pages > .left-content {
   display: grid;
   grid-column: span 2; /* Forces the left section to take 2 columns */
@@ -760,6 +768,22 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   gap: 10px;
   padding: 1rem;
   background-color: #fff;
+}
+
+@media (max-width: 37.5rem) {
+  /* Small devices (phones in landscape, larger phones) - 600px */
+  .mega-menu-column-4 .grid-container-pages > .left-content {
+    grid-column: 1;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 0;
+  }
+}
+
+@media (max-width: 37.5rem) {
+  /* width up to 412px */
+  .mega-menu-column-4 .grid-container-pages > .left-content {
+    grid-template-columns: 1fr;
+  }
 }
 
 .mega-menu-column-4 .grid-container-pages > .left-content > .grid-item {
@@ -797,6 +821,13 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   margin-left: 1rem;
   background-color: #fff;
   padding: 1rem 2rem 0;
+}
+
+@media (max-width: 37.5rem) {
+  /* Small devices (phones in landscape, larger phones) - 600px */
+  .mega-menu-column-4 .extra-content {
+    margin-left: 0;
+  }
 }
 
 #moreSubMenu .mega-menu-column-4 .extra-content {
