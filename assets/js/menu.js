@@ -859,25 +859,6 @@ function toggleTopLevelMenu(menuLink) {
   if (menuMore) {
     const subMenuDivs = menuMore.querySelectorAll('.sub-menu-div');
     const viewportWidth = window.innerWidth;
-
-    subMenuDivs.forEach((div) => {
-      const rect = div.getBoundingClientRect();
-      if (rect.left < 0) {
-        if (viewportWidth >= 2500) {
-          div.style.width = '77vw';
-        } else if (viewportWidth >= 2400) {
-          div.style.width = '78vw';
-        } else if (viewportWidth >= 2300) {
-          div.style.width = '80vw';
-        } else if (viewportWidth >= 2200) {
-          div.style.width = '82vw';
-        } else if (viewportWidth >= 1700) {
-          div.style.width = '82vw';
-        } else {
-          div.style.width = '85vw';
-        }
-      }
-    });
   }
 
   // Update the sidebar content based on the selected top-level menu
