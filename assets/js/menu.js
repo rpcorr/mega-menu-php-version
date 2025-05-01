@@ -5,6 +5,7 @@
 let navItems = [];
 const navItemWidth = [];
 const navItemVisible = [];
+const MOBILE_BREAKPOINT = 600;
 let moreWidth = 0;
 let winWidth = 0;
 let output = '';
@@ -264,6 +265,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       navItems = document.querySelectorAll('#menu-main-menu > li');
 
+      // call alignSubMenusToViewport to initially align them
+      alignSubMenusToViewport('initial');
+
       megaMenuLinks = document.querySelectorAll('nav a');
 
       for (let i = 0; i < megaMenuLinks.length; i++) {
@@ -337,6 +341,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       moreWidth = document.getElementById('menu-more').offsetWidth;
 
+      adjustMoreSubMenuOffset();
+
       // toggle More menu
       document
         .getElementById('menuMoreLink')
@@ -344,7 +350,6 @@ document.addEventListener('DOMContentLoaded', () => {
           event.preventDefault();
 
           const moreMenu = this.closest('.menu-item-has-children');
-          const isVisible = moreMenu.classList.contains('visible');
           const icon = this.querySelector('i');
           const moreSubMenu = document.getElementById('moreSubMenu');
 
@@ -493,15 +498,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
   moreWidth = document.getElementById('menu-main-menu').offsetWidth;
-
-  // Select moreSubMenu
-  const container = document.getElementById('moreSubMenu');
-
-  if (!container === null) {
-    console.log('here');
-  }
 });
 ///// FUNCTIONS /////
+/**
+ * Aligns visible sub-menus (<ul class="sub-menu">) so they stay within the viewport on narrow screens,
+ * except those under <ul id="moreSubMenu">.
+ *
+ * @param {string} mode - Can be 'initial' or 'default'. 'initial' applies an extra offset.
+ * @param {boolean} debug - If true, logs debug information.
+ */
+function alignSubMenusToViewport(mode = 'default', debug = false) {
+  const OFFSET_FOR_INITIAL_MODE = 209;
+
+  if (window.innerWidth > MOBILE_BREAKPOINT) return;
+
+  const subMenus = document.querySelectorAll('ul.sub-menu');
+
+  subMenus.forEach((subMenu) => {
+    // Skip sub-menus inside #moreSubMenu
+    if (subMenu.closest('#moreSubMenu')) return;
+
+    const parentLi = subMenu.closest('li');
+    if (!parentLi) return;
+
+    const parentRightEdge = parentLi.getBoundingClientRect().right;
+    let offsetFromRight = window.innerWidth - parentRightEdge;
+
+    if (mode === 'initial') {
+      offsetFromRight -= OFFSET_FOR_INITIAL_MODE;
+
+      if (debug) {
+        console.log(
+          'SubMenu:',
+          subMenu,
+          '\nParent Element:',
+          subMenu.parentElement,
+          '\n#moreSubMenu Ancestor:',
+          subMenu.closest('#moreSubMenu')
+        );
+      }
+    }
+
+    subMenu.style.right = `-${offsetFromRight}px`;
+  });
+}
 
 /**
  * Handles click events on menu links.
@@ -724,6 +764,8 @@ function onResize() {
 
     // Update stored window width for the next resize event
     winWidth = window.innerWidth;
+
+    alignSubMenusToViewport('onResize');
   }
 }
 
@@ -803,7 +845,10 @@ function toggleTopLevelMenu(menuLink) {
     }
   }
 
-  if (menuLink.getAttribute('aria-expanded') === 'true') {
+  if (
+    menuLink.getAttribute('aria-expanded') === 'true' &&
+    subMenuDiv.tagName === 'DIV'
+  ) {
     // Slide in and show the submenu (mega menu)
     displaySubMegaMenu(subMenuDiv);
   }
@@ -1751,4 +1796,30 @@ function createMenuItems(data) {
         };
       })
   );
+}
+
+function adjustMoreSubMenuOffset() {
+  const moreSubMenu = document.querySelector('#moreSubMenu');
+
+  if (!moreSubMenu) return;
+
+  const width = window.innerWidth;
+
+  // Map of breakpoints to corresponding right offsets (from highest to lowest)
+  const offsetMap = [
+    { minWidth: 600, offset: '-1.75rem' },
+    { minWidth: 550, offset: '-1.7rem' },
+    { minWidth: 500, offset: '-1.65rem' },
+    { minWidth: 450, offset: '-1.4rem' },
+    { minWidth: 400, offset: '-1.25rem' },
+    { minWidth: 350, offset: '-1.1rem' },
+    { minWidth: 320, offset: '-1rem' },
+  ];
+
+  for (const { minWidth, offset } of offsetMap) {
+    if (width >= minWidth) {
+      moreSubMenu.style.right = offset;
+      break; // Stop at the first matching rule
+    }
+  }
 }
