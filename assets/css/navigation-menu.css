@@ -827,6 +827,21 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   }
 }
 
+@media (max-width: 33.75em) {
+  /* ≤ 540px */
+  .mega-menu-column-4 .menu-list li {
+    gap: 1em;
+  }
+
+  .menu-list li a {
+    padding-right: 1rem !important;
+  }
+
+  .mega-menu-column-4 .menu-list li .circle {
+    display: none;
+  }
+}
+
 @media (max-width: 32em) {
   /* ≤ 512px */
   nav {
