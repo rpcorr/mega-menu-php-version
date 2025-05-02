@@ -849,6 +849,19 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   }
 }
 
+@media (max-width: 30em) {
+  /* ≤ 480 px */
+
+  .mega-menu-column-4 .menu-list li {
+    gap: 0.5em;
+  }
+
+  .mega-menu-column-4 .menu-list li img {
+    width: 29px;
+    height: auto;
+  }
+}
+
 @media (max-width: 27rem) {
   /* ≤ 432px */
   .logo {
