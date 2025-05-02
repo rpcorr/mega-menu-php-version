@@ -284,7 +284,7 @@ ul#menu-main-menu
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a {
   text-align: left;
   font-weight: 600;
-  font-size: 1rem;
+  /* font-size: 1rem; */ /* this was overriding font size in tabs for smaller devices */
   line-height: 1.25;
   /* the style below may not be needed any more after completing the mega-menu */
   padding: 1rem 1.5rem;
@@ -801,6 +801,10 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
     max-width: 100vw;
   }
 
+  .menu-main-menu-container > #menu-main-menu > li > .sub-menu a {
+    padding: 1rem 0;
+  }
+
   .mega-menu-column-4 .grid-container-pages {
     grid-template-columns: 1fr;
     padding-right: 0;
@@ -808,6 +812,18 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
   .mega-menu-column-4 .extra-content {
     margin-left: 0;
+  }
+
+  .mega-menu-column-4 .menu-list li {
+    gap: 0.5em;
+  }
+
+  ul.menu-list p {
+    font-size: 0.9rem;
+  }
+
+  .menu-list li a:not([aria-selected='true']) {
+    padding-right: 1rem !important;
   }
 }
 
