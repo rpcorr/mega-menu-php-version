@@ -706,8 +706,13 @@ function formatNav() {
     count += 1;
   });
 
-  // Select the container for the "More" submenu by its ID (if needed for further use)
-  const container = document.getElementById('moreSubMenu');
+  const subMenus = document.querySelectorAll('#moreSubMenu ul.sub-menu');
+
+  subMenus.forEach((ul) => {
+    if (ul.style.right) {
+      ul.style.removeProperty('right');
+    }
+  });
 }
 
 /**
