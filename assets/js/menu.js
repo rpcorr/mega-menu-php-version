@@ -610,40 +610,56 @@ function closeAllMenus() {
   });
 }
 
+/**
+ * Dynamically formats the top navigation bar by showing or hiding menu items
+ * based on available horizontal space in the container. Items that do not fit
+ * are moved into a "More" dropdown menu.
+ *
+ * This function assumes the existence of the following global variables:
+ * - navItems: NodeList or array of navigation <li> items.
+ * - navItemWidth: Array of each navigation item’s width.
+ * - navItemVisible: Array of booleans tracking which items are currently visible.
+ * - moreWidth: Width of the "More" dropdown menu item.
+ */
+
 function formatNav() {
-  // Initialize variables
-  let room = true; // Flag to track if there's space for more items
-  let count = 0; // Counter for menu item index
-  let tempWidth = 0; // Temporary width calculation for current menu
-  let totalWidth = 0; // Total width of the menu items
+  // Track whether there's still room to display more menu items
+  let room = true;
+
+  // Index counter for each menu item
+  let count = 0;
+
+  // Temporary and total width calculations for placing items
+  let tempWidth = 0;
+  let totalWidth = 0;
+
+  // Get the width of the navigation container (rounded to nearest integer)
   const containerWidth = Math.round(
     document.querySelector('.menu-main-menu-container').getBoundingClientRect()
       .width
-  ); // Get the width of the container
+  );
 
-  const navPadding = 5; // Padding to be added around each item for spacing
-  const numItems = 5; // Number of items to be displayed before "More" dropdown
+  // Padding applied around each nav item (buffer for spacing)
+  const navPadding = 5;
 
-  // Loop through each menu item and apply logic for showing or hiding based on available space
+  // Maximum number of top-level items to display before triggering "More"
+  const numItems = 5;
+
+  // Loop through each navigation item and decide whether to show it or move it to "More"
   navItems.forEach(function (item) {
-    // Check if the navItem contains a specific mega menu
-    const hasMegaMenu = item.querySelector(
-      'div.sub-menu-div.mega-menu.mega-menu-column-4'
-    );
-
-    // Calculate the width of the menu with the current item added
+    // Predict total width if this item were added
     tempWidth = totalWidth + navItemWidth[count] + navPadding;
 
-    // If the menu item fits within the container width (considering 'More' dropdown)
+    // Check if item fits within the container (adjusting for "More" menu space)
     if (
       (tempWidth < containerWidth - moreWidth - navPadding ||
         (tempWidth < containerWidth && count === numItems)) &&
       room === true
     ) {
-      // Update the total width after adding this item
+      // Item fits: update the total used width
       totalWidth = tempWidth;
 
-      // Show the menu item if it's not visible already
+      // If the item is not already marked visible, move it from "More" back to main nav
       if (navItemVisible[count] !== true) {
         // Move the first child of the "More" submenu back to the main menu
         const menuMore = document.getElementById('menu-more');
@@ -655,59 +671,51 @@ function formatNav() {
           menuMore.parentNode.insertBefore(firstChild, menuMore);
         }
 
-        // Clear inner text of 'More' menu if no submenu links are visible
+        // If "More" submenu is now empty, reset its visual label and accessibility
         if (menuMore.children[1].children.length === 0) {
-          document.getElementById('menuMoreLink').innerHTML = '';
-          document
-            .getElementById('menuMoreLink')
-            .setAttribute('tabindex', '-1');
+          const moreLink = document.getElementById('menuMoreLink');
+          moreLink.innerHTML = '';
+          moreLink.setAttribute('tabindex', '-1');
         }
-
         // Mark the current item as visible
         navItemVisible[count] = true;
       }
-    }
-    // If the menu item does not fit within the container
-    else {
-      // If this is the first item that doesn't fit, enable the "More" dropdown
+    } else {
+      // Item does not fit: begin using "More" menu if not already
       if (room === true) {
         room = false;
 
-        // Change text to "Menu" if no items are visible
+        const nav = document.querySelector('nav');
+        const moreLink = document.getElementById('menuMoreLink');
+
+        // If no items fit at all, hide the entire nav and show "Menu" label
         if (count === 0) {
-          // Add a class to hide the navigation items initially
-          document.querySelector('nav').classList.add('all-hidden');
+          nav.classList.add('all-hidden');
 
           // Set the HTML content for the 'More' dropdown link
-          document.getElementById('menuMoreLink').innerHTML =
-            'Menu <i class="caret angle-down"></i>';
+          moreLink.innerHTML = 'Menu <i class="caret angle-down"></i>';
         } else {
           // Remove the class to show navigation items when more are revealed
-          document.querySelector('nav').classList.remove('all-hidden');
+          nav.classList.remove('all-hidden');
 
           // Update the 'More' dropdown link content
-          document.getElementById('menuMoreLink').innerHTML =
-            'More <i class="caret angle-down"></i>';
+          moreLink.innerHTML = 'More <i class="caret angle-down"></i>';
         }
       }
 
-      // Remove the hover effect for items that are moved to the "More" dropdown
+      // Remove hover behavior and move item into the "More" submenu
       item.classList.remove('hover');
-
-      // Move the current item to the "More" dropdown submenu
-      const moreSubMenu = document.getElementById('moreSubMenu');
-      moreSubMenu.appendChild(item);
+      document.getElementById('moreSubMenu').appendChild(item);
 
       // Mark the current item as not visible
       navItemVisible[count] = false;
     }
 
-    // Increment the count for the next iteration
-    count += 1;
+    count += 1; // Move to next nav item
   });
 
+  // Cleanup: remove inline 'right' style from submenus under "More"
   const subMenus = document.querySelectorAll('#moreSubMenu ul.sub-menu');
-
   subMenus.forEach((ul) => {
     if (ul.style.right) {
       ul.style.removeProperty('right');
