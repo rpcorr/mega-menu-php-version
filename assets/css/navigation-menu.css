@@ -834,6 +834,15 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
 @media (max-width: 33.75em) {
   /* ≤ 540px */
+  #moreSubMenu .mega-menu-column-4 .tabs-container {
+    grid-template-columns: 34em;
+  }
+
+  .mega-menu-column-4 .tabs__panels [role='listitem'] {
+    padding-left: 1rem;
+    padding-right: 0;
+  }
+
   .mega-menu-column-4 .menu-list li {
     gap: 1em;
   }
