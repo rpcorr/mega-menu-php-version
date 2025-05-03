@@ -788,6 +788,11 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
 @media (max-width: 37.5rem) {
   /* ≤ 600px */
+
+  #moreSubMenu .mega-menu-column-4 .tabs-container {
+    grid-template-columns: 38em;
+  }
+
   .mega-menu-column-4 .grid-container-pages > .left-content {
     grid-column: 1;
     grid-template-columns: 1fr; /* replaces previous repeat(2, 1fr) and 1fr separately */
