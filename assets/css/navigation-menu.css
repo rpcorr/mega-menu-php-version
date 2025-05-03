@@ -856,13 +856,6 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   }
 }
 
-@media (max-width: 32rem) {
-  /* ≤ 512px */
-  nav {
-    width: 50%;
-  }
-}
-
 @media (max-width: 30rem) {
   /* ≤ 480 px */
 
