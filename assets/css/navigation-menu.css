@@ -890,6 +890,32 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
 @media (max-width: 27rem) {
   /* ≤ 432px */
+
+  #moreSubMenu .mega-menu-column-4 .tabs-container {
+    grid-template-columns: 28rem;
+  }
+
+  .mega-menu-column-4 .tabs__panels {
+    column-gap: 0;
+  }
+
+  .mega-menu-column-4 .tabs-container .menu-list li {
+    padding-left: 0.35rem;
+  }
+
+  .mega-menu-column-4 .tabs__panels [role='listitem'] {
+    padding-left: 0.85rem;
+  }
+
+  .mega-menu-column-4 .tabs__panels [role='listitem'] img {
+    width: 35px;
+    height: auto;
+  }
+
+  .mega-menu-column-4 .tabs__panels [role='listitem'] p {
+    font-size: 0.8rem;
+  }
+
   .logo {
     display: none;
   }
