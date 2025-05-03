@@ -790,7 +790,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   /* ≤ 600px */
 
   #moreSubMenu .mega-menu-column-4 .tabs-container {
-    grid-template-columns: 38em;
+    grid-template-columns: 38rem;
   }
 
   .mega-menu-column-4 .grid-container-pages > .left-content {
@@ -835,7 +835,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 @media (max-width: 33.75rem) {
   /* ≤ 540px */
   #moreSubMenu .mega-menu-column-4 .tabs-container {
-    grid-template-columns: 34em;
+    grid-template-columns: 34rem;
   }
 
   .mega-menu-column-4 .tabs__panels [role='listitem'] {
@@ -867,7 +867,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   /* ≤ 480 px */
 
   #moreSubMenu .mega-menu-column-4 .tabs-container {
-    grid-template-columns: 30em;
+    grid-template-columns: 30rem;
   }
 
   .mega-menu-column-4 .tabs__panels [role='listitem'] {
