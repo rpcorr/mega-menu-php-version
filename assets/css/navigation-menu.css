@@ -861,6 +861,14 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
     grid-template-columns: 30em;
   }
 
+  .mega-menu-column-4 .tabs__panels [role='listitem'] {
+    padding-left: 1rem;
+  }
+
+  .menu-main-menu-container > #menu-main-menu > li > .sub-menu .sub-menu-div a {
+    padding-right: 0;
+  }
+
   .mega-menu-column-4 .menu-list li {
     gap: 0.5em;
   }
