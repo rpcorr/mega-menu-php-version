@@ -188,7 +188,7 @@ header {
 
 /* main navigation */
 
-nav {
+#mainNavigation nav {
   width: calc(100% - 15rem);
   float: right;
 }
