@@ -932,12 +932,9 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   }
 }
 
-@media (min-width: 27rem) {
-  /* 432px */
-  .logo {
-    display: block;
-  }
-
+@media (min-width: 27.0625rem) {
+  /* 433px */
+  /* hide simple logo */
   .simple-logo {
     display: none;
   }
