@@ -619,6 +619,7 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   font-size: 1.4rem; /* Adjust font size */
   font-weight: bold; /* Make the font bold */
   color: #007bff; /* Blue color for the heading */
+  text-align: center; /* Center text */
   margin-top: 20px; /* Add some space before the heading */
   margin-bottom: 10px; /* Add some space after the heading */
   text-transform: capitalize; /* Capitalize the first letter of each word */
@@ -925,6 +926,14 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
     width: 29px;
     height: auto;
   }
+
+  .mega-menu-column-4 .tabs__panels h5 {
+    font-size: 1.1rem;
+  }
+
+  .mega-menu-column-4 .tabs__panels [role='listitem'] p {
+    font-size: 0.8rem;
+  }
 }
 
 @media (max-width: 27rem) {
@@ -954,10 +963,6 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   .mega-menu-column-4 .tabs__panels [role='listitem'] img {
     width: 35px;
     height: auto;
-  }
-
-  .mega-menu-column-4 .tabs__panels [role='listitem'] p {
-    font-size: 0.8rem;
   }
 
   .logo {
@@ -1003,6 +1008,10 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
 
   ul.menu-list li p strong {
     font-weight: 700;
+  }
+
+  .mega-menu-column-4 .tabs__panels h5 {
+    font-size: 1rem;
   }
 
   .mega-menu-column-4 .tabs__panels [role='listitem'] p {
