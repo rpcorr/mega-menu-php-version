@@ -786,7 +786,28 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   }
 }
 
-@media (min-width: 37.6rem) and (max-width: 47.9375rem) {
+@media (min-width: 48rem) and (max-width: 64rem) {
+  /* min width 768px to max width 1024px */
+  .mega-menu-column-4 .tabs-container {
+    grid-template-columns: 1fr;
+    padding-right: 0;
+  }
+
+  .mega-menu-column-4 .menu-list {
+    flex-direction: row;
+  }
+
+  .mega-menu-column-4 .menu-list p {
+    padding-right: 2rem;
+  }
+
+  .mega-menu-column-4 .extra-content {
+    margin-left: 0;
+    margin-top: 1rem;
+  }
+}
+
+@media (min-width: 37.5625rem) and (max-width: 47.9375rem) {
   /* min width 601px to max width 767px */
   .mega-menu-column-4 .tabs-container {
     grid-template-columns: 1fr;
