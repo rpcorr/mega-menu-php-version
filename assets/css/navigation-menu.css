@@ -815,6 +815,10 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
     padding-right: 0;
   }
 
+  .mega-menu-column-4 .tabs__panels h4 {
+    font-size: 1em;
+  }
+
   .mega-menu-column-4 .extra-content {
     margin-left: 0;
   }
