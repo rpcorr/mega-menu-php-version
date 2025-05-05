@@ -47,11 +47,6 @@ nav ul > li ul > li ul > li ul > li {
   padding: 1.75rem 0;
 }
 
-#menu-main-menu > li:not(.hidden-links),
-.menu-main-menu-container button {
-  /* white-space: nowrap; */
-}
-
 /* https://codepen.io/scottb/pen/gixIv */
 ul#menu-main-menu li > ul {
   opacity: 0;
