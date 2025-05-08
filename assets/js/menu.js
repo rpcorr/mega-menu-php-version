@@ -262,8 +262,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (ukey.trim() !== '') {
         menuHTML += `<li class="menu-item-has-children hover" id="profileMenu" aria-expanded="false">
         <a href="#" aria-label="John Smith profile has a sub menu. Click enter to open">
-        John Smith <span class="hidden-text">profile</span> 
-        <i class="caret angle-down"></i>
+        <span class="profile-border">
+        John Smith  <span class="hidden-text">profile</span> 
+        <i class="caret angle-down"></i></span>
 
         </a>
         <ul class="sub-menu">
