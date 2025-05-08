@@ -41,7 +41,6 @@ nav ul > li ul > li ul > li ul > li {
 
 #menu-main-menu > li:not(:last-child) {
   height: 48px;
-  border: 2px solid transparent; /* Reserve space for border */
   border-radius: 10px;
 }
 
@@ -248,11 +247,9 @@ nav {
 
 ul.overlap {
   position: absolute;
-  top: 4.1rem !important; /* or a smaller value like 80% if you want it partly over the profile link */
+  top: 2.1rem !important; /* or a smaller value like 80% if you want it partly over the profile link */
   right: 0;
-  background: white; /* optional, for visibility */
   z-index: 1000; /* makes sure it stays on top */
-  min-width: 200px; /* optional: so submenu isn't too narrow */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* optional: subtle dropdown shadow */
 }
 
