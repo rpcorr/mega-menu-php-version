@@ -81,14 +81,6 @@ nav ul li:hover > ul {
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.3s;
-  -webkit-border-radius: 0.313rem;
-  -moz-border-radius: 0.313rem;
-  -ms-border-radius: 0.313rem;
-  -o-border-radius: 0.313rem;
-  -webkit-transition: background-color 0.3s;
-  -moz-transition: background-color 0.3s;
-  -ms-transition: background-color 0.3s;
-  -o-transition: background-color 0.3s;
 }
 
 /* Responsive adjustments */

@@ -14,12 +14,7 @@ if (isset($_POST['username'])) {
 
 
   // Path to the JSON file
-  
-  if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
-    $json_file =  $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\json\users.json';
-  } else {
-    $json_file = $_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/json/users.json';
-  }
+  $json_file = 'assets/json/users.json';
  
 
   // Check if the file exists
@@ -79,16 +74,8 @@ if (isset($_POST['username'])) {
 
 $title = 'Login - Priority Mega Menu';
 
-
-if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
-  
-  include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\header.php');
-} else {
-  include_once( $_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/php_scripts/header.php');
-}
+include('assets/php_scripts/header.php');
 ?>
-
-
     <main>
       <div class="container center">
 
@@ -109,14 +96,5 @@ if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
           </form>
         </div>
     </main>
-    
-<?php 
 
-if ($_SERVER['DOCUMENT_ROOT'] === 'C:\inetpub\wwwroot') {
-  
-  include_once( $_SERVER['DOCUMENT_ROOT'] . '\mega-menu\assets\php_scripts\footer.php');
-} else {
-  include_once( $_SERVER['DOCUMENT_ROOT'] . '/mmenu/assets/php_scripts/footer.php');
-}
-
-?>
+<?php include('assets/php_scripts/footer.php'); ?>

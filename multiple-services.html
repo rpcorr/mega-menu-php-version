@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Grid Multiple Services Example</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .grid-container-multiple {
+        display: grid;
+        grid-template-rows: repeat(
+          3,
+          minmax(100px, auto)
+        ); /* Allow rows to grow */
+        grid-template-columns: 300px repeat(3, 1fr);
+
+        height: auto; /* Allow the grid container to grow with content */
+        border: 1px solid #000;
+        background-color: #999;
+        padding-bottom: 1rem;
+        padding-right: 2rem;
+
+        grid-auto-flow: column;
+      }
+
+      .grid-item {
+        display: flex;
+        align-items: center;
+      }
+
+      .grid-item p {
+        margin-top: 0;
+        margin-left: 1em;
+      }
+
+      .grid-item a {
+        color: black;
+        text-decoration: none;
+      }
+
+      .menu {
+        padding: 1rem;
+      }
+
+      .menu-content {
+        padding-left: 3rem;
+      }
+
+      /* Make the 4th column item span the entire height */
+      .span-all-rows {
+        grid-row: span 3;
+        display: flex;
+        justify-content: start;
+        flex-direction: column;
+        padding: 1rem 2rem 0;
+        margin-left: 1rem;
+      }
+
+      /* Set grey background colour for menu items that are not have class .active */
+      .menu:not(.active) {
+        background-color: #999;
+      }
+
+      /* Set white background colour for grid items, .active grid-item and when hovering a menu item */
+      .grid-item,
+      .active,
+      .menu:hover {
+        background-color: white;
+      }
+
+      .active > .circle,
+      .menu:has(a:focus) > .circle {
+        display: none;
+      }
+
+      .menu:hover > .circle {
+        display: none;
+      }
+
+      .circle {
+        width: 30px;
+        height: 30px;
+        background-color: white; /* Blue color for the circle */
+        border-radius: 50%; /* Makes it a perfect circle */
+        border: 2px black solid;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Adds a shadow */
+        margin-left: auto;
+      }
+
+      .caret {
+        position: relative;
+      }
+
+      .caret:before {
+        content: '';
+        position: absolute;
+        top: 6px;
+        left: 13px;
+        border-left: 9px solid #000;
+        border-top: 9px solid transparent;
+        border-bottom: 9px solid transparent;
+      }
+
+      .caret:after {
+        content: '';
+        position: absolute;
+        left: 13px;
+        top: 11px;
+        border-left: 4px solid #fff;
+        border-top: 4px solid transparent;
+        border-bottom: 4px solid transparent;
+      }
+
+      /* Media Query for screen widths <= 1160px */
+      @media (max-width: 1160px) {
+        .grid-container-multiple {
+          grid-template-columns: 275px repeat(3, 1fr);
+        }
+
+        .menu-content {
+          padding-left: 2rem;
+          padding-right: 1rem;
+        }
+      }
+
+      /* Media Query for screen widths <= 960px */
+      @media (max-width: 960px) {
+        .grid-container-multiple {
+          grid-template-rows: repeat(
+            3,
+            minmax(100px, auto)
+          ); /* Allow rows to grow */ /* Adjust rows for smaller screens */
+          grid-template-columns: 275px repeat(2, 1fr); /* Adjust columns for smaller screens */
+        }
+
+        .span-all-rows {
+          grid-row: 5 / -1;
+          grid-column: 1 / -1;
+          margin-top: 1rem;
+          margin-left: 0;
+          justify-content: start;
+        }
+      }
+
+      /* Media Query for screen widths <= 830px */
+      @media (max-width: 830px) {
+        .grid-container-multiple {
+          grid-auto-flow: row;
+          grid-template-columns: repeat(3, 1fr);
+          padding-right: 0;
+        }
+      }
+
+      /* Media Query for screen widths <= 770px */
+      @media (max-width: 770px) {
+        .menu-content img {
+          width: 35px;
+          height: auto;
+        }
+      }
+
+      /* Media Query for screen widths <= 730px */
+      @media (max-width: 730px) {
+        .circle {
+          width: 20px;
+          height: 20px;
+        }
+
+        .caret:before {
+          top: 4px;
+          left: 8px;
+          border-left: 7px solid #000;
+          border-top: 7px solid transparent;
+          border-bottom: 7px solid transparent;
+        }
+
+        .caret:after {
+          top: 7px;
+          left: 8px;
+          border-left: 4px solid #fff;
+          border-top: 4px solid transparent;
+          border-bottom: 4px solid transparent;
+        }
+      }
+
+      /* Media Query for screen widths <= 630px */
+      @media (max-width: 630px) {
+        .menu > p {
+          width: 5em;
+        }
+      }
+
+      /* Media Query for screen widths <= 550px */
+      @media (max-width: 550px) {
+        .menu > p {
+          margin-left: 0.7em;
+          width: 5em;
+        }
+
+        .menu:first-of-type > p {
+          margin-left: 0.95em;
+          width: 6em;
+        }
+
+        .menu > p {
+          font-size: 0.85em;
+        }
+
+        .menu-content p {
+          font-size: 0.9rem;
+        }
+      }
+
+      /* Media Query for screen widths <= 530px */
+      @media (max-width: 530px) {
+        .grid-container-multiple {
+          grid-template-columns: 160px repeat(2, 1fr);
+        }
+
+        .menu-content > p {
+          font-size: 0.8em;
+        }
+
+        .menu > img {
+          width: 30%;
+          height: auto;
+        }
+      }
+
+      /* Media Query for screen widths <= 500px */
+      @media (max-width: 500px) {
+        .grid-item:not(:first-of-type) > img {
+          display: flex;
+        }
+
+        .menu:nth-child(2) > img,
+        .menu:nth-child(3) > img {
+          display: none;
+        }
+
+        .menu-content {
+          padding: 0 1rem;
+        }
+      }
+
+      /* Media Query for screen widths <= 480px */
+      @media (max-width: 480px) {
+        .menu-content p {
+          font-size: 0.7rem;
+        }
+      }
+
+      /* Media Query for screen widths <= 455px */
+      @media (max-width: 455px) {
+        .menu-content {
+          padding: 0 0.5rem;
+        }
+
+        .circle {
+          width: 18px;
+          height: 18px;
+        }
+
+        .span-all-rows {
+          padding-left: 0;
+          padding-right: 0;
+        }
+
+        .menu-content img {
+          width: 30px;
+          height: auto;
+        }
+      }
+
+      /* Media Query for screen widths <= 420px */
+      @media (max-width: 420px) {
+        .grid-container-multiple {
+          grid-template-columns: 1fr;
+          grid-template-rows: repeat(3, 80px) repeat(6, 90px);
+        }
+
+        .span-all-rows {
+          grid-row: 10 /-1;
+          grid-column: 1 / -1;
+          justify-content: start;
+          padding-top: 2rem;
+        }
+
+        .grid-item:not(:first-of-type) > img {
+          display: flex;
+        }
+
+        .grid-item:first-of-type > img {
+          width: 36px;
+          height: auto;
+        }
+
+        .menu:nth-child(2) > img {
+          width: 43px;
+          height: auto;
+        }
+
+        .menu:nth-child(3) > img {
+          width: 40px;
+          height: auto;
+        }
+
+        .menu > p {
+          margin-left: 1em;
+          width: 80%;
+        }
+
+        .menu-content {
+          padding-left: 1rem;
+        }
+
+        .menu-content p,
+        .menu,
+        .span-all-rows {
+          font-size: 1rem;
+        }
+
+        .menu-content > img {
+          width: 35px;
+          height: auto;
+        }
+
+        .circle {
+          width: 30px;
+          height: 30px;
+        }
+
+        .caret:before {
+          top: 6px;
+          left: 13px;
+          border-left: 9px solid #000;
+          border-top: 9px solid transparent;
+          border-bottom: 9px solid transparent;
+        }
+
+        .caret:after {
+          left: 13px;
+          top: 11px;
+          border-left: 4px solid #fff;
+          border-top: 4px solid transparent;
+          border-bottom: 4px solid transparent;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .circle {
+          width: 25px;
+          height: 25px;
+        }
+
+        .caret:before {
+          top: 5px;
+          left: 11px;
+          border-left: 8px solid #000;
+          border-top: 8px solid transparent;
+          border-bottom: 8px solid transparent;
+        }
+
+        .caret:after {
+          left: 11px;
+          top: 9px;
+          border-left: 4px solid #fff;
+          border-top: 4px solid transparent;
+          border-bottom: 4px solid transparent;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid-container-multiple">
+      <div class="grid-item menu active">
+        <img src="assets/imgs/pie.gif" width="36" height="33" />
+        <p>
+          <a href="#"><strong>LibPas</strong><br />Periodic data </a>
+        </p>
+        <div class="circle">
+          <div class="caret"></div>
+        </div>
+      </div>
+
+      <div class="grid-item menu">
+        <img src="assets/imgs/medal.gif" width="43" height="43" />
+        <p>
+          <a href="#"><strong>LibSAT</strong><br />Qualitative data </a>
+        </p>
+        <div class="circle">
+          <div class="caret"></div>
+        </div>
+      </div>
+
+      <div class="grid-item menu">
+        <img src="assets/imgs/puzzle-pieces.gif" width="40" height="40" />
+        <p>
+          <a href="#"><strong>InformUs</strong><br />Survey data </a>
+        </p>
+        <div class="circle">
+          <div class="caret"></div>
+        </div>
+      </div>
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/data-input.gif" width="42" height="55" />
+
+        <p>
+          <strong>Data Input</strong><br />
+          {Brief description of the function of data input}
+        </p>
+      </div>
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item menu-content">
+        <img src="assets/imgs/reports.gif" width="42" height="55" />
+
+        <p>
+          <strong>Reports</strong><br />{Brief description of the function of
+          reports}
+        </p>
+      </div>
+      <div class="grid-item span-all-rows">
+        <div>
+          <img src="assets/imgs/light-bulb.gif" align="left" />
+          <p>
+            <strong>Did you know that you can do this if you do that?</strong>
+          </p>
+        </div>
+
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+
+        <ul>
+          <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
+          <li>Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
+        </ul>
+      </div>
+    </div>
+    <script src="scripts.js" defer></script>
+  </body>
+</html>

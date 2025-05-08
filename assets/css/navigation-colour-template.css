@@ -4,6 +4,11 @@ html {
   color: var(--defaultTextColour);
 }
 
+.skip-nav-link {
+  background-color: var(--skipNavBgColour);
+  color: var(--skipNavTextColour);
+}
+
 /* h1 text colour */
 h1 {
   color: var(--headingOneTextColour);
@@ -33,9 +38,9 @@ ul#menu-main-menu a:active {
 ul#menu-main-menu li a:hover,
 ul#menu-main-menu li a:focus,
 ul#menu-main-menu a.active,
-ul.menu li:hover,
 ul.menu li a:focus,
-ul.menu li a:active {
+ul.menu li a:active,
+ul.menu li a[aria-expanded='true'] {
   background-color: var(--bgColourHoverActiveFocus);
   color: var(--textColourHoverActiveFocus);
 }

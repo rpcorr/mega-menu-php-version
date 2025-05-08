@@ -82,10 +82,6 @@ h3 {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   width: 18.75rem;
   max-width: 80%;
-  -webkit-border-radius: 0.313rem;
-  -moz-border-radius: 0.313rem;
-  -ms-border-radius: 0.313rem;
-  -o-border-radius: 0.313rem;
 }
 
 .login-form label {
@@ -100,10 +96,6 @@ h3 {
   border: 1px solid #ccc;
   border-radius: 3px;
   box-sizing: border-box;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
 }
 .login-form input[type='submit'] {
   width: 100%;
@@ -111,10 +103,6 @@ h3 {
   border: none;
   border-radius: 3px;
   cursor: pointer;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
 }
 
 @media (max-width: 27em) {
@@ -145,7 +133,7 @@ h3 {
 }
 
 ul#menu-main-menu a {
-  color: #ffffff;
+  color: #000;
 }
 
 /* list item hover, focus colour */
@@ -153,7 +141,6 @@ ul#menu-main-menu a {
 ul#menu-main-menu li a:hover,
 ul#menu-main-menu li a:focus {
   background-color: #1fb7f1;
-  color: #ffffff;
 }
 
 /* first submenu background colour */
@@ -199,6 +186,12 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
 header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   background-color: rgba(255, 255, 255, 0.9);
   color: #000000;
+  width: 100vw;
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none; /*Prevent interaction while hidden*/
+  transform: translateY(-200px); /*Start further off-screen*/
+  transition: opacity 0.5s ease, transform 0.5s ease; /*Smoothtransition*/
 }
 
 .login-form {
@@ -214,10 +207,6 @@ header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
   background-color: #1fb7f1;
   color: #eeeeee;
   transition: background-color 0.3s ease;
-  -webkit-transition: background-color 0.3s ease;
-  -moz-transition: background-color 0.3s ease;
-  -ms-transition: background-color 0.3s ease;
-  -o-transition: background-color 0.3s ease;
 }
 
 .login-form input[type='submit']:hover,
@@ -283,12 +272,12 @@ i.angle-up:after {
 
 /* down arrow stroke colour */
 .menu-item-has-children i.angle-down:before {
-  border-top: 7px solid #ffffff;
+  border-top: 7px solid #000;
 }
 
 /* down arrow stroke colour on hover */
 .menu-item-has-children:hover i.angle-down:before {
-  border-top: 7px solid #ffffff;
+  border-top: 7px solid #000;
 }
 
 /* down arrow fill colour */
@@ -305,12 +294,12 @@ i.angle-up:after {
 
 /* up arrow stroke colour */
 .menu-item-has-children i.angle-up:before {
-  border-bottom: 7px solid #ffffff;
+  border-bottom: 7px solid #000;
 }
 
 /* up arrow stroke colour on hover */
 .menu-item-has-children:hover i.angle-up:before {
-  border-bottom: 7px solid #ffffff;
+  border-bottom: 7px solid #000;
 }
 
 /* up arrow fill colour */

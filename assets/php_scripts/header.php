@@ -74,19 +74,22 @@
 
     <!-- stylesheets -->
     <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/reset.min.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-menu.min.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/default.min.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-colour-template.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-menu.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="<?php //echo getRelativePath(''); ?>assets/css/sidebar.css" /> -->
+    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/default.css" />
+    
     <?php if (basename($_SERVER['PHP_SELF']) === 'preferences.php') { ?>
 
         <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/colourswatch.min.css" />
 
     <?php }  
   
-    if ($ukey || $user) {  
+    if ($ukey || $user) {   ?>
+        <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-colour-template.min.css" />
+    <?php
       
-      if (isset($_SESSION['theme'])) { ?>
-        <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php echo $_SESSION['theme'] ?>.css" />
+      if (isset($_COOKIE['theme'])) { ?>
+        <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php echo $_COOKIE['theme'] ?>.css" />
       <?php 
       } else { ?>
         <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/base.css" />
@@ -95,12 +98,16 @@
     } ?>
 </head>
 <body>
+<p>
+      <a href="#skipMenu" class="skip-nav-link" id="skip-top-nav-link"
+        >Skip to main content</a
+      >
+    </p>
 
     <header id="header" role="banner">
       <div id="mainNavigation" class="group">
         <div class="max-width">
             <section id="branding">
-                <a href="#skipMenu" class="screen-reader-text">Skip to Content</a>
                 <div id="siteIdentity">
                 <div class="logo">
                     <a href="index.php" rel="home"> <img src="<?php echo getRelativePath(''); ?>assets/imgs/CO_logo.svg" alt="Counting Opinions" height="60"> </a>
@@ -115,11 +122,13 @@
               <ul id="menu-main-menu" class="menu"></ul>  
             </div>
           </nav>
-          <a id="skipMenu" class="screen-reader-text"></a>
+          
         </div>
       </div>
     </header>
-    <nav>
+    <?php //include('assets/php_scripts/sidebar.php'); ?>
+    <nav aria-label="breadcrumbs">
       <ul class="breadcrumbs" id="breadcrumbs"></ul>
     </nav>
+    <a id="skipMenu" class="screen-reader-text"></a>
     
