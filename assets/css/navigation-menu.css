@@ -39,8 +39,23 @@ nav ul > li ul > li ul > li ul > li {
   height: 98px;
 }
 
-#menu-main-menu > li {
-  height: 44px;
+#menu-main-menu > li:not(:nth-last-child(-n + 2)) {
+  height: 48px;
+  border: 2px solid transparent; /* Reserve space for border */
+  border-radius: 10px;
+}
+
+#menu-main-menu > li:not(:nth-last-child(-n + 2)) > a {
+  border-radius: 10px;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+#menu-main-menu > li:not(:nth-last-child(-n + 2)) > a:hover,
+#menu-main-menu > li[aria-expanded='true']:not(:nth-last-child(-n + 2)) > a {
+  border-color: #60bd68;
+  background-color: #f5fff5;
 }
 
 #menu-main-menu > li:not(.hidden-links) {
