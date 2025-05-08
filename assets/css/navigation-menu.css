@@ -40,9 +40,7 @@ nav ul > li ul > li ul > li ul > li {
 }
 
 #menu-main-menu > li {
-  height: 98px;
-  /* display: flex; */
-  /* align-items: center; */
+  height: 44px;
 }
 
 #menu-main-menu > li:not(.hidden-links) {
