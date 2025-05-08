@@ -39,21 +39,21 @@ nav ul > li ul > li ul > li ul > li {
   height: 98px;
 }
 
-#menu-main-menu > li:not(:nth-last-child(-n + 2)) {
+#menu-main-menu > li:not(:last-child) {
   height: 48px;
   border: 2px solid transparent; /* Reserve space for border */
   border-radius: 10px;
 }
 
-#menu-main-menu > li:not(:nth-last-child(-n + 2)) > a {
+#menu-main-menu > li:not(:last-child) > a {
   border-radius: 10px;
   border: 2px solid transparent;
   box-sizing: border-box;
   background: transparent;
 }
 
-#menu-main-menu > li:not(:nth-last-child(-n + 2)) > a:hover,
-#menu-main-menu > li[aria-expanded='true']:not(:nth-last-child(-n + 2)) > a {
+#menu-main-menu > li:not(:last-child) > a:hover,
+#menu-main-menu > li[aria-expanded='true']:not(:last-child) > a {
   border-color: #60bd68;
   background-color: #f5fff5;
 }
@@ -225,24 +225,6 @@ nav {
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Optional: for visibility */
   z-index: 1000; /* Ensure it's on top of other elements */
-}
-
-#profileMenu .profile-border {
-  width: 100%;
-  padding: 4px 8px;
-  text-align: right;
-  box-sizing: border-box; /* Important to include border/padding in width */
-  border: 2px solid transparent; /* Reserve space for border */
-  border-bottom: none;
-  border-radius: 10px 10px 0 0; /* Optional: rounded corners */
-}
-
-#profileMenu[aria-expanded='true'] .profile-border {
-  border-color: rgb(96, 189, 104);
-}
-
-#profileMenu > a {
-  padding: 0 !important;
 }
 
 #profileMenu > .sub-menu {
