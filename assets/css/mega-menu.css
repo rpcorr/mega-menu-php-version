@@ -1,16 +1,14 @@
-/* Ensure parent container has relative positioning */
-.menu-main-menu-container > #menu-main-menu > li {
-  position: relative;
-}
-
 /* Position the sub-menu absolutely */
 .menu-main-menu-container > #menu-main-menu > li > .mega-menu {
   position: absolute;
-  top: 100%; /* Position it directly below the top-level item */
+  top: 100%; /* Positioned right below the menu bar */
   left: 0;
-  right: auto;
+  width: 100vw; /* Full width of the viewport */
+  max-width: 100vw;
   opacity: 0;
   pointer-events: none;
+  visibility: hidden;
+  z-index: 1000;
 }
 
 /* When aria-expanded is true, show the sub-menu */
@@ -22,4 +20,103 @@
   opacity: 1;
   pointer-events: auto;
   visibility: visible;
+  background-color: #fff;
+}
+
+.mega-menu .grid-container-pages,
+.mega-menu .grid-container-multiple {
+  display: grid;
+  border: 1px solid #000;
+  padding-bottom: 1rem;
+  padding-right: 2rem;
+  height: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.mega-menu .grid-container-pages {
+  grid-template-columns: 2fr 1fr;
+}
+
+.mega-menu .grid-container-multiple {
+  grid-template-columns: 300px 1.64fr 1fr;
+}
+
+.left-content {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-height: 80vh; /* adjust as needed based on available space */
+  overflow-y: auto;
+  padding-right: 1rem; /* space for scrollbar */
+}
+
+[role='listitem'] {
+  display: flex;
+  flex: 1 1 calc(25% - 1rem); /* Adjusts with gap taken into account */
+  align-items: flex-start; /* or center if you prefer vertical centering */
+  gap: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+[role='listitem'] img {
+  display: none;
+}
+
+[role='listitem'] a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  white-space: normal; /* allow line wrapping */
+}
+
+[role='listitem'] span {
+  font-weight: normal;
+}
+
+[role='presentation'] {
+  margin-bottom: 1.5rem;
+}
+
+[role='presentation'] strong {
+  font-weight: 600;
+}
+
+.menu-list {
+  font-weight: normal;
+  padding: 1rem 1rem 0 3rem;
+}
+
+.menu-list img {
+  display: none;
+}
+
+.menu-list a {
+  text-decoration: none;
+}
+
+.tabs__panels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-height: 68.5vh; /* or any height limit you prefer */
+  overflow-y: auto;
+  padding-right: 1rem; /* optional: space for scrollbar */
+  scrollbar-gutter: stable;
+}
+
+#bodyContent {
+  font-weight: normal;
+}
+
+.extra-content {
+  padding: 1rem;
+}
+
+.menu-list p,
+.extra-content p {
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
