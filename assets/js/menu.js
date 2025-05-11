@@ -1375,7 +1375,6 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
 
     menuItems.forEach((item) => {
       const tab = item.closest('a');
-      const li = tab.closest('li');
 
       const isCurrentItem =
         item.textContent.trim().toLowerCase() ===
