@@ -1380,15 +1380,13 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
       const isCurrentItem =
         item.textContent.trim().toLowerCase() ===
         currentMenuItem.trim().toLowerCase();
-      const isExpanded = li && li.getAttribute('aria-expanded') === 'true';
-
-      if (isCurrentItem && isExpanded) {
+      if (isCurrentItem) {
         // Set accessibility attributes only if li has aria-expanded="true"
         tab.setAttribute('aria-selected', 'true');
         tab.setAttribute('tabindex', '0');
         tab.focus(); // Focus on the selected tab for accessibility
 
-        if (typeof sidebar !== 'undefined') populateSidebar(); // Populate sidebar if available
+        if (sidebar && typeof sidebar !== 'undefined') populateSidebar(); // Populate sidebar if available
       } else {
         // Deactivate non-selected or non-expanded tabs
         tab.removeAttribute('aria-selected');
