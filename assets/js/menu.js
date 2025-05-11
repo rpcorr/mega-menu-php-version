@@ -20,19 +20,19 @@ const menuMap = {
     graphic: 'pie.gif',
     width: '36',
     height: '33',
-    subText: 'Periodic data',
+    subText: 'Performance data management',
   },
   5: {
     graphic: 'puzzle-pieces.gif',
     width: '40',
     height: '40',
-    subText: 'Survey data',
+    subText: 'Customer satisfaction and feedback management',
   },
   1: {
     graphic: 'medal.gif',
     width: '43',
     height: '43',
-    subText: 'Qualitative data',
+    subText: 'Custom forms and surveys',
   },
 };
 
