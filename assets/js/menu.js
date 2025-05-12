@@ -1634,6 +1634,13 @@ function renderBodyContent(contentContainer, type, menuData) {
       }
     }
   }
+
+  // Remove tabindex="-1" from all anchors within .tabs__panels
+  document
+    .querySelectorAll('.tabs__panels a[tabindex="-1"]')
+    .forEach((anchor) => {
+      anchor.removeAttribute('tabindex');
+    });
 }
 
 /**
