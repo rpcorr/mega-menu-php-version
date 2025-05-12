@@ -108,7 +108,19 @@
 
 [role='presentation'] strong {
   font-weight: 600;
-  border-bottom: 2px solid;
+  border-bottom: 4px solid;
+}
+
+#LibPAS strong {
+  border-bottom-color: #f2994a;
+}
+
+#LibSat strong {
+  border-bottom-color: #f2c94c;
+}
+
+#InformsUs strong {
+  border-bottom-color: #9b51e0;
 }
 
 .menu-list {

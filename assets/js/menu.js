@@ -1641,6 +1641,34 @@ function renderBodyContent(contentContainer, type, menuData) {
     .forEach((anchor) => {
       anchor.removeAttribute('tabindex');
     });
+
+  const selectedTab = document.querySelector(
+    ".menu-list [aria-selected='true'] strong"
+  );
+  if (!selectedTab) return;
+
+  const computedStyle = window.getComputedStyle(selectedTab);
+
+  const borderBottomColor = computedStyle.getPropertyValue(
+    'border-bottom-color'
+  );
+  const borderBottomStyle = computedStyle.getPropertyValue(
+    'border-bottom-style'
+  );
+  const borderBottomWidth = computedStyle.getPropertyValue(
+    'border-bottom-width'
+  );
+
+  // Convert borderBottomWidth (e.g., "2px") to a number and subtract 1
+  const widthValue = parseFloat(borderBottomWidth);
+  const adjustedWidth = Math.max(widthValue - 1, 0) + 'px';
+
+  // Apply adjusted border to all [role='listitem'] strong
+  document.querySelectorAll("[role='listitem'] strong").forEach((el) => {
+    el.style.borderBottomColor = borderBottomColor;
+    el.style.borderBottomStyle = borderBottomStyle;
+    el.style.borderBottomWidth = adjustedWidth;
+  });
 }
 
 /**
