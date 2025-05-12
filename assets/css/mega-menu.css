@@ -154,6 +154,24 @@ li[role='presentation'] {
   border-color: #000;
 }
 
+#LibPAS p:focus-within,
+#LibPAS p:focus-within strong,
+#LibPAS p:focus-within span {
+  background-color: #fbd3af;
+}
+
+#InformsUs p:focus-within,
+#InformsUs p:focus-within strong,
+#InformsUs p:focus-within span {
+  background-color: #f0dcfb;
+}
+
+#LibSat p:focus-within,
+#LibSat p:focus-within strong,
+#LibSat p:focus-within span {
+  background-color: #fff4d6;
+}
+
 .selected-tab {
   border-color: #000 !important;
 }
