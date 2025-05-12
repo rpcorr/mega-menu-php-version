@@ -43,67 +43,9 @@
   grid-template-columns: 300px 1.64fr 1fr;
 }
 
-.left-content {
-  display: flex;
-  flex-wrap: wrap;
-  row-gap: 0.5rem;
-  width: 100%;
-  max-height: 80vh; /* adjust as needed based on available space */
-  overflow-y: auto;
-  padding-right: 1rem; /* space for scrollbar */
-  padding-bottom: 1rem;
-}
-
-[role='listitem'] {
-  display: flex;
-  flex: 1 1 calc(25% - 1rem); /* Adjusts with gap taken into account */
-  align-items: flex-start; /* or center if you prefer vertical centering */
-  gap: 1rem;
+li[role='presentation'] {
   padding: 1rem 0 0 1rem;
   box-sizing: border-box;
-}
-
-[role='listitem'] img {
-  display: none;
-}
-
-[role='listitem'] p {
-  background-color: #fff;
-  padding: 0.25rem;
-  border: 1px solid #fff;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  display: inline-block;
-  margin: 0rem 0;
-}
-
-[role='listitem'] p > a:focus-within {
-  outline: none;
-}
-
-[role='listitem'] p:hover,
-[role='listitem'] p:focus-within {
-  border-color: #000;
-}
-
-[role='listitem'] a {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  white-space: normal; /* allow line wrapping */
-  padding: 1rem;
-}
-
-[role='listitem'] strong {
-  border-bottom: 2px solid;
-}
-
-[role='listitem'] span {
-  font-weight: normal;
-}
-
-[role='presentation'] {
-  margin-bottom: 1.5rem;
 }
 
 [role='presentation'] strong {
@@ -125,7 +67,13 @@
 
 .menu-list {
   font-weight: normal;
-  padding: 1rem 1rem 0 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-list > li[role='presentation'] {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .menu-list img {
@@ -150,12 +98,90 @@
   scrollbar-gutter: stable;
 }
 
+.left-content {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+  width: 100%;
+  max-height: 80vh; /* adjust as needed based on available space */
+  overflow-y: auto;
+  padding-right: 1rem; /* space for scrollbar */
+  padding-bottom: 1rem;
+}
+
+[role='listitem'] {
+  display: flex;
+  flex: 1 1 calc(25% - 1rem); /* Adjusts with gap taken into account */
+  align-items: flex-start; /* or center if you prefer vertical centering */
+  gap: 1rem;
+  padding: 1rem 0 0 1rem;
+  box-sizing: border-box;
+}
+
+[role='listitem'] img {
+  display: none;
+}
+
+[role='presentation'] p {
+  background-color: #fff;
+  padding: 0.25rem;
+  border: 1px solid #fff;
+  border-radius: 0.5rem;
+  /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); */
+  display: inline-block;
+  margin: 0rem 0;
+}
+
+[role='listitem'] p {
+  background-color: #fff;
+  padding: 0.25rem;
+  border: 1px solid #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  margin: 0rem 0;
+}
+
+[role='presentation'] p > a:focus-within,
+[role='listitem'] p > a:focus-within {
+  outline: none;
+}
+
+[role='presentation'] p:hover,
+[role='presentation'] p:focus-within,
+[role='listitem'] p:hover,
+[role='listitem'] p:focus-within {
+  border-color: #000;
+}
+
+[role='listitem'] a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  white-space: normal; /* allow line wrapping */
+  padding: 1rem;
+}
+
+[role='listitem'] strong {
+  border-bottom: 2px solid;
+}
+
+[role='listitem'] span {
+  font-weight: normal;
+}
+
 #bodyContent {
   font-weight: normal;
 }
 
 .extra-content {
   padding: 1rem;
+}
+
+.menu-list p {
+  display: block;
+  padding-left: 1rem;
+  margin-right: 1rem;
 }
 
 .menu-list p,
