@@ -161,7 +161,7 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
 .menu-main-menu-container > #menu-main-menu > li > .mega-menu a:focus,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:hover,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:focus {
-  color: #ffffff;
+  color: #000;
 }
 
 /* maintain submenu background colour on hover when another menu item is selected */

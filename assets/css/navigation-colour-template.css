@@ -84,17 +84,6 @@ ul.menu li:hover li a > i.angle-down:before {
   color: var(--firstSubLevelTextColour);
 }
 
-/* first submenu hover and focus background and font colours under "More" menu */
-header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
-.menu-main-menu-container > #menu-main-menu > li > .mega-menu a:hover,
-.menu-main-menu-container > #menu-main-menu > li > .mega-menu a:focus,
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu a:hover,
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu a:focus,
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu a:active {
-  background-color: var(--bgColourHoverActiveFocusAlt);
-  color: var(--textColourHoverActiveFocusAlt);
-}
-
 /* second submenu background and font colours */
 .menu-main-menu-container > #menu-main-menu > li li > .sub-menu a {
   background-color: var(--secondSubLevelBgColour);
