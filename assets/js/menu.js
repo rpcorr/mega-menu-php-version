@@ -1392,6 +1392,15 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
         tab.setAttribute('tabindex', '-1');
       }
     });
+
+    document.querySelectorAll('.menu-list p').forEach((p) => {
+      const a = p.querySelector('a[aria-selected="true"]');
+      if (a) {
+        p.classList.add('selected-tab');
+      } else {
+        p.classList.remove('selected-tab');
+      }
+    });
   }
 }
 
