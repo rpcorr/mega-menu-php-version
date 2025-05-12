@@ -77,7 +77,12 @@
   margin: 0rem 0;
 }
 
-[role='listitem'] p:hover {
+[role='listitem'] p > a:focus-within {
+  outline: none;
+}
+
+[role='listitem'] p:hover,
+[role='listitem'] p:focus-within {
   border-color: #000;
 }
 

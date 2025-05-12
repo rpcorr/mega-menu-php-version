@@ -51,8 +51,13 @@ nav ul > li ul > li ul > li ul > li {
   background: transparent;
 }
 
+#menu-main-menu > li:not(:last-child) > a:focus-visible {
+  outline: none;
+}
+
 #menu-main-menu > li:not(:last-child) > a:hover,
-#menu-main-menu > li[aria-expanded='true']:not(:last-child) > a {
+#menu-main-menu > li[aria-expanded='true']:not(:last-child) > a,
+#menu-main-menu > li:not(:last-child) > a:focus-visible {
   border-color: #60bd68;
   background-color: #f5fff5;
 }
@@ -95,6 +100,14 @@ ul#menu-main-menu li.menu-item-has-children > a.active > ul ul.sub-menu {
 .sub-menu > li {
   display: block;
   position: relative;
+}
+.sub-menu > li a {
+  outline: none;
+}
+
+.sub-menu > li a:focus-visible {
+  border: 1px solid #60bd68 !important;
+  background-color: #f5fff5 !important;
 }
 
 ul#menu-main-menu li > ul > li a {
@@ -377,6 +390,12 @@ ul#menu-main-menu
   font-weight: 600;
   font-size: 1rem;
   line-height: 1.25;
+  border: 1px solid #fff;
+}
+
+.menu-main-menu-container > #menu-main-menu > li > .sub-menu a:hover {
+  background-color: #f5fff5;
+  border-color: #60bd68;
 }
 
 .menu-main-menu-container
