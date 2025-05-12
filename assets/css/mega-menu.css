@@ -143,3 +143,17 @@
   word-break: break-word;
   overflow-wrap: break-word;
 }
+
+h4,
+h5 {
+  text-align: center;
+  margin: 2em 0;
+  padding-bottom: 0.5rem;
+}
+
+h4 {
+  border-bottom: 0.15rem solid #000;
+}
+h5 {
+  border-bottom: 0.15rem dashed #000;
+}
