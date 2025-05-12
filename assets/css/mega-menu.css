@@ -124,6 +124,10 @@
   text-decoration: none;
 }
 
+.menu-list strong {
+  font-size: 1.25rem;
+}
+
 .tabs__panels {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
