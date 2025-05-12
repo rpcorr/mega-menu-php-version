@@ -94,6 +94,10 @@
   padding: 1rem;
 }
 
+[role='listitem'] strong {
+  border-bottom: 2px solid;
+}
+
 [role='listitem'] span {
   font-weight: normal;
 }
@@ -104,6 +108,7 @@
 
 [role='presentation'] strong {
   font-weight: 600;
+  border-bottom: 2px solid;
 }
 
 .menu-list {
