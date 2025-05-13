@@ -40,7 +40,7 @@
 }
 
 .mega-menu .grid-container-multiple {
-  grid-template-columns: 300px 1.64fr 1fr;
+  grid-template-columns: 300px 1.64fr 350px;
 }
 
 li[role='presentation'] {
@@ -200,6 +200,10 @@ li[role='presentation'] {
   padding: 1rem;
 }
 
+.extra-content img {
+  display: none;
+}
+
 .menu-list p {
   display: block;
   padding-left: 1rem;
@@ -207,7 +211,8 @@ li[role='presentation'] {
 }
 
 .menu-list p,
-.extra-content p {
+.extra-content p,
+.extra-content li {
   white-space: normal;
   word-break: break-word;
   overflow-wrap: break-word;
