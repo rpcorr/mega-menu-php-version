@@ -285,10 +285,6 @@ ul.overlap {
   display: block;
 }
 
-li[aria-expanded='false'] > .mega-menu {
-  display: none;
-}
-
 /* Additional styles for the sub-menu links */
 #adminMenu .sub-menu li,
 #profileMenu .sub-menu li {
