@@ -9,7 +9,9 @@
   pointer-events: none;
   visibility: hidden;
   transform: translateY(-500px); /* Start above position */
-  transition: opacity 0.3s ease, transform 0.6s ease; /* transform time is the time it takes for the menu to get into place */
+  /* use this transition to have slide up effect */
+  transition: opacity 0.5s ease, transform 0.5s ease, visibility 0s linear 0.5s;
+  /* transition: opacity 0.5s ease, transform 0.5s ease; */
   will-change: transform, opacity; /* for smoother performance */
   z-index: 1000;
 }
@@ -19,10 +21,12 @@
   > #menu-main-menu
   > li[aria-expanded='true']
   > .mega-menu {
-  display: block;
   opacity: 1;
   pointer-events: auto;
   visibility: visible;
+  /* use this transition to have slide up effect */
+  transition: opacity 0.5s ease, transform 0.5s ease, visibility 0s;
+  /* transition: opacity 0.5s ease, transform 0.5s ease; */
   transform: translateY(0); /* Slides into place */
   background-color: #fff;
 }
