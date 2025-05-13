@@ -65,14 +65,14 @@ const extraContent = [
     graphic: 'light-bulb.gif',
     width: '32',
     height: '37',
-    heading: 'Did you know that you can do this if you do that?',
+    heading: 'Did you know?',
     extraBodyContent: [
       {
         bodyText: 'Extra Content',
       },
       {
         bodyText:
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+          'You can now sed efficitur orci vel dolor faucibus, vitae vehicula odio tristique. Donec finibus ultrices ullamcorper. Sed elit libero, mattis pellentesque blandit.',
       },
       {
         listItems: [
