@@ -769,6 +769,20 @@ function toggleTopLevelMenu(menuLink) {
     }
   }
 
+  // retrieve the Services menu item
+  const servicesMenuItem = Array.from(
+    document.querySelectorAll('#menu-main-menu > li.menu-item-has-children')
+  ).find((item) => item.textContent.trim().startsWith('Services'));
+
+  // determine if Services menu is expanded
+  const isServicesExpanded =
+    servicesMenuItem?.getAttribute('aria-expanded') === 'true';
+
+  // if so, call delayedApplyAdjustedBorderToTabs
+  if (isServicesExpanded) {
+    delayedApplyAdjustedBorderToTabs();
+  }
+
   // If inside "More" menu, keep the parent "More" link open
   // const li = menuLink.closest('li');
   // if (li?.closest('#moreSubMenu')) {
@@ -1650,34 +1664,6 @@ function renderBodyContent(contentContainer, type, menuData) {
     .forEach((anchor) => {
       anchor.removeAttribute('tabindex');
     });
-
-  const selectedTab = document.querySelector(
-    ".menu-list [aria-selected='true'] strong"
-  );
-  if (!selectedTab) return;
-
-  const computedStyle = window.getComputedStyle(selectedTab);
-
-  const borderBottomColor = computedStyle.getPropertyValue(
-    'border-bottom-color'
-  );
-  const borderBottomStyle = computedStyle.getPropertyValue(
-    'border-bottom-style'
-  );
-  const borderBottomWidth = computedStyle.getPropertyValue(
-    'border-bottom-width'
-  );
-
-  // Convert borderBottomWidth (e.g., "2px") to a number and subtract 1
-  const widthValue = parseFloat(borderBottomWidth);
-  const adjustedWidth = Math.max(widthValue - 1, 0) + 'px';
-
-  // Apply adjusted border to all [role='listitem'] strong
-  document.querySelectorAll("[role='listitem'] strong").forEach((el) => {
-    el.style.borderBottomColor = borderBottomColor;
-    el.style.borderBottomStyle = borderBottomStyle;
-    el.style.borderBottomWidth = adjustedWidth;
-  });
 }
 
 /**
@@ -1850,6 +1836,9 @@ function switchTab(clickedTab, menuContainer, type, menuData = []) {
       console.log('Error: Unknown tab ID.');
   }
 
+  // call delayedApplyAdjustedBorderToTabs
+  delayedApplyAdjustedBorderToTabs();
+
   // After rendering the menu, attempt to render any extra body content
   if (Array.isArray(extraContent)) {
     renderBodyContent(menuContainer, type, menuData);
@@ -1979,4 +1968,63 @@ function isProfileMenuUnderMore() {
 
   // Toggle the 'prevent-expand' class based on whether Profile is under More
   profileMenuLiSubMenu.classList.toggle('overlap', !profileMenuLiUnderMore);
+}
+
+/**
+ * Calls applyAdjustedBorderToTabs on the next animation frame.
+ * This ensures the DOM has fully updated before applying styles.
+ */
+function delayedApplyAdjustedBorderToTabs() {
+  requestAnimationFrame(() => {
+    applyAdjustedBorderToTabs();
+  });
+}
+
+/**
+ * Applies a slightly adjusted border-bottom style to all <strong> elements
+ * within anchor tags inside elements with role='listitem'.
+ *
+ * It retrieves the current border-bottom styles from the selected tab
+ * (the one with aria-selected="true") and reduces the border width by 1px
+ * to apply a subtle visual differentiation.
+ *
+ * This function ensures consistent styling across tabs, particularly
+ * when switching between them.
+ */
+function applyAdjustedBorderToTabs() {
+  // Find the currently selected tab
+  const selectedTab = document.querySelector(
+    ".menu-list [aria-selected='true'] strong"
+  );
+  if (!selectedTab) return;
+
+  // Get computed styles for the selected tab
+  const style = window.getComputedStyle(selectedTab);
+
+  // Extract or fallback to default border properties
+  const borderBottomColor =
+    style.getPropertyValue('border-bottom-color') ||
+    selectedTab.style.borderBottomColor ||
+    'rgb(242, 153, 74)';
+  const borderBottomStyle =
+    style.getPropertyValue('border-bottom-style') ||
+    selectedTab.style.borderBottomStyle ||
+    'solid';
+  const borderBottomWidth =
+    style.getPropertyValue('border-bottom-width') ||
+    selectedTab.style.borderBottomWidth ||
+    '3px';
+
+  // Adjust the border width (reduce by 1px)
+  const widthValue = parseFloat(borderBottomWidth);
+  const adjustedWidth = Math.max(widthValue - 1, 0) + 'px';
+
+  // Apply the adjusted styles to all relevant tab <strong> elements
+  document
+    .querySelectorAll(".tabs__panels [role='listitem'] a strong")
+    .forEach((el) => {
+      el.style.borderBottomColor = borderBottomColor;
+      el.style.borderBottomStyle = borderBottomStyle;
+      el.style.borderBottomWidth = adjustedWidth;
+    });
 }
