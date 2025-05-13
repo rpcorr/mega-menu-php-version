@@ -198,6 +198,12 @@ li[role='presentation'] {
 
 .extra-content {
   padding: 1rem;
+  margin: 2rem;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 174, 239, 0.6),
+    rgba(96, 189, 104, 0.6)
+  );
 }
 
 .extra-content img {
