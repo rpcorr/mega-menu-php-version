@@ -8,6 +8,9 @@
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
+  transform: translateY(-500px); /* Start above position */
+  transition: opacity 0.3s ease, transform 0.6s ease; /* transform time is the time it takes for the menu to get into place */
+  will-change: transform, opacity; /* for smoother performance */
   z-index: 1000;
 }
 
@@ -20,6 +23,7 @@
   opacity: 1;
   pointer-events: auto;
   visibility: visible;
+  transform: translateY(0); /* Slides into place */
   background-color: #fff;
 }
 
