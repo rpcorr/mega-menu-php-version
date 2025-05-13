@@ -733,9 +733,6 @@ function onResize() {
  * @param {HTMLElement} menuLink - The <a> element inside a top-level menu item that was clicked.
  */
 function toggleTopLevelMenu(menuLink) {
-  const isExpanded =
-    menuLink.parentElement.getAttribute('aria-expanded') === 'true';
-
   // Toggle the aria-expanded state of the clicked menu item
   toggleAriaExpanded(menuLink);
 
