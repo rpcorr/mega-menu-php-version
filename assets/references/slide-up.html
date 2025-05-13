@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mega Menu Slide Animation</title>
+    <style>
+      /* Basic Reset */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      /* Navigation Styles */
+      .menu-main-menu-container {
+        background-color: #333;
+      }
+
+      #menu-main-menu {
+        list-style: none;
+        display: flex;
+      }
+
+      #menu-main-menu > li {
+        position: relative;
+      }
+
+      #menu-main-menu > li > a {
+        display: block;
+        padding: 15px 20px;
+        color: #fff;
+        text-decoration: none;
+      }
+
+      #menu-main-menu > li > a:hover {
+        background-color: #444;
+      }
+
+      /* Mega Menu Styles */
+      .mega-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100vw;
+        background-color: #fff;
+        transform: translateY(-20px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease, transform 0.6s ease;
+        z-index: 1000;
+      }
+
+      .menu-item-has-children[aria-expanded='true'] > .mega-menu,
+      .menu-item-has-children.collapsing > .mega-menu {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .mega-menu ul {
+        list-style: none;
+        padding: 20px;
+      }
+
+      .mega-menu li {
+        margin-bottom: 10px;
+      }
+
+      .mega-menu a {
+        color: #333;
+        text-decoration: none;
+      }
+
+      .mega-menu a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="menu-main-menu-container">
+      <ul id="menu-main-menu">
+        <li class="menu-item-has-children" aria-expanded="false">
+          <a href="#" onclick="toggleAriaExpanded(event)">Menu</a>
+          <div class="mega-menu">
+            <ul>
+              <li><a href="#">Submenu Item 1</a></li>
+              <li><a href="#">Submenu Item 2</a></li>
+              <li><a href="#">Submenu Item 3</a></li>
+            </ul>
+          </div>
+        </li>
+        <!-- Add more menu items here -->
+      </ul>
+    </nav>
+
+    <script>
+      function toggleAriaExpanded(event) {
+        event.preventDefault();
+        const menuLink = event.currentTarget;
+        const parentLi = menuLink.closest('.menu-item-has-children');
+        const isExpanded = parentLi.getAttribute('aria-expanded') === 'true';
+        const newState = !isExpanded;
+
+        if (newState) {
+          // Collapse all other open menu items
+          const allMenuItems = document.querySelectorAll(
+            '.menu-item-has-children[aria-expanded="true"]'
+          );
+          allMenuItems.forEach((item) => {
+            if (item !== parentLi) {
+              item.setAttribute('aria-expanded', 'false');
+            }
+          });
+
+          parentLi.setAttribute('aria-expanded', 'true');
+        } else {
+          // Handle collapse with animation
+          parentLi.classList.add('collapsing');
+
+          requestAnimationFrame(() => {
+            // Wait one frame to ensure .collapsing takes effect
+            requestAnimationFrame(() => {
+              parentLi.setAttribute('aria-expanded', 'false');
+
+              // After transition completes, remove collapsing class
+              setTimeout(() => {
+                parentLi.classList.remove('collapsing');
+              }, 600); // Match the transform transition
+            });
+          });
+        }
+      }
+    </script>
+  </body>
+</html>
