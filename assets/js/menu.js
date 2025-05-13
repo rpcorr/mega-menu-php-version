@@ -1496,11 +1496,13 @@ function renderBodyContent(contentContainer, type, menuData) {
 
       anchor.href = menuItem.link;
 
-      const wrapperDiv = document.createElement('div');
-      wrapperDiv.style.display = 'contents';
-      wrapperDiv.appendChild(menuContent);
+      // const wrapperDiv = document.createElement('div');
+      //wrapperDiv.style.display = 'contents';
+      //wrapperDiv.appendChild(menuContent);
 
-      fragment.appendChild(wrapperDiv);
+      //fragment.appendChild(wrapperDiv);
+
+      fragment.appendChild(menuContent);
     }
   }
 
