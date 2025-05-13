@@ -278,21 +278,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       populateMegaMenu(finalGroupedArray);
 
-      // const profileMenu = document.getElementById('profileMenu');
-      // const profileMenuLink = profileMenu.querySelector('a');
-      // const subMenu = profileMenu.querySelector('.sub-menu');
-
-      // profileMenuLink.addEventListener('click', function (e) {
-      //   e.preventDefault();
-      //   const isExpanded = profileMenu.getAttribute('aria-expanded') === 'true';
-
-      //   // Toggle the aria-expanded attribute
-      //   profileMenu.setAttribute('aria-expanded', !isExpanded);
-
-      //   // Toggle the sub-menu visibility
-      //   subMenu.style.display = isExpanded ? 'none' : 'block';
-      // });
-
       navItems = document.querySelectorAll('#menu-main-menu > li');
 
       megaMenuLinks = document.querySelectorAll('nav a');
