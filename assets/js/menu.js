@@ -765,6 +765,18 @@ function toggleTopLevelMenu(menuLink) {
     delayedApplyAdjustedBorderToTabs();
   }
 
+  // Select all anchor elements that act as tabs within the .menu-list
+  document.querySelectorAll('.menu-list a[role="tab"]').forEach((link) => {
+    // Check if this tab is the currently selected one
+    if (link.getAttribute('aria-selected') === 'true') {
+      // Make the selected tab focusable by removing tabindex (or you could set it to 0)
+      link.removeAttribute('tabindex');
+    } else {
+      // Make all non-selected tabs unfocusable via keyboard
+      link.setAttribute('tabindex', '-1');
+    }
+  });
+
   // If inside "More" menu, keep the parent "More" link open
   // const li = menuLink.closest('li');
   // if (li?.closest('#moreSubMenu')) {
