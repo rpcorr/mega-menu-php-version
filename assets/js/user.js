@@ -17,7 +17,23 @@ if (!ukey && !user) {
   console.log(ukey, user, portal);
   if (ukey) {
     if (ukey === 'b5e79c05b3f12219e725fc167edefdd1')
-      pagesJSONfile += 'co-pages-logged-in.json';
+      pagesJSONfile += 'co-demo.json';
+    else if (ukey === 'aeff1d4962b1fb2aa59a472d2df7efa1')
+      pagesJSONfile += 'cm-demo.json';
+    else if (ukey === 'b312f517b7bcfe3177d6cb4da6922884')
+      pagesJSONfile += 'co-paul.json';
+    else if (ukey === '0be2b1990297545d657155c2de0e62e4')
+      pagesJSONfile += 'co-cole-t.json';
+    else if (ukey === '5a0dedbcf6da1edccf630ba76699e226')
+      pagesJSONfile += 'co-ala.json';
+    else if (ukey === '3a48a031ac973365980798360b6fdd7e')
+      pagesJSONfile += 'de-demo.json';
+    else if (ukey === 'bd13b136ae6ad94703cc1bf44c0201d8')
+      pagesJSONfile += 'rm-demo.json';
+    else if (ukey === '612879a086be69a0bac8d14445ef9ae5')
+      pagesJSONfile += 'rv-demo.json';
+    else if (ukey === '5544a5c002d3646ea44736a30eeef446')
+      pagesJSONfile += 'tc-demo.json';
     else if (ukey === '23dd36999727c42c207a0445304f44e7')
       pagesJSONfile += 'barry-hill-system-su-cm.json';
     else if (ukey === 'dcbe3c8f358ec7e3e082544cd379a5d6')
