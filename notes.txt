@@ -85,3 +85,14 @@ group-by-section_id-sequence-json-output.php
 index.php
 menu-reference.php
 original-json-output.php
+
+
+
+
+ws/get_users.php?user
+
+look in browser for session id
+
+https://dev.countingopinions.com/ws/get_users.php?portal=DEMOCA
+
+https://dev.countingopinions.com/ws/get_users.php?portal=DEMO
