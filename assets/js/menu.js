@@ -90,10 +90,10 @@ const extraContent = [
 
 console.log(`I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}.`);
 
-console.log(JSONfile);
+console.log(pagesJSONfile);
 // Ensure this code runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-  fetch(JSONfile)
+  fetch(pagesJSONfile)
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
