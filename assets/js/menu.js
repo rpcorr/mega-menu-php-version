@@ -88,7 +88,9 @@ const extraContent = [
   },
 ];
 
-console.log(`I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}.`);
+console.log(
+  `I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}. User is ${user}.`
+);
 
 console.log(pagesJSONfile);
 // Ensure this code runs after the DOM is fully loaded
@@ -261,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // if logged in, show profile
       if (ukey.trim() !== '') {
         menuHTML += `<li class="menu-item-has-children hover" id="profileMenu" aria-expanded="false">
-        <a href="#" aria-label="John Smith profile has a sub menu. Click enter to open">John Smith  <span class="hidden-text">profile</span> 
+        <a href="#" aria-label="${user} profile has a sub menu. Click enter to open">${user}  <span class="hidden-text">profile</span> 
         <i class="caret angle-down"></i></a>
         
         <ul class="sub-menu">
