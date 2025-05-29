@@ -7,7 +7,7 @@ $protected = true;
 $title = "Menu-users - Counting Opinions";
 
 if (!isset($_GET['user'])) {
-  $user = "Admin";
+  $user = "CO&DEMO";
 } else {
   $user = $_REQUEST['user'];
   
