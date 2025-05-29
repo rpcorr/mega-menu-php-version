@@ -588,3 +588,20 @@ footer p {
 .text-center {
   text-align: center;
 }
+
+.users-flex {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.users-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* two equal columns */
+  gap: 1rem; /* spacing between items */
+}
+
+.users-grid p {
+  margin: 0;
+}
