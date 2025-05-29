@@ -3,9 +3,13 @@
   --defaultTextColour: #000;
 
   --skipNavBgColour: #60bd68;
+  --skipNavBgColour: #1d6b2a;
   --skipNavTextColour: #000;
 
   --headingOneTextColour: #60bd68;
+  --headingOneTextColour: #1d6b2a;
+
+  --headingTwoTextColour: #004471;
 
   --topMenuBgColour: #fff;
   --topMenuTextColour: #0f172a;

@@ -9,9 +9,13 @@ html {
   color: var(--skipNavTextColour);
 }
 
-/* h1 text colour */
+/* headings text colour */
 h1 {
   color: var(--headingOneTextColour);
+}
+
+h2 {
+  color: var(--headingTwoTextColour);
 }
 
 /* navigation background colour */
