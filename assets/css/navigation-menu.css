@@ -518,3 +518,8 @@ ul.sub-menu li > ul.sub-menu {
 .profile {
   display: none;
 }
+
+.max-width {
+  max-width: 90%;
+  margin: 0 auto;
+}
