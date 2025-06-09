@@ -4,6 +4,10 @@ html {
   color: var(--defaultTextColour);
 }
 
+body {
+  background-color: var(--bodyBackgroundColour);
+}
+
 .skip-nav-link {
   background-color: var(--skipNavBgColour);
   color: var(--skipNavTextColour);
