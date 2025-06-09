@@ -9,7 +9,7 @@ html {
   color: var(--skipNavTextColour);
 }
 
-/* heading text colour */
+/* headings text colour */
 h1 {
   color: var(--headingOneTextColour);
 }
@@ -121,11 +121,6 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
 header nav ul.menu > li.menu-item-has-children > .mega-menu {
   background-color: var(--firstSubLevelBgColour);
   color: var(--firstSubLevelTextColour);
-}
-
-/* title within a mega menu font colour */
-header nav ul.menu > li > .mega-menu.mega-menu-column-4 > .list-item .title {
-  color: var(--defaultTextColour);
 }
 
 /***** Carets *****/
