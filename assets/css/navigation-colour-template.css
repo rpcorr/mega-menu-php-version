@@ -14,6 +14,11 @@ h1 {
   color: var(--headingOneTextColour);
 }
 
+/* h2 text colour */
+h2 {
+  color: var(--headingTwoTextColour);
+}
+
 /* navigation background colour */
 #mainNavigation {
   background-color: var(--topMenuBgColour);
