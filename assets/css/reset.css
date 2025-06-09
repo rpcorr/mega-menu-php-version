@@ -154,9 +154,3 @@ nav li {
   display: table;
   clear: both;
 }
-
-.max-width {
-  width: 93.75rem;
-  max-width: 90%;
-  margin: 0 auto;
-}

@@ -1014,3 +1014,9 @@ header nav ul.menu > li.menu-item-has-children > .mega-menu {
     padding-right: 0.5rem;
   }
 }
+
+.max-width {
+  /* width: 93.75rem; */ /* uncomment if a defined width is needed */
+  max-width: 90%;
+  margin: 0 auto;
+}
