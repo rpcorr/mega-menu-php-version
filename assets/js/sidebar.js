@@ -218,7 +218,7 @@ function populateSidebar() {
 
   // Get the submenu div directly following the selected anchor
   const subMenuDiv = selectedAnchorElement?.nextElementSibling;
-  if (!subMenuDiv || !subMenuDiv.classList.contains('sub-menu-div')) {
+  if (!subMenuDiv || !subMenuDiv.classList.contains('mega-menu')) {
     createSidebarSection(sideMenuData.default, '');
     return;
   }

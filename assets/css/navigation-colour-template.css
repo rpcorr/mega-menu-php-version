@@ -85,14 +85,14 @@ ul.menu li:hover li a > i.angle-down:before {
 
 /* first submenu text colour */
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a,
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a {
+.menu-main-menu-container > #menu-main-menu > li > .mega-menu a {
   color: var(--firstSubLevelTextColour);
 }
 
 /* first submenu hover and focus background and font colours under "More" menu */
 header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a:hover,
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu-div a:focus,
+.menu-main-menu-container > #menu-main-menu > li > .mega-menu a:hover,
+.menu-main-menu-container > #menu-main-menu > li > .mega-menu a:focus,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:hover,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:focus,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:active {
@@ -119,7 +119,7 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
 }
 
 /* mega menu background and font colours */
-header nav ul.menu > li.menu-item-has-children > .sub-menu-div {
+header nav ul.menu > li.menu-item-has-children > .mega-menu {
   background-color: var(--firstSubLevelBgColour);
   color: var(--firstSubLevelTextColour);
 }
