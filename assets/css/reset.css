@@ -147,8 +147,9 @@ nav li {
   margin-left: 0;
 }
 
-/* Utility classes */
-.group::after {
+/* basic styles */
+/* https://css-tricks.com/snippets/css/clear-fix/ */
+.group:after {
   content: '';
   display: table;
   clear: both;
