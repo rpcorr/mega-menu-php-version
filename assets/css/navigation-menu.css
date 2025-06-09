@@ -499,3 +499,22 @@ ul.sub-menu li > ul.sub-menu {
   border: 0;
   white-space: nowrap;
 }
+
+.profile {
+  width: 30px; /* Adjust size as needed */
+  height: 30px; /* Must be equal to width for a perfect circle */
+  float: left;
+  background-color: white;
+  color: #60bd68;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* Makes it a circle */
+  border: 2px solid #60bd68; /* Optional border */
+  font-weight: bold; /* Optional styling */
+  text-align: center;
+}
+
+.profile {
+  display: none;
+}

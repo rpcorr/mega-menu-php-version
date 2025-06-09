@@ -263,7 +263,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // if logged in, show profile
       if (ukey.trim() !== '') {
         menuHTML += `<li class="menu-item-has-children hover" id="profileMenu" aria-expanded="false">
-        <a href="#" aria-label="${user} profile has a sub menu. Click enter to open">${user}  <span class="hidden-text">profile</span> 
+        <a href="#" aria-label="${user} profile has a sub menu. Click enter to open"><div class="profile"><span aria-hidden="true">${getInitials(
+          user
+        )}</span></div>${user}  <span class="hidden-text">profile</span> 
         <i class="caret angle-down"></i></a>
         
         <ul class="sub-menu">
@@ -2025,4 +2027,24 @@ function applyAdjustedBorderToTabs() {
       el.style.borderBottomStyle = borderBottomStyle;
       el.style.borderBottomWidth = adjustedWidth;
     });
+}
+
+function getInitials(user) {
+  const firstLetter = user.charAt(0);
+
+  // Check for _ or &
+  const match = user.match(/[_&]([A-Za-z])/);
+  if (match) {
+    return firstLetter + match[1];
+  }
+
+  // Find next capital letter (after first character)
+  const rest = user.slice(1);
+  const nextCap = rest.match(/[A-Z]/);
+  if (nextCap) {
+    return firstLetter + nextCap[0];
+  }
+
+  // Fallback: just return first letter
+  return firstLetter;
 }
