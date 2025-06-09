@@ -142,16 +142,8 @@ section {
   padding: 0;
 }
 
-input {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-nav li,
-nav li li,
-nav li li li,
-nav li li li li,
-nav li li li li li,
-nav li li li li li li {
+/* Navigation */
+nav li {
   margin-left: 0;
 }
 
