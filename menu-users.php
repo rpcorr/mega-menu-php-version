@@ -6,13 +6,6 @@ $protected = true;
 
 $title = "Menu-users - Counting Opinions";
 
-if (!isset($_GET['user'])) {
-  $user = "CO&DEMO";
-} else {
-  $user = $_REQUEST['user'];
-  
-}
-
 include('assets/php_scripts/header.php');
 ?>
   <main>
