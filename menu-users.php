@@ -12,8 +12,10 @@ include('assets/php_scripts/header.php');
     <div class="container">
       <h1>Menu Users</h1>
 
-      <h2 style="text-align:center">Current User: <?php echo $user ?> </h2>
+      <?php if (!isset($user)) { $user = 'CO&DEMO'; } ?>
 
+      <h2 style="text-align:center">Current User: <?php echo $user ?> </h2>
+      
       <?php 
       
       // if ukey is present, display preference link
