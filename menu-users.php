@@ -15,7 +15,7 @@ include('assets/php_scripts/header.php');
       <?php if (!isset($user)) { $user = 'CO&DEMO'; } ?>
 
       <h2 style="text-align:center">Current User: <?php echo $user ?> </h2>
-      
+
       <?php 
       
       // if ukey is present, display preference link
@@ -28,7 +28,6 @@ include('assets/php_scripts/header.php');
             echo '<p><a href="mmenu.php">Back</a></p>';
         }
         ?>
-
         <script>
           const portalTemp = <?php echo json_encode($portal); ?>;
           const userTemp = <?php echo json_encode($user); ?>;
