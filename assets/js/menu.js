@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (createdPagesMenu === false) {
               createdPagesMenu = true;
               menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="Pages has a sub menu. Click enter to open">Pages <i class="caret angle-down"></i></a>
-            <div class="mega-menu mega-menu-column-4">
+            <div class="mega-menu">
             <div class="grid-container-pages tabs-container"></div>
             </div>
           </li>`;
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (createdServicesMenu === false) {
               createdServicesMenu = true;
               menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
-            <div class="mega-menu mega-menu-column-4">
+            <div class="mega-menu">
             <div class="grid-container-multiple tabs-container"></div>
             </div>
           </li>`;
