@@ -602,15 +602,9 @@ function closeAllMenus() {
     }
   });
 
-  // Loop through all links again to toggle the aria-expanded attribute
+  // Loop through all links to set aria-expanded attribute to false
   links.forEach((link) => {
-    // If the link is the closest one to the top, set aria-expanded to 'true' (open)
-    if (link === closestLink) {
-      link.parentElement.setAttribute('aria-expanded', 'true');
-    } else {
-      // Otherwise, set aria-expanded to 'false' (closed)
-      link.parentElement.setAttribute('aria-expanded', 'false');
-    }
+    link.parentElement.setAttribute('aria-expanded', 'false');
   });
 }
 
