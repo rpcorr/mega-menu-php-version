@@ -397,7 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Remove inline opacity after a short delay
             setTimeout(() => {
-              moreSubMenu.style.removeProperty('opacity');
+              //moreSubMenu.style.removeProperty('opacity');
             }, 100);
 
             // Reset submenu links
@@ -859,7 +859,7 @@ function toggleTopLevelMenu(menuLink) {
   if (menuLink.parentElement.getAttribute('aria-expanded') === 'false') {
     // If submenu exists, remove inline styles to reset its display
     if (subMenuDiv?.classList.contains('mega-menu')) {
-      subMenuDiv.style.removeProperty('opacity');
+      //subMenuDiv.style.removeProperty('opacity');
       subMenuDiv.style.removeProperty('pointer-events');
       subMenuDiv.style.removeProperty('transform');
     }
@@ -978,7 +978,7 @@ function determineMegaMenuPosition() {
     if (ariaExpanded === 'true') {
       if (subMenuDiv && !subMenuDiv.dataset.positioned) {
         // Hide initially (for smooth animation later)
-        subMenuDiv.style.opacity = '0';
+        //subMenuDiv.style.opacity = '0';
         subMenuDiv.style.pointerEvents = 'none';
         subMenuDiv.style.transform = 'translateY(-200px)';
 
@@ -1013,7 +1013,7 @@ function determineMegaMenuPosition() {
 
 function displaySubMegaMenu(subMenuDiv) {
   requestAnimationFrame(() => {
-    subMenuDiv.style.opacity = '1'; // Fade it in
+    //subMenuDiv.style.opacity = '1'; // Fade it in
     subMenuDiv.style.pointerEvents = 'auto'; // Enable interaction
     subMenuDiv.style.transform = 'translateY(0)'; // Slide it into place
   });
