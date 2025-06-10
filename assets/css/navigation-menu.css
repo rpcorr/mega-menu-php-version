@@ -56,9 +56,9 @@ ul#menu-main-menu li > ul {
   padding: 0;
 }
 
-a[aria-expanded='true'] + ul.sub-menu {
+ul#menu-main-menu li[aria-expanded='true'] > ul {
   /* Add your desired styles here */
-  opacity: 1 !important;
+  opacity: 1;
   display: block; /* Example: Make the submenu visible */
 }
 
@@ -67,21 +67,6 @@ a[aria-expanded='true'] + ul.sub-menu {
   position: relative;
   display: block;
   opacity: 1;
-}
-
-a[aria-expanded='false'] + ul.sub-menu {
-  opacity: 0;
-  display: none; /* Example: Hide the submenu */
-}
-
-a[aria-expanded='true'] + div.mega-menu {
-  /* Add your desired styles here */
-  opacity: 1 !important;
-}
-
-a[aria-expanded='false'] + div.mega-menu {
-  opacity: 0;
-  display: none !important;
 }
 
 /* initially hide sub menus */
