@@ -794,29 +794,26 @@ function onResize() {
  */
 function toggleTopLevelMenu(menuLink) {
   const allMenuItems = document.querySelectorAll('.menu-item-has-children > a');
-  const isExpanded = menuLink.getAttribute('aria-expanded') === 'true';
+  const isExpanded =
+    menuLink.parentElement.getAttribute('aria-expanded') === 'true';
 
   // Close all other open menus (set aria-expanded to false and update icons)
   allMenuItems.forEach((link) => {
     if (link !== menuLink) {
       link.parentElement.setAttribute('aria-expanded', 'false');
-      const icon = link.querySelector('i');
-      if (icon) {
-        icon.classList.replace('angle-up', 'angle-down');
-      }
     }
   });
-
-  // Update all aria-labels if the clicked link is not inside a submenu
-  if (!menuLink.closest('.mega-menu')) {
-    updateAllAriaLabels();
-  }
 
   // Toggle the aria-expanded state of the clicked menu item
   menuLink.parentElement.setAttribute(
     'aria-expanded',
     isExpanded ? 'false' : 'true'
   );
+
+  // Update all aria-labels if the clicked link is not inside a submenu
+  if (!menuLink.closest('.mega-menu')) {
+    updateAllAriaLabels();
+  }
 
   // Toggle the arrow icon direction based on expanded/collapsed state
   const icon = menuLink.querySelector('i');
