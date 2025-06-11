@@ -357,62 +357,18 @@ document.addEventListener('DOMContentLoaded', () => {
           const icon = this.querySelector('i');
           const moreSubMenu = document.getElementById('moreSubMenu');
 
-          // Close all other open menus
-          document
-            .querySelectorAll('li.menu-item-has-children > a')
-            .forEach((anchor) => {
-              //anchor.setAttribute('aria-expanded', 'false');
-              anchor.classList.remove('active');
-            });
-
           // Toggle visibility of More menu
-          moreMenu.classList.toggle('visible');
+          const expanded =
+            this.parentElement.getAttribute('aria-expanded') === 'true';
+          this.parentElement.setAttribute('aria-expanded', String(!expanded));
 
-          if (moreMenu.classList.contains('visible')) {
-            // Open state
-            this.setAttribute(
-              'aria-label',
-              'Click Enter to close More sub menu'
-            );
-            this.parentElement.setAttribute('aria-expanded', 'true');
-            this.classList.add('active');
-
-            // Adjust icon if available
-            if (icon) {
+          // Adjust icon class based on new expanded state
+          if (icon) {
+            if (!expanded) {
               icon.classList.replace('angle-down', 'angle-up');
-            }
-          } else {
-            // Close state
-            this.setAttribute(
-              'aria-label',
-              'More has a sub menu. Click enter to open'
-            );
-            this.parentElement.setAttribute('aria-expanded', 'false');
-            this.classList.remove('active');
-
-            // Reset icon if available
-            if (icon) {
+            } else {
               icon.classList.replace('angle-up', 'angle-down');
             }
-
-            // Remove inline opacity after a short delay
-            setTimeout(() => {
-              //moreSubMenu.style.removeProperty('opacity');
-            }, 100);
-
-            // Reset submenu links
-            document.querySelectorAll('#moreSubMenu a').forEach((anchor) => {
-              //anchor.setAttribute('aria-expanded', 'false');
-              anchor.setAttribute(
-                'aria-label',
-                `${anchor.textContent} has a sub menu. Click enter to open`
-              );
-            });
-          }
-
-          // Remove empty class attribute
-          if (this.className.trim() === '') {
-            this.removeAttribute('class');
           }
 
           // Update sidebar content
@@ -438,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
           document
             .querySelectorAll('.menu-item-has-children')
             .forEach(function (element) {
-              element.classList.remove('visible');
+              //element.classList.remove('visible');
             });
         }
 
