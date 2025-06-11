@@ -735,6 +735,21 @@ function toggleTopLevelMenu(menuLink) {
     isExpanded ? 'false' : 'true'
   );
 
+  // Toggle tabindex on sub-menu links based on aria-expanded state
+  const subMenuList = menuLink.parentElement.querySelector('.sub-menu');
+  if (subMenuList) {
+    const isNowExpanded =
+      menuLink.parentElement.getAttribute('aria-expanded') === 'true';
+    const links = subMenuList.querySelectorAll('a');
+    links.forEach((link) => {
+      if (isNowExpanded) {
+        link.removeAttribute('tabindex');
+      } else {
+        link.setAttribute('tabindex', '-1');
+      }
+    });
+  }
+
   // Update all aria-labels if the clicked link is not inside a submenu
   if (!menuLink.closest('.mega-menu')) {
     updateAllAriaLabels();
