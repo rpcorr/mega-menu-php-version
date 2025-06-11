@@ -276,20 +276,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       for (let i = 0; i < megaMenuLinks.length; i++) {
         megaMenuLinks[i].addEventListener('click', handleLinkClick);
-        megaMenuLinks[i].addEventListener('keyup', function (e) {
-          // open current menu when enter key is pressed
-          if (e.keyCode === 13) {
-            // open menu - determine the type of menu
-            const nextSibling = this.nextElementSibling;
-
-            // Check if nextSibling exists and has the class 'mega-menu'
-            if (nextSibling && nextSibling.classList.contains('mega-menu')) {
-              openMenu(true, null); // Modify this if you need to pass a different argument
-            } else {
-              openMenu(false, null);
-            }
-          }
-        });
       }
 
       // assign window width to winWidth
@@ -373,17 +359,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
           // Update sidebar content
           if (sidebar) populateSidebar();
-        });
-
-      // toggle More menu sub-menu on key up
-      document
-        .getElementById('menuMoreLink')
-        .addEventListener('keyup', function (event) {
-          // open "More" menu when enter key is pressed
-          if (event.key === 'Enter') {
-            // open current regular menu, there param is false
-            openMenu(false, this);
-          }
         });
 
       // collapse all sub-menus when user clicks off
@@ -1037,49 +1012,6 @@ function watchForHover() {
   document.addEventListener('mousemove', enableHover, true);
 
   enableHover();
-}
-
-// Enable openMenu using the keyboard for accessibility
-function openMenu(bContainsSubMenuDiv, targetElement) {
-  // Handle updating the "More" link's active state based on aria-expanded attribute
-  const moreLink = document.getElementById('menuMoreLink');
-
-  if (targetElement && moreLink) {
-    const isExpanded =
-      targetElement.parentElement.getAttribute('aria-expanded') === 'true';
-
-    if (isExpanded) {
-      // If the menu is expanded, add 'active' class to the "More" link
-      moreLink.classList.add('active');
-    } else {
-      // If the menu is collapsed, remove the 'active' class
-      moreLink.classList.remove('active');
-
-      // If no classes remain, remove the class attribute entirely
-      if (moreLink.className.trim() === '') {
-        moreLink.removeAttribute('class');
-      }
-    }
-  }
-
-  let elements;
-
-  // Select submenu elements depending on whether they are wrapped in a <div> or a <ul>
-  if (!bContainsSubMenuDiv) {
-    elements = document.querySelectorAll(
-      'ul#menu-main-menu li.menu-item-has-children.visible > ul:not(:hover)'
-    );
-  } else {
-    elements = document.querySelectorAll(
-      'ul#menu-main-menu li.menu-item-has-children.visible > div:not(:hover)'
-    );
-  }
-
-  // Loop through each matched submenu element
-  elements.forEach(function (element) {
-    // Intended to set submenu visibility (commented out for now)
-    // element.style.opacity = '1';
-  });
 }
 
 /**
