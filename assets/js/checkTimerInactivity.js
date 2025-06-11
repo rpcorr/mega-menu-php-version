@@ -1,3 +1,4 @@
+'use strict';
 let idleTime = 0;
 
 document.addEventListener('DOMContentLoaded', function () {

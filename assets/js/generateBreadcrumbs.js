@@ -1,3 +1,5 @@
+'use strict';
+
 function generateBreadcrumbs() {
   const breadcrumbContainer = document.getElementById('breadcrumbs');
   if (!breadcrumbContainer) return; // Exit if container is not found
