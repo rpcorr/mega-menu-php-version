@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
                       menuHTML += '<ul class="sub-menu">';
                       openSubmenu = true;
                     } else {
-                      menuHTML += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
+                      menuHTML += `<li><a href="${page.page_link}" tabindex="-1">${page.page_prompt}</a></li>`;
                     }
 
                   // close sub menu if index is at the end of section and openSubmenu is true
