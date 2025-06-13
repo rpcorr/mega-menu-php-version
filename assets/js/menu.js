@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (ukey.trim() !== '') {
         menuHTML += `<li class="menu-item-has-children hover" aria-expanded="false"><a href="#" aria-label="${user} profile has a sub menu. Click enter to open"><div class="profile"><span aria-hidden="true">${getInitials(
           user
-        )}</span></div>${user} <span class="hidden-text">profile</span> <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="#">My Profile</a></li><li><a href="#">Settings</a></li><li><a href="#">Notifications</a></li><li><a href="#">Help &amp; Support</a></li><li><a href="logout.php">Sign Out</a></li></ul></li>`;
+        )}</span></div>${user} <span class="hidden-text">profile</span> <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="#" tabindex='-1'>My Profile</a></li><li><a href="#" tabindex='-1'>Settings</a></li><li><a href="#" tabindex='-1'>Notifications</a></li><li><a href="#" tabindex='-1'>Help &amp; Support</a></li><li><a href="logout.php" tabindex='-1'>Sign Out</a></li></ul></li>`;
       }
 
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
