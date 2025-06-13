@@ -832,7 +832,21 @@ function toggleSubMenu(menuLink) {
 
   // Toggle expanded state
   const isExpanded = parentLi.getAttribute('aria-expanded') === 'true';
-  parentLi.setAttribute('aria-expanded', String(!isExpanded));
+  const newState = !isExpanded;
+  parentLi.setAttribute('aria-expanded', String(newState));
+
+  // Update tabindex of submenu links
+  const subMenu = parentLi.querySelector('ul.sub-menu');
+  if (subMenu) {
+    const links = subMenu.querySelectorAll('a');
+    links.forEach((link) => {
+      if (newState) {
+        link.removeAttribute('tabindex'); // make focusable
+      } else {
+        link.setAttribute('tabindex', '-1'); // hide from tab order
+      }
+    });
+  }
 }
 
 /**
