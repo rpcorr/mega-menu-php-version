@@ -77,7 +77,7 @@ ul#menu-main-menu li[aria-expanded='true'] > ul {
 }
 
 /* position sub-menu under moreSubMenu to relative in order to display */
-#moreSubMenu a[aria-expanded='true'] + ul.sub-menu {
+#moreSubMenu li[aria-expanded='true'] > ul.sub-menu {
   position: relative;
   display: block;
   opacity: 1;

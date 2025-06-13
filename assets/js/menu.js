@@ -489,7 +489,15 @@ function handleLinkClick(e) {
   // Check if the clicked link is inside a menu item that has children
   if (this.closest('.menu-item-has-children')) {
     // Toggle the display of the submenu for this top-level menu item
-    toggleTopLevelMenu(this);
+    const isInMoreMenu = document.getElementById('moreSubMenu').contains(this);
+
+    if (isInMoreMenu) {
+      console.log('Toggle Sub Menu');
+      toggleSubMenu(this); // submenu item inside "More"
+    } else {
+      console.log('Toggle top level menu');
+      toggleTopLevelMenu(this); // regular top-level menu
+    }
   }
 }
 
@@ -812,6 +820,19 @@ function toggleTopLevelMenu(menuLink) {
 
   // Update the sidebar content based on the selected top-level menu
   if (sidebar) populateSidebar();
+}
+
+/**
+ * Toggles a submenu's open/closed state and ensures "More" menu stays open.
+ *
+ * @param {HTMLElement} menuLink - The <a> element clicked to toggle a submenu.
+ */
+function toggleSubMenu(menuLink) {
+  const parentLi = menuLink.closest('li');
+
+  // Toggle expanded state
+  const isExpanded = parentLi.getAttribute('aria-expanded') === 'true';
+  parentLi.setAttribute('aria-expanded', String(!isExpanded));
 }
 
 /**
