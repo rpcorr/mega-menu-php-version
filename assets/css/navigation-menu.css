@@ -56,6 +56,20 @@ ul#menu-main-menu li > ul {
   padding: 0;
 }
 
+/* Disable submenu links when parent aria-expanded is false */
+.menu-item-has-children[aria-expanded='false'] .sub-menu a {
+  pointer-events: none;
+  cursor: default;
+  color: #999; /* Optional: dimmed color */
+  text-decoration: none;
+}
+
+/* Ensure hover doesn't show pointer or underline */
+.menu-item-has-children[aria-expanded='false'] .sub-menu a:hover {
+  text-decoration: none;
+  background: none;
+}
+
 ul#menu-main-menu li[aria-expanded='true'] > ul {
   /* Add your desired styles here */
   opacity: 1;
