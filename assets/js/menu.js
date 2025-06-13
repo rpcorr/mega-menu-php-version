@@ -629,6 +629,14 @@ function formatNav() {
 
           // Update the 'More' dropdown link content
           moreLink.innerHTML = 'More <i class="caret angle-down"></i>';
+
+          // Remove tabindex attribute from the 'More' link and its subitems
+          moreLink.removeAttribute('tabindex');
+
+          const subLinks = document.querySelectorAll('#moreSubMenu a');
+          subLinks.forEach((link) => {
+            link.removeAttribute('tabindex');
+          });
         }
       }
 
@@ -764,29 +772,13 @@ function toggleTopLevelMenu(menuLink) {
 
   // If inside "More" menu, keep the parent "More" link open
   const li = menuLink.parentElement.closest('li');
-  if (li?.closest('#moreSubMenu')) {
-    document
-      .querySelector('#menuMoreLink')
-      ?.setAttribute('aria-expanded', 'true');
-  }
+
+  console.log(li);
 
   // Allow interaction with the submenu without closing it
   const subMenu = li?.querySelector('.mega-menu');
+  console.log(subMenu);
   if (subMenu) {
-    subMenu.addEventListener('click', (event) => {
-      event.stopPropagation();
-      menuLink.parentElement.setAttribute('aria-expanded', 'true');
-      if (icon) icon.classList.replace('angle-down', 'angle-up');
-    });
-
-    subMenu.querySelectorAll('a').forEach((subMenuLink) => {
-      subMenuLink.addEventListener('click', (event) => {
-        event.stopPropagation();
-        menuLink.parentElement.setAttribute('aria-expanded', 'true');
-        if (icon) icon.classList.replace('angle-down', 'angle-up');
-      });
-    });
-
     // Adjust mega menu position after submenu interaction
     determineMegaMenuPosition();
   }
