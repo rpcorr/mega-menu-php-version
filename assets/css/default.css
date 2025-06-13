@@ -147,15 +147,11 @@ ul#menu-main-menu li a:focus {
 }
 
 /* first submenu text colour */
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu a,
-.menu-main-menu-container > #menu-main-menu > li > .mega-menu a {
+.menu-main-menu-container > #menu-main-menu > li > .sub-menu a {
   color: #000;
 }
 
 /* first submenu hover and focus font colour */
-header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
-.menu-main-menu-container > #menu-main-menu > li > .mega-menu a:hover,
-.menu-main-menu-container > #menu-main-menu > li > .mega-menu a:focus,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:hover,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:focus {
   color: #000;
@@ -178,18 +174,6 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
   > li.menu-item-has-children:hover
   > a:link {
   color: #ffffff;
-}
-
-/* mega menu background colour and title colour */
-header nav ul.menu > li.menu-item-has-children > .mega-menu {
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #000000;
-  width: 100vw;
-  opacity: 0;
-  z-index: 1;
-  pointer-events: none; /*Prevent interaction while hidden*/
-  transform: translateY(-200px); /*Start further off-screen*/
-  transition: opacity 0.5s ease, transform 0.5s ease; /*Smoothtransition*/
 }
 
 .login-form {
