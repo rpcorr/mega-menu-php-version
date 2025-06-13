@@ -337,24 +337,49 @@ document.addEventListener('DOMContentLoaded', () => {
       document
         .getElementById('menuMoreLink')
         .addEventListener('click', function (event) {
+          console.log('Toggle More');
           event.preventDefault();
 
-          const moreMenu = this.closest('.menu-item-has-children');
+          const moreMenu = this.parentElement;
           const icon = this.querySelector('i');
-          const moreSubMenu = document.getElementById('moreSubMenu');
 
-          // Toggle visibility of More menu
-          const expanded =
-            this.parentElement.getAttribute('aria-expanded') === 'true';
-          this.parentElement.setAttribute('aria-expanded', String(!expanded));
+          const expanded = moreMenu.getAttribute('aria-expanded') === 'true';
+          const newState = !expanded;
 
-          // Adjust icon class based on new expanded state
+          moreMenu.setAttribute('aria-expanded', String(newState));
+
+          // Adjust icon direction
           if (icon) {
-            if (!expanded) {
-              icon.classList.replace('angle-down', 'angle-up');
-            } else {
-              icon.classList.replace('angle-up', 'angle-down');
-            }
+            icon.classList.replace(
+              expanded ? 'angle-up' : 'angle-down',
+              newState ? 'angle-up' : 'angle-down'
+            );
+          }
+
+          const subLinks = document.querySelectorAll('#moreSubMenu a');
+
+          if (newState) {
+            // Opening: make all submenu links focusable
+            subLinks.forEach((link) => {
+              link.removeAttribute('tabindex');
+            });
+          } else {
+            // Closing: close all expanded submenus and hide links from tab order
+            const subItems = document.querySelectorAll(
+              '#moreSubMenu li[aria-expanded="true"]'
+            );
+            subItems.forEach((li) => {
+              li.setAttribute('aria-expanded', 'false');
+              const nestedLinks = li.querySelectorAll('.sub-menu a');
+              nestedLinks.forEach((link) => {
+                link.setAttribute('tabindex', '-1');
+              });
+            });
+
+            // Also set tabindex=-1 on all direct submenu links
+            subLinks.forEach((link) => {
+              link.setAttribute('tabindex', '-1');
+            });
           }
 
           // Update sidebar content
@@ -651,6 +676,12 @@ function formatNav() {
       // Remove hover behavior and move item into the "More" submenu
       item.classList.remove('hover');
       document.getElementById('moreSubMenu').appendChild(item);
+
+      // Ensure submenu links inside "More" menu are not focusable initially
+      const innerLinks = item.querySelectorAll('.sub-menu a');
+      innerLinks.forEach((link) => {
+        link.setAttribute('tabindex', '-1');
+      });
 
       // Mark the current item as not visible
       navItemVisible[count] = false;
