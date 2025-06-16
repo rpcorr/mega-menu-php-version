@@ -1558,12 +1558,7 @@ function renderBodyContent(contentContainer, type, menuData) {
 
         // Check the next item in the array
         const nextItem = pagePromptsAndLinks[index + 1];
-        const shouldEndGrouping =
-          !nextItem ||
-          !isEmpty(nextItem.link) ||
-          ['maphat trends', 'maphat rankings'].includes(
-            nextItem.prompt?.toLowerCase()
-          );
+        const shouldEndGrouping = !nextItem || !isEmpty(nextItem.link);
 
         if (shouldEndGrouping) {
           // Check if the grouped heading should be `h5` instead of `h4`
@@ -1608,7 +1603,7 @@ function renderBodyContent(contentContainer, type, menuData) {
       const prompt = menuItem.prompt?.toLowerCase();
       const isMenuItemPromptExcluded = ['libpas', 'libsat'].includes(prompt);
 
-      if (!isExcludedPrompt && !isMenuItemPromptExcluded) {
+      if (!isMenuItemPromptExcluded) {
         if (menuItem.link === '') createMenuContent(menuItem, true);
         else createMenuContent(menuItem);
       }
