@@ -1468,8 +1468,10 @@ function renderBodyContent(contentContainer, type, menuData) {
     const img = menuContent.querySelector('img');
     const p = menuContent.querySelector('p');
     const anchor = menuContent.querySelector('a');
+    const strongEl = p.querySelector('strong');
+    const spanEl = p.querySelector('span');
 
-    if (!img || !p || !anchor) {
+    if (!img || !p || !anchor || !strongEl || !spanEl) {
       console.error('Error: Missing elements inside body content template.');
       return;
     }
@@ -1480,28 +1482,32 @@ function renderBodyContent(contentContainer, type, menuData) {
     if (
       typeof ukey !== 'undefined' &&
       ukey &&
-      menuItem.prompt.toLowerCase() !== 'login'
+      menuItem.prompt?.toLowerCase() !== 'login'
     ) {
       img.src = `/mmenu/assets/imgs/${randomIcon.graphic}`;
       img.width = randomIcon.width;
       img.height = randomIcon.height;
       img.alt = '';
 
-      p.querySelector('strong').textContent = menuItem.prompt;
+      // Clear <strong> and add spans
+      strongEl.innerHTML = '';
 
-      if (menuHeading) p.querySelector('strong').textContent += '+';
+      const promptSpan = document.createElement('span');
+      promptSpan.textContent = menuItem.prompt;
+      strongEl.appendChild(promptSpan);
 
-      p.querySelector(
-        'span'
-      ).textContent = `Brief description of the function of ${menuItem.prompt}`;
+      if (menuHeading) {
+        const plusSpan = document.createElement('span');
+        plusSpan.className = 'plus-sign';
+        plusSpan.textContent = '+';
+        strongEl.appendChild(plusSpan);
+      }
+
+      spanEl.textContent = `Brief description of the function of ${menuItem.prompt}`;
 
       anchor.href = menuItem.link;
 
-      // const wrapperDiv = document.createElement('div');
-      //wrapperDiv.style.display = 'contents';
-      //wrapperDiv.appendChild(menuContent);
-
-      //fragment.appendChild(wrapperDiv);
+      console.log(strongEl.innerHTML);
 
       fragment.appendChild(menuContent);
     }

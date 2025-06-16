@@ -211,7 +211,24 @@ li[role='presentation'] {
 }
 
 [role='listitem'] strong {
-  border-bottom: 2px solid;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+[role='listitem'] strong span {
+  display: inline-block;
+  font-weight: bold;
+}
+
+[role='listitem'] a span:last-of-type {
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.plus-sign {
+  font-weight: normal;
+  padding-left: 0.25rem;
 }
 
 [role='listitem'] span {
