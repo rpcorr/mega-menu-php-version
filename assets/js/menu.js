@@ -1241,53 +1241,60 @@ function getMegaMenu(menuContainer, type, menuData) {
       'click',
       function (event) {
         event.stopPropagation(); // Stop event from bubbling up
-        const anchor = event.target.closest('a'); // Check if a link or tab was clicked
+        const anchor = event.target.closest('a');
+        if (!anchor) return;
 
-        if (anchor) {
-          event.preventDefault(); // Prevent default link behavior (e.g., page reload)
+        const href = anchor.getAttribute('href');
 
-          const clickedTab = event.target.closest('a');
-          if (!clickedTab) return;
+        // Prevent default if href is missing, empty, or starts with #
+        if (!href || href === '' || href.startsWith('#')) {
+          event.preventDefault();
 
-          // If a tab is clicked, update the selected tab
-          if (clickedTab.getAttribute('role') === 'tab') {
-            // Deselect all tabs
-            menuContainer.querySelectorAll('[role="tab"]').forEach((tab) => {
-              tab.setAttribute('aria-selected', 'false');
-            });
-
-            // Select the clicked tab
-            clickedTab.setAttribute('aria-selected', 'true');
-
-            // Switch content to the clicked tab
-            switchTab(clickedTab, menuContainer, type, menuData);
+          // Toggle "+" and "−" for anchors with .plus-sign span
+          const plusSign = anchor.querySelector('.plus-sign');
+          if (plusSign) {
+            plusSign.textContent = plusSign.textContent === '+' ? '−' : '+';
           }
         }
+
+        // Tab switching logic
+        if (anchor.getAttribute('role') === 'tab') {
+          // Deselect all tabs
+          menuContainer.querySelectorAll('[role="tab"]').forEach((tab) => {
+            tab.setAttribute('aria-selected', 'false');
+          });
+
+          // Select the clicked tab
+          anchor.setAttribute('aria-selected', 'true');
+
+          // Switch content to the clicked tab
+          switchTab(anchor, menuContainer, type, menuData);
+        }
       },
-      true // Capture phase to handle events before they reach child elements
+      true // Use capture phase
     );
 
     // Handle keyboard navigation within tabs
     menuContainer.addEventListener('keydown', (event) => {
       switch (event.key) {
         case 'ArrowLeft':
-          moveTab(menuContainer, type, -1, menuData); // Move focus to the previous tab
+          moveTab(menuContainer, type, -1, menuData);
           break;
         case 'ArrowRight':
-          moveTab(menuContainer, type, 1, menuData); // Move focus to the next tab
+          moveTab(menuContainer, type, 1, menuData);
           break;
         case 'Home':
-          event.preventDefault(); // Prevent default scrolling behavior
-          switchTab(tabButtons[0], menuContainer, type, menuData); // Move focus to the first tab
+          event.preventDefault();
+          switchTab(tabButtons[0], menuContainer, type, menuData);
           break;
         case 'End':
-          event.preventDefault(); // Prevent default scrolling behavior
+          event.preventDefault();
           switchTab(
             tabButtons[tabButtons.length - 1],
             menuContainer,
             type,
             menuData
-          ); // Move focus to the last tab
+          );
           break;
       }
     });
