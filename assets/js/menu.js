@@ -1507,8 +1507,6 @@ function renderBodyContent(contentContainer, type, menuData) {
 
       anchor.href = menuItem.link;
 
-      console.log(strongEl.innerHTML);
-
       fragment.appendChild(menuContent);
     }
   }
@@ -1611,7 +1609,6 @@ function renderBodyContent(contentContainer, type, menuData) {
       const isMenuItemPromptExcluded = ['libpas', 'libsat'].includes(prompt);
 
       if (!isExcludedPrompt && !isMenuItemPromptExcluded) {
-        console.log(menuItem);
         if (menuItem.link === '') createMenuContent(menuItem, true);
         else createMenuContent(menuItem);
       }
