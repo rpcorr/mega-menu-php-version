@@ -1253,7 +1253,13 @@ function getMegaMenu(menuContainer, type, menuData) {
           // Toggle "+" and "−" for anchors with .plus-sign span
           const plusSign = anchor.querySelector('.plus-sign');
           if (plusSign) {
-            plusSign.textContent = plusSign.textContent === '+' ? '−' : '+';
+            const isExpanded = plusSign.textContent === '−';
+
+            // Toggle the sign
+            plusSign.textContent = isExpanded ? '+' : '−';
+
+            // Toggle the aria-expanded attribute
+            anchor.setAttribute('aria-expanded', String(!isExpanded));
           }
         }
 
@@ -1503,11 +1509,15 @@ function renderBodyContent(contentContainer, type, menuData) {
       promptSpan.textContent = menuItem.prompt;
       strongEl.appendChild(promptSpan);
 
+      console.log('Freya');
       if (menuHeading) {
         const plusSpan = document.createElement('span');
         plusSpan.className = 'plus-sign';
         plusSpan.textContent = '+';
         strongEl.appendChild(plusSpan);
+
+        // Add ARIA attribute to indicate collapsible section
+        anchor.setAttribute('aria-expanded', 'false');
       }
 
       spanEl.textContent = `Brief description of the function of ${menuItem.prompt}`;
