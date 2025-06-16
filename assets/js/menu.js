@@ -1524,7 +1524,7 @@ function renderBodyContent(contentContainer, type, menuData) {
       .filter((page) => page.section_id === '0' && page.section_prompt === null)
       .map((page) => ({ prompt: page.page_prompt, link: page.page_link }));
 
-    pagePromptsAndLinks.forEach(createMenuContent);
+    pagePromptsAndLinks.forEach((item) => createMenuContent(item));
   }
 
   if (type === 'multiple') {
