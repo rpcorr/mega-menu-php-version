@@ -1463,7 +1463,7 @@ function renderBodyContent(contentContainer, type, menuData) {
    * Creates and appends a menu content item based on a given menu item object.
    * @param {Object} menuItem - Object containing 'prompt' and 'link' properties.
    */
-  function createMenuContent(menuItem) {
+  function createMenuContent(menuItem, menuHeading = false) {
     const menuContent = contentTemplate.content.cloneNode(true);
     const img = menuContent.querySelector('img');
     const p = menuContent.querySelector('p');
@@ -1488,6 +1488,9 @@ function renderBodyContent(contentContainer, type, menuData) {
       img.alt = '';
 
       p.querySelector('strong').textContent = menuItem.prompt;
+
+      if (menuHeading) p.querySelector('strong').textContent += '+';
+
       p.querySelector(
         'span'
       ).textContent = `Brief description of the function of ${menuItem.prompt}`;
@@ -1566,21 +1569,21 @@ function renderBodyContent(contentContainer, type, menuData) {
             )
               ? 'h5'
               : 'h4';
-          const heading = document.createElement(headingTag);
-          heading.textContent = groupedHeading;
-          heading.style.gridColumn = '1 / -1'; // Span full grid width
+          //   const heading = document.createElement(headingTag);
+          //   heading.textContent = groupedHeading;
+          //   heading.style.gridColumn = '1 / -1'; // Span full grid width
 
-          // Conditionally make heading focusable
-          if (
-            selectedLi.classList.contains('menu-item-has-children') &&
-            selectedLi.getAttribute('aria-expanded') === 'true'
-          ) {
-            heading.setAttribute('tabindex', '0');
-          }
+          //   // Conditionally make heading focusable
+          //   if (
+          //     selectedLi.classList.contains('menu-item-has-children') &&
+          //     selectedLi.getAttribute('aria-expanded') === 'true'
+          //   ) {
+          //     heading.setAttribute('tabindex', '0');
+          //   }
 
-          fragment.appendChild(heading);
-          groupedHeading = '';
-          isGrouping = false;
+          //   fragment.appendChild(heading);
+          //   groupedHeading = '';
+          //   isGrouping = false;
         }
       }
 
@@ -1589,7 +1592,7 @@ function renderBodyContent(contentContainer, type, menuData) {
         const customReportsHeading = document.createElement('h4');
         customReportsHeading.textContent = 'Custom Reports';
         customReportsHeading.style.gridColumn = '1 / -1';
-        fragment.appendChild(customReportsHeading);
+        //fragment.appendChild(customReportsHeading);
         customReportsAdded = true;
 
         if (surveyReportsStored) {
@@ -1598,8 +1601,13 @@ function renderBodyContent(contentContainer, type, menuData) {
         }
       }
       // Handle menu items with valid links or excluded prompts
-      if (!isEmpty(menuItem.link) || isExcludedPrompt) {
-        createMenuContent(menuItem);
+      const prompt = menuItem.prompt?.toLowerCase();
+      const isMenuItemPromptExcluded = ['libpas', 'libsat'].includes(prompt);
+
+      if (!isExcludedPrompt && !isMenuItemPromptExcluded) {
+        console.log(menuItem);
+        if (menuItem.link === '') createMenuContent(menuItem, true);
+        else createMenuContent(menuItem);
       }
     });
   }
