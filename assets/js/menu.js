@@ -1260,6 +1260,8 @@ function getMegaMenu(menuContainer, type, menuData) {
 
             // Toggle the aria-expanded attribute
             anchor.setAttribute('aria-expanded', String(!isExpanded));
+
+            hideShowSiblings(anchor, isExpanded);
           }
         }
 
@@ -1766,6 +1768,9 @@ function renderExtraContent(contentData, menuContainer) {
   });
 
   menuContainer.appendChild(fragment); // Insert all content at once for better performance
+
+  // Hide listitem siblings after collapsed anchors on initial load
+  hideListItemsInitially();
 }
 
 ///////  Navigation through tabs begin /////////////////
@@ -2070,4 +2075,57 @@ function getInitials(user) {
 
   // Fallback: just return first letter
   return firstLetter;
+}
+
+function hideShowSiblings(anchor, isExpanded) {
+  // === Hide/Show siblings ===
+  const currentItem = anchor.closest('div[role="listitem"]');
+  if (!currentItem) return;
+
+  let sibling = currentItem.nextElementSibling;
+
+  while (sibling) {
+    if (sibling.getAttribute('role') !== 'listitem') {
+      sibling = sibling.nextElementSibling;
+      continue;
+    }
+
+    const nextAnchor = sibling.querySelector('a[aria-expanded]');
+    if (nextAnchor && nextAnchor.getAttribute('aria-expanded') === 'false') {
+      break; // Stop at the next collapsed section
+    }
+
+    // Toggle visibility
+    sibling.style.display = isExpanded ? 'none' : '';
+
+    sibling = sibling.nextElementSibling;
+  }
+}
+
+function hideListItemsInitially() {
+  // Hide listitem siblings after collapsed anchors on initial load
+  document.querySelectorAll('a[aria-expanded="false"]').forEach((anchor) => {
+    console.log(
+      'Hide listitem siblings after collapsed anchors on initial load'
+    );
+    const currentItem = anchor.closest('div[role="listitem"]');
+    if (!currentItem) return;
+
+    let sibling = currentItem.nextElementSibling;
+
+    while (sibling) {
+      if (sibling.getAttribute('role') !== 'listitem') {
+        sibling = sibling.nextElementSibling;
+        continue;
+      }
+
+      const nextAnchor = sibling.querySelector('a[aria-expanded]');
+      if (nextAnchor && nextAnchor.getAttribute('aria-expanded') === 'false') {
+        break; // Stop at the next collapsed section
+      }
+
+      sibling.style.display = 'none';
+      sibling = sibling.nextElementSibling;
+    }
+  });
 }
