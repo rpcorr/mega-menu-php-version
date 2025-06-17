@@ -2091,42 +2091,17 @@ function hideShowSiblings(anchor, isExpanded) {
       continue;
     }
 
-    const nextAnchor = sibling.querySelector('a[aria-expanded]');
-    const isCollapsedSection =
-      nextAnchor && nextAnchor.getAttribute('aria-expanded') === 'false';
+    const siblingAnchor = sibling.querySelector('a[aria-expanded]');
+    const isSiblingExpandable = !!siblingAnchor;
 
-    if (isCollapsedSection) {
-      // Always show/hide the collapsed section that belongs to the parent
-      sibling.style.display = isExpanded ? '' : 'none';
-
-      // If expanding, continue to reveal any siblings following this collapsed one
-      // until another collapsed section appears
-      if (isExpanded) {
-        let nestedSibling = sibling.nextElementSibling;
-        while (nestedSibling) {
-          if (nestedSibling.getAttribute('role') !== 'listitem') {
-            nestedSibling = nestedSibling.nextElementSibling;
-            continue;
-          }
-
-          const nestedAnchor = nestedSibling.querySelector('a[aria-expanded]');
-          if (
-            nestedAnchor &&
-            nestedAnchor.getAttribute('aria-expanded') === 'false'
-          ) {
-            break; // Stop revealing at the next collapsed block
-          }
-
-          nestedSibling.style.display = '';
-          nestedSibling = nestedSibling.nextElementSibling;
-        }
-      }
-
-      break; // Stop outer loop at next collapsed section
+    if (isSiblingExpandable) {
+      // Stop at next expandable section (not part of current group)
+      break;
     }
 
-    // Toggle visibility for regular siblings
+    // Toggle visibility of sibling (child of current expandable group)
     sibling.style.display = isExpanded ? '' : 'none';
+
     sibling = sibling.nextElementSibling;
   }
 }
