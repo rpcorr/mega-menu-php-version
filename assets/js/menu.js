@@ -1253,15 +1253,17 @@ function getMegaMenu(menuContainer, type, menuData) {
           // Toggle "+" and "−" for anchors with .plus-sign span
           const plusSign = anchor.querySelector('.plus-sign');
           if (plusSign) {
-            const isExpanded = plusSign.textContent === '−';
+            const wasExpanded = plusSign.textContent === '−';
 
             // Toggle the sign
-            plusSign.textContent = isExpanded ? '+' : '−';
+            plusSign.textContent = wasExpanded ? '+' : '−';
 
             // Toggle the aria-expanded attribute
-            anchor.setAttribute('aria-expanded', String(!isExpanded));
+            const nowExpanded = !wasExpanded;
+            anchor.setAttribute('aria-expanded', String(nowExpanded));
 
-            hideShowSiblings(anchor, isExpanded);
+            // Call hideShowSiblings with the updated state
+            hideShowSiblings(anchor, nowExpanded);
           }
         }
 
@@ -2078,7 +2080,6 @@ function getInitials(user) {
 }
 
 function hideShowSiblings(anchor, isExpanded) {
-  // === Hide/Show siblings ===
   const currentItem = anchor.closest('div[role="listitem"]');
   if (!currentItem) return;
 
@@ -2091,41 +2092,87 @@ function hideShowSiblings(anchor, isExpanded) {
     }
 
     const nextAnchor = sibling.querySelector('a[aria-expanded]');
-    if (nextAnchor && nextAnchor.getAttribute('aria-expanded') === 'false') {
-      break; // Stop at the next collapsed section
+    const isCollapsedSection =
+      nextAnchor && nextAnchor.getAttribute('aria-expanded') === 'false';
+
+    if (isCollapsedSection) {
+      // Always show/hide the collapsed section that belongs to the parent
+      sibling.style.display = isExpanded ? '' : 'none';
+
+      // If expanding, continue to reveal any siblings following this collapsed one
+      // until another collapsed section appears
+      if (isExpanded) {
+        let nestedSibling = sibling.nextElementSibling;
+        while (nestedSibling) {
+          if (nestedSibling.getAttribute('role') !== 'listitem') {
+            nestedSibling = nestedSibling.nextElementSibling;
+            continue;
+          }
+
+          const nestedAnchor = nestedSibling.querySelector('a[aria-expanded]');
+          if (
+            nestedAnchor &&
+            nestedAnchor.getAttribute('aria-expanded') === 'false'
+          ) {
+            break; // Stop revealing at the next collapsed block
+          }
+
+          nestedSibling.style.display = '';
+          nestedSibling = nestedSibling.nextElementSibling;
+        }
+      }
+
+      break; // Stop outer loop at next collapsed section
     }
 
-    // Toggle visibility
-    sibling.style.display = isExpanded ? 'none' : '';
-
+    // Toggle visibility for regular siblings
+    sibling.style.display = isExpanded ? '' : 'none';
     sibling = sibling.nextElementSibling;
   }
 }
 
 function hideListItemsInitially() {
-  // Hide listitem siblings after collapsed anchors on initial load
-  document.querySelectorAll('a[aria-expanded="false"]').forEach((anchor) => {
-    console.log(
-      'Hide listitem siblings after collapsed anchors on initial load'
-    );
-    const currentItem = anchor.closest('div[role="listitem"]');
-    if (!currentItem) return;
+  const listItems = Array.from(
+    document.querySelectorAll('div[role="listitem"]')
+  );
 
-    let sibling = currentItem.nextElementSibling;
+  for (let i = 0; i < listItems.length; i++) {
+    const anchor = listItems[i].querySelector('a[aria-expanded]');
 
-    while (sibling) {
-      if (sibling.getAttribute('role') !== 'listitem') {
-        sibling = sibling.nextElementSibling;
-        continue;
+    if (anchor && anchor.getAttribute('aria-expanded') === 'false') {
+      let j = i + 1;
+
+      while (j < listItems.length) {
+        const nextAnchor = listItems[j].querySelector('a[aria-expanded]');
+        if (
+          nextAnchor &&
+          nextAnchor.getAttribute('aria-expanded') === 'false'
+        ) {
+          // This is a "nested" collapsed item — hide it too
+          listItems[j].style.display = 'none';
+          j++;
+          continue;
+        }
+
+        // Stop hiding when we hit a non-collapsible or expanded section
+        break;
       }
 
-      const nextAnchor = sibling.querySelector('a[aria-expanded]');
-      if (nextAnchor && nextAnchor.getAttribute('aria-expanded') === 'false') {
-        break; // Stop at the next collapsed section
+      // Now hide items *after* this block until the next collapsed one
+      while (j < listItems.length) {
+        const nextAnchor = listItems[j].querySelector('a[aria-expanded]');
+        if (
+          nextAnchor &&
+          nextAnchor.getAttribute('aria-expanded') === 'false'
+        ) {
+          break; // Stop at the next collapsed section
+        }
+
+        listItems[j].style.display = 'none';
+        j++;
       }
 
-      sibling.style.display = 'none';
-      sibling = sibling.nextElementSibling;
+      i = j - 1; // Skip ahead to avoid redundant checks
     }
-  });
+  }
 }
