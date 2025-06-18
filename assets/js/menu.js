@@ -1576,56 +1576,20 @@ function renderBodyContent(contentContainer, type, menuData) {
           ? `, ${menuItem.prompt}`
           : menuItem.prompt;
         isGrouping = true;
-
-        // Check the next item in the array
-        const nextItem = pagePromptsAndLinks[index + 1];
-        const shouldEndGrouping = !nextItem || !isEmpty(nextItem.link);
-
-        if (shouldEndGrouping) {
-          // Check if the grouped heading should be `h5` instead of `h4`
-          const headingTag =
-            /benchmarking reports|postal reports|email reports/i.test(
-              groupedHeading
-            )
-              ? 'h5'
-              : 'h4';
-          //   const heading = document.createElement(headingTag);
-          //   heading.textContent = groupedHeading;
-          //   heading.style.gridColumn = '1 / -1'; // Span full grid width
-
-          //   // Conditionally make heading focusable
-          //   if (
-          //     selectedLi.classList.contains('menu-item-has-children') &&
-          //     selectedLi.getAttribute('aria-expanded') === 'true'
-          //   ) {
-          //     heading.setAttribute('tabindex', '0');
-          //   }
-
-          //   fragment.appendChild(heading);
-          //   groupedHeading = '';
-          //   isGrouping = false;
-        }
       }
 
-      // Handle Custom Reports section separately
-      if (isCustomReports && !customReportsAdded) {
-        const customReportsHeading = document.createElement('h4');
-        customReportsHeading.textContent = 'Custom Reports';
-        customReportsHeading.style.gridColumn = '1 / -1';
-        //fragment.appendChild(customReportsHeading);
-        customReportsAdded = true;
-
-        if (surveyReportsStored) {
-          createMenuContent(surveyReportsStored);
-          surveyReportsStored = null;
-        }
-      }
       // Handle menu items with valid links or excluded prompts
       const prompt = menuItem.prompt?.toLowerCase();
       const isMenuItemPromptExcluded = ['libpas', 'libsat'].includes(prompt);
 
       if (!isMenuItemPromptExcluded) {
-        if (menuItem.link === '') createMenuContent(menuItem, true);
+        console.log(menuItem);
+        if (
+          menuItem.prompt === 'MAPHAT Trends' ||
+          menuItem.prompt === 'MAPHAT Rankings'
+        ) {
+          createMenuContent(menuItem);
+        } else if (menuItem.link === '') createMenuContent(menuItem, true);
         else createMenuContent(menuItem);
       }
     });
