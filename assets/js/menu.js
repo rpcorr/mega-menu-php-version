@@ -1583,7 +1583,6 @@ function renderBodyContent(contentContainer, type, menuData) {
       const isMenuItemPromptExcluded = ['libpas', 'libsat'].includes(prompt);
 
       if (!isMenuItemPromptExcluded) {
-        console.log(menuItem);
         if (
           menuItem.prompt === 'MAPHAT Trends' ||
           menuItem.prompt === 'MAPHAT Rankings'
@@ -2049,23 +2048,28 @@ function hideShowSiblings(anchor, isExpanded) {
 
   let sibling = currentItem.nextElementSibling;
 
+  if (!sibling || sibling.getAttribute('role') !== 'listitem') return;
+
+  const siblingAnchor = sibling.querySelector('a[aria-expanded]');
+  const siblingHasExpanded = !!siblingAnchor;
+
+  // If first sibling is expandable, toggle its visibility based on parent's state
+  if (siblingHasExpanded) {
+    sibling.style.display = isExpanded ? '' : 'none';
+    return;
+  }
+
+  // Otherwise toggle non-expandable siblings until next expandable is found
   while (sibling) {
     if (sibling.getAttribute('role') !== 'listitem') {
       sibling = sibling.nextElementSibling;
       continue;
     }
 
-    const siblingAnchor = sibling.querySelector('a[aria-expanded]');
-    const isSiblingExpandable = !!siblingAnchor;
+    const isSiblingExpandable = !!sibling.querySelector('a[aria-expanded]');
+    if (isSiblingExpandable) break;
 
-    if (isSiblingExpandable) {
-      // Stop at next expandable section (not part of current group)
-      break;
-    }
-
-    // Toggle visibility of sibling (child of current expandable group)
     sibling.style.display = isExpanded ? '' : 'none';
-
     sibling = sibling.nextElementSibling;
   }
 }
