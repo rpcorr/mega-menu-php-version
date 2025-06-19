@@ -2053,9 +2053,31 @@ function hideShowSiblings(anchor, isExpanded) {
   const siblingAnchor = sibling.querySelector('a[aria-expanded]');
   const siblingHasExpanded = !!siblingAnchor;
 
-  // If first sibling is expandable, toggle its visibility based on parent's state
+  // If the next sibling is expandable (has aria-expanded)
   if (siblingHasExpanded) {
     sibling.style.display = isExpanded ? '' : 'none';
+
+    // If collapsing, also collapse this sibling's aria-expanded and its children
+    if (!isExpanded) {
+      siblingAnchor.setAttribute('aria-expanded', 'false');
+
+      let subSibling = sibling.nextElementSibling;
+      while (subSibling) {
+        if (subSibling.getAttribute('role') !== 'listitem') {
+          subSibling = subSibling.nextElementSibling;
+          continue;
+        }
+
+        const subSiblingAnchor = subSibling.querySelector('a[aria-expanded]');
+        const isSubExpandable = !!subSiblingAnchor;
+
+        if (isSubExpandable) break; // Stop at the next expandable sibling
+        subSibling.style.display = 'none';
+
+        subSibling = subSibling.nextElementSibling;
+      }
+    }
+
     return;
   }
 
