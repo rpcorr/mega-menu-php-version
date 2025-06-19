@@ -2107,9 +2107,41 @@ function hideListItemsInitially() {
     document.querySelectorAll('div[role="listitem"]')
   );
 
+  const keywordsToHide = [
+    'Benchmarking Reports',
+    'Postal Reports',
+    'Email Reports',
+  ];
+
   for (let i = 0; i < listItems.length; i++) {
     const anchor = listItems[i].querySelector('a[aria-expanded]');
+    const anchorText = anchor?.textContent?.trim() || '';
 
+    const shouldHideExplicitly = keywordsToHide.some((keyword) =>
+      anchorText.toLowerCase().includes(keyword.toLowerCase())
+    );
+
+    if (shouldHideExplicitly) {
+      // Hide this item and its children
+      listItems[i].style.display = 'none';
+
+      let j = i + 1;
+      while (j < listItems.length) {
+        const nextAnchor = listItems[j].querySelector('a[aria-expanded]');
+        const isNextCollapsed =
+          nextAnchor && nextAnchor.getAttribute('aria-expanded') === 'false';
+
+        if (isNextCollapsed || nextAnchor) break;
+
+        listItems[j].style.display = 'none';
+        j++;
+      }
+
+      i = j - 1; // Skip ahead to avoid redundant processing
+      continue;
+    }
+
+    // Handle regular collapsed blocks
     if (anchor && anchor.getAttribute('aria-expanded') === 'false') {
       let j = i + 1;
 
