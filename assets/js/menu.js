@@ -2061,6 +2061,12 @@ function hideShowSiblings(anchor, isExpanded) {
     if (!isExpanded) {
       siblingAnchor.setAttribute('aria-expanded', 'false');
 
+      // Update visual sign from minus to plus
+      const plusSign = siblingAnchor.querySelector('.plus-sign');
+      if (plusSign) {
+        plusSign.textContent = '+'; // Update symbol
+      }
+
       let subSibling = sibling.nextElementSibling;
       while (subSibling) {
         if (subSibling.getAttribute('role') !== 'listitem') {
