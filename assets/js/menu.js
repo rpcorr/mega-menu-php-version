@@ -2045,7 +2045,7 @@ function getInitials(user) {
 function hideShowSiblings(anchor, isExpanded) {
   // Case-insensitive check for "Custom Reports"
   if (anchor.textContent.toLowerCase().includes('custom reports')) {
-    console.log('This is it');
+    // toggle Custom Reports children
     toggleCustomGroupChildren();
   }
 
@@ -2192,7 +2192,52 @@ function toggleCustomGroupChildren() {
     'a[aria-expanded="true"][href=""] strong span:first-child'
   );
 
-  if (!customReportsAnchor) return;
+  // Define the group of child reports
+  const groupChildren = [
+    'Benchmarking Reports',
+    'Postal Reports',
+    'Email Reports',
+  ].map((label) => label.toLowerCase()); // normalize for case-insensitive comparison;
+
+  if (!customReportsAnchor) {
+    const tempArray = [];
+    Array.from(document.querySelectorAll('div[role="listitem"]')).filter(
+      (item) => {
+        const anchor = item.querySelector('a[aria-expanded]');
+        if (!anchor) return false;
+
+        const strong = anchor.querySelector('strong');
+        const text = strong ? strong.textContent.trim().toLowerCase() : '';
+        if (groupChildren.some((child) => text.includes(child))) {
+          tempArray.push(text);
+        }
+      }
+    );
+
+    // remove + and trailing spaces
+    const cleanedArray = tempArray.map((item) =>
+      item.replace(/\+\s*$/, '').trim()
+    );
+
+    cleanedArray.forEach((targetText) => {
+      document.querySelectorAll('div[role="listitem"]').forEach((item) => {
+        const strong = item.querySelector('strong');
+        if (!strong) return;
+
+        // Clone the strong element and remove the plus-sign span before getting text
+        const clone = strong.cloneNode(true);
+        const plusSign = clone.querySelector('.plus-sign');
+        if (plusSign) plusSign.remove();
+
+        const text = clone.textContent.trim().toLowerCase();
+        if (text === targetText.toLowerCase()) {
+          item.style.display = 'none';
+        }
+      });
+    });
+
+    return;
+  }
 
   const anchorText = customReportsAnchor.textContent.trim();
   if (anchorText.toLowerCase() !== 'custom reports') return;
@@ -2204,13 +2249,6 @@ function toggleCustomGroupChildren() {
     parentItem
       .querySelector('a[aria-expanded]')
       .getAttribute('aria-expanded') === 'true';
-
-  // Define the group of child reports
-  const groupChildren = [
-    'Benchmarking Reports',
-    'Postal Reports',
-    'Email Reports',
-  ];
 
   // Start with the sibling two elements after Custom Reports
   let sibling = parentItem.nextElementSibling;
