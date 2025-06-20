@@ -2043,6 +2043,12 @@ function getInitials(user) {
 }
 
 function hideShowSiblings(anchor, isExpanded) {
+  // Case-insensitive check for "Custom Reports"
+  if (anchor.textContent.toLowerCase().includes('custom reports')) {
+    console.log('This is it');
+    toggleCustomGroupChildren();
+  }
+
   const currentItem = anchor.closest('div[role="listitem"]');
   if (!currentItem) return;
 
@@ -2177,5 +2183,52 @@ function hideListItemsInitially() {
 
       i = j - 1; // Skip ahead to avoid redundant checks
     }
+  }
+}
+
+function toggleCustomGroupChildren() {
+  // Find the Custom Reports anchor
+  const customReportsAnchor = document.querySelector(
+    'a[aria-expanded="true"][href=""] strong span:first-child'
+  );
+
+  if (!customReportsAnchor) return;
+
+  const anchorText = customReportsAnchor.textContent.trim();
+  if (anchorText.toLowerCase() !== 'custom reports') return;
+
+  const parentItem = customReportsAnchor.closest('div[role="listitem"]');
+  if (!parentItem) return;
+
+  const isExpanded =
+    parentItem
+      .querySelector('a[aria-expanded]')
+      .getAttribute('aria-expanded') === 'true';
+
+  // Define the group of child reports
+  const groupChildren = [
+    'Benchmarking Reports',
+    'Postal Reports',
+    'Email Reports',
+  ];
+
+  // Start with the sibling two elements after Custom Reports
+  let sibling = parentItem.nextElementSibling;
+  if (sibling) sibling = sibling.nextElementSibling;
+
+  while (sibling) {
+    if (sibling.getAttribute('role') !== 'listitem') {
+      sibling = sibling.nextElementSibling;
+      continue;
+    }
+
+    const labelSpan = sibling.querySelector('strong span');
+    const siblingLabel = labelSpan?.textContent.trim().toLowerCase();
+
+    if (groupChildren.some((label) => label.toLowerCase() === siblingLabel)) {
+      sibling.style.display = isExpanded ? '' : 'none';
+    }
+
+    sibling = sibling.nextElementSibling;
   }
 }
