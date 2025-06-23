@@ -2298,6 +2298,12 @@ function hideChildrenReports(groupChildren) {
     const isGroupHeader = groupChildren.includes(label);
     const isExpanded = anchor.getAttribute('aria-expanded') === 'true';
 
+    // Always hide the group header itself
+    if (isGroupHeader) {
+      item.style.display = 'none';
+    }
+
+    // Then hide its children if expanded
     if (isGroupHeader && isExpanded) {
       for (let i = index + 1; i < listItems.length; i++) {
         const nextItem = listItems[i];
