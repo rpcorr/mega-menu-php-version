@@ -2046,7 +2046,7 @@ function hideShowSiblings(anchor, isExpanded) {
   // Case-insensitive check for "Custom Reports"
   if (anchor.textContent.toLowerCase().includes('custom reports')) {
     // toggle Custom Reports children
-    toggleCustomGroupChildren();
+    toggleCustomGroupChildren(anchor);
   }
 
   const currentItem = anchor.closest('div[role="listitem"]');
@@ -2186,7 +2186,7 @@ function hideListItemsInitially() {
   }
 }
 
-function toggleCustomGroupChildren() {
+function toggleCustomGroupChildren(anchor) {
   // Find the Custom Reports anchor
   const customReportsAnchor = document.querySelector(
     'a[aria-expanded="true"][href=""] strong span:first-child'
@@ -2237,6 +2237,11 @@ function toggleCustomGroupChildren() {
     });
 
     return;
+  } else {
+    const isExpanded = anchor.getAttribute('aria-expanded') === 'true';
+
+    // if not expanded
+    if (!isExpanded) hideChildrenReports(groupChildren);
   }
 
   const anchorText = customReportsAnchor.textContent.trim();
@@ -2269,4 +2274,56 @@ function toggleCustomGroupChildren() {
 
     sibling = sibling.nextElementSibling;
   }
+}
+
+function hideChildrenReports(groupChildren) {
+  const preserveLabels = ['nps', 'maphat'];
+
+  const listItems = Array.from(
+    document.querySelectorAll('div[role="listitem"]')
+  );
+
+  listItems.forEach((item, index) => {
+    const anchor = item.querySelector('a[aria-expanded]');
+    if (!anchor) return;
+
+    const strong = anchor.querySelector('strong');
+    if (!strong) return;
+
+    const clone = strong.cloneNode(true);
+    const plusSign = clone.querySelector('.plus-sign');
+    if (plusSign) plusSign.remove();
+
+    const label = clone.textContent.trim().toLowerCase();
+    const isGroupHeader = groupChildren.includes(label);
+    const isExpanded = anchor.getAttribute('aria-expanded') === 'true';
+
+    if (isGroupHeader && isExpanded) {
+      for (let i = index + 1; i < listItems.length; i++) {
+        const nextItem = listItems[i];
+
+        const nextAnchor = nextItem.querySelector('a[aria-expanded]');
+        if (nextAnchor) {
+          // Update the minus back to plus on the group header
+          const groupPlusSign = anchor.querySelector('.plus-sign');
+          if (groupPlusSign) groupPlusSign.textContent = '+';
+          anchor.setAttribute('aria-expanded', 'false');
+          break;
+        }
+
+        const nextStrong = nextItem.querySelector('strong');
+        if (!nextStrong) continue;
+
+        const nextClone = nextStrong.cloneNode(true);
+        const nextPlus = nextClone.querySelector('.plus-sign');
+        if (nextPlus) nextPlus.remove();
+
+        const nextLabel = nextClone.textContent.trim().toLowerCase();
+
+        if (preserveLabels.includes(nextLabel)) continue;
+
+        nextItem.style.display = 'none';
+      }
+    }
+  });
 }
