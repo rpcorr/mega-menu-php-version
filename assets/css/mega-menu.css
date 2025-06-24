@@ -109,19 +109,58 @@ li[role='presentation'] {
 [role='listitem'] {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   justify-content: stretch;
+  flex: 1 1 calc(25% - 1rem); /* Adjusts with gap taken into account */
+  align-items: flex-start; /* or center if you prefer vertical centering */
+  gap: 1rem;
+  padding: 1rem 0 0 1rem;
+  box-sizing: border-box;
+}
+
+[role='listitem'] img {
+  display: none;
 }
 
 [role='listitem'] p {
-  flex-grow: 1; /* Makes <p> stretch to fill vertical space */
+  display: inline-block;
+  box-sizing: border-box;
   min-height: 0; /* prevent overflow issues */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* if you want inner spacing */
   width: 100%;
   height: 100%;
-  box-sizing: border-box;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 0.25rem;
+  margin: 0rem 0;
+}
+
+[role='listitem'] a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  white-space: normal; /* allow line wrapping */
+  padding: 1rem;
+}
+
+[role='listitem'] strong {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+[role='listitem'] strong span {
+  display: inline-block;
+  font-weight: bold;
+}
+
+[role='listitem'] a span:last-of-type {
+  display: block;
+  margin-top: 0.25rem;
+}
+
+[role='listitem'] span {
+  font-weight: normal;
 }
 
 .left-content {
@@ -135,35 +174,12 @@ li[role='presentation'] {
   padding-bottom: 1rem;
 }
 
-[role='listitem'] {
-  display: flex;
-  flex: 1 1 calc(25% - 1rem); /* Adjusts with gap taken into account */
-  align-items: flex-start; /* or center if you prefer vertical centering */
-  gap: 1rem;
-  padding: 1rem 0 0 1rem;
-  box-sizing: border-box;
-}
-
-[role='listitem'] img {
-  display: none;
-}
-
 [role='presentation'] p {
   background-color: #fff;
   padding: 0.25rem;
   border: 1px solid #fff;
   border-radius: 0.5rem;
   /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); */
-  display: inline-block;
-  margin: 0rem 0;
-}
-
-[role='listitem'] p {
-  background-color: #fff;
-  padding: 0.25rem;
-  border: 1px solid #fff;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   display: inline-block;
   margin: 0rem 0;
 }
@@ -202,37 +218,9 @@ li[role='presentation'] {
   border-color: #000 !important;
 }
 
-[role='listitem'] a {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  white-space: normal; /* allow line wrapping */
-  padding: 1rem;
-}
-
-[role='listitem'] strong {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-[role='listitem'] strong span {
-  display: inline-block;
-  font-weight: bold;
-}
-
-[role='listitem'] a span:last-of-type {
-  display: block;
-  margin-top: 0.25rem;
-}
-
 .plus-sign {
   font-weight: normal;
   padding-left: 0.25rem;
-}
-
-[role='listitem'] span {
-  font-weight: normal;
 }
 
 #bodyContent {
