@@ -124,23 +124,24 @@ li[role='presentation'] {
 [role='listitem'] p {
   display: inline-block;
   box-sizing: border-box;
-  min-height: 0; /* prevent overflow issues */
   width: 100%;
   height: 100%;
+  min-height: 0; /* prevent overflow issues */
   background-color: #fff;
   border: 1px solid #fff;
   border-radius: 0.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   padding: 0.25rem;
-  margin: 0rem 0;
+  margin: 0;
 }
 
 [role='listitem'] a {
+  display: block;
+  width: 100%;
+  padding: 1rem;
   text-decoration: none;
   color: inherit;
-  display: block;
   white-space: normal; /* allow line wrapping */
-  padding: 1rem;
 }
 
 [role='listitem'] strong {
@@ -149,8 +150,7 @@ li[role='presentation'] {
   width: 100%;
 }
 
-[role='listitem'] strong span {
-  display: inline-block;
+[role='listitem'] strong > span {
   font-weight: bold;
 }
 
