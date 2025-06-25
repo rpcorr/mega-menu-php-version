@@ -2065,30 +2065,61 @@ function hideShowSiblings(anchor, isExpanded) {
 
   // If expanding, apply the same border-bottom colour as the <strong> inside the anchor
   if (isExpanded) {
+    console.log('expand');
     const strong = anchor.querySelector('strong');
     const parentParagraph = anchor.closest('p');
 
-    if (strong && parentParagraph) {
-      // Get the computed border-bottom colour from the <strong> element
-      const computedStyle = window.getComputedStyle(strong);
-      const borderColor = computedStyle.getPropertyValue('border-bottom-color');
-
-      // Apply that colour to the border of the parent <p> element
-      parentParagraph.style.borderColor = borderColor;
+    if (parentParagraph) {
+      parentParagraph.classList.add('open');
     }
+
+    // if (strong && parentParagraph) {
+    //   // Get the computed border-bottom colour from the <strong> element
+    //   const computedStyle = window.getComputedStyle(strong);
+    //   const borderColor = computedStyle.getPropertyValue('border-bottom-color');
+
+    //   // Apply that colour to the border of the parent <p> element
+    //   parentParagraph.style.borderColor = borderColor;
+    // }
+    // document.querySelectorAll('div[role="listitem"] p').forEach((p) => {
+    //   const anchor = p.querySelector('a[aria-expanded="true"]');
+    //   if (anchor) {
+    //     // p.style.backgroundColor = 'rgba(242, 201, 76, 0.2)';
+    //     //p.style.backgroundColor = '#fff4d6';
+    //   }
+    // });
   }
 
   // If collapsing, remove border-color property
   if (!isExpanded) {
     const parentParagraph = anchor.closest('p');
-    if (parentParagraph) {
-      parentParagraph.style.removeProperty('border-color');
 
-      // Remove the style attribute if it's now empty or contains only whitespace
-      if (!parentParagraph.getAttribute('style')?.trim()) {
-        parentParagraph.removeAttribute('style');
+    if (parentParagraph) {
+      parentParagraph.classList.remove('open');
+      // Remove the class attribute if it's now empty
+      if (parentParagraph.classList.length === 0) {
+        parentParagraph.removeAttribute('class');
       }
     }
+    //if (parentParagraph) {
+    //parentParagraph.style.removeProperty('border-color');
+
+    // // Remove the style attribute if it's now empty or contains only whitespace
+    // if (!parentParagraph.getAttribute('style')?.trim()) {
+    //   parentParagraph.removeAttribute('style');
+    // }
+    //}
+
+    // console.log('collapse');
+    // document.querySelectorAll('div[role="listitem"] p').forEach((p) => {
+    //   const anchor = p.querySelector('a');
+
+    //   if (anchor && anchor.getAttribute('aria-expanded') === 'true') {
+    //     p.style.backgroundColor = 'rgba(242, 201, 76, 0.2)';
+    //   } else {
+    //     p.style.backgroundColor = ''; // removes inline style
+    //   }
+    // });
   }
 
   // If the sibling is expandable
