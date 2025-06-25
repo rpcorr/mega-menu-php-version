@@ -237,8 +237,20 @@ li[role='presentation'] {
 #LibPAS p:focus-within,
 #InformsUs p:focus-within,
 #LibSat p:focus-within {
-  border-left: 4px solid #555; /*or a brand-accent color */
+  border-left: 4px solid; /*or a brand-accent color */
   padding-left: 0.5em; /* prevent content from touching border */
+}
+
+#LibPAS p:focus-within {
+  border-left-color: #f2994a;
+}
+
+#InformsUs p:focus-within {
+  border-left-color: #9b51e0;
+}
+
+#LibSat p:focus-within {
+  border-left-color: #f2c94c;
 }
 
 #LibPAS p:focus-within,
@@ -261,8 +273,16 @@ li[role='presentation'] {
   /* transform: scale(1.01); */
 }
 
-.selected-tab {
-  border-color: #000 !important;
+#LibPAS .selected-tab {
+  border-color: #f2994a;
+}
+
+#InformsUs .selected-tab {
+  border-color: #9b51e0;
+}
+
+#LibSat .selected-tab {
+  border-color: #f2c94c;
 }
 
 .plus-sign {
