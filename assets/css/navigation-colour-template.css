@@ -42,17 +42,6 @@ ul#menu-main-menu a:active {
   color: var(--textColourHoverActiveFocus);
 }
 
-/* link background and font colours on hover, focus and active */
-ul#menu-main-menu li a:hover,
-ul#menu-main-menu li a:focus,
-ul#menu-main-menu a.active,
-ul.menu li a:focus,
-ul.menu li a:active,
-ul.menu li a[aria-expanded='true'] {
-  background-color: var(--bgColourHoverActiveFocus);
-  color: var(--textColourHoverActiveFocus);
-}
-
 /* top-level carat stroke when #moreSubMenu is hover and menu is closed */
 ul.menu li:hover a > i.angle-down:before {
   border-top: 7px solid var(--textColourHoverActiveFocus);

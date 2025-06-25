@@ -134,13 +134,6 @@ ul#menu-main-menu a {
   color: #000;
 }
 
-/* list item hover, focus colour */
-/* link background and font colours on hover and focus */
-ul#menu-main-menu li a:hover,
-ul#menu-main-menu li a:focus {
-  background-color: #1fb7f1;
-}
-
 /* first submenu background colour */
 #menu-main-menu > li.menu-item-has-children > ul.sub-menu {
   background-color: rgba(96, 189, 104, 0.9);
