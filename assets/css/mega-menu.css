@@ -208,6 +208,10 @@ li[role='presentation'] {
   background-color: #fbd3af !important;
 }
 
+#libpas .open {
+  background-color: #fbd3af;
+}
+
 #InformsUs p:focus-within,
 #InformsUs p:focus-within strong,
 #InformsUs p:focus-within span,
@@ -218,6 +222,10 @@ li[role='presentation'] {
 
 #InformsUs a:hover {
   background-color: #f0dcfb !important;
+}
+
+#informsus .open {
+  background-color: #f0dcfb;
 }
 
 #LibSat p:focus-within,
@@ -232,12 +240,18 @@ li[role='presentation'] {
   background-color: #fff4d6 !important;
 }
 
-/** .menu-list focus options **/
+#libsat .open {
+  background-color: #fff4d6;
+}
+
+/** .menu-list focus options start **/
+
+/* OPTION 1: */
 
 #LibPAS p:focus-within,
 #InformsUs p:focus-within,
 #LibSat p:focus-within {
-  border-left: 4px solid; /*or a brand-accent color */
+  border-left: 4px solid;
   padding-left: 0.5em; /* prevent content from touching border */
 }
 
@@ -253,6 +267,7 @@ li[role='presentation'] {
   border-left-color: #f2c94c;
 }
 
+/* OPTION 2 */
 #LibPAS p:focus-within,
 #InformsUs p:focus-within,
 #LibSat p:focus-within {
@@ -272,6 +287,8 @@ li[role='presentation'] {
   /* box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.15); */
   /* transform: scale(1.01); */
 }
+
+/** .menu-list focus options ends **/
 
 #LibPAS .selected-tab {
   border-color: #f2994a;
