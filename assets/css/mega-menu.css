@@ -210,6 +210,7 @@ li[role='presentation'] {
 
 #libpas .open {
   background-color: #fbd3af;
+  border-color: #f2994a;
 }
 
 #InformsUs p:focus-within,
@@ -226,6 +227,7 @@ li[role='presentation'] {
 
 #informsus .open {
   background-color: #f0dcfb;
+  border-color: #9b51e0;
 }
 
 #LibSat p:focus-within,
@@ -242,6 +244,7 @@ li[role='presentation'] {
 
 #libsat .open {
   background-color: #fff4d6;
+  border-color: #f2c94c;
 }
 
 /** .menu-list focus options start **/
