@@ -198,20 +198,38 @@ li[role='presentation'] {
 
 #LibPAS p:focus-within,
 #LibPAS p:focus-within strong,
-#LibPAS p:focus-within span {
+#LibPAS p:focus-within span,
+#LibPAS p.selected-tab,
+#LibPAS p:hover {
   background-color: #fbd3af;
+}
+
+#LibPAS a:hover {
+  background-color: #fbd3af !important;
 }
 
 #InformsUs p:focus-within,
 #InformsUs p:focus-within strong,
-#InformsUs p:focus-within span {
+#InformsUs p:focus-within span,
+#InformsUs p.selected-tab,
+#InformsUs p:hover {
   background-color: #f0dcfb;
+}
+
+#InformsUs a:hover {
+  background-color: #f0dcfb !important;
 }
 
 #LibSat p:focus-within,
 #LibSat p:focus-within strong,
-#LibSat p:focus-within span {
+#LibSat p:focus-within span,
+#LibSat p.selected-tab,
+#LibSat p:hover {
   background-color: #fff4d6;
+}
+
+#LibSat a:hover {
+  background-color: #fff4d6 !important;
 }
 
 .selected-tab {
