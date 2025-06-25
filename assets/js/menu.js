@@ -2083,6 +2083,11 @@ function hideShowSiblings(anchor, isExpanded) {
     const parentParagraph = anchor.closest('p');
     if (parentParagraph) {
       parentParagraph.style.removeProperty('border-color');
+
+      // Remove the style attribute if it's now empty or contains only whitespace
+      if (!parentParagraph.getAttribute('style')?.trim()) {
+        parentParagraph.removeAttribute('style');
+      }
     }
   }
 
