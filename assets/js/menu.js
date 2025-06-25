@@ -2063,28 +2063,26 @@ function hideShowSiblings(anchor, isExpanded) {
   const siblingAnchor = sibling.querySelector('a[aria-expanded]');
   const siblingHasExpanded = !!siblingAnchor;
 
-  // If expanding, apply the same border-bottom color as the <strong> inside the anchor
+  // If expanding, apply the same border-bottom colour as the <strong> inside the anchor
   if (isExpanded) {
     const strong = anchor.querySelector('strong');
     const parentParagraph = anchor.closest('p');
 
     if (strong && parentParagraph) {
-      // Get the computed border-bottom color from the <strong> element
+      // Get the computed border-bottom colour from the <strong> element
       const computedStyle = window.getComputedStyle(strong);
-      const borderBottomColor = computedStyle.getPropertyValue(
-        'border-bottom-color'
-      );
+      const borderColor = computedStyle.getPropertyValue('border-bottom-color');
 
-      // Apply that color to the border of the parent <p> element
-      parentParagraph.style.borderColor = borderBottomColor;
+      // Apply that colour to the border of the parent <p> element
+      parentParagraph.style.borderColor = borderColor;
     }
   }
 
-  // If collapsing, reset the border color of the parent <p>
+  // If collapsing, reset the border styles
   if (!isExpanded) {
     const parentParagraph = anchor.closest('p');
     if (parentParagraph) {
-      parentParagraph.style.borderColor = ''; // Clear the style
+      parentParagraph.style.borderColor = 'white'; // Reset colour to white
     }
   }
 
