@@ -128,7 +128,7 @@ li[role='presentation'] {
   height: 100%;
   min-height: 0; /* prevent overflow issues */
   background-color: #fff;
-  border: 4px solid #fff;
+  border: 3px solid #fff;
   border-radius: 0.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   padding: 0.25rem;
