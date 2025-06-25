@@ -232,6 +232,8 @@ li[role='presentation'] {
   background-color: #fff4d6 !important;
 }
 
+/** .menu-list focus options **/
+
 #LibPAS p:focus-within,
 #InformsUs p:focus-within,
 #LibSat p:focus-within {
@@ -244,6 +246,19 @@ li[role='presentation'] {
 #LibSat p:focus-within {
   /*box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.25);*/
   /*border-radius: 4px;*/
+}
+
+#LibPAS p,
+#InformsUs p,
+#LibSat p {
+  /* transition: box-shadow 0.2s ease, transform 0.2s ease; */
+}
+
+#LibPAS p:focus-within,
+#InformsUs p:focus-within,
+#LibSat p:focus-within {
+  /* box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.15); */
+  /* transform: scale(1.01); */
 }
 
 .selected-tab {
