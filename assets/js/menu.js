@@ -1603,6 +1603,8 @@ function renderBodyContent(contentContainer, type, menuData) {
   containerWrapper.setAttribute('role', 'list');
   containerWrapper.setAttribute('aria-label', 'Menu Options');
 
+  containerWrapper.setAttribute('id', selectedText);
+
   containerWrapper.appendChild(fragment);
   contentContainer.appendChild(containerWrapper);
 
