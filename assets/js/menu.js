@@ -2078,11 +2078,11 @@ function hideShowSiblings(anchor, isExpanded) {
     }
   }
 
-  // If collapsing, reset the border styles
+  // If collapsing, remove border-color property
   if (!isExpanded) {
     const parentParagraph = anchor.closest('p');
     if (parentParagraph) {
-      parentParagraph.style.borderColor = 'white'; // Reset colour to white
+      parentParagraph.style.removeProperty('border-color');
     }
   }
 
