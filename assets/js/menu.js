@@ -2044,35 +2044,66 @@ function getInitials(user) {
 
 function hideShowSiblings(anchor, isExpanded) {
   // Case-insensitive check for "Custom Reports"
+  // If matched, toggle visibility of its children via a custom function
   if (anchor.textContent.toLowerCase().includes('custom reports')) {
-    // toggle Custom Reports children
     toggleCustomGroupChildren(anchor);
   }
 
+  // Find the current list item containing the clicked anchor
   const currentItem = anchor.closest('div[role="listitem"]');
   if (!currentItem) return;
 
+  // Get the next sibling element
   let sibling = currentItem.nextElementSibling;
 
+  // Exit if there's no sibling or it's not a valid list item
   if (!sibling || sibling.getAttribute('role') !== 'listitem') return;
 
+  // Check if the sibling is expandable (has aria-expanded)
   const siblingAnchor = sibling.querySelector('a[aria-expanded]');
   const siblingHasExpanded = !!siblingAnchor;
 
-  // If the next sibling is expandable (has aria-expanded)
+  // If expanding, apply the same border-bottom color as the <strong> inside the anchor
+  if (isExpanded) {
+    const strong = anchor.querySelector('strong');
+    const parentParagraph = anchor.closest('p');
+
+    if (strong && parentParagraph) {
+      // Get the computed border-bottom color from the <strong> element
+      const computedStyle = window.getComputedStyle(strong);
+      const borderBottomColor = computedStyle.getPropertyValue(
+        'border-bottom-color'
+      );
+
+      // Apply that color to the border of the parent <p> element
+      parentParagraph.style.borderColor = borderBottomColor;
+    }
+  }
+
+  // If collapsing, reset the border color of the parent <p>
+  if (!isExpanded) {
+    const parentParagraph = anchor.closest('p');
+    if (parentParagraph) {
+      parentParagraph.style.borderColor = ''; // Clear the style
+    }
+  }
+
+  // If the sibling is expandable
   if (siblingHasExpanded) {
+    // Show or hide it based on the current expanded state
     sibling.style.display = isExpanded ? '' : 'none';
 
-    // If collapsing, also collapse this sibling's aria-expanded and its children
     if (!isExpanded) {
+      // If collapsing, update its aria-expanded attribute
       siblingAnchor.setAttribute('aria-expanded', 'false');
 
-      // Update visual sign from minus to plus
+      // Change visual cue from minus to plus sign
       const plusSign = siblingAnchor.querySelector('.plus-sign');
       if (plusSign) {
-        plusSign.textContent = '+'; // Update symbol
+        plusSign.textContent = '+';
       }
 
+      // Collapse all non-expandable siblings that follow this one
       let subSibling = sibling.nextElementSibling;
       while (subSibling) {
         if (subSibling.getAttribute('role') !== 'listitem') {
@@ -2083,17 +2114,20 @@ function hideShowSiblings(anchor, isExpanded) {
         const subSiblingAnchor = subSibling.querySelector('a[aria-expanded]');
         const isSubExpandable = !!subSiblingAnchor;
 
-        if (isSubExpandable) break; // Stop at the next expandable sibling
-        subSibling.style.display = 'none';
+        // Stop at the next expandable group
+        if (isSubExpandable) break;
 
+        // Hide this sub-sibling
+        subSibling.style.display = 'none';
         subSibling = subSibling.nextElementSibling;
       }
     }
 
+    // Exit after handling expandable sibling
     return;
   }
 
-  // Otherwise toggle non-expandable siblings until next expandable is found
+  // Otherwise, toggle all non-expandable siblings until the next expandable is found
   while (sibling) {
     if (sibling.getAttribute('role') !== 'listitem') {
       sibling = sibling.nextElementSibling;
