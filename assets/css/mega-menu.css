@@ -232,6 +232,20 @@ li[role='presentation'] {
   background-color: #fff4d6 !important;
 }
 
+#LibPAS p:focus-within,
+#InformsUs p:focus-within,
+#LibSat p:focus-within {
+  border-left: 4px solid #555; /*or a brand-accent color */
+  padding-left: 0.5em; /* prevent content from touching border */
+}
+
+#LibPAS p:focus-within,
+#InformsUs p:focus-within,
+#LibSat p:focus-within {
+  /*box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.25);*/
+  /*border-radius: 4px;*/
+}
+
 .selected-tab {
   border-color: #000 !important;
 }
