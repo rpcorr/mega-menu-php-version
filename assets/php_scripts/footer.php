@@ -33,7 +33,7 @@
     <template id="menuContent">
       <div role="listitem">
         <img src="" width="" alt="" height=""  />
-        <p><a href="#" tabindex="-1"><strong></strong><br/><span></span></a></p>
+        <p><a href="#" tabindex="-1"><strong></strong><span></span></a></p>
       </div>
     </template>
 
