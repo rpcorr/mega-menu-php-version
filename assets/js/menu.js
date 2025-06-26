@@ -1656,6 +1656,48 @@ function renderBodyContent(contentContainer, type, menuData) {
     .forEach((anchor) => {
       anchor.removeAttribute('tabindex');
     });
+
+  document
+    .querySelectorAll('.tabs__panels#libpas a[aria-expanded]')
+    .forEach((anchor) => {
+      anchor.addEventListener('focus', () => {
+        const parentP = anchor.closest('p');
+        if (parentP) parentP.classList.add('focus-visible');
+      });
+
+      anchor.addEventListener('blur', () => {
+        const parentP = anchor.closest('p');
+        if (parentP) parentP.classList.remove('focus-visible');
+      });
+    });
+
+  document
+    .querySelectorAll('.tabs__panels#informsus a[aria-expanded]')
+    .forEach((anchor) => {
+      anchor.addEventListener('focus', () => {
+        const parentP = anchor.closest('p');
+        if (parentP) parentP.classList.add('focus-visible');
+      });
+
+      anchor.addEventListener('blur', () => {
+        const parentP = anchor.closest('p');
+        if (parentP) parentP.classList.remove('focus-visible');
+      });
+    });
+
+  document
+    .querySelectorAll('.tabs__panels#libsat a[aria-expanded]')
+    .forEach((anchor) => {
+      anchor.addEventListener('focus', () => {
+        const parentP = anchor.closest('p');
+        if (parentP) parentP.classList.add('focus-visible');
+      });
+
+      anchor.addEventListener('blur', () => {
+        const parentP = anchor.closest('p');
+        if (parentP) parentP.classList.remove('focus-visible');
+      });
+    });
 }
 
 /**
@@ -2067,8 +2109,6 @@ function hideShowSiblings(anchor, isExpanded) {
 
   // If expanding, apply the same border-bottom colour as the <strong> inside the anchor
   if (isExpanded) {
-    console.log('expand');
-    const strong = anchor.querySelector('strong');
     const parentParagraph = anchor.closest('p');
 
     if (parentParagraph) {

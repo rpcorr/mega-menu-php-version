@@ -213,6 +213,11 @@ li[role='presentation'] {
   border-color: #f2994a;
 }
 
+/* Focused anchor inside the p.open — distinguish it */
+#libpas .open.focus-visible {
+  border: 3px dashed #f2994a;
+}
+
 #InformsUs p:focus-within,
 #InformsUs p:focus-within strong,
 #InformsUs p:focus-within span,
@@ -230,6 +235,11 @@ li[role='presentation'] {
   border-color: #9b51e0;
 }
 
+/* Focused anchor inside the p.open — distinguish it */
+#informsus .open.focus-visible {
+  border: 3px dashed #9b51e0;
+}
+
 #LibSat p:focus-within,
 #LibSat p:focus-within strong,
 #LibSat p:focus-within span,
@@ -245,6 +255,11 @@ li[role='presentation'] {
 #libsat .open {
   background-color: #fff4d6;
   border-color: #f2c94c;
+}
+
+/* Focused anchor inside the p.open — distinguish it */
+#libsat .open.focus-visible {
+  border: 3px dashed #f2c94c;
 }
 
 /** .menu-list focus options start **/
