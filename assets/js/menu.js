@@ -1524,7 +1524,7 @@ function renderBodyContent(contentContainer, type, menuData) {
         anchor.setAttribute('aria-expanded', 'false');
       }
 
-      spanEl.textContent = `Brief description of the function of ${menuItem.prompt}`;
+      spanEl.textContent = `Brief description of the function for ${menuItem.prompt}`;
 
       anchor.href = menuItem.link;
 
