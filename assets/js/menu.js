@@ -1657,47 +1657,21 @@ function renderBodyContent(contentContainer, type, menuData) {
       anchor.removeAttribute('tabindex');
     });
 
-  document
-    .querySelectorAll('.tabs__panels#libpas a[aria-expanded]')
-    .forEach((anchor) => {
-      anchor.addEventListener('focus', () => {
-        const parentP = anchor.closest('p');
-        if (parentP) parentP.classList.add('focus-visible');
-      });
+  ['libpas', 'informsus', 'libsat'].forEach((id) => {
+    document
+      .querySelectorAll(`.tabs__panels#${id} a[aria-expanded]`)
+      .forEach((anchor) => {
+        anchor.addEventListener('focus', () => {
+          const parentP = anchor.closest('p');
+          if (parentP) parentP.classList.add('focus-visible');
+        });
 
-      anchor.addEventListener('blur', () => {
-        const parentP = anchor.closest('p');
-        if (parentP) parentP.classList.remove('focus-visible');
+        anchor.addEventListener('blur', () => {
+          const parentP = anchor.closest('p');
+          if (parentP) parentP.classList.remove('focus-visible');
+        });
       });
-    });
-
-  document
-    .querySelectorAll('.tabs__panels#informsus a[aria-expanded]')
-    .forEach((anchor) => {
-      anchor.addEventListener('focus', () => {
-        const parentP = anchor.closest('p');
-        if (parentP) parentP.classList.add('focus-visible');
-      });
-
-      anchor.addEventListener('blur', () => {
-        const parentP = anchor.closest('p');
-        if (parentP) parentP.classList.remove('focus-visible');
-      });
-    });
-
-  document
-    .querySelectorAll('.tabs__panels#libsat a[aria-expanded]')
-    .forEach((anchor) => {
-      anchor.addEventListener('focus', () => {
-        const parentP = anchor.closest('p');
-        if (parentP) parentP.classList.add('focus-visible');
-      });
-
-      anchor.addEventListener('blur', () => {
-        const parentP = anchor.closest('p');
-        if (parentP) parentP.classList.remove('focus-visible');
-      });
-    });
+  });
 }
 
 /**
