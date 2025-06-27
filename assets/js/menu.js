@@ -1513,7 +1513,7 @@ function renderBodyContent(contentContainer, type, menuData) {
       promptSpan.textContent = menuItem.prompt;
       strongEl.appendChild(promptSpan);
 
-      console.log('Freya');
+      //console.log('Freya');
       if (menuHeading) {
         const plusSpan = document.createElement('span');
         plusSpan.className = 'plus-sign';
@@ -2061,99 +2061,85 @@ function getInitials(user) {
 }
 
 function hideShowSiblings(anchor, isExpanded) {
+  console.log('I am within hideShowSiblings function');
+
   // Case-insensitive check for "Custom Reports"
-  // If matched, toggle visibility of its children via a custom function
   if (anchor.textContent.toLowerCase().includes('custom reports')) {
     toggleCustomGroupChildren(anchor);
   }
 
-  // Find the current list item containing the clicked anchor
   const currentItem = anchor.closest('div[role="listitem"]');
   if (!currentItem) return;
 
-  // Get the next sibling element
-  let sibling = currentItem.nextElementSibling;
-
-  // Exit if there's no sibling or it's not a valid list item
-  if (!sibling || sibling.getAttribute('role') !== 'listitem') return;
-
-  // Check if the sibling is expandable (has aria-expanded)
-  const siblingAnchor = sibling.querySelector('a[aria-expanded]');
+  const sibling = currentItem.nextElementSibling;
+  const siblingAnchor = sibling?.querySelector('a[aria-expanded]');
   const siblingHasExpanded = !!siblingAnchor;
 
-  // If expanding, apply the same border-bottom colour as the <strong> inside the anchor
+  // === Expand logic ===
   if (isExpanded) {
     const parentParagraph = anchor.closest('p');
-
     if (parentParagraph) {
       parentParagraph.classList.add('open');
     }
 
-    // if (strong && parentParagraph) {
-    //   // Get the computed border-bottom colour from the <strong> element
-    //   const computedStyle = window.getComputedStyle(strong);
-    //   const borderColor = computedStyle.getPropertyValue('border-bottom-color');
+    // ✅ Generate and assign a group ID
+    const groupId = crypto.randomUUID();
+    currentItem.setAttribute('data-group-id', groupId);
 
-    //   // Apply that colour to the border of the parent <p> element
-    //   parentParagraph.style.borderColor = borderColor;
-    // }
-    // document.querySelectorAll('div[role="listitem"] p').forEach((p) => {
-    //   const anchor = p.querySelector('a[aria-expanded="true"]');
-    //   if (anchor) {
-    //     // p.style.backgroundColor = 'rgba(242, 201, 76, 0.2)';
-    //     //p.style.backgroundColor = '#fff4d6';
-    //   }
-    // });
+    // ✅ Assign group ID to all non-expandable siblings following the parent
+    let tempSibling = currentItem.nextElementSibling;
+    while (tempSibling) {
+      if (tempSibling.getAttribute('role') !== 'listitem') {
+        tempSibling = tempSibling.nextElementSibling;
+        continue;
+      }
+
+      const isExpandable = !!tempSibling.querySelector('a[aria-expanded]');
+      if (isExpandable) break;
+
+      tempSibling.setAttribute('data-group-id', groupId);
+      tempSibling.style.display = ''; // show grouped item
+      tempSibling = tempSibling.nextElementSibling;
+    }
   }
 
-  // If collapsing, remove border-color property
+  // === Collapse logic ===
   if (!isExpanded) {
     const parentParagraph = anchor.closest('p');
-
     if (parentParagraph) {
       parentParagraph.classList.remove('open');
-      // Remove the class attribute if it's now empty
       if (parentParagraph.classList.length === 0) {
         parentParagraph.removeAttribute('class');
       }
     }
-    //if (parentParagraph) {
-    //parentParagraph.style.removeProperty('border-color');
 
-    // // Remove the style attribute if it's now empty or contains only whitespace
-    // if (!parentParagraph.getAttribute('style')?.trim()) {
-    //   parentParagraph.removeAttribute('style');
-    // }
-    //}
+    // Get and remove group ID from grouped siblings
+    const groupId = currentItem.getAttribute('data-group-id');
+    if (groupId) {
+      const groupItems = document.querySelectorAll(
+        `[data-group-id="${groupId}"]`
+      );
+      groupItems.forEach((item) => {
+        if (item !== currentItem) {
+          item.style.display = 'none';
+          item.removeAttribute('data-group-id');
+        }
+      });
 
-    // console.log('collapse');
-    // document.querySelectorAll('div[role="listitem"] p').forEach((p) => {
-    //   const anchor = p.querySelector('a');
-
-    //   if (anchor && anchor.getAttribute('aria-expanded') === 'true') {
-    //     p.style.backgroundColor = 'rgba(242, 201, 76, 0.2)';
-    //   } else {
-    //     p.style.backgroundColor = ''; // removes inline style
-    //   }
-    // });
+      // ✅ Remove the group ID from the parent item itself
+      currentItem.removeAttribute('data-group-id');
+    }
   }
 
-  // If the sibling is expandable
+  // === Handle expandable sibling ===
   if (siblingHasExpanded) {
-    // Show or hide it based on the current expanded state
     sibling.style.display = isExpanded ? '' : 'none';
 
     if (!isExpanded) {
-      // If collapsing, update its aria-expanded attribute
       siblingAnchor.setAttribute('aria-expanded', 'false');
-
-      // Change visual cue from minus to plus sign
       const plusSign = siblingAnchor.querySelector('.plus-sign');
-      if (plusSign) {
-        plusSign.textContent = '+';
-      }
+      if (plusSign) plusSign.textContent = '+';
 
-      // Collapse all non-expandable siblings that follow this one
       let subSibling = sibling.nextElementSibling;
       while (subSibling) {
         if (subSibling.getAttribute('role') !== 'listitem') {
@@ -2161,34 +2147,31 @@ function hideShowSiblings(anchor, isExpanded) {
           continue;
         }
 
-        const subSiblingAnchor = subSibling.querySelector('a[aria-expanded]');
-        const isSubExpandable = !!subSiblingAnchor;
-
-        // Stop at the next expandable group
+        const isSubExpandable = !!subSibling.querySelector('a[aria-expanded]');
         if (isSubExpandable) break;
 
-        // Hide this sub-sibling
         subSibling.style.display = 'none';
         subSibling = subSibling.nextElementSibling;
       }
     }
 
-    // Exit after handling expandable sibling
     return;
   }
 
-  // Otherwise, toggle all non-expandable siblings until the next expandable is found
-  while (sibling) {
-    if (sibling.getAttribute('role') !== 'listitem') {
-      sibling = sibling.nextElementSibling;
+  // === Generic sibling toggle ===
+  let genericSibling = currentItem.nextElementSibling;
+  while (genericSibling) {
+    if (genericSibling.getAttribute('role') !== 'listitem') {
+      genericSibling = genericSibling.nextElementSibling;
       continue;
     }
 
-    const isSiblingExpandable = !!sibling.querySelector('a[aria-expanded]');
+    const isSiblingExpandable =
+      !!genericSibling.querySelector('a[aria-expanded]');
     if (isSiblingExpandable) break;
 
-    sibling.style.display = isExpanded ? '' : 'none';
-    sibling = sibling.nextElementSibling;
+    genericSibling.style.display = isExpanded ? '' : 'none';
+    genericSibling = genericSibling.nextElementSibling;
   }
 }
 
@@ -2271,6 +2254,7 @@ function hideListItemsInitially() {
 }
 
 function toggleCustomGroupChildren(anchor) {
+  console.log('toggleCustomGroupChildren');
   // Find the Custom Reports anchor
   const customReportsAnchor = document.querySelector(
     'a[aria-expanded="true"][href=""] strong span:first-child'

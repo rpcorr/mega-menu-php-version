@@ -240,6 +240,24 @@ li[role='presentation'] {
   border: 3px dashed #9b51e0;
 }
 
+#informsus [role='listitem'][data-group-id] > p.open {
+  box-shadow: 0 0 0 3px rgba(155, 81, 224, 0.9), 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: #f0dcfb !important;
+}
+
+#informsus [role='listitem'][data-group-id]:not(:first-of-type) > p {
+  /* background-color: #e1bdf5; */
+  /* background-color: #d3aef0; */
+  /* background-color: #dbe4ff; */
+  background-color: #e6e0fa; /* I like this one */
+  /* background-color: #f7d6e0; */
+  /* background-color: #fcead7; */
+  /* background-color: #f9f0da; */
+  /* background-color: #e0c5f0; */
+  /* background-color: #cca0e8; */
+  border-color: #9b51e0;
+}
+
 #LibSat p:focus-within,
 #LibSat p:focus-within strong,
 #LibSat p:focus-within span,
@@ -260,6 +278,21 @@ li[role='presentation'] {
 /* Focused anchor inside the p.open — distinguish it */
 #libsat .open.focus-visible {
   border: 3px dashed #f2c94c;
+}
+
+#libsat [role='listitem'][data-group-id] > p.open {
+  box-shadow: 0 0 0 3px rgba(242, 201, 76, 0.9), 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: #fff4d6 !important;
+}
+
+#libsat [role='listitem'][data-group-id]:not(:first-of-type) > p {
+  background-color: #fffacd;
+  /* background-color: #fafad2; */
+  /* background-color: #ffefd5; */
+  /* background-color: #fff8dc; */
+  /* background-color: #ffebcd; */
+  /* background-color: #ffe4b5; */
+  border-color: #f2c94c;
 }
 
 /** .menu-list focus options start **/
