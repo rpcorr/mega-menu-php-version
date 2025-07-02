@@ -249,7 +249,7 @@ li[role='presentation'] {
   /* background-color: #e1bdf5; */
   /* background-color: #d3aef0; */
   /* background-color: #dbe4ff; */
-  background-color: #e6e0fa; /* I like this one */
+  /*background-color: #e6e0fa;*/ /* I like this one */
   /* background-color: #f7d6e0; */
   /* background-color: #fcead7; */
   /* background-color: #f9f0da; */
@@ -286,7 +286,7 @@ li[role='presentation'] {
 }
 
 #libsat [role='listitem'][data-group-id]:not(:first-of-type) > p {
-  background-color: #fffacd;
+  /* background-color: #fffacd; */
   /* background-color: #fafad2; */
   /* background-color: #ffefd5; */
   /* background-color: #fff8dc; */
