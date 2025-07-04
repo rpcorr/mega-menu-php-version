@@ -2082,11 +2082,17 @@ function hideShowSiblings(anchor, isExpanded) {
       parentParagraph.classList.add('open');
     }
 
-    // ✅ Generate and assign a group ID
+    // Generate and assign a group ID
     const groupId = crypto.randomUUID();
     currentItem.setAttribute('data-group-id', groupId);
 
-    // ✅ Assign group ID to all non-expandable siblings following the parent
+    // Also apply group ID if anchor text is "Reports"
+    const anchorText = anchor.textContent.toLowerCase().trim();
+    if (anchorText.includes('reports')) {
+      currentItem.nextElementSibling.setAttribute('data-group-id', groupId);
+    }
+
+    // Assign group ID to all non-expandable siblings following the parent
     let tempSibling = currentItem.nextElementSibling;
     while (tempSibling) {
       if (tempSibling.getAttribute('role') !== 'listitem') {
@@ -2126,8 +2132,11 @@ function hideShowSiblings(anchor, isExpanded) {
         }
       });
 
-      // ✅ Remove the group ID from the parent item itself
-      currentItem.removeAttribute('data-group-id');
+      // Conditionally remove the group ID from the parent item
+      const anchorText = anchor.textContent.toLowerCase().trim();
+      if (!anchorText.includes('opportunity index')) {
+        currentItem.removeAttribute('data-group-id');
+      }
     }
   }
 
