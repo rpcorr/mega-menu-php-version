@@ -2061,8 +2061,6 @@ function getInitials(user) {
 }
 
 function hideShowSiblings(anchor, isExpanded) {
-  console.log('I am within hideShowSiblings function');
-
   // Case-insensitive check for "Custom Reports"
   if (anchor.textContent.toLowerCase().includes('custom reports')) {
     toggleCustomGroupChildren(anchor);
@@ -2125,17 +2123,47 @@ function hideShowSiblings(anchor, isExpanded) {
       const groupItems = document.querySelectorAll(
         `[data-group-id="${groupId}"]`
       );
+
+      const preserveLabels = [
+        'benchmarking reports',
+        'postal reports',
+        'email reports',
+      ];
+
       groupItems.forEach((item) => {
         if (item !== currentItem) {
+          // Get anchor label text
+          const labelSpan = item.querySelector('strong span');
+          const labelText = labelSpan?.textContent.trim().toLowerCase() || '';
+
           item.style.display = 'none';
-          item.removeAttribute('data-group-id');
+
+          // Only remove data-group-id if it's NOT in the preserve list
+          if (!preserveLabels.includes(labelText)) {
+            item.removeAttribute('data-group-id');
+          }
+        } else {
+          // preserve background colour for child item when toggled
+          item.setAttribute('data-group-id', groupId);
         }
       });
 
-      // Conditionally remove the group ID from the parent item
+      // Remove group-id from parent unless it's Custom Reports or similar
       const anchorText = anchor.textContent.toLowerCase().trim();
-      if (!anchorText.includes('opportunity index')) {
-        currentItem.removeAttribute('data-group-id');
+
+      if (!preserveLabels.includes(anchorText)) {
+        // Count and log all elements with data-group-id
+        const allGroupedItems = document.querySelectorAll('[data-group-id]');
+
+        if (allGroupedItems.length === 1)
+          currentItem.removeAttribute('data-group-id');
+
+        const strongSpan = currentItem.querySelector('strong span');
+        const labelText = strongSpan?.textContent.trim().toLowerCase() || '';
+
+        if (labelText === 'reports' || labelText === 'custom reports') {
+          currentItem.removeAttribute('data-group-id');
+        }
       }
     }
   }
@@ -2263,7 +2291,6 @@ function hideListItemsInitially() {
 }
 
 function toggleCustomGroupChildren(anchor) {
-  console.log('toggleCustomGroupChildren');
   // Find the Custom Reports anchor
   const customReportsAnchor = document.querySelector(
     'a[aria-expanded="true"][href=""] strong span:first-child'
