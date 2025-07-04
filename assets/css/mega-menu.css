@@ -218,6 +218,19 @@ li[role='presentation'] {
   border: 3px dashed #f2994a;
 }
 
+#libpas [role='listitem'][data-group-id] {
+  background-color: #fbd3af;
+}
+
+#libpas [role='listitem'][data-group-id] > p.open {
+  box-shadow: 0 0 0 3px rgba(242, 152, 74, 0.9), 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: #fbd3af !important;
+}
+
+#libpas [role='listitem'][data-group-id]:not(:first-of-type) > p {
+  border-color: #f2994a;
+}
+
 #libpas div[data-group-id] p:has(a:focus) {
   border: 3px dashed #f2994a;
   background-color: #fbd3af;
@@ -243,6 +256,10 @@ li[role='presentation'] {
 /* Focused anchor inside the p.open — distinguish it */
 #informsus .open.focus-visible {
   border: 3px dashed #9b51e0;
+}
+
+#informsus [role='listitem'][data-group-id] {
+  background-color: #f0dcfb;
 }
 
 #informsus [role='listitem'][data-group-id] > p.open {
@@ -279,6 +296,10 @@ li[role='presentation'] {
 /* Focused anchor inside the p.open — distinguish it */
 #libsat .open.focus-visible {
   border: 3px dashed #f2c94c;
+}
+
+#libsat [role='listitem'][data-group-id] {
+  background-color: #fff4d6;
 }
 
 #libsat [role='listitem'][data-group-id] > p.open {
