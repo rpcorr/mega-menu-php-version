@@ -2276,12 +2276,13 @@ function toggleCustomGroupChildren(anchor) {
     'Email Reports',
   ].map((label) => label.toLowerCase()); // normalize for case-insensitive comparison;
 
+  // Case: Custom Reports section is not found
   if (!customReportsAnchor) {
     const tempArray = [];
-    Array.from(document.querySelectorAll('div[role="listitem"]')).filter(
+    Array.from(document.querySelectorAll('div[role="listitem"]')).forEach(
       (item) => {
         const anchor = item.querySelector('a[aria-expanded]');
-        if (!anchor) return false;
+        if (!anchor) return;
 
         const strong = anchor.querySelector('strong');
         const text = strong ? strong.textContent.trim().toLowerCase() : '';
@@ -2309,6 +2310,7 @@ function toggleCustomGroupChildren(anchor) {
         const text = clone.textContent.trim().toLowerCase();
         if (text === targetText.toLowerCase()) {
           item.style.display = 'none';
+          item.removeAttribute('data-group-id'); // clear when collapsed
         }
       });
     });
@@ -2332,7 +2334,7 @@ function toggleCustomGroupChildren(anchor) {
       .querySelector('a[aria-expanded]')
       .getAttribute('aria-expanded') === 'true';
 
-  // Start with the sibling two elements after Custom Reports
+  // Start with the second sibling after Custom Reports
   let sibling = parentItem.nextElementSibling;
   if (sibling) sibling = sibling.nextElementSibling;
 
@@ -2345,8 +2347,16 @@ function toggleCustomGroupChildren(anchor) {
     const labelSpan = sibling.querySelector('strong span');
     const siblingLabel = labelSpan?.textContent.trim().toLowerCase();
 
-    if (groupChildren.some((label) => label.toLowerCase() === siblingLabel)) {
+    if (groupChildren.includes(siblingLabel)) {
+      // Show or hide
       sibling.style.display = isExpanded ? '' : 'none';
+
+      // Set or remove data-group-id
+      if (isExpanded) {
+        sibling.setAttribute('data-group-id', 'custom-child');
+      } else {
+        sibling.removeAttribute('data-group-id');
+      }
     }
 
     sibling = sibling.nextElementSibling;
