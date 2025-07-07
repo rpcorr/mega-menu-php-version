@@ -11,6 +11,7 @@ body {
 .skip-nav-link {
   background-color: var(--skipNavBgColour);
   color: var(--skipNavTextColour);
+  border-color: var(--skipNavBorderColour);
 }
 
 /* headings text colour */

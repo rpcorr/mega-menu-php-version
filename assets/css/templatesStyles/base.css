@@ -2,8 +2,9 @@
   --defaultBgColour: #fff;
   --defaultTextColour: #000;
 
-  --skipNavBgColour: #1d6b2a;
+  --skipNavBgColour: #f5fff5;
   --skipNavTextColour: #000;
+  --skipNavBorderColour: #60bd68;
 
   --headingOneTextColour: #1d6b2a;
   --headingTwoTextColour: #004471;
