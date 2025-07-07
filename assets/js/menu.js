@@ -2073,6 +2073,12 @@ function hideShowSiblings(anchor, isExpanded) {
   const siblingAnchor = sibling?.querySelector('a[aria-expanded]');
   const siblingHasExpanded = !!siblingAnchor;
 
+  const preserveLabels = [
+    'benchmarking reports',
+    'postal reports',
+    'email reports',
+  ];
+
   // === Expand logic ===
   if (isExpanded) {
     const parentParagraph = anchor.closest('p');
@@ -2123,12 +2129,6 @@ function hideShowSiblings(anchor, isExpanded) {
       const groupItems = document.querySelectorAll(
         `[data-group-id="${groupId}"]`
       );
-
-      const preserveLabels = [
-        'benchmarking reports',
-        'postal reports',
-        'email reports',
-      ];
 
       groupItems.forEach((item) => {
         if (item !== currentItem) {
@@ -2209,6 +2209,19 @@ function hideShowSiblings(anchor, isExpanded) {
 
     genericSibling.style.display = isExpanded ? '' : 'none';
     genericSibling = genericSibling.nextElementSibling;
+  }
+
+  // === Final check to remove group-id attribute ===
+  const currentLabelSpan = currentItem.querySelector('strong span');
+  const currentLabelText =
+    currentLabelSpan?.textContent.trim().toLowerCase() || '';
+
+  const hasPreserveLabel = preserveLabels.includes(currentLabelText);
+  const hasGroupId = currentItem.hasAttribute('data-group-id');
+
+  if (!hasPreserveLabel && hasGroupId && !isExpanded) {
+    // remove group-id
+    currentItem.removeAttribute('data-group-id');
   }
 }
 
