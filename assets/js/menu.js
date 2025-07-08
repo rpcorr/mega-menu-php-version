@@ -455,6 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .querySelectorAll('.menu-item-has-children a')
         .forEach(function (element) {
           element.addEventListener('click', function (e) {
+            e.preventDefault();
             e.stopPropagation();
           });
         });
@@ -464,6 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .querySelectorAll('.menu-item-has-children ul')
         .forEach(function (element) {
           element.addEventListener('click', function (e) {
+            e.preventDefault();
             e.stopPropagation();
           });
         });
@@ -473,6 +475,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .querySelectorAll('.menu-item-has-children li')
         .forEach(function (element) {
           element.addEventListener('click', function (e) {
+            e.preventDefault();
             e.stopPropagation();
           });
         });
