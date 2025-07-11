@@ -1343,7 +1343,7 @@ function getMegaMenu(menuContainer, type, menuData) {
 function renderMenu(menuData, menuContainer, type, currentMenuItem) {
   let menuTemplate;
 
-  // Select the appropriate menu template based on the type
+  // Select the appropriate menu template
   if (type === 'multiple') {
     menuTemplate = document.querySelector('#menuTemplate');
   } else if (type === 'single' || type === 'pages') {
@@ -1370,10 +1370,11 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
   if (menuData) {
     const fragment = document.createDocumentFragment();
     const templateContent = menuTemplate.content;
-    const totalItems = menuData.length;
+
+    const itemCount = menuData.length;
 
     menuData.forEach((item, index) => {
-      // Clone the template content for each menu item
+      // Clone the template content
       const menuContent = templateContent.cloneNode(true);
 
       // Query relevant elements inside the template
@@ -1388,37 +1389,47 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
         return;
       }
 
-      // Populate the template elements with item data
+      // Unique IDs for tab and corresponding panel
+      const tabId = `tab-${item.menuTitle}`;
+      const panelId = `panel-${item.menuTitle}`;
+
+      // Populate content
       img.src = `/mmenu/assets/imgs/${item.graphic}`;
       img.width = item.width;
       img.height = item.height;
       anchor.href = item.url;
       strong.textContent = item.menuTitle;
       span.textContent = item.subText;
-      // Assign a unique ID to each menu item based on its title
-      menuItem.setAttribute('id', item.menuTitle);
 
-      // Insert "n of total" screen reader text after <strong>
-      const srSpan = document.createElement('span');
-      srSpan.className = 'sr-only';
-      srSpan.textContent = ` (${index + 1} of ${totalItems})`;
-      strong.after(srSpan);
+      // Accessibility attributes
+      anchor.setAttribute('id', tabId);
+      anchor.setAttribute('aria-controls', 'shared-tabpanel');
+
+      // Visually hidden index label (e.g., " (1 of 3)")
+      const positionSpan = document.createElement('span');
+      positionSpan.className = 'sr-only';
+      positionSpan.textContent = ` (${index + 1} of ${itemCount})`;
+      strong.appendChild(positionSpan);
+
+      // Add ID to <li>
+      menuItem.setAttribute('id', item.menuTitle);
 
       fragment.appendChild(menuContent);
     });
 
-    // Append the menu list
+    // Append everything
     menuList.appendChild(fragment);
     tablistWrapper.appendChild(menuList);
     menuContainer.appendChild(tablistWrapper);
 
-    // Highlight the current menu item
+    // Highlight current tab
     const menuItems = tablistWrapper.querySelectorAll('li a strong');
     menuItems.forEach((item) => {
       const tab = item.closest('a');
-      const isCurrentItem =
-        item.textContent.trim().toLowerCase() ===
-        currentMenuItem.trim().toLowerCase();
+      const isCurrentItem = item.textContent
+        .trim()
+        .toLowerCase()
+        .startsWith(currentMenuItem.trim().toLowerCase());
 
       if (isCurrentItem) {
         tab.setAttribute('aria-selected', 'true');
@@ -1434,7 +1445,7 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
       }
     });
 
-    // Toggle selected-tab class on <p> wrappers if they exist
+    // Toggle selected-tab class
     tablistWrapper.querySelectorAll('li[role="presentation"]').forEach((li) => {
       const wrapper = li.querySelector('p');
       const anchor = li.querySelector('a[role="tab"]');
@@ -1613,10 +1624,9 @@ function renderBodyContent(contentContainer, type, menuData) {
     type !== 'pages' ? 'tabs__panels' : 'left-content'
   );
 
-  containerWrapper.setAttribute('role', 'list');
-  containerWrapper.setAttribute('aria-label', 'Menu Options');
-
-  containerWrapper.setAttribute('id', selectedText);
+  containerWrapper.setAttribute('role', 'tabpanel');
+  containerWrapper.setAttribute('aria-labelledby', selectedAnchor.id);
+  containerWrapper.setAttribute('id', 'shared-tabpanel');
 
   containerWrapper.appendChild(fragment);
   contentContainer.appendChild(containerWrapper);
