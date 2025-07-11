@@ -1289,6 +1289,14 @@ function getMegaMenu(menuContainer, type, menuData) {
 
     // Handle keyboard navigation within tabs
     menuContainer.addEventListener('keydown', (event) => {
+      // Get all tab buttons
+
+      const tabButtons = Array.from(
+        document.querySelectorAll('.menu-list a[role="tab"]')
+      );
+
+      if (!tabButtons.includes(document.activeElement)) return;
+
       switch (event.key) {
         case 'ArrowLeft':
           moveTab(menuContainer, type, -1, menuData);
@@ -1297,10 +1305,12 @@ function getMegaMenu(menuContainer, type, menuData) {
           moveTab(menuContainer, type, 1, menuData);
           break;
         case 'Home':
+          console.log('here home');
           event.preventDefault();
           switchTab(tabButtons[0], menuContainer, type, menuData);
           break;
         case 'End':
+          console.log('here end');
           event.preventDefault();
           switchTab(
             tabButtons[tabButtons.length - 1],
