@@ -1356,18 +1356,23 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
     return;
   }
 
-  // Clear existing content from the container
+  // Clear existing content
   menuContainer.innerHTML = '';
 
-  // Create a new unordered list to hold the menu items
+  // Create the wrapper div with role="tablist"
+  const tablistWrapper = document.createElement('div');
+  tablistWrapper.setAttribute('role', 'tablist');
+
+  // Create the ul element
   const menuList = document.createElement('ul');
   menuList.classList.add('menu-list');
 
   if (menuData) {
     const fragment = document.createDocumentFragment();
     const templateContent = menuTemplate.content;
+    const totalItems = menuData.length;
 
-    menuData.forEach((item) => {
+    menuData.forEach((item, index) => {
       // Clone the template content for each menu item
       const menuContent = templateContent.cloneNode(true);
 
@@ -1390,47 +1395,52 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
       anchor.href = item.url;
       strong.textContent = item.menuTitle;
       span.textContent = item.subText;
-
       // Assign a unique ID to each menu item based on its title
       menuItem.setAttribute('id', item.menuTitle);
 
-      // Append the populated menu item to the fragment
+      // Insert "n of total" screen reader text after <strong>
+      const srSpan = document.createElement('span');
+      srSpan.className = 'sr-only';
+      srSpan.textContent = ` (${index + 1} of ${totalItems})`;
+      strong.after(srSpan);
+
       fragment.appendChild(menuContent);
     });
 
-    // Append all menu items at once for better performance
+    // Append the menu list
     menuList.appendChild(fragment);
-    menuContainer.appendChild(menuList);
+    tablistWrapper.appendChild(menuList);
+    menuContainer.appendChild(tablistWrapper);
 
     // Highlight the current menu item
-    const menuItems = document.querySelectorAll('.menu-list li a strong');
-
+    const menuItems = tablistWrapper.querySelectorAll('li a strong');
     menuItems.forEach((item) => {
       const tab = item.closest('a');
-
       const isCurrentItem =
         item.textContent.trim().toLowerCase() ===
         currentMenuItem.trim().toLowerCase();
+
       if (isCurrentItem) {
-        // Set accessibility attributes only if li has aria-expanded="true"
         tab.setAttribute('aria-selected', 'true');
         tab.setAttribute('tabindex', '0');
-        tab.focus(); // Focus on the selected tab for accessibility
+        tab.focus();
 
-        if (sidebar && typeof sidebar !== 'undefined') populateSidebar(); // Populate sidebar if available
+        if (typeof sidebar !== 'undefined' && sidebar) {
+          populateSidebar();
+        }
       } else {
-        // Deactivate non-selected or non-expanded tabs
         tab.removeAttribute('aria-selected');
         tab.setAttribute('tabindex', '-1');
       }
     });
 
-    document.querySelectorAll('.menu-list p').forEach((p) => {
-      const a = p.querySelector('a[aria-selected="true"]');
-      if (a) {
-        p.classList.add('selected-tab');
-      } else {
-        p.classList.remove('selected-tab');
+    // Toggle selected-tab class on <p> wrappers if they exist
+    tablistWrapper.querySelectorAll('li[role="presentation"]').forEach((li) => {
+      const wrapper = li.querySelector('p');
+      const anchor = li.querySelector('a[role="tab"]');
+      if (wrapper && anchor) {
+        const isSelected = anchor.getAttribute('aria-selected') === 'true';
+        wrapper.classList.toggle('selected-tab', isSelected);
       }
     });
   }
