@@ -208,30 +208,32 @@ li[role='presentation'] {
   background-color: #fbd3af !important;
 }
 
-#libpas .open {
+[aria-labelledby='tab-LibPAS'] .open {
   background-color: #fbd3af;
   border-color: #f2994a;
 }
 
 /* Focused anchor inside the p.open — distinguish it */
-#libpas .open.focus-visible {
+[aria-labelledby='tab-LibPAS'] .open.focus-visible {
   border: 3px dashed #f2994a;
 }
 
-#libpas [role='listitem'][data-group-id] {
+[aria-labelledby='tab-LibPAS'] [role='listitem'][data-group-id] {
   background-color: #fbd3af;
 }
 
-#libpas [role='listitem'][data-group-id] > p.open {
+[aria-labelledby='tab-LibPAS'] [role='listitem'][data-group-id] > p.open {
   box-shadow: 0 0 0 3px rgba(242, 152, 74, 0.9), 0 4px 12px rgba(0, 0, 0, 0.15);
   background-color: #fbd3af !important;
 }
 
-#libpas [role='listitem'][data-group-id]:not(:first-of-type) > p {
+[aria-labelledby='tab-LibPAS']
+  [role='listitem'][data-group-id]:not(:first-of-type)
+  > p {
   border-color: #f2994a;
 }
 
-#libpas div[data-group-id] p:has(a:focus) {
+[aria-labelledby='tab-LibPAS'] div[data-group-id] p:has(a:focus) {
   border: 3px dashed #f2994a;
   background-color: #fbd3af;
 }
@@ -248,30 +250,32 @@ li[role='presentation'] {
   background-color: #f0dcfb !important;
 }
 
-#informsus .open {
+[aria-labelledby='tab-InformsUs'] .open {
   background-color: #f0dcfb;
   border-color: #9b51e0;
 }
 
 /* Focused anchor inside the p.open — distinguish it */
-#informsus .open.focus-visible {
+[aria-labelledby='tab-InformsUs'] .open.focus-visible {
   border: 3px dashed #9b51e0;
 }
 
-#informsus [role='listitem'][data-group-id] {
+[aria-labelledby='tab-InformsUs'] [role='listitem'][data-group-id] {
   background-color: #f0dcfb;
 }
 
-#informsus [role='listitem'][data-group-id] > p.open {
+[aria-labelledby='tab-InformsUs'] [role='listitem'][data-group-id] > p.open {
   box-shadow: 0 0 0 3px rgba(155, 81, 224, 0.9), 0 4px 12px rgba(0, 0, 0, 0.15);
   background-color: #f0dcfb !important;
 }
 
-#informsus [role='listitem'][data-group-id]:not(:first-of-type) > p {
+[aria-labelledby='tab-InformsUs']
+  [role='listitem'][data-group-id]:not(:first-of-type)
+  > p {
   border-color: #9b51e0;
 }
 
-#informsus div[data-group-id] p:has(a:focus) {
+[aria-labelledby='tab-InformsUs'] div[data-group-id] p:has(a:focus) {
   border: 3px dashed #9b51e0;
   background-color: #f0dcfb;
 }
@@ -288,30 +292,32 @@ li[role='presentation'] {
   background-color: #fff4d6 !important;
 }
 
-#libsat .open {
+[aria-labelledby='tab-LibSat'] .open {
   background-color: #fff4d6;
   border-color: #f2c94c;
 }
 
 /* Focused anchor inside the p.open — distinguish it */
-#libsat .open.focus-visible {
+[aria-labelledby='tab-LibSat'] .open.focus-visible {
   border: 3px dashed #f2c94c;
 }
 
-#libsat [role='listitem'][data-group-id] {
+[aria-labelledby='tab-LibSat'] [role='listitem'][data-group-id] {
   background-color: #fff4d6;
 }
 
-#libsat [role='listitem'][data-group-id] > p.open {
+[aria-labelledby='tab-LibSat'] [role='listitem'][data-group-id] > p.open {
   box-shadow: 0 0 0 3px rgba(242, 201, 76, 0.9), 0 4px 12px rgba(0, 0, 0, 0.15);
   background-color: #fff4d6 !important;
 }
 
-#libsat [role='listitem'][data-group-id]:not(:first-of-type) > p {
+[aria-labelledby='tab-LibSat']
+  [role='listitem'][data-group-id]:not(:first-of-type)
+  > p {
   border-color: #f2c94c;
 }
 
-#libsat div[data-group-id] p:has(a:focus) {
+[aria-labelledby='tab-LibSat'] div[data-group-id] p:has(a:focus) {
   border: 3px dashed #f2c94c;
   background-color: #fff4d6;
 }
