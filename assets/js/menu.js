@@ -2093,6 +2093,16 @@ function getInitials(user) {
   return firstLetter;
 }
 
+function hideElement(el) {
+  el.style.display = 'none';
+  el.setAttribute('aria-hidden', 'true');
+}
+
+function showElement(el) {
+  el.style.display = '';
+  el.removeAttribute('aria-hidden');
+}
+
 function hideShowSiblings(anchor, isExpanded) {
   // Case-insensitive check for "Custom Reports"
   if (anchor.textContent.toLowerCase().includes('custom reports')) {
@@ -2126,7 +2136,8 @@ function hideShowSiblings(anchor, isExpanded) {
     // Also apply group ID if anchor text is "Reports"
     const anchorText = anchor.textContent.toLowerCase().trim();
     if (anchorText.includes('reports')) {
-      currentItem.nextElementSibling.setAttribute('data-group-id', groupId);
+      const nextItem = currentItem.nextElementSibling;
+      if (nextItem) nextItem.setAttribute('data-group-id', groupId);
     }
 
     // Assign group ID to all non-expandable siblings following the parent
@@ -2141,7 +2152,7 @@ function hideShowSiblings(anchor, isExpanded) {
       if (isExpandable) break;
 
       tempSibling.setAttribute('data-group-id', groupId);
-      tempSibling.style.display = ''; // show grouped item
+      showElement(tempSibling); // show grouped item
       tempSibling = tempSibling.nextElementSibling;
     }
   }
@@ -2169,7 +2180,7 @@ function hideShowSiblings(anchor, isExpanded) {
           const labelSpan = item.querySelector('strong span');
           const labelText = labelSpan?.textContent.trim().toLowerCase() || '';
 
-          item.style.display = 'none';
+          hideElement(item);
 
           // Only remove data-group-id if it's NOT in the preserve list
           if (!preserveLabels.includes(labelText)) {
@@ -2178,6 +2189,7 @@ function hideShowSiblings(anchor, isExpanded) {
         } else {
           // preserve background colour for child item when toggled
           item.setAttribute('data-group-id', groupId);
+          showElement(item);
         }
       });
 
@@ -2203,9 +2215,10 @@ function hideShowSiblings(anchor, isExpanded) {
 
   // === Handle expandable sibling ===
   if (siblingHasExpanded) {
-    sibling.style.display = isExpanded ? '' : 'none';
-
-    if (!isExpanded) {
+    if (isExpanded) {
+      showElement(sibling);
+    } else {
+      hideElement(sibling);
       siblingAnchor.setAttribute('aria-expanded', 'false');
       const plusSign = siblingAnchor.querySelector('.plus-sign');
       if (plusSign) plusSign.textContent = '+';
@@ -2220,7 +2233,7 @@ function hideShowSiblings(anchor, isExpanded) {
         const isSubExpandable = !!subSibling.querySelector('a[aria-expanded]');
         if (isSubExpandable) break;
 
-        subSibling.style.display = 'none';
+        hideElement(subSibling);
         subSibling = subSibling.nextElementSibling;
       }
     }
@@ -2240,7 +2253,12 @@ function hideShowSiblings(anchor, isExpanded) {
       !!genericSibling.querySelector('a[aria-expanded]');
     if (isSiblingExpandable) break;
 
-    genericSibling.style.display = isExpanded ? '' : 'none';
+    if (isExpanded) {
+      showElement(genericSibling);
+    } else {
+      hideElement(genericSibling);
+    }
+
     genericSibling = genericSibling.nextElementSibling;
   }
 
@@ -2279,7 +2297,7 @@ function hideListItemsInitially() {
 
     if (shouldHideExplicitly) {
       // Hide this item and its children
-      listItems[i].style.display = 'none';
+      hideElement(listItems[i]);
 
       let j = i + 1;
       while (j < listItems.length) {
@@ -2289,7 +2307,7 @@ function hideListItemsInitially() {
 
         if (isNextCollapsed || nextAnchor) break;
 
-        listItems[j].style.display = 'none';
+        hideElement(listItems[j]);
         j++;
       }
 
@@ -2308,7 +2326,7 @@ function hideListItemsInitially() {
           nextAnchor.getAttribute('aria-expanded') === 'false'
         ) {
           // This is a "nested" collapsed item — hide it too
-          listItems[j].style.display = 'none';
+          hideElement(listItems[j]);
           j++;
           continue;
         }
@@ -2317,7 +2335,7 @@ function hideListItemsInitially() {
         break;
       }
 
-      // Now hide items *after* this block until the next collapsed one
+      // Hide items after this block until next collapsed section
       while (j < listItems.length) {
         const nextAnchor = listItems[j].querySelector('a[aria-expanded]');
         if (
@@ -2327,7 +2345,7 @@ function hideListItemsInitially() {
           break; // Stop at the next collapsed section
         }
 
-        listItems[j].style.display = 'none';
+        hideElement(listItems[j]);
         j++;
       }
 
