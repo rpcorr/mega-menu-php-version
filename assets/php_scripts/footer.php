@@ -21,18 +21,18 @@
     
     <!-- ///// The Templates ///// -->
     <template id="menuTemplate">
-      <li role="presentation"><img src="" /><p><a href="" role="tab"><strong></strong><br/><span></span></a></p> <div class="circle">
+      <li role="presentation"><img src="" alt="" /><p><a href="" role="tab"><strong></strong><br/><span></span></a></p> <div class="circle">
           <div class="caret"></div>
         </div></li>
     </template> 
 
     <template id="oneMenuTemplate">
-      <li><img src="" /><p><a href="" role="tab"><strong></strong><br/><span></span></a></p> </li>
+      <li><img src="" alt="" /><p><a href="" role="tab"><strong></strong><br/><span></span></a></p> </li>
     </template> 
 
     <template id="menuContent">
       <div role="listitem">
-        <img src="" width="" alt="" height=""  />
+        <img src="" width="" height="" alt=""  />
         <p><a href="#" tabindex="-1"><strong></strong><span></span></a></p>
       </div>
     </template>
@@ -40,7 +40,7 @@
     <template id="menuExtraContent">
       <div class="extra-content">
         <div>
-          <img src="" width="" height="" align="left" />
+          <img src="" width="" height="" align="left" alt="" />
           <p>
             <strong></strong>
           </p>
