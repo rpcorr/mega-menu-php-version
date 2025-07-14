@@ -1647,6 +1647,36 @@ function renderBodyContent(contentContainer, type, menuData) {
   containerWrapper.appendChild(fragment);
   contentContainer.appendChild(containerWrapper);
 
+  // Update live region outside the container (already in DOM)
+  const liveRegion = document.getElementById('itemCountAnnouncement');
+
+  if (liveRegion) {
+    // Step 1: Clear previous content
+    liveRegion.textContent = '';
+
+    // Step 2: Force reflow (for NVDA consistency)
+    liveRegion.appendChild(document.createTextNode('\u00A0'));
+
+    // Step 3: Slightly longer delay
+    setTimeout(() => {
+      const visibleItems = Array.from(
+        containerWrapper.querySelectorAll('[role="listitem"]')
+      ).filter((item) => {
+        const style = window.getComputedStyle(item);
+        return style.display !== 'none' && style.visibility !== 'hidden';
+      });
+
+      // Step 4: Clear and update again
+      liveRegion.textContent = '';
+      setTimeout(() => {
+        const count = visibleItems.length;
+        liveRegion.textContent = `There ${
+          count === 1 ? 'is' : 'are'
+        } ${count} item${count === 1 ? '' : 's'} in this panel.`;
+      }, 50); // Micro-delay for second flush
+    }, 350);
+  }
+
   reorderCustomReportsSection(containerWrapper);
 
   // Remove duplicate 'Custom Reports' headings if necessary

@@ -1,3 +1,5 @@
+<!-- Outside your render logic, ideally in the layout near the tabs -->
+<div id="itemCountAnnouncement" class="sr-only" aria-live="polite" aria-atomic="true" aria-relevant="additions text"></div>
 <script>
       // create js variables from the PHP variables
       // Assign PHP session variable to JavaScript variable
