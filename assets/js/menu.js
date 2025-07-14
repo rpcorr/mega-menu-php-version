@@ -1401,19 +1401,19 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
 
       // Unique IDs for tab and corresponding panel
       const tabId = `tab-${item.menuTitle}`;
-      const panelId = `panel-${item.menuTitle}`;
+      const panelId = `tabpanel-tab-${item.menuTitle}`;
 
       // Populate content
       img.src = `/mmenu/assets/imgs/${item.graphic}`;
       img.width = item.width;
       img.height = item.height;
-      anchor.href = item.url;
+      anchor.href = `#${panelId}`;
       strong.textContent = item.menuTitle;
       span.textContent = item.subText;
 
       // Accessibility attributes
       anchor.setAttribute('id', tabId);
-      anchor.setAttribute('aria-controls', 'shared-tabpanel');
+      anchor.setAttribute('aria-controls', panelId);
 
       // Visually hidden index label (e.g., " (1 of 3)")
       const positionSpan = document.createElement('span');
@@ -1440,6 +1440,8 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
         .trim()
         .toLowerCase()
         .startsWith(currentMenuItem.trim().toLowerCase());
+
+      const panelId = tab.getAttribute('aria-controls');
 
       if (isCurrentItem) {
         tab.setAttribute('aria-selected', 'true');
@@ -1635,8 +1637,12 @@ function renderBodyContent(contentContainer, type, menuData) {
   );
 
   containerWrapper.setAttribute('role', 'tabpanel');
+
+  const panelId = `tabpanel-${selectedAnchor.id}`;
+  containerWrapper.setAttribute('id', panelId);
   containerWrapper.setAttribute('aria-labelledby', selectedAnchor.id);
-  containerWrapper.setAttribute('id', 'shared-tabpanel');
+  selectedAnchor.setAttribute('aria-controls', panelId);
+  selectedAnchor.href = `#${panelId}`;
 
   containerWrapper.appendChild(fragment);
   contentContainer.appendChild(containerWrapper);
