@@ -1636,13 +1636,15 @@ function renderBodyContent(contentContainer, type, menuData) {
     type !== 'pages' ? 'tabs__panels' : 'left-content'
   );
 
-  containerWrapper.setAttribute('role', 'tabpanel');
+  if (type == 'multiple') {
+    containerWrapper.setAttribute('role', 'tabpanel');
 
-  const panelId = `tabpanel-${selectedAnchor.id}`;
-  containerWrapper.setAttribute('id', panelId);
-  containerWrapper.setAttribute('aria-labelledby', selectedAnchor.id);
-  selectedAnchor.setAttribute('aria-controls', panelId);
-  selectedAnchor.href = `#${panelId}`;
+    const panelId = `tabpanel-${selectedAnchor.id}`;
+    containerWrapper.setAttribute('id', panelId);
+    containerWrapper.setAttribute('aria-labelledby', selectedAnchor.id);
+    selectedAnchor.setAttribute('aria-controls', panelId);
+    selectedAnchor.href = `#${panelId}`;
+  }
 
   containerWrapper.appendChild(fragment);
   contentContainer.appendChild(containerWrapper);
