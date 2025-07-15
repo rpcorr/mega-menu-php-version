@@ -784,6 +784,36 @@ function toggleTopLevelMenu(menuLink) {
     }
   });
 
+  // Get the element where the item count announcement will be displayed
+  const itemCountAnnouncement = document.getElementById(
+    'itemCountAnnouncement'
+  );
+
+  // Check if the menu link text is 'pages' and its parent is expanded
+  if (
+    menuLink.textContent.trim().toLowerCase() === 'pages' &&
+    menuLink.parentElement.getAttribute('aria-expanded') === 'true'
+  ) {
+    // Find the container that holds the list items
+    const leftContent = document.querySelector('.left-content');
+
+    if (leftContent) {
+      // Select all divs with role="listitem" inside the left-content container
+      const listItems = leftContent.querySelectorAll('div[role="listitem"]');
+
+      // If the announcement element exists, update its text content with the item count
+      if (itemCountAnnouncement && listItems.length > 0) {
+        itemCountAnnouncement.textContent = `There are ${listItems.length} items in this panel.`;
+      }
+    } else {
+      // Log a message if the left-content container is not found
+      console.log('.left-content not found');
+    }
+  } else {
+    // Clear the announcement if the condition is not met
+    itemCountAnnouncement.textContent = '';
+  }
+
   // If inside "More" menu, keep the parent "More" link open
   // const li = menuLink.closest('li');
   // if (li?.closest('#moreSubMenu')) {
@@ -995,6 +1025,28 @@ document.addEventListener('keydown', function (event) {
       // Call the toggle function to collapse/close the expanded menu
       toggleTopLevelMenu(expandedMenuItem);
     }
+  }
+});
+
+document.addEventListener('keyup', function (event) {
+  if (document.activeElement.getAttribute('role') === 'tab') {
+    // Delay announcement to allow screen reader to finish reading tab text
+    setTimeout(() => {
+      const visibleListItems = document.querySelectorAll(
+        'div[role="tabpanel"] div[role="listitem"]:not([aria-hidden="true"])'
+      );
+
+      const count = visibleListItems.length;
+      const announcement = document.getElementById('itemCountAnnouncement');
+
+      if (announcement) {
+        if (count === 1) {
+          announcement.textContent = 'There is 1 item in this panel.';
+        } else if (count !== 0) {
+          announcement.textContent = `There are ${count} items in this panel.`;
+        }
+      }
+    }, 2000); // 2000ms delay works well for screen readers
   }
 });
 
@@ -1648,36 +1700,6 @@ function renderBodyContent(contentContainer, type, menuData) {
 
   containerWrapper.appendChild(fragment);
   contentContainer.appendChild(containerWrapper);
-
-  // Update live region outside the container (already in DOM)
-  const liveRegion = document.getElementById('itemCountAnnouncement');
-
-  if (liveRegion) {
-    // Step 1: Clear previous content
-    liveRegion.textContent = '';
-
-    // Step 2: Force reflow (for NVDA consistency)
-    liveRegion.appendChild(document.createTextNode('\u00A0'));
-
-    // Step 3: Slightly longer delay
-    setTimeout(() => {
-      const visibleItems = Array.from(
-        containerWrapper.querySelectorAll('[role="listitem"]')
-      ).filter((item) => {
-        const style = window.getComputedStyle(item);
-        return style.display !== 'none' && style.visibility !== 'hidden';
-      });
-
-      // Step 4: Clear and update again
-      liveRegion.textContent = '';
-      setTimeout(() => {
-        const count = visibleItems.length;
-        liveRegion.textContent = `There ${
-          count === 1 ? 'is' : 'are'
-        } ${count} item${count === 1 ? '' : 's'} in this panel.`;
-      }, 50); // Micro-delay for second flush
-    }, 350);
-  }
 
   reorderCustomReportsSection(containerWrapper);
 
