@@ -213,11 +213,6 @@ li[role='presentation'] {
   border-color: #f2994a;
 }
 
-/* Focused anchor inside the p.open — distinguish it */
-[aria-labelledby='tab-LibPAS'] .open.focus-visible {
-  border: 3px dashed #f2994a;
-}
-
 [aria-labelledby='tab-LibPAS'] [role='listitem'][data-group-id] {
   background-color: #fbd3af;
 }
@@ -255,11 +250,6 @@ li[role='presentation'] {
   border-color: #9b51e0;
 }
 
-/* Focused anchor inside the p.open — distinguish it */
-[aria-labelledby='tab-InformsUs'] .open.focus-visible {
-  border: 3px dashed #9b51e0;
-}
-
 [aria-labelledby='tab-InformsUs'] [role='listitem'][data-group-id] {
   background-color: #f0dcfb;
 }
@@ -295,11 +285,6 @@ li[role='presentation'] {
 [aria-labelledby='tab-LibSat'] .open {
   background-color: #fff4d6;
   border-color: #f2c94c;
-}
-
-/* Focused anchor inside the p.open — distinguish it */
-[aria-labelledby='tab-LibSat'] .open.focus-visible {
-  border: 3px dashed #f2c94c;
 }
 
 [aria-labelledby='tab-LibSat'] [role='listitem'][data-group-id] {
