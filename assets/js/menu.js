@@ -1750,20 +1750,47 @@ function renderBodyContent(contentContainer, type, menuData) {
       anchor.removeAttribute('tabindex');
     });
 
-  ['libpas', 'informsus', 'libsat'].forEach((id) => {
-    document
-      .querySelectorAll(`.tabs__panels#${id} a[aria-expanded]`)
-      .forEach((anchor) => {
-        anchor.addEventListener('focus', () => {
-          const parentP = anchor.closest('p');
-          if (parentP) parentP.classList.add('focus-visible');
-        });
+  // Define the tab panel IDs that contain anchor elements to monitor
+  const tabPanelIds = [
+    'tabpanel-tab-LibPAS',
+    'tabpanel-tab-InformsUs',
+    'tabpanel-tab-LibSat',
+  ];
 
-        anchor.addEventListener('blur', () => {
-          const parentP = anchor.closest('p');
-          if (parentP) parentP.classList.remove('focus-visible');
-        });
+  // Loop through each tab panel and add a blur event listener to clear announcements
+  tabPanelIds.forEach((id) => {
+    document.querySelectorAll(`.tabs__panels#${id} a`).forEach((anchor) => {
+      anchor.addEventListener('blur', () => {
+        // Clear the aria-live region when focus leaves an anchor
+        document.getElementById('itemCountAnnouncement').textContent = '';
       });
+    });
+  });
+
+  // Loop through each tab panel and add a focus event listener to announce group count
+  tabPanelIds.forEach((id) => {
+    document.querySelectorAll(`.tabs__panels#${id} a`).forEach((anchor) => {
+      anchor.addEventListener('focus', () => {
+        // Find the nearest parent <div> that may contain the data-group-id
+        const selectedDiv = anchor.closest('div');
+        const groupId = selectedDiv.getAttribute('data-group-id');
+
+        // Proceed only if the item has a group ID and is currently expanded (open)
+        if (groupId && selectedDiv.querySelector('p.open')) {
+          // Count how many elements in the DOM share the same groupId
+          const count = document.querySelectorAll(
+            `[data-group-id="${groupId}"]`
+          ).length;
+
+          // Update the live region with the count (excluding the currently focused item)
+          const announcement = document.getElementById('itemCountAnnouncement');
+          announcement.textContent =
+            count === 1
+              ? 'There is 1 item in this menu.'
+              : `There are ${count - 1} items in this menu.`;
+        }
+      });
+    });
   });
 }
 
@@ -2183,6 +2210,7 @@ function hideShowSiblings(anchor, isExpanded) {
   ];
 
   // === Expand logic ===
+  const announcement = document.getElementById('itemCountAnnouncement');
   if (isExpanded) {
     const parentParagraph = anchor.closest('p');
     if (parentParagraph) {
@@ -2215,6 +2243,21 @@ function hideShowSiblings(anchor, isExpanded) {
       showElement(tempSibling); // show grouped item
       tempSibling = tempSibling.nextElementSibling;
     }
+
+    // Count and announce number of grouped items
+    const groupedItems = document.querySelectorAll(
+      `[data-group-id="${groupId}"]`
+    );
+
+    if (announcement) {
+      const count = groupedItems.length;
+      announcement.textContent =
+        count === 1
+          ? 'There is 1 item in this menu.'
+          : `There are ${count - 1} items in this menu.`;
+    }
+  } else {
+    announcement.textContent = '';
   }
 
   // === Collapse logic ===
