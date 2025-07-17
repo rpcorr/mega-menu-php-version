@@ -1768,6 +1768,7 @@ function renderBodyContent(contentContainer, type, menuData) {
   });
 
   // Loop through each tab panel and add a focus event listener to announce group count
+  let customReportsCount = 0;
   tabPanelIds.forEach((id) => {
     document.querySelectorAll(`.tabs__panels#${id} a`).forEach((anchor) => {
       anchor.addEventListener('focus', () => {
@@ -1778,12 +1779,13 @@ function renderBodyContent(contentContainer, type, menuData) {
         // Proceed only if the item has a group ID and is currently expanded (open)
         if (groupId && selectedDiv.querySelector('p.open')) {
           let count = 0;
-          let customReportsCount = 0;
           if (anchor.textContent.toLowerCase().includes('custom reports')) {
             const groupedItems = document.querySelectorAll(
               '[data-group-id="custom-child"]'
             );
-            customReportsCount = groupedItems.length + 1;
+
+            if (customReportsCount === 0)
+              customReportsCount = groupedItems.length + 1;
           } else {
             // Count how many elements in the DOM share the same groupId
             count = document.querySelectorAll(
