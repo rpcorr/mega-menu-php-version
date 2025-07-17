@@ -1769,43 +1769,49 @@ function renderBodyContent(contentContainer, type, menuData) {
 
   // Loop through each tab panel and add a focus event listener to announce group count
   let customReportsCount = 0;
+  let hasCustomReportsCountBeenSet = false;
+
   tabPanelIds.forEach((id) => {
     document.querySelectorAll(`.tabs__panels#${id} a`).forEach((anchor) => {
       anchor.addEventListener('focus', () => {
         // Find the nearest parent <div> that may contain the data-group-id
         const selectedDiv = anchor.closest('div');
-        const groupId = selectedDiv.getAttribute('data-group-id');
+        const groupId = selectedDiv?.getAttribute('data-group-id');
 
         // Proceed only if the item has a group ID and is currently expanded (open)
         if (groupId && selectedDiv.querySelector('p.open')) {
           let count = 0;
-          if (anchor.textContent.toLowerCase().includes('custom reports')) {
-            const groupedItems = document.querySelectorAll(
-              '[data-group-id="custom-child"]'
-            );
 
-            if (customReportsCount === 0)
+          const isCustomReports = anchor.textContent
+            .toLowerCase()
+            .includes('custom reports');
+
+          if (isCustomReports) {
+            if (!hasCustomReportsCountBeenSet) {
+              const groupedItems = document.querySelectorAll(
+                '[data-group-id="custom-child"]'
+              );
               customReportsCount = groupedItems.length + 1;
+              hasCustomReportsCountBeenSet = true;
+            }
+            count = customReportsCount;
           } else {
-            // Count how many elements in the DOM share the same groupId
             count = document.querySelectorAll(
               `[data-group-id="${groupId}"]`
             ).length;
-          }
 
-          if (customReportsCount !== 0) {
-            count = customReportsCount;
-          } else {
+            // Decrement by 1 to exclude the currently focused item, if needed
             count--;
             if (count === 0) count = 1;
           }
 
-          // Update the live region with the count (excluding the currently focused item)
           const announcement = document.getElementById('itemCountAnnouncement');
-          announcement.textContent =
-            count === 1
-              ? 'There is 1 item in this menu.'
-              : `There are ${count} items in this menu.`;
+          if (announcement) {
+            announcement.textContent =
+              count === 1
+                ? 'There is 1 item in this menu.'
+                : `There are ${count} items in this menu.`;
+          }
         }
       });
     });
