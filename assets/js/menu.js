@@ -1777,17 +1777,33 @@ function renderBodyContent(contentContainer, type, menuData) {
 
         // Proceed only if the item has a group ID and is currently expanded (open)
         if (groupId && selectedDiv.querySelector('p.open')) {
-          // Count how many elements in the DOM share the same groupId
-          const count = document.querySelectorAll(
-            `[data-group-id="${groupId}"]`
-          ).length;
+          let count = 0;
+          let customReportsCount = 0;
+          if (anchor.textContent.toLowerCase().includes('custom reports')) {
+            const groupedItems = document.querySelectorAll(
+              '[data-group-id="custom-child"]'
+            );
+            customReportsCount = groupedItems.length + 1;
+          } else {
+            // Count how many elements in the DOM share the same groupId
+            count = document.querySelectorAll(
+              `[data-group-id="${groupId}"]`
+            ).length;
+          }
+
+          if (customReportsCount !== 0) {
+            count = customReportsCount;
+          } else {
+            count--;
+            if (count === 0) count = 1;
+          }
 
           // Update the live region with the count (excluding the currently focused item)
           const announcement = document.getElementById('itemCountAnnouncement');
           announcement.textContent =
             count === 1
               ? 'There is 1 item in this menu.'
-              : `There are ${count - 1} items in this menu.`;
+              : `There are ${count} items in this menu.`;
         }
       });
     });
@@ -2244,13 +2260,28 @@ function hideShowSiblings(anchor, isExpanded) {
       tempSibling = tempSibling.nextElementSibling;
     }
 
+    let groupedItems;
     // Count and announce number of grouped items
-    const groupedItems = document.querySelectorAll(
-      `[data-group-id="${groupId}"]`
-    );
+
+    let customReportsCount = 0;
+    if (anchor.textContent.toLowerCase().includes('custom reports')) {
+      groupedItems = document.querySelectorAll(
+        '[data-group-id="custom-child"]'
+      );
+      customReportsCount = groupedItems.length + 1;
+    } else {
+      groupedItems = document.querySelectorAll(`[data-group-id="${groupId}"]`);
+    }
+
+    let count = 0;
+    if (customReportsCount != 0) {
+      // Custom Reports was opened
+      count = customReportsCount + 1;
+    } else {
+      count = groupedItems.length;
+    }
 
     if (announcement) {
-      const count = groupedItems.length;
       announcement.textContent =
         count === 1
           ? 'There is 1 item in this menu.'
