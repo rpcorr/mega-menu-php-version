@@ -1757,28 +1757,35 @@ function renderBodyContent(contentContainer, type, menuData) {
     'tabpanel-tab-LibSat',
   ];
 
-  // Loop through each tab panel and add a blur event listener to clear announcements
-  tabPanelIds.forEach((id) => {
-    document.querySelectorAll(`.tabs__panels#${id} a`).forEach((anchor) => {
-      anchor.addEventListener('blur', () => {
-        // Clear the aria-live region when focus leaves an anchor
-        document.getElementById('itemCountAnnouncement').textContent = '';
-      });
-    });
-  });
-
-  // Loop through each tab panel and add a focus event listener to announce group count
+  // Variables to track custom reports count
   let customReportsCount = 0;
   let hasCustomReportsCountBeenSet = false;
 
+  // Utility to set customReportsCount once
+  function setCustomReportsCountOnce() {
+    if (!hasCustomReportsCountBeenSet) {
+      const groupedItems = document.querySelectorAll(
+        '[data-group-id="custom-child"]'
+      );
+      customReportsCount = groupedItems.length + 1;
+      hasCustomReportsCountBeenSet = true;
+    }
+  }
+
+  // Add blur and focus listeners to anchors
   tabPanelIds.forEach((id) => {
     document.querySelectorAll(`.tabs__panels#${id} a`).forEach((anchor) => {
+      // Blur: Clear live region
+      anchor.addEventListener('blur', () => {
+        const announcement = document.getElementById('itemCountAnnouncement');
+        if (announcement) announcement.textContent = '';
+      });
+
+      // Focus: Announce item count
       anchor.addEventListener('focus', () => {
-        // Find the nearest parent <div> that may contain the data-group-id
         const selectedDiv = anchor.closest('div');
         const groupId = selectedDiv?.getAttribute('data-group-id');
 
-        // Proceed only if the item has a group ID and is currently expanded (open)
         if (groupId && selectedDiv.querySelector('p.open')) {
           let count = 0;
 
@@ -1787,22 +1794,16 @@ function renderBodyContent(contentContainer, type, menuData) {
             .includes('custom reports');
 
           if (isCustomReports) {
-            if (!hasCustomReportsCountBeenSet) {
-              const groupedItems = document.querySelectorAll(
-                '[data-group-id="custom-child"]'
-              );
-              customReportsCount = groupedItems.length + 1;
-              hasCustomReportsCountBeenSet = true;
-            }
+            setCustomReportsCountOnce(); // Only sets once
             count = customReportsCount;
           } else {
             count = document.querySelectorAll(
               `[data-group-id="${groupId}"]`
             ).length;
 
-            // Decrement by 1 to exclude the currently focused item, if needed
+            // Subtract 1 to exclude the header (focused anchor's parent)
             count--;
-            if (count === 0) count = 1;
+            if (count === 0) count = 1; // Fallback to 1 if no children
           }
 
           const announcement = document.getElementById('itemCountAnnouncement');
