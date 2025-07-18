@@ -594,12 +594,12 @@ ul.sub-menu li > ul.sub-menu {
     flex-direction: column;
     gap: 0.5rem;
     background: #fff;
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    top: 98px;
     left: 0;
-    right: 0;
-    z-index: 1000;
+    width: 100vw;
     height: 135px;
+    z-index: 1000;
   }
 
   #menu-main-menu.open {
