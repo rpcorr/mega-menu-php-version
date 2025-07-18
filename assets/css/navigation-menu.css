@@ -602,12 +602,26 @@ ul.sub-menu li > ul.sub-menu {
     z-index: 1000;
   }
 
+  #menu-main-menu > li {
+    width: 100%;
+  }
+
   #menu-main-menu.open {
     display: flex;
   }
 
   #profileMenu {
-    margin-left: unset;
+    align-self: flex-start;
+    text-align: left;
+    width: 100%;
+    margin-left: 0;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  #profileMenu > a {
+    justify-content: flex-start;
+    padding-left: 1rem; /* Optional: match padding of other menu items */
   }
 }
 
