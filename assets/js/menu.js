@@ -330,123 +330,132 @@ document.addEventListener('DOMContentLoaded', () => {
         navItemVisible.push(true);
       });
 
-      // add more link
+      // add mobile menu
       const menuMainMenu = document.getElementById('menu-main-menu');
-      const newMenuItem = document.createElement('li');
 
-      newMenuItem.id = 'menu-more';
-      newMenuItem.className = 'menu-item menu-item-has-children';
-      newMenuItem.setAttribute('aria-expanded', 'false');
+      const menuToggle = document.getElementById('menuToggle');
+      menuToggle.addEventListener('click', () => {
+        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', String(!isExpanded));
+        menuMainMenu.classList.toggle('open');
+      });
 
-      const newMenuLink = document.createElement('a');
-      newMenuLink.id = 'menuMoreLink';
-      newMenuLink.href = '#';
-      newMenuLink.setAttribute(
-        'aria-label',
-        'More has a sub menu. Click enter to open'
-      );
+      // // add more link
+      // const newMenuItem = document.createElement('li');
 
-      const newSubMenu = document.createElement('ul');
-      newSubMenu.id = 'moreSubMenu';
-      newSubMenu.className = 'sub-menu';
+      // newMenuItem.id = 'menu-more';
+      // newMenuItem.className = 'menu-item menu-item-has-children';
+      // newMenuItem.setAttribute('aria-expanded', 'false');
 
-      newMenuItem.appendChild(newMenuLink);
-      newMenuItem.appendChild(newSubMenu);
-      menuMainMenu.appendChild(newMenuItem);
+      // const newMenuLink = document.createElement('a');
+      // newMenuLink.id = 'menuMoreLink';
+      // newMenuLink.href = '#';
+      // newMenuLink.setAttribute(
+      //   'aria-label',
+      //   'More has a sub menu. Click enter to open'
+      // );
 
-      moreWidth = document.getElementById('menu-more').offsetWidth;
+      // const newSubMenu = document.createElement('ul');
+      // newSubMenu.id = 'moreSubMenu';
+      // newSubMenu.className = 'sub-menu';
 
-      // toggle More menu
-      document
-        .getElementById('menuMoreLink')
-        .addEventListener('click', function (event) {
-          event.preventDefault();
+      // newMenuItem.appendChild(newMenuLink);
+      // newMenuItem.appendChild(newSubMenu);
+      // menuMainMenu.appendChild(newMenuItem);
 
-          const moreMenu = this.closest('.menu-item-has-children');
+      // moreWidth = document.getElementById('menu-more').offsetWidth;
 
-          // Toggle the aria-expanded state of the clicked menu item
-          toggleAriaExpanded(this);
+      // // toggle More menu
+      // document
+      //   .getElementById('menuMoreLink')
+      //   .addEventListener('click', function (event) {
+      //     event.preventDefault();
 
-          // Toggle the arrow icon direction based on expanded/collapsed state
-          toggleArrowIcon(this);
+      //     const moreMenu = this.closest('.menu-item-has-children');
 
-          // Toggle the aria-label state of the clicked menu item
-          toggleLinkAriaLabel(this);
+      //     // Toggle the aria-expanded state of the clicked menu item
+      //     toggleAriaExpanded(this);
 
-          //const isVisible = moreMenu.classList.contains('visible');
-          //const icon = this.querySelector('i');
-          //const moreSubMenu = document.getElementById('moreSubMenu');
+      //     // Toggle the arrow icon direction based on expanded/collapsed state
+      //     toggleArrowIcon(this);
 
-          // Close all other open menus
-          // document
-          //   .querySelectorAll('li.menu-item-has-children > a')
-          //   .forEach((anchor) => {
-          //     // anchor.setAttribute('aria-expanded', 'false');
-          //     //anchor.classList.remove('active');
-          //   });
+      //     // Toggle the aria-label state of the clicked menu item
+      //     toggleLinkAriaLabel(this);
 
-          // Toggle visibility of More menu
-          //moreMenu.classList.toggle('visible');
+      //     //const isVisible = moreMenu.classList.contains('visible');
+      //     //const icon = this.querySelector('i');
+      //     //const moreSubMenu = document.getElementById('moreSubMenu');
 
-          // if (moreMenu.classList.contains('visible')) {
-          //   // Open state
-          //   this.setAttribute(
-          //     'aria-label',
-          //     'Click Enter to close More sub menu'
-          //   );
-          //   this.setAttribute('aria-expanded', 'true');
-          //   //this.classList.add('active');
+      //     // Close all other open menus
+      //     // document
+      //     //   .querySelectorAll('li.menu-item-has-children > a')
+      //     //   .forEach((anchor) => {
+      //     //     // anchor.setAttribute('aria-expanded', 'false');
+      //     //     //anchor.classList.remove('active');
+      //     //   });
 
-          //   // Adjust icon if available
-          //   if (icon) {
-          //     icon.classList.replace('angle-down', 'angle-up');
-          //   }
-          // } else {
-          //   // Close state
-          //   this.setAttribute(
-          //     'aria-label',
-          //     'More has a sub menu. Click enter to open'
-          //   );
-          //   //this.classList.remove('active');
+      //     // Toggle visibility of More menu
+      //     //moreMenu.classList.toggle('visible');
 
-          //   // Reset icon if available
-          //   if (icon) {
-          //     icon.classList.replace('angle-up', 'angle-down');
-          //   }
+      //     // if (moreMenu.classList.contains('visible')) {
+      //     //   // Open state
+      //     //   this.setAttribute(
+      //     //     'aria-label',
+      //     //     'Click Enter to close More sub menu'
+      //     //   );
+      //     //   this.setAttribute('aria-expanded', 'true');
+      //     //   //this.classList.add('active');
 
-          //   // Remove inline opacity after a short delay
-          //   setTimeout(() => {
-          //     moreSubMenu.style.removeProperty('opacity');
-          //   }, 100);
+      //     //   // Adjust icon if available
+      //     //   if (icon) {
+      //     //     icon.classList.replace('angle-down', 'angle-up');
+      //     //   }
+      //     // } else {
+      //     //   // Close state
+      //     //   this.setAttribute(
+      //     //     'aria-label',
+      //     //     'More has a sub menu. Click enter to open'
+      //     //   );
+      //     //   //this.classList.remove('active');
 
-          //   // Reset submenu links
-          //   document.querySelectorAll('#moreSubMenu a').forEach((anchor) => {
-          //     anchor.setAttribute(
-          //       'aria-label',
-          //       `${anchor.textContent} has a sub menu. Click enter to open`
-          //     );
-          //   });
-          // }
+      //     //   // Reset icon if available
+      //     //   if (icon) {
+      //     //     icon.classList.replace('angle-up', 'angle-down');
+      //     //   }
 
-          // // Remove empty class attribute
-          // if (this.className.trim() === '') {
-          //   this.removeAttribute('class');
-          // }
+      //     //   // Remove inline opacity after a short delay
+      //     //   setTimeout(() => {
+      //     //     moreSubMenu.style.removeProperty('opacity');
+      //     //   }, 100);
 
-          // // Update sidebar content
-          // if (sidebar) populateSidebar();
-        });
+      //     //   // Reset submenu links
+      //     //   document.querySelectorAll('#moreSubMenu a').forEach((anchor) => {
+      //     //     anchor.setAttribute(
+      //     //       'aria-label',
+      //     //       `${anchor.textContent} has a sub menu. Click enter to open`
+      //     //     );
+      //     //   });
+      //     // }
 
-      // toggle More menu sub-menu on key up
-      document
-        .getElementById('menuMoreLink')
-        .addEventListener('keyup', function (event) {
-          // open "More" menu when enter key is pressed
-          if (event.key === 'Enter') {
-            // open current regular menu, there param is false
-            //openMenu(false, this);
-          }
-        });
+      //     // // Remove empty class attribute
+      //     // if (this.className.trim() === '') {
+      //     //   this.removeAttribute('class');
+      //     // }
+
+      //     // // Update sidebar content
+      //     // if (sidebar) populateSidebar();
+      //   });
+
+      // // toggle More menu sub-menu on key up
+      // document
+      //   .getElementById('menuMoreLink')
+      //   .addEventListener('keyup', function (event) {
+      //     // open "More" menu when enter key is pressed
+      //     if (event.key === 'Enter') {
+      //       // open current regular menu, there param is false
+      //       //openMenu(false, this);
+      //     }
+      //   });
 
       preserveMenuColour();
 
@@ -640,8 +649,8 @@ function formatNav() {
           document.querySelector('nav').classList.add('all-hidden');
 
           // Set the HTML content for the 'More' dropdown link
-          document.getElementById('menuMoreLink').innerHTML =
-            'Menu <i class="caret angle-down"></i>';
+          // document.getElementById('menuMoreLink').innerHTML =
+          //   'Menu <i class="caret angle-down"></i>';
         } else {
           // Remove the class to show navigation items when more are revealed
           document.querySelector('nav').classList.remove('all-hidden');
@@ -656,8 +665,8 @@ function formatNav() {
       item.classList.remove('hover');
 
       // Move the current item to the "More" dropdown submenu
-      const moreSubMenu = document.getElementById('moreSubMenu');
-      moreSubMenu.appendChild(item);
+      // const moreSubMenu = document.getElementById('moreSubMenu');
+      // moreSubMenu.appendChild(item);
 
       // Mark the current item as not visible
       navItemVisible[count] = false;

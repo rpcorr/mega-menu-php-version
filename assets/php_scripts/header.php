@@ -122,6 +122,12 @@
             <div class="menu-main-menu-container">
               <ul id="menu-main-menu"></ul>  
             </div>
+            
+            <button id="menuToggle" class="hamburger" aria-controls="menu-main-menu" aria-expanded="false" aria-label="Toggle navigation menu">
+              <span class="hamburger-bar"></span>
+              <span class="hamburger-bar"></span>
+              <span class="hamburger-bar"></span>
+            </button>
           </nav>
           
         </div>
