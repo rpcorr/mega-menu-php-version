@@ -489,14 +489,6 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         });
 
-      // format navigation on page load
-      formatNav();
-
-      // Determin is Admin Menu under the More menu, if so add prevent-expand class
-      isAdminMenuUnderMore();
-
-      isProfileMenuUnderMore();
-
       // set More Menu tabindex to -1 if there are no children
       updateMenuMoreTabIndex();
 
@@ -582,104 +574,6 @@ function closeAllMenus() {
   });
 }
 
-function formatNav() {
-  // Initialize variables
-  let room = true; // Flag to track if there's space for more items
-  let count = 0; // Counter for menu item index
-  let tempWidth = 0; // Temporary width calculation for current menu
-  let totalWidth = 0; // Total width of the menu items
-  const containerWidth = Math.round(
-    document.querySelector('.menu-main-menu-container').getBoundingClientRect()
-      .width
-  ); // Get the width of the container
-
-  const navPadding = 5; // Padding to be added around each item for spacing
-  const numItems = 5; // Number of items to be displayed before "More" dropdown
-
-  // Loop through each menu item and apply logic for showing or hiding based on available space
-  navItems.forEach(function (item) {
-    // Check if the navItem contains a specific mega menu
-    const hasMegaMenu = item.querySelector('div.mega-menu');
-
-    // Calculate the width of the menu with the current item added
-    tempWidth = totalWidth + navItemWidth[count] + navPadding;
-
-    // If the menu item fits within the container width (considering 'More' dropdown)
-    if (
-      (tempWidth < containerWidth - moreWidth - navPadding ||
-        (tempWidth < containerWidth && count === numItems)) &&
-      room === true
-    ) {
-      // Update the total width after adding this item
-      totalWidth = tempWidth;
-
-      // Show the menu item if it's not visible already
-      if (navItemVisible[count] !== true) {
-        // Move the first child of the "More" submenu back to the main menu
-        const menuMore = document.getElementById('menu-more');
-        const moreSubMenu = document.getElementById('moreSubMenu');
-        const firstChild = moreSubMenu.firstElementChild;
-
-        // If there is a first child, insert it before the 'More' menu
-        if (firstChild) {
-          menuMore.parentNode.insertBefore(firstChild, menuMore);
-        }
-
-        // Clear inner text of 'More' menu if no submenu links are visible
-        if (menuMore.children[1].children.length === 0) {
-          document.getElementById('menuMoreLink').innerHTML = '';
-          document
-            .getElementById('menuMoreLink')
-            .setAttribute('tabindex', '-1');
-        }
-
-        // Mark the current item as visible
-        navItemVisible[count] = true;
-      }
-    }
-    // If the menu item does not fit within the container
-    else {
-      // If this is the first item that doesn't fit, enable the "More" dropdown
-      if (room === true) {
-        room = false;
-
-        // Change text to "Menu" if no items are visible
-        if (count === 0) {
-          // Add a class to hide the navigation items initially
-          document.querySelector('nav').classList.add('all-hidden');
-
-          // Set the HTML content for the 'More' dropdown link
-          // document.getElementById('menuMoreLink').innerHTML =
-          //   'Menu <i class="caret angle-down"></i>';
-        } else {
-          // Remove the class to show navigation items when more are revealed
-          document.querySelector('nav').classList.remove('all-hidden');
-
-          // Update the 'More' dropdown link content
-          document.getElementById('menuMoreLink').innerHTML =
-            'More <i class="caret angle-down"></i>';
-        }
-      }
-
-      // Remove the hover effect for items that are moved to the "More" dropdown
-      item.classList.remove('hover');
-
-      // Move the current item to the "More" dropdown submenu
-      // const moreSubMenu = document.getElementById('moreSubMenu');
-      // moreSubMenu.appendChild(item);
-
-      // Mark the current item as not visible
-      navItemVisible[count] = false;
-    }
-
-    // Increment the count for the next iteration
-    count += 1;
-  });
-
-  // Select the container for the "More" submenu by its ID (if needed for further use)
-  const container = document.getElementById('moreSubMenu');
-}
-
 /**
  * Resets the direction of all arrows by switching their classes from 'angle-up' to 'angle-down'.
  * This is typically used for collapsing or resetting UI elements like dropdown menus or accordions.
@@ -725,14 +619,6 @@ function onResize() {
 
     // Update tab indices to manage focusability of dynamic menu items
     updateMenuMoreTabIndex();
-
-    // Reformat navigation layout, e.g., move overflowing items into "More" dropdown
-    formatNav();
-
-    // Determin is Admin Menu under the More menu, if so add prevent-expand class
-    isAdminMenuUnderMore();
-
-    isProfileMenuUnderMore();
 
     // Adjust mega menu positioning if necessary based on new window size
     //determineMegaMenuPosition();
@@ -2065,74 +1951,6 @@ function createMenuItems(data) {
         };
       })
   );
-}
-
-/**
- * Checks if the Admin menu item is under the "More" submenu,
- * and toggles the 'prevent-expand' class on the Admin submenu accordingly.
- *
- * Variables:
- * @const {HTMLElement|null} adminMenuLi - The main Admin menu <li> element.
- * @const {HTMLElement|null} adminMenuLiSubMenu - The <ul> sub-menu inside the Admin menu item.
- * @const {HTMLElement|null} moreSubMenu - The "More" submenu <ul> container.
- * @const {boolean} adminMenuLiUnderMore - Whether the Admin menu <li> is inside the More submenu.
- */
-function isAdminMenuUnderMore() {
-  // Find the Admin menu list item
-  const adminMenuLi = document.querySelector('li#adminMenu');
-  if (!adminMenuLi) {
-    console.warn('Admin menu list item not found.');
-    return;
-  }
-
-  // Find the sub-menu inside Admin menu
-  const adminMenuLiSubMenu = adminMenuLi.querySelector('ul.sub-menu');
-  if (!adminMenuLiSubMenu) {
-    console.warn('Admin menu sub-menu not found.');
-    return;
-  }
-
-  // Find the "More" submenu container
-  const moreSubMenu = document.querySelector('ul#moreSubMenu');
-  if (!moreSubMenu) {
-    console.warn('"More" submenu not found.');
-    return;
-  }
-
-  // Check if Admin menu is under "More"
-  const adminMenuLiUnderMore = moreSubMenu.contains(adminMenuLi);
-
-  // Toggle the 'prevent-expand' class based on whether Admin is under More
-  adminMenuLiSubMenu.classList.toggle('prevent-expand', !adminMenuLiUnderMore);
-}
-
-function isProfileMenuUnderMore() {
-  // Find the Admin menu list item
-  const profileMenuLi = document.querySelector('li#profileMenu');
-  if (!profileMenuLi) {
-    console.warn('Profile menu list item not found.');
-    return;
-  }
-
-  // Find the sub-menu inside Admin menu
-  const profileMenuLiSubMenu = profileMenuLi.querySelector('ul.sub-menu');
-  if (!profileMenuLiSubMenu) {
-    console.warn('Profile menu sub-menu not found.');
-    return;
-  }
-
-  // Find the "More" submenu container
-  const moreSubMenu = document.querySelector('ul#moreSubMenu');
-  if (!moreSubMenu) {
-    console.warn('"More" submenu not found.');
-    return;
-  }
-
-  // Check if Profile menu is under "More"
-  const profileMenuLiUnderMore = moreSubMenu.contains(profileMenuLi);
-
-  // Toggle the 'prevent-expand' class based on whether Profile is under More
-  profileMenuLiSubMenu.classList.toggle('overlap', !profileMenuLiUnderMore);
 }
 
 /**
