@@ -623,6 +623,21 @@ ul.sub-menu li > ul.sub-menu {
     justify-content: flex-start;
     padding-left: 1rem; /* Optional: match padding of other menu items */
   }
+
+  @media (max-width: 960px) {
+    #menu-main-menu li.menu-item-has-children > a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 0.75rem 1rem; /* or match your existing padding */
+    }
+
+    #menu-main-menu li.menu-item-has-children > a .caret {
+      margin-left: auto;
+      text-align: right;
+    }
+  }
 }
 
 /* Desktop styles */
