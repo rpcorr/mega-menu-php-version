@@ -245,15 +245,14 @@ nav {
 }
 
 #adminMenu > .sub-menu,
-#profileMenu > .sub-menu,
-#menu-more > .sub-menu {
+#profileMenu > .sub-menu {
   background-color: #fff; /* Match your design background */
   display: none; /* Hidden by default */
   border: 1px solid #ccc; /* Optional: for visibility */
   border-top: none;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Optional: for visibility */
-  z-index: 1000; /* Ensure it's on top of other elements */
+  /*z-index: 1000;*/ /* Ensure it's on top of other elements */
 }
 
 #profileMenu > .sub-menu {
@@ -275,14 +274,6 @@ nav {
   min-width: 13.5rem;
 }
 
-ul.overlap {
-  position: absolute;
-  top: 2.1rem !important; /* or a smaller value like 80% if you want it partly over the profile link */
-  right: 0;
-  z-index: 1000; /* makes sure it stays on top */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* optional: subtle dropdown shadow */
-}
-
 /* prevent a submenu parent container from expanding when open */
 .prevent-expand {
   position: absolute;
@@ -291,14 +282,7 @@ ul.overlap {
 }
 
 /* Show sub-menu when parent is expanded */
-#adminMenu[aria-expanded='true'] > .sub-menu,
-#menu-more[aria-expanded='true'] > .sub-menu {
-  display: block;
-}
-
-#menu-more[aria-expanded='true']
-  #profileMenu[aria-expanded='true']
-  > .sub-menu {
+#adminMenu[aria-expanded='true'] > .sub-menu {
   display: block;
 }
 
@@ -326,35 +310,6 @@ ul.overlap {
 }
 
 /* Initial state of the submenu (hidden or collapsed) */
-#moreSubMenu {
-  position: absolute;
-  top: 5.4rem; /* same top spacing */
-  left: 0;
-  right: 0;
-  width: 100vw;
-  max-height: 90vh;
-  max-width: calc(80vw - 1rem); /* 2rem gap on right */
-  margin-left: auto;
-  overflow-y: auto;
-  box-shadow: 0 0 0.2rem 0 rgba(50, 50, 50, 0.75);
-  transition: max-height 0.5s ease-in-out, width 0.5s ease-in-out;
-  z-index: 999; /* ensure it’s on top */
-}
-
-#menuMoreLink.active + #moreSubMenu {
-  max-height: 1000px; /* Large enough to fit content */
-  width: 100vw; /* Full width of the viewport */
-  left: 0;
-  top: 100%; /* Position it just below the More link */
-  background: white; /* optional background */
-  z-index: 999; /* ensure it’s on top */
-}
-
-/* When the link is hovered and active, reveal the submenu */
-#menuMoreLink.active:hover + #moreSubMenu,
-#menuMoreLink.active + #moreSubMenu:hover {
-  opacity: 1;
-}
 
 body.has-hover ul#menu-main-menu .hover:hover > ul ul.sub-menu,
 ul#menu-main-menu li.menu-item-has-children > a.active > ul ul.sub-menu {
@@ -467,12 +422,6 @@ ul.sub-menu li > ul.sub-menu {
   padding: 0.74rem 0 0.63rem 2rem;
 }
 
-.menu-main-menu-container > #menu-main-menu > li li li > .sub-menu a {
-  /* padding top and bottom are needed to prevent overflow of focus the border 
-     when under the "More" menu item */
-  padding: 0.74rem 0 0.63rem 2.5rem;
-}
-
 .menu-main-menu-container > #menu-main-menu > li li li li > .sub-menu a {
   padding-left: 3rem;
 }
@@ -578,7 +527,6 @@ ul.sub-menu li > ul.sub-menu {
     border: none;
     cursor: pointer;
     margin-left: auto;
-    z-index: 1001;
   }
 
   .hamburger-bar {
@@ -599,7 +547,6 @@ ul.sub-menu li > ul.sub-menu {
     left: 0;
     width: 100vw;
     height: 135px;
-    z-index: 1000;
   }
 
   #menu-main-menu > li {
