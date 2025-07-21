@@ -338,6 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
         menuToggle.setAttribute('aria-expanded', String(!isExpanded));
         menuMainMenu.classList.toggle('open');
+        menuToggle.classList.toggle('open'); // toggle X class
       });
 
       // // add more link

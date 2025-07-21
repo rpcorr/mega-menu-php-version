@@ -533,6 +533,23 @@ ul.sub-menu li > ul.sub-menu {
     transition: all 0.3s ease;
   }
 
+  .hamburger.open .hamburger-bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .hamburger.open .hamburger-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.open .hamburger-bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  /* When hamburger is open, reduce margin between bars */
+  .hamburger.open .hamburger-bar {
+    margin: 2px 0;
+  }
+
   #menu-main-menu {
     display: none;
     flex-direction: column;
