@@ -579,10 +579,6 @@ ul.sub-menu li > ul.sub-menu {
     display: flex;
   }
 
-  #adminMenu > .sub-menu {
-    border: unset;
-  }
-
   #profileMenu {
     /* align-self: flex-start; */
     text-align: left;
@@ -592,10 +588,6 @@ ul.sub-menu li > ul.sub-menu {
     /* justify-content: flex-start; */
   }
 
-  #profileMenu > .sub-menu {
-    border-radius: unset;
-  }
-
   #profileMenu > a {
     justify-content: flex-start;
     padding-left: 1rem; /* Optional: match padding of other menu items */
@@ -603,6 +595,12 @@ ul.sub-menu li > ul.sub-menu {
 
   #profileMenu[aria-expanded='true'] > .sub-menu {
     align-items: start;
+  }
+
+  #adminMenu > .sub-menu,
+  #profileMenu > .sub-menu {
+    border-radius: unset;
+    border: unset;
   }
 }
 
