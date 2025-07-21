@@ -561,6 +561,20 @@ ul.sub-menu li > ul.sub-menu {
     border-radius: unset;
   }
 
+  #menu-main-menu li.menu-item-has-children > a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 2.75em;
+    padding: 0.75rem 1rem; /* or match your existing padding */
+  }
+
+  #menu-main-menu li.menu-item-has-children > a .caret {
+    margin-left: auto;
+    text-align: right;
+  }
+
   #menu-main-menu.open {
     display: flex;
   }
@@ -578,26 +592,17 @@ ul.sub-menu li > ul.sub-menu {
     /* justify-content: flex-start; */
   }
 
+  #profileMenu > .sub-menu {
+    border-radius: unset;
+  }
+
   #profileMenu > a {
     justify-content: flex-start;
     padding-left: 1rem; /* Optional: match padding of other menu items */
   }
 
-  #menu-main-menu li.menu-item-has-children > a {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 0.75rem 1rem; /* or match your existing padding */
-  }
-
-  #menu-main-menu li.menu-item-has-children > a .caret {
-    margin-left: auto;
-    text-align: right;
-  }
-
-  ul#menu-main-menu li.menu-item-has-children > a {
-    height: 2.75em;
+  #profileMenu[aria-expanded='true'] > .sub-menu {
+    align-items: start;
   }
 }
 
