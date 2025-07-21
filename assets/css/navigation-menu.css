@@ -597,21 +597,44 @@ ul.sub-menu li > ul.sub-menu {
   }
 
   #profileMenu {
-    /* align-self: flex-start; */
     text-align: left;
     width: 100%;
     margin-left: 0;
-    /* display: flex; */
-    /* justify-content: flex-start; */
+  }
+
+  #profileMenu .profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #ccc; /* or your desired color */
+    font-weight: bold;
+    flex-shrink: 0;
   }
 
   #profileMenu > a {
-    justify-content: flex-start;
-    padding-left: 1rem; /* Optional: match padding of other menu items */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important; /* Centers profile circle and text */
+    gap: 0.5rem;
+    width: 20% !important;
+    padding: 0.75rem 1rem;
+    text-align: center;
+    margin: auto;
   }
 
   #profileMenu[aria-expanded='true'] > .sub-menu {
     align-items: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centers child items horizontally */
+    justify-content: center;
+    width: auto;
+    padding: 0.5rem 1rem;
+    margin: 0 auto; /* centers the <ul> itself */
+    background: #fff;
   }
 
   #adminMenu > .sub-menu,
