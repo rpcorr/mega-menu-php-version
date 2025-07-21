@@ -39,7 +39,7 @@ nav ul > li ul > li ul > li ul > li {
   align-items: center;
   justify-content: flex-start;
   font-weight: 600;
-  height: 98px;
+  /* height: 98px; */
 }
 
 #menu-main-menu > li {
@@ -52,6 +52,12 @@ nav ul > li ul > li ul > li ul > li {
   border: 2px solid transparent;
   box-sizing: border-box;
   background: transparent;
+
+  display: flex;
+  align-items: center;
+  height: 100%;
+  text-transform: capitalize;
+  text-decoration: none;
 }
 
 #menu-main-menu > li > a:focus-visible {
@@ -337,16 +343,6 @@ ul#menu-main-menu
   top: 1.25rem;
 }
 
-/* link styles */
-
-#menu-main-menu > li > a {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  text-transform: capitalize;
-  text-decoration: none;
-}
-
 @media (max-width: 27em) {
   .menu-main-menu-container > #menu-main-menu > li > a {
     padding: 1.5rem 1.25rem;
@@ -546,24 +542,40 @@ ul.sub-menu li > ul.sub-menu {
     top: 98px;
     left: 0;
     width: 100vw;
-    height: 135px;
+    height: unset;
   }
 
   #menu-main-menu > li {
     width: 100%;
+    min-height: 36px;
+    height: auto;
+    /* border-bottom: 1px solid #ccc; */
+    border-radius: unset;
+  }
+
+  #menu-main-menu > li.menu-item-has-children > ul.sub-menu {
+    box-shadow: unset;
+  }
+
+  #menu-main-menu > li > a {
+    border-radius: unset;
   }
 
   #menu-main-menu.open {
     display: flex;
   }
 
+  #adminMenu > .sub-menu {
+    border: unset;
+  }
+
   #profileMenu {
-    align-self: flex-start;
+    /* align-self: flex-start; */
     text-align: left;
     width: 100%;
     margin-left: 0;
-    display: flex;
-    justify-content: flex-start;
+    /* display: flex; */
+    /* justify-content: flex-start; */
   }
 
   #profileMenu > a {
@@ -571,19 +583,21 @@ ul.sub-menu li > ul.sub-menu {
     padding-left: 1rem; /* Optional: match padding of other menu items */
   }
 
-  @media (max-width: 960px) {
-    #menu-main-menu li.menu-item-has-children > a {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      padding: 0.75rem 1rem; /* or match your existing padding */
-    }
+  #menu-main-menu li.menu-item-has-children > a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 1rem; /* or match your existing padding */
+  }
 
-    #menu-main-menu li.menu-item-has-children > a .caret {
-      margin-left: auto;
-      text-align: right;
-    }
+  #menu-main-menu li.menu-item-has-children > a .caret {
+    margin-left: auto;
+    text-align: right;
+  }
+
+  ul#menu-main-menu li.menu-item-has-children > a {
+    height: 2.75em;
   }
 }
 
