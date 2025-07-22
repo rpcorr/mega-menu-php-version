@@ -635,14 +635,12 @@ ul.sub-menu li > ul.sub-menu {
 
   #profileMenu[aria-expanded='true'] > .sub-menu {
     align-items: start;
-    display: flex;
-    flex-direction: column;
-    /*align-items: center;*/ /* centers child items horizontally */
-    justify-content: center;
     width: auto;
     padding: 0.5rem 1rem;
     margin: 0 auto; /* centers the <ul> itself */
     background: #e0e0e0 !important;
+    border-top: 1px solid #000 !important;
+    border-bottom: 1px solid #000;
   }
 
   ul#menu-main-menu li#profileMenu > ul > li a {
