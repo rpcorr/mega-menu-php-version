@@ -618,6 +618,10 @@ ul.sub-menu li > ul.sub-menu {
     flex-shrink: 0;
   }
 
+  #profileMenu .sub-menu {
+    box-shadow: inset 0 2px 2px #000, inset 0 -2px 2px #000 !important;
+  }
+
   #profileMenu .sub-menu li {
     padding: 0.5rem 0;
   }
@@ -644,7 +648,7 @@ ul.sub-menu li > ul.sub-menu {
     border-bottom: 1px solid #000;
   }
 
-  ul#menu-main-menu li#profileMenu > ul > li a {
+  #profileMenu > ul > li a {
     padding: 0.5em 0;
   }
 
