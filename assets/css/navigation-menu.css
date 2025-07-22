@@ -570,6 +570,10 @@ ul.sub-menu li > ul.sub-menu {
     border-radius: unset;
   }
 
+  .menu-main-menu-container > #menu-main-menu > li > .sub-menu a {
+    border: unset;
+  }
+
   #menu-main-menu > li.menu-item-has-children > ul.sub-menu {
     box-shadow: unset;
   }
@@ -614,6 +618,10 @@ ul.sub-menu li > ul.sub-menu {
     flex-shrink: 0;
   }
 
+  #profileMenu .sub-menu li {
+    padding: 0.5rem 0;
+  }
+
   #profileMenu > a {
     display: flex !important;
     align-items: center !important;
@@ -629,12 +637,16 @@ ul.sub-menu li > ul.sub-menu {
     align-items: start;
     display: flex;
     flex-direction: column;
-    align-items: center; /* centers child items horizontally */
+    /*align-items: center;*/ /* centers child items horizontally */
     justify-content: center;
     width: auto;
     padding: 0.5rem 1rem;
     margin: 0 auto; /* centers the <ul> itself */
-    background: #fff;
+    background: #e0e0e0 !important;
+  }
+
+  ul#menu-main-menu li#profileMenu > ul > li a {
+    padding: 0.5em 0;
   }
 
   #adminMenu > .sub-menu,
