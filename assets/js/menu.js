@@ -626,6 +626,28 @@ function onResize() {
 
     // Update stored window width for the next resize event
     winWidth = window.innerWidth;
+
+    const menu = document.getElementById('menu-main-menu');
+    const lastLi = menu.lastElementChild;
+
+    if (window.innerWidth >= 961) {
+      if (menu) {
+        // Check if last <li> has exactly one child and it's a <div class="extra-content">
+        if (
+          lastLi &&
+          lastLi.tagName === 'LI' &&
+          lastLi.children.length === 1 &&
+          lastLi.firstElementChild.tagName === 'DIV' &&
+          lastLi.firstElementChild.classList.contains('extra-content')
+        ) {
+          // found therefore hide last <li>
+          lastLi.style.display = 'none';
+        }
+      }
+    } else {
+      // display extra content block
+      lastLi.style.display = 'block';
+    }
   }
 }
 
@@ -1795,6 +1817,32 @@ function renderExtraContent(contentData, menuContainer) {
 
   // Hide listitem siblings after collapsed anchors on initial load
   hideListItemsInitially();
+
+  if (window.innerWidth <= 961) {
+    displayExtraContentAtBottomOfMenuForSmallScreens();
+  }
+}
+
+function displayExtraContentAtBottomOfMenuForSmallScreens() {
+  // Locate the div with class "extra-content"
+  const extraContent = document.querySelector('.extra-content');
+
+  // Locate the target ul
+  const menu = document.getElementById('menu-main-menu');
+
+  // Run only if both elements exist and content hasn't been inserted before
+  if (extraContent && menu && !menu.dataset.extraInserted) {
+    // Clone the extraContent div
+    const clonedContent = extraContent.cloneNode(true);
+
+    // Wrap it in an <li> for valid HTML
+    const li = document.createElement('li');
+    li.appendChild(clonedContent);
+    menu.appendChild(li);
+
+    // Mark that insertion has been done
+    menu.dataset.extraInserted = 'true';
+  }
 }
 
 ///////  Navigation through tabs begin /////////////////
