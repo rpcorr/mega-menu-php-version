@@ -415,3 +415,10 @@ h4 {
 h5 {
   border-bottom: 0.15rem dashed #000;
 }
+
+/* Mobile styles */
+@media (max-width: 960px) {
+  .mega-menu .grid-container-pages {
+    grid-template-columns: 2fr;
+  }
+}

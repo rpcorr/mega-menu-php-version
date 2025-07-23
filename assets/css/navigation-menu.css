@@ -315,6 +315,10 @@ nav {
   left: -9999px;
 }
 
+.hidden {
+  display: none;
+}
+
 /* Initial state of the submenu (hidden or collapsed) */
 
 body.has-hover ul#menu-main-menu .hover:hover > ul ul.sub-menu,

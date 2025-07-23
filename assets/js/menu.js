@@ -630,23 +630,15 @@ function onResize() {
     const menu = document.getElementById('menu-main-menu');
     const lastLi = menu.lastElementChild;
 
-    if (window.innerWidth >= 961) {
-      if (menu) {
-        // Check if last <li> has exactly one child and it's a <div class="extra-content">
-        if (
-          lastLi &&
-          lastLi.tagName === 'LI' &&
-          lastLi.children.length === 1 &&
-          lastLi.firstElementChild.tagName === 'DIV' &&
-          lastLi.firstElementChild.classList.contains('extra-content')
-        ) {
-          // found therefore hide last <li>
-          lastLi.style.display = 'none';
-        }
+    if (menu) {
+      console.log(window.innerWidth);
+      if (window.innerWidth >= 961) {
+        // hide the last element of the main nav - large screens
+        lastLi.classList.add('hidden');
+      } else {
+        // small screens
+        lastLi.classList.remove('hidden');
       }
-    } else {
-      // display extra content block
-      lastLi.style.display = 'block';
     }
   }
 }
@@ -1818,9 +1810,7 @@ function renderExtraContent(contentData, menuContainer) {
   // Hide listitem siblings after collapsed anchors on initial load
   hideListItemsInitially();
 
-  if (window.innerWidth <= 961) {
-    displayExtraContentAtBottomOfMenuForSmallScreens();
-  }
+  displayExtraContentAtBottomOfMenuForSmallScreens();
 }
 
 function displayExtraContentAtBottomOfMenuForSmallScreens() {
@@ -1842,6 +1832,11 @@ function displayExtraContentAtBottomOfMenuForSmallScreens() {
 
     // Mark that insertion has been done
     menu.dataset.extraInserted = 'true';
+
+    if (window.innerWidth > 961) {
+      // large screens
+      li.classList.add('hidden');
+    }
   }
 }
 
