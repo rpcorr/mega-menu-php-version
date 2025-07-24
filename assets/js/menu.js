@@ -1830,6 +1830,7 @@ function displayExtraContentAtBottomOfMenuForSmallScreens() {
 
     // Wrap it in an <li> for valid HTML
     const li = document.createElement('li');
+    li.setAttribute('aria-hidden', 'true');
     li.appendChild(clonedContent);
     menu.appendChild(li);
 
