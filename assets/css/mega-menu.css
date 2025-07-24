@@ -423,7 +423,8 @@ h5 {
   }
 
   .mega-menu .grid-container-multiple {
-    grid-template-columns: 300px 1fr;
+    /* grid-template-columns: 300px 1fr; */
+    grid-template-columns: 1fr;
   }
 
   .mega-menu .grid-container-pages,
