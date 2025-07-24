@@ -425,4 +425,8 @@ h5 {
   .mega-menu .grid-container-multiple {
     grid-template-columns: 300px 1fr;
   }
+
+  .menu-main-menu-container > #menu-main-menu > li > .mega-menu {
+    top: unset;
+  }
 }
