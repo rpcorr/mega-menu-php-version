@@ -631,13 +631,16 @@ function onResize() {
     const lastLi = menu.lastElementChild;
 
     if (menu) {
-      console.log(window.innerWidth);
+      const allExtraContent = document.querySelectorAll('.extra-content');
+      const extraContentExceptLast = Array.from(allExtraContent).slice(0, -1);
       if (window.innerWidth >= 961) {
-        // hide the last element of the main nav - large screens
+        // hide the last element of the main nav and show extra content in mega menu  - (large screens)
         lastLi.classList.add('hidden');
+        extraContentExceptLast.forEach((el) => el.classList.remove('hidden'));
       } else {
-        // small screens
+        // show the last element of the main nav and hide extra content in mega menu  - small screens
         lastLi.classList.remove('hidden');
+        extraContentExceptLast.forEach((el) => el.classList.add('hidden'));
       }
     }
   }
@@ -1838,9 +1841,20 @@ function displayExtraContentAtBottomOfMenuForSmallScreens() {
       li.classList.add('hidden');
     }
   }
+
+  if (window.innerWidth < 961) {
+    // call hide all extra content except for the last one
+    hideAllExtraContentExceptForLastOne();
+  }
 }
 
 ///////  Navigation through tabs begin /////////////////
+
+function hideAllExtraContentExceptForLastOne() {
+  const allExtraContent = document.querySelectorAll('.extra-content');
+  const extraContentExceptLast = Array.from(allExtraContent).slice(0, -1);
+  extraContentExceptLast.forEach((el) => el.classList.add('hidden'));
+}
 
 function setTabsContainer() {
   // Find the main tabs container element
