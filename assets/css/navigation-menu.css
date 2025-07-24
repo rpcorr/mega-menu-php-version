@@ -597,6 +597,10 @@ ul.sub-menu li > ul.sub-menu {
     display: flex;
   }
 
+  #adminMenu > .sub-menu {
+    margin-top: 0;
+  }
+
   #profileMenu {
     text-align: left;
     width: 100%;
