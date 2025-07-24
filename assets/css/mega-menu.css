@@ -436,3 +436,27 @@ h5 {
     top: unset;
   }
 }
+
+@media (max-width: 479px) {
+  .tabs__panels {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .left-content > [role='listitem'] {
+    flex: 0 0 50%; /* Two per row */
+    box-sizing: border-box;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .tabs__panels {
+    grid-template-columns: 1fr;
+  }
+
+  .left-content > [role='listitem'] {
+    flex: 0 0 100%; /* One per row */
+    box-sizing: border-box;
+    padding-right: 0;
+  }
+}
