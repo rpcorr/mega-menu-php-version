@@ -426,6 +426,11 @@ h5 {
     grid-template-columns: 300px 1fr;
   }
 
+  .mega-menu .grid-container-pages,
+  .mega-menu .grid-container-multiple {
+    padding-right: 0.15rem;
+  }
+
   .menu-main-menu-container > #menu-main-menu > li > .mega-menu {
     top: unset;
   }
