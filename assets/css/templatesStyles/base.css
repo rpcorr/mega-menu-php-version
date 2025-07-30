@@ -6,31 +6,20 @@
   --skipNavTextColour: #000;
   --skipNavBorderColour: #60bd68;
 
-  --headingOneTextColour: #1d6b2a;
-  --headingTwoTextColour: #004471;
-
   --topMenuBgColour: #fff;
   --topMenuTextColour: #0f172a;
 
-  --firstSubLevelBgColour: #fff;
-  --firstSubLevelTextColour: #0a2939;
+  --menuBorderColour: #60bd68;
+  --menuBgColour: #f5fff5;
+  --menuTransparentColour: rgba(96, 189, 104, 0.5);
 
-  --secondSubLevelBgColour: #4fc7f4;
-  --secondSubLevelTextColour: #0a2939;
-
-  --thirdSubLevelBgColour: #337ab7;
-  --thirdSubLevelTextColour: #fff;
-
-  --fourthSubLevelBgColour: #1fb7f1;
-  --fourthSubLevelTextColour: #0a2939;
-
-  --bgColourHoverActiveFocus: #fff;
-  --textColourHoverActiveFocus: #0a2939;
-
-  --bgColourHoverActiveFocusAlt: #60bd68;
-  --textColourHoverActiveFocusAlt: #0a2939;
-
-  --bottomBorderColour: transparent;
+  --arrowFillColour: var(--menuBgColour);
+  --arrowStrokeColour: var(--topMenuTextColour);
 
   --bodyBackgroundColour: #c1c1c1;
+
+  --headingOneTextColour: #1d6b2a;
+  --headingTwoTextColour: #004471;
+
+  --bottomBorderColour: transparent;
 }
