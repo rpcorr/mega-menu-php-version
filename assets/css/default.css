@@ -136,7 +136,7 @@ ul#menu-main-menu a {
 
 /* first submenu background colour */
 #menu-main-menu > li.menu-item-has-children > ul.sub-menu {
-  background-color: rgba(96, 189, 104, 0.9);
+  background-color: #fff;
 }
 
 /* first submenu text colour */
