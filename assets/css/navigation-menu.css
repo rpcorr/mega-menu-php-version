@@ -67,18 +67,26 @@ nav ul > li ul > li ul > li ul > li {
 #menu-main-menu > li > a:hover,
 #menu-main-menu > li[aria-expanded='true'] > a,
 #menu-main-menu > li > a:focus-visible {
-  border-color: #60bd68;
-  background-color: #f5fff5;
+  border-color: #000;
+  background-color: #fff;
 }
 
 #menu-main-menu > li > a:focus-visible {
   outline: none; /* remove default blue outline */
-  box-shadow: 0 0 0 2px rgba(96, 189, 104, 0.5); /* match #60bd68 with transparency */
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.5); /* match #000000 with transparency */
   border-radius: 4px; /* optional: softens edges */
 }
 
 #menu-main-menu > li:not(.hidden-links) {
   white-space: nowrap;
+}
+
+ul#menu-main-menu a:active {
+  color: #000;
+}
+
+ul.menu li:hover a > i.angle-down:before {
+  border-top: 7px solid #000;
 }
 
 /* https://codepen.io/scottb/pen/gixIv */
@@ -254,7 +262,7 @@ nav {
 #profileMenu > .sub-menu {
   background-color: #fff; /* Match your design background */
   display: none; /* Hidden by default */
-  border: 2px solid #60bd68;
+  border: 2px solid #000;
   border-top: none !important;
   margin-top: -8px;
   box-shadow: inset 0 4px 4px #fff !important; /* optional, if needed */
@@ -355,8 +363,8 @@ ul#menu-main-menu
 }
 
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:hover {
-  background-color: #f5fff5;
-  border-color: #60bd68;
+  background-color: #fff;
+  border-color: #000;
 }
 
 .menu-main-menu-container
@@ -572,7 +580,7 @@ ul.sub-menu li > ul.sub-menu {
   }
 
   #menu-main-menu > li.menu-item-has-children > ul.sub-menu {
-    box-shadow: unset;
+    /* box-shadow: unset; */
   }
 
   #menu-main-menu > li > a {
