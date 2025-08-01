@@ -34,17 +34,22 @@ ul#menu-main-menu a:active {
   color: var(--arrowStrokeColour);
 }
 
-/* top-level carat stroke when #moreSubMenu is hover and menu is closed */
-ul.menu li:hover a > i.angle-down:before {
-  /*border-top: 7px solid var(--arrowStrokeColour);*/
-}
-
 /* maintain main menu text colour on hover when a sub menu item is selected */
 .menu-main-menu-container
   > #menu-main-menu
   > li.menu-item-has-children:hover
   > a:link {
   color: var(--topMenuTextColour);
+}
+
+/** submenus **/
+#menu-main-menu > li.menu-item-has-children > ul.sub-menu {
+  background-color: var(--subMenuBgColour) !important;
+}
+
+.sub-menu > li a:focus-visible {
+  border: 1px solid var(--menuBorderColour) !important;
+  background-color: var(--menuHoverBgColour) !important;
 }
 
 /***** Carets *****/
@@ -71,7 +76,9 @@ ul.menu li:hover a > i.angle-down:before {
 /* down arrow fill colour on a:hover, a:active, a:focus */
 .menu-item-has-children a:hover i.angle-down:after,
 .menu-item-has-children a:active i.angle-down:after,
-.menu-item-has-children a:focus i.angle-down:after {
+.menu-item-has-children a:focus i.angle-down:after,
+.menu-item-has-children:hover i.angle-down:after,
+.menu-item-has-children:active i.angle-down:after {
   border-top: 4px solid var(--arrowFillColour);
 }
 
@@ -79,7 +86,7 @@ ul.menu li:hover a > i.angle-down:before {
 
 /* up arrow stroke colour */
 .menu-item-has-children i.angle-up:before {
-  border-bottom: 7px solid var(--topMenuTextColour);
+  border-bottom: 7px solid var(--arrowStrokeColour);
 }
 
 /* up arrow stroke colour on hover, a:focus */
@@ -103,7 +110,8 @@ ul.menu li:hover a > i.angle-down:before {
 #menu-main-menu > li[aria-expanded='true'] > a,
 #menu-main-menu > li > a:focus-visible {
   border-color: var(--menuBorderColour);
-  background-color: var(--menuBgColour);
+  background-color: var(--menuHoverBgColour);
+  color: var(--topMenuHoverTextColour);
 }
 
 #menu-main-menu > li > a:focus-visible {
@@ -113,6 +121,13 @@ ul.menu li:hover a > i.angle-down:before {
 #adminMenu > .sub-menu,
 #profileMenu > .sub-menu {
   border: 2px solid var(--menuBorderColour);
+  background-color: var(--menuHoverBgColour);
+  box-shadow: inset 0 4px 4px var(--menuHoverBgColour) !important;
+}
+
+.menu-main-menu-container > #menu-main-menu > li > .sub-menu a {
+  color: var(--subMenuTextColour);
+  border: 1px solid var(--subMenuBgColour);
 }
 
 /* headings text colour */

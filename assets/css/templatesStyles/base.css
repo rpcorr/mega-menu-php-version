@@ -8,13 +8,17 @@
 
   --topMenuBgColour: #fff;
   --topMenuTextColour: #0f172a;
+  --topMenuHoverTextColour: #0f172a;
 
   --menuBorderColour: #60bd68;
-  --menuBgColour: #f5fff5;
+  --menuHoverBgColour: #f5fff5;
   --menuTransparentColour: rgba(96, 189, 104, 0.5);
 
-  --arrowFillColour: var(--menuBgColour);
-  --arrowStrokeColour: var(--topMenuTextColour);
+  --subMenuBgColour: var(--menuHoverBgColour);
+  --subMenuTextColour: var(--topMenuTextColour);
+
+  --arrowFillColour: var(--menuHoverBgColour);
+  --arrowStrokeColour: var(--topMenuHoverTextColour);
 
   --bodyBackgroundColour: #c1c1c1;
 
