@@ -12,7 +12,7 @@
 
   --menuBorderColour: #235fa4;
   --menuHoverBgColour: #e8f086;
-  --menuTransparentColour: rgba(96, 189, 104, 0.5);
+  --menuTransparentColour: rgba(35, 95, 164, 0.5);
 
   --subMenuBgColour: var(--menuHoverBgColour);
   --subMenuTextColour: var(--topMenuTextColour);
