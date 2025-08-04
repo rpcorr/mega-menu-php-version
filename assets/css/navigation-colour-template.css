@@ -42,14 +42,27 @@ ul#menu-main-menu a:active {
   color: var(--topMenuTextColour);
 }
 
+.menu-main-menu-container
+  > #menu-main-menu
+  > li.menu-item-has-children:hover
+  > a:hover {
+  color: var(--topMenuHoverTextColour);
+}
+
 /** submenus **/
 #menu-main-menu > li.menu-item-has-children > ul.sub-menu {
   background-color: var(--subMenuBgColour) !important;
 }
 
-.sub-menu > li a:focus-visible {
+.sub-menu > li a:focus-visible,
+.menu-main-menu-container > #menu-main-menu > li > .sub-menu a:hover {
   border: 1px solid var(--menuBorderColour) !important;
   background-color: var(--menuHoverBgColour) !important;
+  color: var(--topMenuHoverTextColour);
+}
+
+.menu-main-menu-container > #menu-main-menu > li > .sub-menu a:focus {
+  color: var(--topMenuHoverTextColour);
 }
 
 /***** Carets *****/
@@ -111,7 +124,7 @@ ul#menu-main-menu a:active {
 #menu-main-menu > li > a:focus-visible {
   border-color: var(--menuBorderColour);
   background-color: var(--menuHoverBgColour);
-  color: var(--topMenuHoverTextColour);
+  color: var(--topMenuHoverTextColour) !important;
 }
 
 #menu-main-menu > li > a:focus-visible {
@@ -128,6 +141,11 @@ ul#menu-main-menu a:active {
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a {
   color: var(--subMenuTextColour);
   border: 1px solid var(--subMenuBgColour);
+}
+
+.menu-main-menu-container > #menu-main-menu > li > .sub-menu a:hover {
+  /* background-color: peru; */
+  /* border-color: blue; */
 }
 
 /* headings text colour */

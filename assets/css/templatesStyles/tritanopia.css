@@ -4,29 +4,26 @@
 
   --skipNavBgColour: #194b4f;
   --skipNavTextColour: #fff;
-
-  --headingOneTextColour: #194b4f;
+  --skipNavBorderColour: #000;
 
   --topMenuBgColour: #dd4444;
   --topMenuTextColour: #000;
+  --topMenuHoverTextColour: #fff;
 
-  --firstSubLevelBgColour: rgba(244, 128, 128, 0.9);
-  --firstSubLevelTextColour: #000;
+  --menuBorderColour: #ffdcdc;
+  --menuHoverBgColour: #194b4f;
+  --menuTransparentColour: rgba(25, 75, 79, 0.5);
 
-  --secondSubLevelBgColour: #2d676f;
-  --secondSubLevelTextColour: #fff;
+  --subMenuBgColour: var(--menuHoverBgColour);
+  --subMenuTextColour: var(--topMenuHoverTextColour);
 
-  --thirdSubLevelBgColour: #dd4444;
-  --thirdSubLevelTextColour: #000;
+  --arrowFillColour: var(--menuHoverBgColour);
+  --arrowStrokeColour: var(--topMenuHoverTextColour);
 
-  --fourthSubLevelBgColour: #f48080;
-  --fourthSubLevelTextColour: #000;
+  --bodyBackgroundColour: #c1c1c1;
 
-  --bgColourHoverActiveFocus: #194b4f;
-  --textColourHoverActiveFocus: #fff;
+  --headingOneTextColour: #194b4f;
+  --headingTwoTextColour: #2d676f;
 
-  --bgColourHoverActiveFocusAlt: #194b4f;
-  --textColourHoverActiveFocusAlt: #fff;
-
-  --bottomBorderColour: #194b4f;
+  --bottomBorderColour: var(--menuBorderColour);
 }
