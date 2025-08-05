@@ -170,4 +170,12 @@ h2 {
   ul#menu-main-menu a {
     color: var(--subMenuTextColour);
   }
+
+  .menu-item-has-children i.angle-down:before {
+    border-top: 7px solid var(--subMenuTextColour);
+  }
+
+  .menu-item-has-children i.angle-down:after {
+    border-top: 4px solid var(--subMenuBgColour);
+  }
 }
