@@ -148,6 +148,11 @@ ul#menu-main-menu a:active {
   /* border-color: blue; */
 }
 
+/*hamburger bars colour*/
+.hamburger-bar {
+  background-color: var(--topMenuTextColour);
+}
+
 /* headings text colour */
 h1 {
   color: var(--headingOneTextColour);
