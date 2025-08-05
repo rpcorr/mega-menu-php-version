@@ -552,7 +552,7 @@ ul.sub-menu li > ul.sub-menu {
   #menu-main-menu {
     display: none;
     flex-direction: column;
-    gap: 0.5rem;
+    /* gap: 0.5rem; */
     background: #fff;
     position: fixed;
     top: 98px;
