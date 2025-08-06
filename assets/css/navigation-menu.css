@@ -678,3 +678,33 @@ ul.sub-menu li > ul.sub-menu {
     flex-direction: row;
   }
 }
+
+@media (max-width: 768px) {
+  #profileMenu > a {
+    width: 23% !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #profileMenu > a {
+    width: 30% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #profileMenu > a {
+    width: 37% !important;
+  }
+}
+
+@media (max-width: 375px) {
+  #profileMenu > a {
+    width: 47% !important;
+  }
+}
+
+@media (max-width: 320px) {
+  #profileMenu > a {
+    width: 55% !important;
+  }
+}
