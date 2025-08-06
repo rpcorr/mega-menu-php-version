@@ -25,5 +25,5 @@
   --headingOneTextColour: #000;
   --headingTwoTextColour: #009999;
 
-  --bottomBorderColour: var(--menuBorderColour);
+  --bottomBorderColour: var(--menuHoverBgColour);
 }

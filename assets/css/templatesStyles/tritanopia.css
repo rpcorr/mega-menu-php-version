@@ -25,5 +25,5 @@
   --headingOneTextColour: #194b4f;
   --headingTwoTextColour: #2d676f;
 
-  --bottomBorderColour: var(--menuBorderColour);
+  --bottomBorderColour: #000;
 }
