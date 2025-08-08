@@ -14,6 +14,9 @@ const sidebar = document.getElementById('sidebar');
 
 let allMenuItemsinArray;
 
+const BREAKPOINT = 960;
+let isMobileLayout = null;
+
 // LibPAS, InformUS, LibSat menu items
 const menuMap = {
   2: {
@@ -103,84 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return response.json();
     })
     .then((data) => {
-      allMenuItemsinArray = data;
-
-      // Initialize an empty object to hold grouped pages
-      const groupedSections = {};
-
-      // Loop through each page in the data
-      data.pages.forEach((page) => {
-        const { section_id, section_prompt } = page;
-
-        // Ensure the section_id exists in the groupedSections object
-        if (!groupedSections[section_id]) {
-          groupedSections[section_id] = {
-            nonNull: [],
-            null: [],
-          };
-        }
-
-        // Push the page to the appropriate array based on section_prompt
-        if (section_prompt === null) {
-          groupedSections[section_id].null.push(page);
-        } else {
-          groupedSections[section_id].nonNull.push(page);
-        }
-      });
-
-      // Create a final array of grouped results with section_prompt
-      const finalGroupedArray = Object.entries(groupedSections).map(
-        ([section_id, { nonNull, null: nullPages }]) => {
-          // Get the section_prompt from the first non-null page (if exists) or use null
-          const section_prompt =
-            nonNull.length > 0 ? nonNull[0].section_prompt : null;
-
-          return {
-            section_id,
-            section_prompt, // Add the section_prompt
-            pages: [...nonNull, ...nullPages], // Combine non-null pages with null pages at the end
-          };
-        }
-      );
-
-      // Check if there's no entry with section_id equal to zero
-      const hasSectionZero = finalGroupedArray.some(
-        (section) => section.section_id === '0'
-      );
-
-      if (!hasSectionZero) {
-        // Add an entry for section_id = 0 with an empty pages array
-        finalGroupedArray.push({
-          section_id: '0',
-          section_prompt: null,
-          pages: [],
-        });
-      }
-
-      // Define the custom order for section_ids
-      const customOrder = ['0', '8', '2', '5', '1'];
-
-      // Sort the finalGroupedArray based on the custom order
-      finalGroupedArray.sort((a, b) => {
-        return (
-          customOrder.indexOf(a.section_id) - customOrder.indexOf(b.section_id)
-        );
-      });
-
-      if (finalGroupedArray.length > 1) {
-        // Create a deep clone and modify it
-        const cloneGroupedArray = JSON.parse(JSON.stringify(finalGroupedArray)); // Deep clone
-
-        // Modify the cloned array
-        cloneGroupedArray.forEach((section) => {
-          if (section.section_id !== '1') {
-            // If you want to keep the pages, uncomment the next line
-            delete section.pages;
-          }
-          delete section.section_id; // Remove from section
-          delete section.section_prompt; // Remove from section
-        });
-      }
+      const finalGroupedArray = finalGroupedArrayFunction(data);
 
       function createMenu(menuData) {
         let menuHTML = '';
@@ -642,6 +568,9 @@ function onResize() {
         lastLi.classList.remove('hidden');
         extraContentExceptLast.forEach((el) => el.classList.add('hidden'));
       }
+
+      //call toggleTabPanelsLayout
+      toggleTabPanelsLayout(true);
     }
   }
 }
@@ -803,6 +732,9 @@ function toggleTopLevelMenu(menuLink) {
 
   // Update the sidebar content based on the selected top-level menu
   if (sidebar) populateSidebar();
+
+  // call toggleTabPanelsLayout
+  toggleTabPanelsLayout(false);
 }
 
 function toggleAriaExpanded(menuLink) {
@@ -1305,6 +1237,13 @@ function getMegaMenu(menuContainer, type, menuData) {
       }
     }
   });
+
+  // // Initial call
+  // if (type === 'multiple') {
+  //   console.log('here I am');
+  //   console.log(document.querySelector('.menu-list'));
+  //   //toggleTabPanelsLayout();
+  // }
 }
 
 /**
@@ -1859,7 +1798,9 @@ function hideAllExtraContentExceptForLastOne() {
 
 function setTabsContainer() {
   // Find the main tabs container element
+
   const tabsContainer = document.querySelector('.tabs-container');
+
   if (!tabsContainer) return; // If no container is found, exit early
 
   // Find the <ul> element inside the tabs container (assumed to be the list of tabs)
@@ -2069,6 +2010,8 @@ function applyAdjustedBorderToTabs() {
       el.style.borderBottomStyle = borderBottomStyle;
       el.style.borderBottomWidth = adjustedWidth;
     });
+
+  //toggleTabPanelsLayout();
 }
 
 function getInitials(user) {
@@ -2539,4 +2482,139 @@ function hideChildrenReports(groupChildren) {
       }
     }
   });
+}
+
+function toggleTabPanelsLayout(calledFromResized) {
+  const container = document.querySelector(
+    '.grid-container-multiple.tabs-container'
+  );
+  const tabList = container?.querySelector('[role="tablist"]');
+  const menuList = tabList?.querySelector('.menu-list') || null;
+  const tabPanels = container.querySelectorAll('.tabs__panels');
+
+  const screenIsMobile = window.innerWidth <= BREAKPOINT;
+
+  // Exit if layout hasn't changed
+  //if (screenIsMobile === isMobileLayout) return;
+
+  if (screenIsMobile) {
+    // Switch to mobile layout
+    tabPanels.forEach((panel) => {
+      const tabId = panel.getAttribute('aria-labelledby');
+      const correspondingTab = document.getElementById(tabId);
+      if (correspondingTab) {
+        const li = correspondingTab.closest('li');
+        if (li && !li.contains(panel)) {
+          li.appendChild(panel);
+        }
+      }
+    });
+
+    // Hide extra-content
+    const extra = container.querySelector('.extra-content');
+    if (extra) extra.classList.add('hidden');
+
+    isMobileLayout = true;
+  } else {
+    // Switch to desktop layout
+
+    if (calledFromResized) {
+      document.querySelector('div[role="tablist"]')?.remove();
+      document.querySelector('div.extra-content')?.remove();
+
+      const menuData = finalGroupedArrayFunction(allMenuItemsinArray);
+
+      //getMegaMenu(container, 'multiple', menuData);
+      populateMegaMenu(menuData);
+    }
+
+    // Show extra-content
+    const extra = container.querySelector('.extra-content');
+    if (extra) extra.classList.remove('hidden');
+
+    isMobileLayout = false;
+  }
+}
+
+function finalGroupedArrayFunction(data) {
+  allMenuItemsinArray = data;
+
+  // Initialize an empty object to hold grouped pages
+  const groupedSections = {};
+
+  // Loop through each page in the data
+  data.pages.forEach((page) => {
+    const { section_id, section_prompt } = page;
+
+    // Ensure the section_id exists in the groupedSections object
+    if (!groupedSections[section_id]) {
+      groupedSections[section_id] = {
+        nonNull: [],
+        null: [],
+      };
+    }
+
+    // Push the page to the appropriate array based on section_prompt
+    if (section_prompt === null) {
+      groupedSections[section_id].null.push(page);
+    } else {
+      groupedSections[section_id].nonNull.push(page);
+    }
+  });
+
+  // Create a final array of grouped results with section_prompt
+  const finalGroupedArray = Object.entries(groupedSections).map(
+    ([section_id, { nonNull, null: nullPages }]) => {
+      // Get the section_prompt from the first non-null page (if exists) or use null
+      const section_prompt =
+        nonNull.length > 0 ? nonNull[0].section_prompt : null;
+
+      return {
+        section_id,
+        section_prompt, // Add the section_prompt
+        pages: [...nonNull, ...nullPages], // Combine non-null pages with null pages at the end
+      };
+    }
+  );
+
+  // Check if there's no entry with section_id equal to zero
+  const hasSectionZero = finalGroupedArray.some(
+    (section) => section.section_id === '0'
+  );
+
+  if (!hasSectionZero) {
+    // Add an entry for section_id = 0 with an empty pages array
+    finalGroupedArray.push({
+      section_id: '0',
+      section_prompt: null,
+      pages: [],
+    });
+  }
+
+  // Define the custom order for section_ids
+  const customOrder = ['0', '8', '2', '5', '1'];
+
+  // Sort the finalGroupedArray based on the custom order
+  finalGroupedArray.sort((a, b) => {
+    return (
+      customOrder.indexOf(a.section_id) - customOrder.indexOf(b.section_id)
+    );
+  });
+
+  if (finalGroupedArray.length > 1) {
+    // Create a deep clone and modify it
+    const cloneGroupedArray = JSON.parse(JSON.stringify(finalGroupedArray)); // Deep clone
+
+    // Modify the cloned array
+    cloneGroupedArray.forEach((section) => {
+      if (section.section_id !== '1') {
+        // If you want to keep the pages, uncomment the next line
+        delete section.pages;
+      }
+      delete section.section_id; // Remove from section
+      delete section.section_prompt; // Remove from section
+    });
+  }
+
+  return finalGroupedArray;
 }
