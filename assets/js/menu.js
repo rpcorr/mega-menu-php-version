@@ -2515,6 +2515,14 @@ function toggleTabPanelsLayout(calledFromResized) {
     if (extra) extra.classList.add('hidden');
 
     isMobileLayout = true;
+
+    document.querySelectorAll('.selected-tab').forEach((el) => {
+      el.classList.remove('selected-tab');
+    });
+
+    document.querySelectorAll('.tabs__panels').forEach((el) => {
+      el.classList.add('hidden');
+    });
   } else {
     // Switch to desktop layout
 

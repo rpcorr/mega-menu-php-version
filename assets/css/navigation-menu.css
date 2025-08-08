@@ -311,7 +311,7 @@ nav {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 /* Initial state of the submenu (hidden or collapsed) */
