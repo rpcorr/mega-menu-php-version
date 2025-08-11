@@ -1850,7 +1850,8 @@ function moveTab(menuContainer, type, direction, menuData = []) {
 // Handles tab switching and menu rendering based on the clicked tab
 function switchTab(clickedTab, menuContainer, type, menuData = []) {
   // Find the closest parent <li> element and retrieve its ID in lowercase
-  const id = clickedTab.closest('li')?.id?.toLowerCase();
+  const id = clickedTab.closest('li')?.id;
+  const idLowerCase = clickedTab.closest('li')?.id?.toLowerCase();
 
   // Exit early if no valid ID is found
   if (!id) {
@@ -1862,7 +1863,7 @@ function switchTab(clickedTab, menuContainer, type, menuData = []) {
   const menu = createMenuItems(menuData);
 
   // Determine which tab was clicked and render the corresponding menu
-  switch (id) {
+  switch (idLowerCase) {
     case 'libpas':
       // For 'LibPAS', render the menu according to the type ('multiple' or 'single')
       if (type === 'multiple') {
@@ -1896,6 +1897,32 @@ function switchTab(clickedTab, menuContainer, type, menuData = []) {
     renderExtraContent(extraContent, menuContainer);
   } else {
     console.error('Error: extraContent is undefined or not an array.');
+  }
+
+  if (window.innerWidth < 961) {
+    console.log(`Selected tab ID: ${id}`);
+
+    const panel = document.querySelector(`[aria-labelledby="tab-${id}"]`);
+    console.log(panel);
+
+    // Find the <li> with that ID
+    const liElement = document.getElementById(id);
+    if (!liElement) {
+      console.warn(`No <li> found with id="${id}"`);
+      return;
+    }
+
+    // The div to replace is the next sibling after <li>
+    const contentDiv = liElement.nextElementSibling;
+    if (contentDiv && contentDiv.tagName.toLowerCase() === 'div') {
+      if (panel) {
+        contentDiv.replaceWith(panel);
+      } else {
+        console.warn('Panel not found');
+      }
+    } else {
+      console.warn('No div found immediately after <li> to replace');
+    }
   }
 }
 

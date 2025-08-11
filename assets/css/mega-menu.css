@@ -435,6 +435,14 @@ h5 {
   .menu-main-menu-container > #menu-main-menu > li > .mega-menu {
     top: unset;
   }
+
+  #LibPAS:has(p.selected-tab) + div,
+  #InformsUs:has(p.selected-tab) + div,
+  #LibSat:has(p.selected-tab) + div {
+    display: block;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
 }
 
 @media (max-width: 479px) {
@@ -459,4 +467,10 @@ h5 {
     box-sizing: border-box;
     padding-right: 0;
   }
+}
+
+#LibPAS + div,
+#InformsUs + div,
+#LibSat + div {
+  display: none;
 }

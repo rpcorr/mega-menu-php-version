@@ -26,6 +26,7 @@
       <li role="presentation"><img src="" alt="" /><p><a href="" role="tab"><strong></strong><br/><span></span></a></p> <div class="circle">
           <div class="caret"></div>
         </div></li>
+        <div>Content goes here</div>
     </template> 
 
     <template id="oneMenuTemplate">
