@@ -423,8 +423,8 @@ h5 {
   }
 
   .mega-menu .grid-container-multiple {
-    /* grid-template-columns: 300px 1fr; */
     grid-template-columns: 1fr;
+    overflow: visible; /* <-- prevents parent from clipping the scroll */
   }
 
   .mega-menu .grid-container-pages,
@@ -433,15 +433,27 @@ h5 {
   }
 
   .menu-main-menu-container > #menu-main-menu > li > .mega-menu {
-    top: unset;
+    top: -98px;
+    /* top: unset; */
   }
 
+  /* Active panel & all tab panels share the same scroll settings */
   #LibPAS:has(p.selected-tab) + div,
   #InformsUs:has(p.selected-tab) + div,
-  #LibSat:has(p.selected-tab) + div {
+  #LibSat:has(p.selected-tab) + div,
+  .tabs__panels[role='tabpanel'] {
     display: block;
     overflow-y: auto;
     scrollbar-gutter: stable;
+    padding-bottom: 2rem;
+    scroll-padding-bottom: 2rem; /* ensures last item is visible */
+    /* remove height: 100% unless ALL parents have defined heights */
+    /*max-height: 80vh;*/ /* safer for mobile scrolling */
+  }
+
+  /* optional: gap after last item */
+  .tabs__panels[role='tabpanel'] [role='listitem']:last-of-type {
+    scroll-margin-bottom: 2rem;
   }
 }
 

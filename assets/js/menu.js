@@ -2653,3 +2653,127 @@ function finalGroupedArrayFunction(data) {
 
   return finalGroupedArray;
 }
+
+(() => {
+  const mq = window.matchMedia('(max-width: 960px)');
+
+  function getActivePanel() {
+    // Your CSS marks the selected tab with <p class="selected-tab">
+    const selectedP = document.querySelector('.menu-list p.selected-tab');
+    if (!selectedP) return null;
+
+    const li = selectedP.closest('li');
+    if (!li) return null;
+
+    // Find the sibling tab panel
+    let sib = li.nextElementSibling;
+    while (
+      sib &&
+      !(sib.matches && sib.matches(".tabs__panels[role='tabpanel']"))
+    ) {
+      sib = sib.nextElementSibling;
+    }
+    return sib || null;
+  }
+
+  function ensureLastItemsVisible(panel = getActivePanel()) {
+    if (!panel || !mq.matches) return;
+
+    const items = panel.querySelectorAll("[role='listitem']");
+    if (items.length < 2) return;
+
+    // Check last two items
+    const lastTwo = [items[items.length - 2], items[items.length - 1]];
+
+    const panelRect = panel.getBoundingClientRect();
+    const cs = getComputedStyle(panel);
+    const paddingBottom = parseFloat(cs.paddingBottom) || 0;
+    const paddingTop = parseFloat(cs.paddingTop) || 0;
+
+    // Calculate bounding rect that encloses last two items
+    const combinedRect = lastTwo.reduce(
+      (acc, el) => {
+        const r = el.getBoundingClientRect();
+        return {
+          top: Math.min(acc.top, r.top),
+          bottom: Math.max(acc.bottom, r.bottom),
+        };
+      },
+      { top: Infinity, bottom: -Infinity }
+    );
+
+    // If bottom of lastTwo is below visible bottom, scroll down
+    if (combinedRect.bottom > panelRect.bottom - paddingBottom) {
+      const scrollOffset =
+        panel.scrollTop +
+        (combinedRect.bottom - panelRect.bottom) +
+        paddingBottom;
+      panel.scrollTop = scrollOffset;
+    }
+
+    // If top of lastTwo is above visible top, scroll up
+    else if (combinedRect.top < panelRect.top + paddingTop) {
+      const scrollOffset =
+        panel.scrollTop - (panelRect.top + paddingTop - combinedRect.top);
+      panel.scrollTop = scrollOffset < 0 ? 0 : scrollOffset;
+    }
+  }
+
+  function onTabChange() {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        ensureLastItemsVisible();
+      });
+    });
+  }
+
+  function watchPanelContent(panel) {
+    if (!panel) return;
+    const observer = new MutationObserver(() => ensureLastItemsVisible(panel));
+    observer.observe(panel, { childList: true, subtree: true });
+    panel._lastItemObserver = observer;
+  }
+
+  function cleanupObservers() {
+    document.querySelectorAll(".tabs__panels[role='tabpanel']").forEach((p) => {
+      if (p._lastItemObserver) {
+        p._lastItemObserver.disconnect();
+        p._lastItemObserver = null;
+      }
+    });
+  }
+
+  // Tab click listener
+  document.addEventListener('click', (e) => {
+    const tab = e.target.closest("[role='tab']");
+    if (!tab) return;
+    setTimeout(() => {
+      onTabChange();
+      cleanupObservers();
+      watchPanelContent(getActivePanel());
+    }, 0);
+  });
+
+  // Breakpoint change
+  mq.addEventListener('change', () => {
+    if (mq.matches) {
+      onTabChange();
+      watchPanelContent(getActivePanel());
+    } else {
+      cleanupObservers();
+    }
+  });
+
+  // Resize handler
+  window.addEventListener('resize', () => {
+    if (mq.matches) ensureLastItemsVisible();
+  });
+
+  // Init on DOM load
+  document.addEventListener('DOMContentLoaded', () => {
+    if (mq.matches) {
+      onTabChange();
+      watchPanelContent(getActivePanel());
+    }
+  });
+})();
