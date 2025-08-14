@@ -17,6 +17,8 @@ let allMenuItemsinArray;
 const BREAKPOINT = 960;
 let isMobileLayout = null;
 
+let lastClickedTabId = null;
+
 // LibPAS, InformUS, LibSat menu items
 const menuMap = {
   2: {
@@ -1194,6 +1196,7 @@ function getMegaMenu(menuContainer, type, menuData) {
 
       if (!tabButtons.includes(document.activeElement)) return;
 
+      console.log(event.key);
       switch (event.key) {
         case 'ArrowLeft':
           moveTab(menuContainer, type, -1, menuData);
@@ -1362,14 +1365,26 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
     });
 
     // Toggle selected-tab class
-    tablistWrapper.querySelectorAll('li[role="presentation"]').forEach((li) => {
-      const wrapper = li.querySelector('p');
-      const anchor = li.querySelector('a[role="tab"]');
-      if (wrapper && anchor) {
-        const isSelected = anchor.getAttribute('aria-selected') === 'true';
-        wrapper.classList.toggle('selected-tab', isSelected);
-      }
-    });
+    // tablistWrapper.querySelectorAll('li[role="presentation"]').forEach((li) => {
+    //   const wrapper = li.querySelector('p');
+    //   const anchor = li.querySelector('a[role="tab"]');
+    //   if (wrapper && anchor) {
+    //     const isSelected = anchor.getAttribute('aria-selected') === 'true';
+    //     wrapper.classList.toggle('selected-tab', isSelected);
+    //   }
+    // });
+
+    let modifyCurrentMenuItem = '';
+    if (currentMenuItem.trim().toLowerCase() == 'libsat') {
+      modifyCurrentMenuItem = 'LibSat';
+    } else {
+      modifyCurrentMenuItem = currentMenuItem;
+    }
+
+    const currentLi = document.getElementById(modifyCurrentMenuItem);
+    const pTag = currentLi.querySelector('p');
+
+    pTag.classList.add('selected-tab');
   }
 }
 
@@ -1453,7 +1468,7 @@ function renderBodyContent(contentContainer, type, menuData) {
       promptSpan.textContent = menuItem.prompt;
       strongEl.appendChild(promptSpan);
 
-      //console.log('Freya');
+      //console.log('Ronan');
       if (menuHeading) {
         const plusSpan = document.createElement('span');
         plusSpan.className = 'plus-sign';
@@ -1819,6 +1834,7 @@ function setTabsContainer() {
 }
 
 function moveTab(menuContainer, type, direction, menuData = []) {
+  console.log(direction);
   // Find the list of tabs (assumes tabs are contained within a <ul> element)
   const tabsList = menuContainer.querySelector('ul');
   if (!tabsList) {
@@ -1850,14 +1866,47 @@ function moveTab(menuContainer, type, direction, menuData = []) {
 // Handles tab switching and menu rendering based on the clicked tab
 function switchTab(clickedTab, menuContainer, type, menuData = []) {
   // Find the closest parent <li> element and retrieve its ID in lowercase
+  //console.log(clickedTab);
   const id = clickedTab.closest('li')?.id;
-  const idLowerCase = clickedTab.closest('li')?.id?.toLowerCase();
+  const idLowerCase = id?.toLowerCase();
 
   // Exit early if no valid ID is found
   if (!id) {
     console.error('Error: Unable to determine tab ID.');
     return;
+  } else {
+    id == lastClickedTabId;
   }
+
+  // Check if the same tab was clicked
+  if (id === lastClickedTabId) {
+    const li = document.getElementById(id);
+    const pTag = li.querySelector('p');
+    const iTag = pTag.querySelector('i');
+
+    if (pTag) {
+      if (pTag.classList.contains('selected-tab')) {
+        // remove selected-tab class
+        // closed
+        pTag.classList.remove('selected-tab');
+        iTag.classList.remove('angle-up');
+        iTag.classList.add('angle-down');
+      } else {
+        // open
+        // add selected-tab-class
+        pTag.classList.add('selected-tab');
+        iTag.classList.remove('angle-down');
+        iTag.classList.add('angle-up');
+      }
+    }
+    return;
+  } else {
+    // add classs seleted-tab
+    const li = document.getElementById(id);
+    const pTag = li.querySelector('p');
+    pTag.classList.add('selected-tab');
+  }
+  lastClickedTabId = id; // Update stored ID
 
   // Dynamically create menu items based on provided menuData
   const menu = createMenuItems(menuData);
@@ -1900,10 +1949,8 @@ function switchTab(clickedTab, menuContainer, type, menuData = []) {
   }
 
   if (window.innerWidth < 961) {
-    console.log(`Selected tab ID: ${id}`);
-
+    // small devices
     const panel = document.querySelector(`[aria-labelledby="tab-${id}"]`);
-    console.log(panel);
 
     // Find the <li> with that ID
     const liElement = document.getElementById(id);
@@ -2547,8 +2594,14 @@ function toggleTabPanelsLayout(calledFromResized) {
       el.classList.remove('selected-tab');
     });
 
-    document.querySelectorAll('.tabs__panels').forEach((el) => {
-      el.classList.add('hidden');
+    document.querySelectorAll('.tabs__panels').forEach((panel) => {
+      // Hide panel
+      panel.classList.add('hidden');
+
+      // Remove anchors from tab order
+      panel.querySelectorAll('a').forEach((anchor) => {
+        anchor.setAttribute('tabindex', '-1');
+      });
     });
   } else {
     // Switch to desktop layout
