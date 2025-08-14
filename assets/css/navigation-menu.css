@@ -677,6 +677,10 @@ ul.sub-menu li > ul.sub-menu {
     position: static;
     flex-direction: row;
   }
+
+  a[role='tab'] .caret.angle-down {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
