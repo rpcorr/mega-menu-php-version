@@ -1473,6 +1473,7 @@ function renderBodyContent(contentContainer, type, menuData) {
         const plusSpan = document.createElement('span');
         plusSpan.className = 'plus-sign';
         plusSpan.textContent = '+';
+        plusSpan.setAttribute('aria-hidden', 'true');
         strongEl.appendChild(plusSpan);
 
         // Add ARIA attribute to indicate collapsible section
