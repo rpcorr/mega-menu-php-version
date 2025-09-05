@@ -1326,7 +1326,7 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
       const positionSpan = document.createElement('span');
       positionSpan.className = 'sr-only';
       positionSpan.textContent = ` (${index + 1} of ${itemCount})`;
-      strong.appendChild(positionSpan);
+      span.appendChild(positionSpan);
 
       // Add ID to <li>
       menuItem.setAttribute('id', item.menuTitle);
