@@ -433,8 +433,7 @@ h5 {
   }
 
   .menu-main-menu-container > #menu-main-menu > li > .mega-menu {
-    top: -98px;
-    /* top: unset; */
+    top: unset;
   }
 
   /* Active panel & all tab panels share the same scroll settings */
@@ -445,10 +444,8 @@ h5 {
     display: block;
     overflow-y: auto;
     scrollbar-gutter: stable;
-    padding-bottom: 2rem;
+    padding-bottom: 17rem;
     scroll-padding-bottom: 2rem; /* ensures last item is visible */
-    /* remove height: 100% unless ALL parents have defined heights */
-    /*max-height: 80vh;*/ /* safer for mobile scrolling */
   }
 
   /* optional: gap after last item */
