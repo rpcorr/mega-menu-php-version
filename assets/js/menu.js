@@ -15,7 +15,6 @@ const sidebar = document.getElementById('sidebar');
 let allMenuItemsinArray;
 
 const BREAKPOINT = 960;
-let isMobileLayout = null;
 
 let lastClickedTabId = null;
 
@@ -2430,8 +2429,6 @@ function toggleTabPanelsLayout(calledFromResized) {
     const extra = container.querySelector('.extra-content');
     if (extra) extra.classList.add('hidden');
 
-    isMobileLayout = true;
-
     document.querySelectorAll('.selected-tab').forEach((el) => {
       el.classList.remove('selected-tab');
     });
@@ -2461,8 +2458,6 @@ function toggleTabPanelsLayout(calledFromResized) {
     // Show extra-content
     const extra = container.querySelector('.extra-content');
     if (extra) extra.classList.remove('hidden');
-
-    isMobileLayout = false;
   }
 }
 
