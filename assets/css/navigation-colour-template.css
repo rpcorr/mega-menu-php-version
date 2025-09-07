@@ -143,11 +143,6 @@ ul#menu-main-menu a:active {
   border: 1px solid var(--subMenuBgColour);
 }
 
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu a:hover {
-  /* background-color: peru; */
-  /* border-color: blue; */
-}
-
 /*hamburger bars colour*/
 .hamburger-bar {
   background-color: var(--topMenuTextColour);

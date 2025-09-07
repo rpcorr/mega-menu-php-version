@@ -216,19 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       for (let i = 0; i < megaMenuLinks.length; i++) {
         megaMenuLinks[i].addEventListener('click', handleLinkClick);
-        megaMenuLinks[i].addEventListener('keyup', function (e) {
-          // open current menu when enter key is pressed
-          //if (e.keyCode === 13) {
-          // open menu - determine the type of menu
-          //const nextSibling = this.nextElementSibling;
-          // Check if nextSibling exists and has the class 'mega-menu'
-          // if (nextSibling && nextSibling.classList.contains('mega-menu')) {
-          //   openMenu(true, null); // Modify this if you need to pass a different argument
-          // } else {
-          //   openMenu(false, null);
-          // }
-          //}
-        });
       }
 
       // assign window width to winWidth
@@ -268,123 +255,6 @@ document.addEventListener('DOMContentLoaded', () => {
         menuMainMenu.classList.toggle('open');
         menuToggle.classList.toggle('open'); // toggle X class
       });
-
-      // // add more link
-      // const newMenuItem = document.createElement('li');
-
-      // newMenuItem.id = 'menu-more';
-      // newMenuItem.className = 'menu-item menu-item-has-children';
-      // newMenuItem.setAttribute('aria-expanded', 'false');
-
-      // const newMenuLink = document.createElement('a');
-      // newMenuLink.id = 'menuMoreLink';
-      // newMenuLink.href = '#';
-      // newMenuLink.setAttribute(
-      //   'aria-label',
-      //   'More has a sub menu. Click enter to open'
-      // );
-
-      // const newSubMenu = document.createElement('ul');
-      // newSubMenu.id = 'moreSubMenu';
-      // newSubMenu.className = 'sub-menu';
-
-      // newMenuItem.appendChild(newMenuLink);
-      // newMenuItem.appendChild(newSubMenu);
-      // menuMainMenu.appendChild(newMenuItem);
-
-      // moreWidth = document.getElementById('menu-more').offsetWidth;
-
-      // // toggle More menu
-      // document
-      //   .getElementById('menuMoreLink')
-      //   .addEventListener('click', function (event) {
-      //     event.preventDefault();
-
-      //     const moreMenu = this.closest('.menu-item-has-children');
-
-      //     // Toggle the aria-expanded state of the clicked menu item
-      //     toggleAriaExpanded(this);
-
-      //     // Toggle the arrow icon direction based on expanded/collapsed state
-      //     toggleArrowIcon(this);
-
-      //     // Toggle the aria-label state of the clicked menu item
-      //     toggleLinkAriaLabel(this);
-
-      //     //const isVisible = moreMenu.classList.contains('visible');
-      //     //const icon = this.querySelector('i');
-      //     //const moreSubMenu = document.getElementById('moreSubMenu');
-
-      //     // Close all other open menus
-      //     // document
-      //     //   .querySelectorAll('li.menu-item-has-children > a')
-      //     //   .forEach((anchor) => {
-      //     //     // anchor.setAttribute('aria-expanded', 'false');
-      //     //     //anchor.classList.remove('active');
-      //     //   });
-
-      //     // Toggle visibility of More menu
-      //     //moreMenu.classList.toggle('visible');
-
-      //     // if (moreMenu.classList.contains('visible')) {
-      //     //   // Open state
-      //     //   this.setAttribute(
-      //     //     'aria-label',
-      //     //     'Click Enter to close More sub menu'
-      //     //   );
-      //     //   this.setAttribute('aria-expanded', 'true');
-      //     //   //this.classList.add('active');
-
-      //     //   // Adjust icon if available
-      //     //   if (icon) {
-      //     //     icon.classList.replace('angle-down', 'angle-up');
-      //     //   }
-      //     // } else {
-      //     //   // Close state
-      //     //   this.setAttribute(
-      //     //     'aria-label',
-      //     //     'More has a sub menu. Click enter to open'
-      //     //   );
-      //     //   //this.classList.remove('active');
-
-      //     //   // Reset icon if available
-      //     //   if (icon) {
-      //     //     icon.classList.replace('angle-up', 'angle-down');
-      //     //   }
-
-      //     //   // Remove inline opacity after a short delay
-      //     //   setTimeout(() => {
-      //     //     moreSubMenu.style.removeProperty('opacity');
-      //     //   }, 100);
-
-      //     //   // Reset submenu links
-      //     //   document.querySelectorAll('#moreSubMenu a').forEach((anchor) => {
-      //     //     anchor.setAttribute(
-      //     //       'aria-label',
-      //     //       `${anchor.textContent} has a sub menu. Click enter to open`
-      //     //     );
-      //     //   });
-      //     // }
-
-      //     // // Remove empty class attribute
-      //     // if (this.className.trim() === '') {
-      //     //   this.removeAttribute('class');
-      //     // }
-
-      //     // // Update sidebar content
-      //     // if (sidebar) populateSidebar();
-      //   });
-
-      // // toggle More menu sub-menu on key up
-      // document
-      //   .getElementById('menuMoreLink')
-      //   .addEventListener('keyup', function (event) {
-      //     // open "More" menu when enter key is pressed
-      //     if (event.key === 'Enter') {
-      //       // open current regular menu, there param is false
-      //       //openMenu(false, this);
-      //     }
-      //   });
 
       preserveMenuColour();
 
@@ -875,7 +745,7 @@ document.addEventListener('keydown', function (event) {
   }
 });
 
-document.addEventListener('keyup', function (event) {
+document.addEventListener('keyup', function () {
   if (document.activeElement.getAttribute('role') === 'tab') {
     // Delay announcement to allow screen reader to finish reading tab text
     setTimeout(() => {
@@ -1025,48 +895,6 @@ function watchForHover() {
 
   enableHover();
 }
-
-// Enable openMenu using the keyboard for accessibility
-// function openMenu(bContainsSubMenuDiv, targetElement) {
-//   // Handle updating the "More" link's active state based on aria-expanded attribute
-//   const moreLink = document.getElementById('menuMoreLink');
-
-//   if (targetElement && moreLink) {
-//     const isExpanded = targetElement.getAttribute('aria-expanded') === 'true';
-
-//     if (isExpanded) {
-//       // If the menu is expanded, add 'active' class to the "More" link
-//       moreLink.classList.add('active');
-//     } else {
-//       // If the menu is collapsed, remove the 'active' class
-//       moreLink.classList.remove('active');
-
-//       // If no classes remain, remove the class attribute entirely
-//       if (moreLink.className.trim() === '') {
-//         moreLink.removeAttribute('class');
-//       }
-//     }
-//   }
-
-//   let elements;
-
-//   // Select submenu elements depending on whether they are wrapped in a <div> or a <ul>
-//   if (!bContainsSubMenuDiv) {
-//     elements = document.querySelectorAll(
-//       'ul#menu-main-menu li.menu-item-has-children.visible > ul:not(:hover)'
-//     );
-//   } else {
-//     elements = document.querySelectorAll(
-//       'ul#menu-main-menu li.menu-item-has-children.visible > div:not(:hover)'
-//     );
-//   }
-
-//   // Loop through each matched submenu element
-//   elements.forEach(function (element) {
-//     // Intended to set submenu visibility (commented out for now)
-//     // element.style.opacity = '1';
-//   });
-// }
 
 /**
  * Preserve the active menu link color when hovering over the "More" menu item.
@@ -1240,13 +1068,6 @@ function getMegaMenu(menuContainer, type, menuData) {
       }
     }
   });
-
-  // // Initial call
-  // if (type === 'multiple') {
-  //   console.log('here I am');
-  //   console.log(document.querySelector('.menu-list'));
-  //   //toggleTabPanelsLayout();
-  // }
 }
 
 /**
@@ -2110,8 +1931,6 @@ function applyAdjustedBorderToTabs() {
       el.style.borderBottomStyle = borderBottomStyle;
       el.style.borderBottomWidth = adjustedWidth;
     });
-
-  //toggleTabPanelsLayout();
 }
 
 function getInitials(user) {
@@ -2593,9 +2412,6 @@ function toggleTabPanelsLayout(calledFromResized) {
   const tabPanels = container.querySelectorAll('.tabs__panels');
 
   const screenIsMobile = window.innerWidth <= BREAKPOINT;
-
-  // Exit if layout hasn't changed
-  //if (screenIsMobile === isMobileLayout) return;
 
   if (screenIsMobile) {
     // Switch to mobile layout

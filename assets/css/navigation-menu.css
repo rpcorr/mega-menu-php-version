@@ -300,11 +300,6 @@ nav {
   color: #333; /* Change color as needed */
 }
 
-/* Profile menu icon when open */
-#profileMenu[aria-expanded='true'] a .caret {
-  /*transform: rotate(180deg);*/ /* Rotate the caret icon */
-}
-
 .hidden-text {
   position: absolute;
   left: -9999px;
@@ -571,10 +566,6 @@ ul.sub-menu li > ul.sub-menu {
 
   .menu-main-menu-container > #menu-main-menu > li > .sub-menu a {
     border: unset;
-  }
-
-  #menu-main-menu > li.menu-item-has-children > ul.sub-menu {
-    /* box-shadow: unset; */
   }
 
   #menu-main-menu > li > a {
