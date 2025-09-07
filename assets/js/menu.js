@@ -1316,17 +1316,42 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
       img.height = item.height;
       anchor.href = `#${panelId}`;
       strong.textContent = item.menuTitle;
-      span.textContent = item.subText;
+
+      // --- Build two-line structure ---
+      // Row wrapper
+      const row = document.createElement('span');
+      row.className = 'menu-row';
+
+      // Left side: subText
+      const subText = document.createElement('span');
+      subText.className = 'menu-text';
+      subText.textContent = item.subText;
+
+      // Right side: caret + sr-only
+      const rightWrapper = document.createElement('span');
+      rightWrapper.className = 'right-icons';
+
+      const caretIcon = document.createElement('i');
+      caretIcon.className = 'caret angle-down';
+
+      const positionSpan = document.createElement('span');
+      positionSpan.className = 'sr-only';
+      positionSpan.textContent = ` (${index + 1} of ${itemCount})`;
+
+      rightWrapper.appendChild(caretIcon);
+      rightWrapper.appendChild(positionSpan);
+
+      // Append left + right into row
+      row.appendChild(subText);
+      row.appendChild(rightWrapper);
+
+      // Replace old placeholder span with new row
+      span.replaceWith(row);
+      // --- End two-line structure ---
 
       // Accessibility attributes
       anchor.setAttribute('id', tabId);
       anchor.setAttribute('aria-controls', panelId);
-
-      // Visually hidden index label (e.g., " (1 of 3)")
-      const positionSpan = document.createElement('span');
-      positionSpan.className = 'sr-only';
-      positionSpan.textContent = ` (${index + 1} of ${itemCount})`;
-      span.appendChild(positionSpan);
 
       // Add ID to <li>
       menuItem.setAttribute('id', item.menuTitle);

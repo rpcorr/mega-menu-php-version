@@ -58,7 +58,14 @@ li[role='presentation'] {
 
 [role='presentation'] strong {
   font-weight: 600;
-  border-bottom: 4px solid;
+}
+
+#LibPAS strong,
+#LibSat strong,
+#InformsUs strong {
+  display: inline-block; /* shrink to text width */
+  align-self: flex-start; /* prevent flex from stretching */
+  border-bottom: 4px solid; /* thickness + default color */
 }
 
 #LibPAS strong {
@@ -94,6 +101,28 @@ li[role='presentation'] {
 
 .menu-list strong {
   font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.menu-list span {
+  display: block;
+}
+
+[role='presentation'] strong {
+  font-weight: 600;
+}
+
+a[role='tab'] {
+  display: flex;
+  flex-direction: column; /* stack LibPAS above row */
+  text-decoration: none;
+}
+
+a[role='tab'] .menu-row {
+  display: flex;
+  justify-content: space-between; /* left text, right caret */
+  align-items: center;
+  width: 100%;
 }
 
 .tabs__panels {

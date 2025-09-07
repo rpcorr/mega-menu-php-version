@@ -23,7 +23,7 @@
     
     <!-- ///// The Templates ///// -->
     <template id="menuTemplate">
-      <li role="presentation"><img src="" alt="" /><p><a href="" role="tab"><strong></strong><br/><span></span><i class="caret angle-down"></i></a></p> <div class="circle">
+      <li role="presentation"><img src="" alt="" /><p><a href="" role="tab"><strong></strong><span></span></a></p> <div class="circle">
           <div class="caret"></div>
         </div></li>
         <div>Content goes here</div>
