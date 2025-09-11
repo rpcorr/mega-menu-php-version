@@ -1274,6 +1274,11 @@ function renderBodyContent(contentContainer, type, menuData) {
   }
 
   const selectedText = selectedLi.id.toLowerCase();
+
+  // Create one wrapper with role="list"
+  const listWrapper = document.createElement('div');
+  listWrapper.setAttribute('role', 'list');
+
   const fragment = document.createDocumentFragment();
 
   /**
@@ -1313,7 +1318,6 @@ function renderBodyContent(contentContainer, type, menuData) {
       promptSpan.textContent = menuItem.prompt;
       strongEl.appendChild(promptSpan);
 
-      //console.log('Ronan');
       if (menuHeading) {
         const plusSpan = document.createElement('span');
         plusSpan.className = 'plus-sign';
@@ -1329,7 +1333,12 @@ function renderBodyContent(contentContainer, type, menuData) {
 
       anchor.href = menuItem.link;
 
-      fragment.appendChild(menuContent);
+      // Ensure the root node has role="listitem"
+      const rootDiv = menuContent.querySelector('div');
+      if (rootDiv) rootDiv.setAttribute('role', 'listitem');
+
+      // Append to list wrapper instead of fragment
+      listWrapper.appendChild(menuContent);
     }
   }
 
@@ -1357,7 +1366,7 @@ function renderBodyContent(contentContainer, type, menuData) {
     let customReportsAdded = false;
     let surveyReportsStored = null;
 
-    pagePromptsAndLinks.forEach((menuItem, index) => {
+    pagePromptsAndLinks.forEach((menuItem) => {
       const promptText = menuItem.prompt.toLowerCase();
       const isDifferentPrompt = promptText !== selectedText;
       const isExcludedPrompt = ['maphat trends', 'maphat rankings'].includes(
@@ -1395,7 +1404,9 @@ function renderBodyContent(contentContainer, type, menuData) {
     });
   }
 
-  // Append constructed fragment to content container
+  // Append the wrapper (with all listitems) to fragment
+  fragment.appendChild(listWrapper);
+
   const containerWrapper = document.createElement('div');
   containerWrapper.classList.add(
     type !== 'pages' ? 'tabs__panels' : 'left-content'

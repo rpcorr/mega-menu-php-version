@@ -133,6 +133,10 @@ a[role='tab'] .menu-row {
   scrollbar-gutter: stable;
 }
 
+[role='list'] {
+  display: contents;
+}
+
 [role='listitem'] {
   display: flex;
   flex-direction: column;
