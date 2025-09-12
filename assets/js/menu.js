@@ -1077,7 +1077,9 @@ function getMegaMenu(menuContainer, type, menuData) {
  * @param {string} type - Type of menu ('multiple', 'single', or 'pages') to determine which template to use.
  * @param {string} currentMenuItem - The currently selected menu item to highlight.
  */
+let callCount = 0;
 function renderMenu(menuData, menuContainer, type, currentMenuItem) {
+  callCount++;
   let menuTemplate;
 
   // Select the appropriate menu template
@@ -1209,16 +1211,6 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
       }
     });
 
-    // Toggle selected-tab class
-    // tablistWrapper.querySelectorAll('li[role="presentation"]').forEach((li) => {
-    //   const wrapper = li.querySelector('p');
-    //   const anchor = li.querySelector('a[role="tab"]');
-    //   if (wrapper && anchor) {
-    //     const isSelected = anchor.getAttribute('aria-selected') === 'true';
-    //     wrapper.classList.toggle('selected-tab', isSelected);
-    //   }
-    // });
-
     let modifyCurrentMenuItem = '';
     if (currentMenuItem.trim().toLowerCase() == 'libsat') {
       modifyCurrentMenuItem = 'LibSat';
@@ -1230,6 +1222,14 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
     const pTag = currentLi.querySelector('p');
 
     pTag.classList.add('selected-tab');
+
+    // run code snippet after renderMenu initial run and on small devices
+    if (callCount > 1 && window.innerWidth <= BREAKPOINT) {
+      const iTag = pTag.querySelector('i');
+
+      iTag.classList.remove('angle-down');
+      iTag.classList.add('angle-up');
+    }
   }
 }
 
@@ -1761,7 +1761,11 @@ function switchTab(clickedTab, menuContainer, type, menuData = []) {
     // add classs seleted-tab
     const li = document.getElementById(id);
     const pTag = li.querySelector('p');
+    const iTag = pTag.querySelector('i');
+
     pTag.classList.add('selected-tab');
+    iTag.classList.remove('angle-down');
+    iTag.classList.add('angle-up');
   }
   lastClickedTabId = id; // Update stored ID
 
