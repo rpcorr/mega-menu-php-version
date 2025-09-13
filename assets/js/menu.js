@@ -1023,7 +1023,6 @@ function getMegaMenu(menuContainer, type, menuData) {
 
       if (!tabButtons.includes(document.activeElement)) return;
 
-      console.log(event.key);
       switch (event.key) {
         case 'ArrowLeft':
           moveTab(menuContainer, type, -1, menuData);
@@ -1691,7 +1690,6 @@ function setTabsContainer() {
 }
 
 function moveTab(menuContainer, type, direction, menuData = []) {
-  console.log(direction);
   // Find the list of tabs (assumes tabs are contained within a <ul> element)
   const tabsList = menuContainer.querySelector('ul');
   if (!tabsList) {
@@ -1699,8 +1697,13 @@ function moveTab(menuContainer, type, direction, menuData = []) {
     return;
   }
 
-  // Get all tab buttons (assumes tabs are anchor <a> elements inside the <ul>)
-  const tabButtons = Array.from(tabsList.querySelectorAll('a'));
+  // Get all tab buttons (anchor <a> elements inside the <ul> with role="tab")
+  const tabButtons = Array.from(tabsList.querySelectorAll('a[role="tab"]'));
+
+  if (!tabButtons.length) {
+    console.error('No tab buttons found');
+    return;
+  }
 
   // Get the currently focused tab (element with active focus)
   const currentTab = document.activeElement;
@@ -1708,15 +1711,23 @@ function moveTab(menuContainer, type, direction, menuData = []) {
   // Find the index of the currently focused tab among the tab buttons
   const currentIndex = tabButtons.findIndex((tab) => tab === currentTab);
 
-  // If the currently focused element is not a tab button, exit early
-  if (currentIndex === -1) return;
+  // If the currently focused element is not a tab button, fallback to lastClickedTabId
+  let startIndex = currentIndex;
+  if (startIndex === -1 && lastClickedTabId) {
+    startIndex = tabButtons.findIndex((tab) => tab.id === lastClickedTabId);
+  }
 
-  // Calculate the next tab index based on direction (-1 for previous, +1 for next)
-  // Wrap around if moving beyond the first or last tab
+  // If still invalid, just start at the first tab
+  if (startIndex === -1) startIndex = 0;
+
+  // Calculate the next tab index (wraps around)
   const nextIndex =
-    (currentIndex + direction + tabButtons.length) % tabButtons.length;
+    (startIndex + direction + tabButtons.length) % tabButtons.length;
 
-  // Move focus to the next tab and update its corresponding content
+  // Move focus to the next tab
+  tabButtons[nextIndex].focus();
+
+  // Update the content by calling switchTab
   switchTab(tabButtons[nextIndex], menuContainer, type, menuData);
 }
 
