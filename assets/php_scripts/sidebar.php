@@ -1,5 +1,5 @@
 <button class="toggle-btn" aria-controls="sidebar" aria-expanded="false" aria-label="Open sidebar">
-    <div class="hamburger" aria-hidden="true">
+    <div class="sidebar-hamburger" aria-hidden="true">
         <div></div>
         <div></div>
         <div></div>

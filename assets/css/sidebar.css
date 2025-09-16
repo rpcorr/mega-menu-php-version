@@ -81,14 +81,14 @@
   right: var(--sidebar-width);
 }
 
-.hamburger {
+.sidebar-hamburger {
   display: inline-block;
   cursor: pointer;
   width: 30px;
   height: 30px;
 }
 
-.hamburger div {
+.sidebar-hamburger div {
   width: 30px;
   height: 4px;
   background-color: var(--sidebar-color);
@@ -96,15 +96,15 @@
   transition: all 0.3s ease;
 }
 
-.hamburger.active div:nth-child(1) {
+.sidebar-hamburger.active div:nth-child(1) {
   transform: translateY(9px) rotate(45deg);
 }
 
-.hamburger.active div:nth-child(2) {
+.sidebar-hamburger.active div:nth-child(2) {
   opacity: 0;
 }
 
-.hamburger.active div:nth-child(3) {
+.sidebar-hamburger.active div:nth-child(3) {
   transform: translateY(-9px) rotate(-45deg);
 }
 

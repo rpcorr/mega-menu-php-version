@@ -113,7 +113,7 @@ function toggleSidebar() {
   const links = sidebar.querySelectorAll(
     'a, button, input, [tabindex]:not([tabindex="-1"])'
   );
-  const hamburger = button.querySelector('.hamburger');
+  const hamburger = button.querySelector('.sidebar-hamburger');
 
   const isOpen = button.classList.contains('open');
 
