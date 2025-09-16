@@ -1,15 +1,5 @@
 'use strict';
 
-document.addEventListener('DOMContentLoaded', function () {
-  if (document.getElementById('sidebar')) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    link.href = "<?php echo getRelativePath(''); ?>assets/css/sidebar.css";
-    document.head.appendChild(link);
-  }
-});
-
 // Side menu data
 const sideMenuData = {
   services: {
