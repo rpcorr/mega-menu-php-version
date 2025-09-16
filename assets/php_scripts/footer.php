@@ -14,12 +14,33 @@
     </script>
     <script src='<?php echo getRelativePath(''); ?>assets/js/user.js' defer></script>
     <script src='<?php echo getRelativePath(''); ?>assets/js/menu.js' defer></script>
-    <!-- <script src='<?php //echo getRelativePath(''); ?>assets/js/sidebar.js' defer></script> -->
     <script src='<?php echo getRelativePath(''); ?>assets/js/generateBreadcrumbs.js' defer></script>
     <?php if ($_COOKIE['ukey'] || $_REQUEST['ukey']) { ?>
       <script src='<?php echo getRelativePath(''); ?>assets/js/selectTheme.js' defer></script>
     <!-- <script src='<?php //echo getRelativePath(''); ?>assets/js/checkTimerInactivity.min.js' defer></script> -->
     <?php } ?>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+
+        // if sidebar exist add styles and js files
+        if (document.getElementById('sidebar')) {
+          const script = document.createElement('script');
+          script.src = '<?php echo getRelativePath(''); ?>assets/js/sidebar.js';
+          script.defer = true;
+          document.body.appendChild(script);
+        }
+
+        if (document.getElementById('sidebar')) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = "<?php echo getRelativePath(''); ?>assets/css/sidebar.css";
+            document.head.appendChild(link);
+          }
+      });
+
+    </script>
     
     <!-- ///// The Templates ///// -->
     <template id="menuTemplate">
