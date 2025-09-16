@@ -814,7 +814,7 @@ function toggleTopLevelMenu(menuLink) {
 
   // Allow interaction with the submenu without closing it
   const subMenu = li?.querySelector('.mega-menu');
-  console.log(subMenu);
+
   if (subMenu) {
     // Adjust mega menu position after submenu interaction
     determineMegaMenuPosition();
