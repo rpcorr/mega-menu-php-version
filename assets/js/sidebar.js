@@ -40,14 +40,14 @@ const sideMenuData = {
 };
 
 const tabData = {
-  libPas: {
+  LibPAS: {
     title: 'LibPAS',
     items: [
       { name: 'LibPAS 1', url: '#libPas-1' },
       { name: 'LibPAS 2', url: '#libPas-2' },
     ],
   },
-  libSat: {
+  LibSat: {
     title: 'LibSat',
     items: [
       { name: 'LibSat 1', url: '#libSat-1' },
@@ -55,7 +55,7 @@ const tabData = {
       { name: 'LibSat 3', url: '#libSat-3' },
     ],
   },
-  informsUs: {
+  InformsUs: {
     title: 'InformsUs',
     items: [
       { name: 'InformsUs 1', url: '#informsUs-1' },
@@ -65,6 +65,8 @@ const tabData = {
     ],
   },
 };
+
+const announcement = document.getElementById('sidebar-announcement');
 
 // Focus trap helper
 let trapFocusHandler = null;
@@ -77,12 +79,6 @@ function trapFocus(container) {
   const lastEl = focusableEls[focusableEls.length - 1];
 
   const handleTab = (e) => {
-    if (e.key === 'Escape') {
-      toggleSidebar(); // close on escape
-      document.querySelector('.toggle-btn').focus();
-      return;
-    }
-
     if (e.key === 'Tab') {
       if (e.shiftKey) {
         if (document.activeElement === firstEl) {
@@ -118,7 +114,6 @@ function toggleSidebar() {
     'a, button, input, [tabindex]:not([tabindex="-1"])'
   );
   const hamburger = button.querySelector('.sidebar-hamburger');
-  const announcement = document.getElementById('sidebar-announcement');
 
   const isOpen = button.classList.contains('open');
 
@@ -133,21 +128,14 @@ function toggleSidebar() {
 
   // Update screen reader message
   if (!isOpen) {
-    trapFocus(sidebar);
     links[0]?.focus();
-    if (announcement) {
-      announcement.textContent = ''; // clear first
-      setTimeout(() => {
-        announcement.textContent = 'Sidebar opened. Press Escape to close it.';
-      }, 100); // delay helps with DOM mutation detection
-    }
+    trapFocus(sidebar);
+
+    announceOnce('Sidebar opened. Press Escape to close it.');
   } else {
     removeFocusTrap();
     if (announcement) {
-      announcement.textContent = ''; // clear first
-      setTimeout(() => {
-        announcement.textContent = 'Sidebar closed.';
-      }, 100); // delay helps with DOM mutation detection
+      announceOnce('Sidebar closed.');
     }
   }
 
@@ -169,68 +157,134 @@ function handleEscapeKey(e) {
 
 // Initialize state based on aria-expanded value
 document.addEventListener('DOMContentLoaded', () => {
-  if (document.querySelector('.toggle-btn')) {
-    const button = document.querySelector('.toggle-btn');
-    const sidebar = document.getElementById('sidebar');
+  const button = document.querySelector('.toggle-btn');
+  const sidebar = document.getElementById('sidebar');
+  const links = sidebar.querySelectorAll('a');
 
-    const isOpen = button.getAttribute('aria-expanded') === 'true';
+  const isOpen = button.getAttribute('aria-expanded') === 'true';
 
-    button.classList.toggle('open', isOpen);
-    sidebar.classList.toggle('open', isOpen);
+  button.classList.toggle('open', isOpen);
+  sidebar.classList.toggle('open', isOpen);
 
-    sidebar.setAttribute('aria-hidden', 'true');
-    button.setAttribute('aria-label', 'Open sidebar');
-  }
+  sidebar.setAttribute('aria-hidden', 'true');
+  button.setAttribute('aria-label', 'Open sidebar');
 });
 
+// Event listeners
+document.querySelector('.toggle-btn').addEventListener('click', toggleSidebar);
+document.addEventListener('keydown', handleEscapeKey);
+
+// Function to update sidebar content and announce changes
 function populateSidebar() {
   // Find all expanded anchor elements
   let expandedAnchors = Array.from(
-    document.querySelectorAll('a[aria-expanded="true"]')
+    document.querySelectorAll('li[aria-expanded="true"]')
   );
+
   let selectedAnchorElement = expandedAnchors[0];
-  let selectedAnchor = selectedAnchorElement?.textContent?.toLowerCase().trim();
 
-  // If no expanded anchor is found, default to "default" menu
-  if (!selectedAnchorElement) {
-    createSidebarSection(sideMenuData.default, '');
-    return;
+  let selectedAnchor = selectedAnchorElement
+    ?.querySelector('a') // get the first anchor text instead of all text
+    ?.textContent?.toLowerCase()
+    .trim();
+
+  if (selectedAnchor) {
+    // See if selectedAnchor is profile
+    if (selectedAnchor.includes('profile')) {
+      createSidebarSection(sideMenuData.profile, '');
+    } else {
+      let submenu = '';
+      let firstWord = selectedAnchor.split(/\s+/)[0];
+      // Look up the matching section in sideMenuData
+
+      const matchedEntry =
+        sideMenuData[firstWord.toLowerCase()] || sideMenuData.default;
+
+      if (matchedEntry.title == 'Services') {
+        // services menu
+
+        // Find the anchor with role="tab" and aria-selected="true"
+        const selectedTab = document.querySelector(
+          'a[role="tab"][aria-selected="true"]'
+        );
+
+        //let selectedText = null;
+        if (selectedTab) {
+          // Get the <strong> text specifically (safe and explicit)
+          const strong = selectedTab.querySelector('strong');
+          submenu = strong
+            ? strong.textContent.trim()
+            : selectedTab.childNodes[0].textContent.trim();
+        }
+        createSidebarSection(matchedEntry, tabData[submenu]);
+      } else {
+        // not services menu or more;
+        if (firstWord !== 'more') {
+          if (firstWord == 'admin') {
+            createSidebarSection(sideMenuData.admin);
+          } else {
+            createSidebarSection(sideMenuData.default);
+          }
+        }
+
+        if (firstWord === 'more' || firstWord === 'menu') {
+          //more menu exists
+          // Select the <li> with aria-expanded="true"
+          const expandedLis = document.querySelectorAll(
+            'li[aria-expanded="true"]'
+          );
+
+          const selectedMenuItem = expandedLis[1];
+
+          if (selectedMenuItem) {
+            let selectedAnchor = selectedMenuItem
+              ?.querySelector('a') // get the first anchor text instead of all text
+              ?.textContent?.toLowerCase()
+              .trim();
+
+            if (selectedAnchor.includes('profile')) {
+              createSidebarSection(sideMenuData.profile, '');
+            } else if (selectedAnchor.includes('services')) {
+              let submenu = '';
+              let firstWord = selectedAnchor.split(/\s+/)[0];
+              // Look up the matching section in sideMenuData
+
+              const matchedEntry =
+                sideMenuData[firstWord.toLowerCase()] || sideMenuData.default;
+
+              if (matchedEntry.title == 'Services') {
+                // services menu
+
+                // Find the anchor with role="tab" and aria-selected="true"
+                const selectedTab = document.querySelector(
+                  'a[role="tab"][aria-selected="true"]'
+                );
+
+                if (selectedTab) {
+                  // Get the <strong> text specifically (safe and explicit)
+                  const strong = selectedTab.querySelector('strong');
+                  submenu = strong
+                    ? strong.textContent.trim()
+                    : selectedTab.childNodes[0].textContent.trim();
+                }
+                createSidebarSection(matchedEntry, tabData[submenu]);
+              }
+            } else if (selectedAnchor.includes('admin')) {
+              createSidebarSection(sideMenuData.admin);
+            }
+          }
+        }
+      }
+    }
   }
 
-  // If the first expanded anchor is "more", try to find the next expanded element
-  if (selectedAnchor === 'more' && expandedAnchors.length > 1) {
-    selectedAnchorElement = expandedAnchors[1]; // Use the next expanded element
-    selectedAnchor = selectedAnchorElement.textContent.toLowerCase().trim();
-  }
+  const selectedMenu = sideMenuData[selectedAnchor] || sideMenuData.default;
 
-  // Handle case where "Admin" link is expanded (case-insensitive)
+  // //Collect data for announcement
+  const mainSectionTitle = selectedMenu?.title || 'Sidebar';
+  const mainLinks = selectedMenu?.items?.map((item) => item.name) || [];
 
-  if (/^admin$/i.test(selectedAnchor)) {
-    createSidebarSection(sideMenuData.admin, '');
-    return;
-  }
-
-  // Handle case where "Profile" link is expanded (case-insensitive)
-  if (/profile/i.test(selectedAnchor?.trim())) {
-    createSidebarSection(sideMenuData.profile, '');
-    return;
-  }
-
-  // Get the submenu div directly following the selected anchor
-  const megaMenuDiv = selectedAnchorElement?.nextElementSibling;
-  if (!megaMenuDiv || !megaMenuDiv.classList.contains('mega-menu')) {
-    createSidebarSection(sideMenuData.default, '');
-    return;
-  }
-
-  // Find the menu list within the submenu div
-  const menuList = subMenuDiv.querySelector('ul.menu-list');
-  if (!menuList) {
-    createSidebarSection(sideMenuData.default, '');
-    return;
-  }
-
-  // Find the selected list item within the menu list
+  const menuList = document.querySelector('ul.menu-list');
   const selectedListItem = menuList.querySelector('a[aria-selected="true"]');
   const strTab = selectedListItem?.innerHTML
     .match(/<strong>(.*?)<\/strong>/)?.[1]
@@ -245,75 +299,102 @@ function populateSidebar() {
       ] || ''
     : '';
 
-  // Select the appropriate menu based on the anchor or use the default menu
-  const selectedMenu = sideMenuData[selectedAnchor] || sideMenuData.default;
+  const extraSectionTitle = selectedTab?.title || '';
+  const extraLinks = selectedTab?.items?.map((item) => item.name) || [];
 
-  // Populate the sidebar with the selected menu and tab
-  createSidebarSection(selectedMenu, selectedTab);
+  // Announce sidebar update
+  announceSidebarUpdate(
+    mainSectionTitle,
+    mainLinks,
+    extraSectionTitle,
+    extraLinks
+  );
 }
 
 // Helper function to create and append sidebar content
 function createSidebarSection(menuSection, extraContent) {
-  if (document.querySelector('.sidebar')) {
-    const sidebar = document.querySelector('.sidebar');
-    sidebar.innerHTML = ''; // Clear out the current sidebar content
+  const sidebar = document.querySelector('.sidebar');
+  sidebar.innerHTML = ''; // Clear out the current sidebar
 
-    sidebar.setAttribute('role', 'region');
-    sidebar.setAttribute('aria-label', 'Sidebar navigation');
+  // Create and append section heading
+  if (menuSection?.title) {
+    const heading = document.createElement('h2');
+    heading.textContent = menuSection.title;
+    sidebar.appendChild(heading);
+  }
 
-    // Create and append section heading
-    if (menuSection?.title) {
-      const heading = document.createElement('h2');
-      heading.textContent = menuSection.title;
-      sidebar.appendChild(heading);
-    }
+  // Create and append menu items
+  if (menuSection?.items?.length) {
+    const ul = document.createElement('ul');
 
-    // Create and append menu items
-    if (menuSection?.items?.length) {
-      const ul = document.createElement('ul');
+    menuSection.items.forEach((item) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.textContent = item.name;
+      a.href = item.url;
+      a.setAttribute('aria-label', `Learn more about ${item.name}`);
+      a.setAttribute('tabindex', '-1');
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
 
-      menuSection.items.forEach((item) => {
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.textContent = item.name;
-        a.href = item.url;
-        a.setAttribute('aria-label', `Learn more about ${item.name}`);
-        a.setAttribute('tabindex', '-1');
-        li.appendChild(a);
-        ul.appendChild(li);
-      });
+    sidebar.appendChild(ul);
+  }
 
-      sidebar.appendChild(ul);
-    }
+  // Render extra content if it's a valid object with title and items
+  if (extraContent?.title && extraContent?.items?.length) {
+    const extraHeading = document.createElement('h2');
+    extraHeading.textContent = extraContent.title;
+    sidebar.appendChild(extraHeading);
 
-    // Render extra content if it's a valid object with title and items
-    if (extraContent?.title && extraContent?.items?.length) {
-      const extraHeading = document.createElement('h2');
-      extraHeading.textContent = extraContent.title;
-      sidebar.appendChild(extraHeading);
+    const extraContentUl = document.createElement('ul');
 
-      const extraContentUl = document.createElement('ul');
+    extraContent.items.forEach((item) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.textContent = item.name;
+      a.href = item.url;
+      a.style.textDecoration = 'underline';
+      a.setAttribute('aria-label', `Learn more about ${item.name}`);
+      li.appendChild(a);
+      extraContentUl.appendChild(li);
+    });
 
-      extraContent.items.forEach((item) => {
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.textContent = item.name;
-        a.href = item.url;
-        a.style.textDecoration = 'underline';
-        a.setAttribute('aria-label', `Learn more about ${item.name}`);
-        li.appendChild(a);
-        extraContentUl.appendChild(li);
-      });
-
-      sidebar.appendChild(extraContentUl);
-    }
+    sidebar.appendChild(extraContentUl);
   }
 }
 
-// Event listeners
-document.addEventListener('keydown', handleEscapeKey);
+// Function to announce the sidebar update once
+function announceSidebarUpdate(
+  sectionTitle,
+  links = [],
+  extraSectionTitle = '',
+  extraLinks = []
+) {
+  let message = `Sidebar updated with section "${sectionTitle}" containing ${
+    links.length
+  } links: ${links.join(', ')}.`;
 
-if (document.querySelector('.toggle-btn'))
-  document
-    .querySelector('.toggle-btn')
-    .addEventListener('click', toggleSidebar);
+  if (extraSectionTitle && extraLinks.length) {
+    message += ` Also included is "${extraSectionTitle}" with ${
+      extraLinks.length
+    } links: ${extraLinks.join(', ')}.`;
+  }
+
+  // Announce once
+  announceOnce(message);
+}
+
+// Function to announce content only once
+function announceOnce(message) {
+  const region = document.getElementById('sidebar-announcement');
+  if (!region) return;
+
+  // Clear previous content
+  region.textContent = '';
+
+  // Set new content with a slight delay
+  setTimeout(() => {
+    region.textContent = message;
+  }, 100); // Small delay to ensure only one announcement
+}
