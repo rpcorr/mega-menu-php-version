@@ -257,36 +257,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       preserveMenuColour();
 
-      // stop propagation for .menu-item-has-children a
-      document
-        .querySelectorAll('.menu-item-has-children a')
-        .forEach(function (element) {
-          element.addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-          });
-        });
-
-      // stop propagation for .menu-item-has-children ul
-      document
-        .querySelectorAll('.menu-item-has-children ul')
-        .forEach(function (element) {
-          element.addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-          });
-        });
-
-      // stop propagation for .menu-item-has-children li
-      document
-        .querySelectorAll('.menu-item-has-children li')
-        .forEach(function (element) {
-          element.addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-          });
-        });
-
       // set More Menu tabindex to -1 if there are no children
       updateMenuMoreTabIndex();
 
@@ -312,7 +282,7 @@ function handleLinkClick(e) {
   // Check if the clicked link is inside a menu item that has children
   if (this.closest('.menu-item-has-children')) {
     // Toggle the display of the submenu for this top-level menu item
-    toggleTopLevelMenu(this);
+    toggleTopLevelMenu(this, e);
   }
 }
 
@@ -452,7 +422,11 @@ function onResize() {
  *
  * @param {HTMLElement} menuLink - The <a> element inside a top-level menu item that was clicked.
  */
-function toggleTopLevelMenu(menuLink) {
+function toggleTopLevelMenu(menuLink, e) {
+  if (e && menuLink.getAttribute('href') === '#') {
+    e.preventDefault(); // only stop jump-to-# links
+  }
+
   // Toggle the aria-expanded state of the clicked menu item
   toggleAriaExpanded(menuLink);
 
@@ -739,7 +713,7 @@ document.addEventListener('keydown', function (event) {
     // If an expanded menu item is found
     if (expandedMenuItem) {
       // Call the toggle function to collapse/close the expanded menu
-      toggleTopLevelMenu(expandedMenuItem);
+      toggleTopLevelMenu(expandedMenuItem, e);
     }
   }
 });
@@ -1734,7 +1708,6 @@ function moveTab(menuContainer, type, direction, menuData = []) {
 // Handles tab switching and menu rendering based on the clicked tab
 function switchTab(clickedTab, menuContainer, type, menuData = []) {
   // Find the closest parent <li> element and retrieve its ID in lowercase
-  //console.log(clickedTab);
   const id = clickedTab.closest('li')?.id;
   const idLowerCase = id?.toLowerCase();
 
