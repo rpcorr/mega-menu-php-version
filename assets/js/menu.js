@@ -521,7 +521,7 @@ function handleLinkClick(e) {
       toggleSubMenu(this); // submenu item inside "More"
     } else {
       // Toggle top level menu
-      toggleTopLevelMenu(this); // regular top-level menu
+      toggleTopLevelMenu(this, e); // regular top-level menu
     }
   }
 }
@@ -764,7 +764,11 @@ function onResize() {
  *
  * @param {HTMLElement} menuLink - The <a> element inside a top-level menu item that was clicked.
  */
-function toggleTopLevelMenu(menuLink) {
+function toggleTopLevelMenu(menuLink, e) {
+  if (e && menuLink.getAttribute('href') === '#') {
+    e.preventDefault(); // only stop jump-to-# links
+  }
+
   const allMenuItems = document.querySelectorAll('.menu-item-has-children > a');
   const isExpanded =
     menuLink.parentElement.getAttribute('aria-expanded') === 'true';
@@ -941,7 +945,7 @@ document.addEventListener('keydown', function (event) {
     // If an expanded menu item is found
     if (expandedMenuItem) {
       // Call the toggle function to collapse/close the expanded menu
-      toggleTopLevelMenu(expandedMenuItem);
+      toggleTopLevelMenu(expandedMenuItem, event);
     }
   }
 });
@@ -1175,7 +1179,21 @@ function getMegaMenu(menuContainer, type, menuData) {
         const anchor = event.target.closest('a'); // Check if a link or tab was clicked
 
         if (anchor) {
-          event.preventDefault(); // Prevent default link behavior (e.g., page reload)
+          const href = anchor.getAttribute('href') || '';
+
+          // If href does not include allowed hash values, treat as normal link
+          if (
+            !href.includes('#libpas') &&
+            !href.includes('#informsus') &&
+            !href.includes('#libsat') &&
+            !href.includes('#')
+          ) {
+            window.location.href = href; // Navigate to the link
+            return;
+          }
+
+          // Prevent default link behavior (e.g., page reload)
+          event.preventDefault();
 
           const clickedTab = event.target.closest('a');
           if (!clickedTab) return;
