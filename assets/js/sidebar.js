@@ -129,7 +129,7 @@ function toggleSidebar() {
   // Update screen reader message
   if (!isOpen) {
     links[0]?.focus();
-    trapFocus(sidebar);
+    //trapFocus(sidebar);
 
     announceOnce('Sidebar opened. Press Escape to close it.');
   } else {
