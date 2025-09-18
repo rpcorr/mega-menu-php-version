@@ -837,6 +837,7 @@ function toggleTopLevelMenu(menuLink, e) {
 
   if (
     menuLink.parentElement.getAttribute('aria-expanded') === 'true' &&
+    subMenuDiv &&
     subMenuDiv.tagName === 'DIV'
   ) {
     // Slide in and show the submenu (mega menu)
