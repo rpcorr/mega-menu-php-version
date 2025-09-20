@@ -175,19 +175,23 @@ header nav ul.menu > li.menu-item-has-children > .mega-menu {
 }
 
 #branding {
-  width: 11rem;
+  width: 100%;
   height: 6rem;
   display: flex;
-  justify-content: center;
+  /* justify-content: flex-start; */
   align-items: center;
+  position: relative;
   background-color: #fff;
 }
 
 #siteIdentity {
-  padding: 0;
-  max-width: 100%;
-  margin-right: 0;
-  background-color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  /* transition: transform 0.38s cubic-bezier(0.2, 0.9, 0.2, 1); */
+  transition: transform 1s cubic-bezier(0.2, 0.9, 0.2, 1);
+  transform: translateX(0);
+  will-change: transform;
 }
 
 #siteIdentity a {
@@ -587,6 +591,16 @@ ul.sub-menu li > ul.sub-menu {
 
   #menu-main-menu.open {
     display: flex;
+  }
+
+  /* when menu is open (uses :has()) — slide by the computed --siteShift */
+  #branding:has(+ nav #menu-main-menu.open) #siteIdentity {
+    transform: translateX(var(--siteShift, 0px));
+  }
+
+  /* fallback if :has() isn't supported — JS will toggle body.menu-open */
+  body.menu-open #siteIdentity {
+    transform: translateX(var(--siteShift, 0px));
   }
 
   #adminMenu > .sub-menu {

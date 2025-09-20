@@ -268,6 +268,49 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
   moreWidth = document.getElementById('menu-main-menu').offsetWidth;
+
+  (function () {
+    const branding = document.getElementById('branding');
+    const site = document.getElementById('siteIdentity');
+    const menu = document.getElementById('menu-main-menu');
+
+    if (!branding || !site) return;
+
+    // compute how many px to shift siteIdentity so it sits at the right edge
+    function updateShift() {
+      // gap = desired right padding in px
+      const gap = 16;
+      const brandingWidth = branding.clientWidth;
+      const siteWidth = site.clientWidth;
+
+      // compute a positive shift (brandingWidth - siteWidth - gap)
+      const shift = Math.max(0, brandingWidth - siteWidth - gap);
+
+      // put shift as a CSS var used by the transform
+      document.documentElement.style.setProperty('--siteShift', shift + 'px');
+    }
+
+    updateShift();
+    window.addEventListener('resize', updateShift);
+
+    // Fallback: observe the menu's class and toggle a body class for browsers without :has()
+    function syncMenuOpen() {
+      if (!menu) return;
+      if (menu.classList.contains('open')) {
+        document.body.classList.add('menu-open');
+      } else {
+        document.body.classList.remove('menu-open');
+      }
+    }
+
+    syncMenuOpen();
+    if (menu) {
+      new MutationObserver(syncMenuOpen).observe(menu, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    }
+  })();
 });
 ///// FUNCTIONS /////
 
