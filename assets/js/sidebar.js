@@ -191,7 +191,7 @@ function populateSidebar() {
   if (selectedAnchor) {
     // See if selectedAnchor is profile
     if (selectedAnchor.includes('profile')) {
-      createSidebarSection(sideMenuData.profile, '');
+      createSidebarSection(sideMenuData.profile);
     } else {
       let submenu = '';
       let firstWord = selectedAnchor.split(/\s+/)[0];
@@ -243,7 +243,7 @@ function populateSidebar() {
               .trim();
 
             if (selectedAnchor.includes('profile')) {
-              createSidebarSection(sideMenuData.profile, '');
+              createSidebarSection(sideMenuData.profile);
             } else if (selectedAnchor.includes('services')) {
               let submenu = '';
               let firstWord = selectedAnchor.split(/\s+/)[0];
@@ -312,7 +312,7 @@ function populateSidebar() {
 }
 
 // Helper function to create and append sidebar content
-function createSidebarSection(menuSection, extraContent) {
+function createSidebarSection(menuSection, extraContent = '') {
   const sidebar = document.querySelector('.sidebar');
   sidebar.innerHTML = ''; // Clear out the current sidebar
 
@@ -356,6 +356,7 @@ function createSidebarSection(menuSection, extraContent) {
       a.href = item.url;
       a.style.textDecoration = 'underline';
       a.setAttribute('aria-label', `Learn more about ${item.name}`);
+      a.setAttribute('tabindex', '-1');
       li.appendChild(a);
       extraContentUl.appendChild(li);
     });
