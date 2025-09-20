@@ -177,7 +177,6 @@ header nav ul.menu > li.menu-item-has-children > .mega-menu {
 #branding {
   width: 11rem;
   height: 6rem;
-  float: left;
   display: flex;
   justify-content: center;
   align-items: center;
