@@ -175,7 +175,7 @@ header nav ul.menu > li.menu-item-has-children > .mega-menu {
 }
 
 #branding {
-  width: 11rem;
+  width: 60%;
   height: 6rem;
   display: flex;
   justify-content: flex-start;
@@ -232,8 +232,8 @@ header nav ul.menu > li.menu-item-has-children > .mega-menu {
 /* main navigation */
 
 nav {
-  width: calc(100% - 15rem);
-  float: right;
+  /* width: calc(100% - 15rem); */
+  /* float: right; */
 }
 
 @media (max-width: 32em) {
@@ -591,10 +591,6 @@ ul.sub-menu li > ul.sub-menu {
 
   #menu-main-menu.open {
     display: flex;
-  }
-
-  #branding {
-    width: 100%;
   }
 
   /* when menu is open (uses :has()) — slide by the computed --siteShift */
