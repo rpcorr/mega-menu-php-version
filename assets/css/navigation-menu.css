@@ -715,4 +715,8 @@ ul.sub-menu li > ul.sub-menu {
   #profileMenu > a {
     width: 55% !important;
   }
+
+  #branding {
+    width: 100%;
+  }
 }
