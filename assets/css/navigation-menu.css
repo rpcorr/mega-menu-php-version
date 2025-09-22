@@ -175,10 +175,10 @@ header nav ul.menu > li.menu-item-has-children > .mega-menu {
 }
 
 #branding {
-  width: 100%;
+  width: 11rem;
   height: 6rem;
   display: flex;
-  /* justify-content: flex-start; */
+  justify-content: flex-start;
   align-items: center;
   position: relative;
   background-color: #fff;
@@ -591,6 +591,10 @@ ul.sub-menu li > ul.sub-menu {
 
   #menu-main-menu.open {
     display: flex;
+  }
+
+  #branding {
+    width: 100%;
   }
 
   /* when menu is open (uses :has()) — slide by the computed --siteShift */
