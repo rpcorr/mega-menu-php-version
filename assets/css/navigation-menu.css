@@ -175,7 +175,6 @@ header nav ul.menu > li.menu-item-has-children > .mega-menu {
 }
 
 #branding {
-  width: 60%;
   height: 6rem;
   display: flex;
   justify-content: flex-start;
@@ -202,27 +201,6 @@ header nav ul.menu > li.menu-item-has-children > .mega-menu {
 #siteIdentity a:hover,
 #siteIdentity a:focus {
   text-decoration: underline;
-}
-
-@media (min-width: 27rem) {
-  .logo {
-    display: block;
-  }
-  .simple-logo {
-    display: none;
-  }
-}
-@media (max-width: 27rem) {
-  .logo {
-    display: none;
-  }
-  .simple-logo {
-    display: block;
-  }
-
-  #branding {
-    width: 30%;
-  }
 }
 
 #siteIdentity a {
@@ -587,6 +565,10 @@ ul.sub-menu li > ul.sub-menu {
     display: flex;
   }
 
+  #branding {
+    width: 60%;
+  }
+
   /* when menu is open (uses :has()) — slide by the computed --siteShift */
   #branding:has(+ nav #menu-main-menu.open) #siteIdentity {
     transform: translateX(var(--siteShift, 0px));
@@ -685,17 +667,58 @@ ul.sub-menu li > ul.sub-menu {
   #profileMenu > a {
     width: 23% !important;
   }
+
+  #branding {
+    width: 63%;
+  }
 }
 
 @media (max-width: 600px) {
   #profileMenu > a {
     width: 30% !important;
   }
+
+  #branding {
+    width: 66%;
+  }
 }
 
 @media (max-width: 480px) {
   #profileMenu > a {
     width: 37% !important;
+  }
+
+  #branding {
+    width: 71%;
+  }
+}
+
+@media (min-width: 431px) {
+  .logo {
+    display: block;
+  }
+  .simple-logo {
+    display: none;
+  }
+}
+@media (max-width: 432px) {
+  .logo {
+    display: none;
+  }
+  .simple-logo {
+    display: block;
+  }
+
+  body.menu-open .logo {
+    display: block;
+  }
+
+  body.menu-open .simple-logo {
+    display: none;
+  }
+
+  #branding {
+    width: 50%;
   }
 }
 
@@ -711,6 +734,6 @@ ul.sub-menu li > ul.sub-menu {
   }
 
   #branding {
-    width: 100%;
+    width: 50%;
   }
 }
