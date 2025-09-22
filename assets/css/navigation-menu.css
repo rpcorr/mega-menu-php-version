@@ -399,7 +399,7 @@ ul.sub-menu li > ul.sub-menu {
 /* Basic CSS for breadcrumbs */
 .breadcrumbs {
   display: flex;
-  /* flex-wrap: wrap; */
+  flex-wrap: wrap;
   /* list-style: none; */
   margin: 6.5em 0 0 2em;
 }
