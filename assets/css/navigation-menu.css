@@ -154,12 +154,12 @@ header {
 }
 
 /* Make sure the LI (parent) is positioned relatively */
-header nav ul.menu > li.menu-item-has-children {
+header nav#menu ul.menu > li.menu-item-has-children {
   position: relative;
 }
 
 /* Make sure the submenu is positioned absolutely */
-header nav ul.menu > li.menu-item-has-children > .mega-menu {
+header nav#menu ul.menu > li.menu-item-has-children > .mega-menu {
   top: 100%; /* right below the top-level menu item */
   left: 0;
 }
@@ -227,7 +227,7 @@ header nav ul.menu > li.menu-item-has-children > .mega-menu {
 
 /* main navigation */
 
-nav {
+nav#menu {
   width: calc(100% - 15rem);
   float: right;
 }

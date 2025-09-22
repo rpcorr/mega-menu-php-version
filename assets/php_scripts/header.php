@@ -131,8 +131,8 @@
         </div>
       </div>
     </header>
-    <?php include('assets/php_scripts/sidebar.php'); ?>
-    <nav aria-label="breadcrumbs">
+    <?php //include('assets/php_scripts/sidebar.php'); ?>
+    <nav id="breadcrumbsMenu" aria-label="breadcrumbs">
       <ul class="breadcrumbs" id="breadcrumbs"></ul>
     </nav>
     <a id="skipMenu" class="screen-reader-text"></a>
