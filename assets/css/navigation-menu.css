@@ -236,12 +236,6 @@ nav {
   /* float: right; */
 }
 
-@media (max-width: 32em) {
-  nav {
-    width: 50%;
-  }
-}
-
 /* Admin & Profile Menu - Sub Menu Container */
 #adminMenu,
 #profileMenu {
@@ -427,8 +421,8 @@ ul.sub-menu li > ul.sub-menu {
 /* Basic CSS for breadcrumbs */
 .breadcrumbs {
   display: flex;
-  flex-wrap: wrap;
-  list-style: none;
+  /* flex-wrap: wrap; */
+  /* list-style: none; */
   margin: 6.5em 0 0 2em;
 }
 .breadcrumbs li {
