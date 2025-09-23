@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title ?></title>
     <?php
+    session_start();
+
 
     // determine which variable to use: Request or Cookie
     $ukey = '';
@@ -70,6 +72,9 @@
       return $relativePath;
     }
 
+      // Example: set it for testing
+      $_SESSION['switchAble'] = true;
+
     ?>
 
     <!-- stylesheets -->
@@ -97,7 +102,9 @@
       }
     } ?>
 
-    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/modal.css" />
+    <?php if ($_SESSION['switchAble'] === true) { ?>
+      <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/modal.css" />
+    <?php } ?>
 </head>
 <body>
 <p>
