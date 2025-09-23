@@ -96,6 +96,8 @@
       <?php 
       }
     } ?>
+
+    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/modal.css" />
 </head>
 <body>
 <p>
