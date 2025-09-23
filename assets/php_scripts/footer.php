@@ -7,6 +7,10 @@
       const portal = <?php echo json_encode($portal); ?>;
       const queryString = <?php echo json_encode($queryString); ?>;
       const user = <?php echo json_encode($user); ?> === null ? 'CO&DEMO' : <?php echo json_encode($user); ?>;
+      const switchAble = <?php echo (!empty($_SESSION['switchAble']) && $_SESSION['switchAble'] === true) ? 'true' : 'false'; ?>;
+
+      console.log(`switchAble is ${switchAble}`);
+
 
       console.log(`I am outside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}.`);
       console.log(`I am outside of breadcrumbs.js. Querystring is ${queryString}`);
@@ -41,94 +45,96 @@
       });
 
     </script>
+    
+  <?php if (!empty($_SESSION['switchAble']) && $_SESSION['switchAble'] === true): ?>
     <script src='<?php echo getRelativePath(''); ?>assets/js/modal.js' defer></script>
-
     <div id="userModal" class="modal" role="dialog" aria-hidden="true" aria-labelledby="modalTitle">
-  <div class="modal-content">
-    <span class="close" id="closeModal" aria-label="Close">&times;</span>
-    <h2 id="modalTitle">User List</h2>
-    <div id="modalBody">
-      <?php if ($_COOKIE['ukey'] || $_REQUEST['ukey']) { ?>  
-        <script>
-          const portalTemp = <?php echo json_encode($portal); ?>;
-          const userTemp   = <?php echo json_encode($user); ?>;
+      <div class="modal-content">
+        <span class="close" id="closeModal" aria-label="Close">&times;</span>
+        <h2 id="modalTitle">User List</h2>
+        <div id="modalBody">
+          <?php if ($_COOKIE['ukey'] || $_REQUEST['ukey']) { ?>  
+            <script>
+              const portalTemp = <?php echo json_encode($portal); ?>;
+              const userTemp   = <?php echo json_encode($user); ?>;
 
-          let userJSONfile = '';
+              let userJSONfile = '';
 
-          if (portalTemp.toLowerCase() === 'democa')
-            userJSONfile = 'http://localhost/mmenu/assets/json/users-democa.json';
-          else 
-            userJSONfile = 'http://localhost/mmenu/assets/json/users-demo.json';
+              if (portalTemp.toLowerCase() === 'democa')
+                userJSONfile = 'http://localhost/mmenu/assets/json/users-democa.json';
+              else 
+                userJSONfile = 'http://localhost/mmenu/assets/json/users-demo.json';
 
-          const userInput = document.createElement('input');
-          userInput.setAttribute('list', 'userList');
-          userInput.id = 'userInput';
-          userInput.className = 'users-select';
-          userInput.placeholder = 'Type to search...';
+              const userInput = document.createElement('input');
+              userInput.setAttribute('list', 'userList');
+              userInput.id = 'userInput';
+              userInput.className = 'users-select';
+              userInput.placeholder = 'Type to search...';
 
-          const userList = document.createElement('datalist');
-          userList.id = 'userList';
+              const userList = document.createElement('datalist');
+              userList.id = 'userList';
 
-          const usersFlex = document.createElement('div');
-          usersFlex.className = 'users-flex';
+              const usersFlex = document.createElement('div');
+              usersFlex.className = 'users-flex';
 
-          const label = document.createElement('label');
-          label.setAttribute('for', 'userInput');
-          label.innerHTML = '<strong>Select a User:</strong>';
+              const label = document.createElement('label');
+              label.setAttribute('for', 'userInput');
+              label.innerHTML = '<strong>Select a User:</strong>';
 
-          const goButton = document.createElement('button');
-          goButton.id = 'goUser';
-          goButton.textContent = 'Go';
+              const goButton = document.createElement('button');
+              goButton.id = 'goUser';
+              goButton.textContent = 'Go';
 
-          usersFlex.appendChild(label);
-          usersFlex.appendChild(userInput);
-          usersFlex.appendChild(userList);
-          usersFlex.appendChild(goButton);
+              usersFlex.appendChild(label);
+              usersFlex.appendChild(userInput);
+              usersFlex.appendChild(userList);
+              usersFlex.appendChild(goButton);
 
-          document.getElementById('modalBody').appendChild(usersFlex);
+              document.getElementById('modalBody').appendChild(usersFlex);
 
-          let userData = [];
+              let userData = [];
 
-          fetch(userJSONfile)
-            .then(response => {
-              if (!response.ok) throw new Error('Network response was not ok: ' + response.statusText);
-              return response.json();
-            })
-            .then(data => {
-              userData = data;
-              data.forEach(user => {
-                const option = document.createElement('option');
-                option.value = user.username; // shown in autocomplete
-                userList.appendChild(option);
+              fetch(userJSONfile)
+                .then(response => {
+                  if (!response.ok) throw new Error('Network response was not ok: ' + response.statusText);
+                  return response.json();
+                })
+                .then(data => {
+                  userData = data;
+                  data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.username; // shown in autocomplete
+                    userList.appendChild(option);
+                  });
+                })
+                .catch(error => console.error('Problem fetching JSON:', error));
+
+              goButton.addEventListener('click', () => {
+                const selectedUser = userInput.value;
+                const match = userData.find(u => u.username === selectedUser);
+                // if (match) {
+                //   const url = `menu-users.php?is_menu&portal=${portalTemp}&ukey=${match.ukey}&user=${encodeURIComponent(match.username)}`;
+                //   window.location.href = url;
+                if (match) {
+                  // Keep the current page URL, just add/update query parameters
+                  const urlParams = new URLSearchParams(window.location.search);
+                  urlParams.set('is_menu', '');
+                  urlParams.set('portal', portalTemp);
+                  urlParams.set('ukey', match.ukey);
+                  urlParams.set('user', match.username);
+
+                  // Update the current page URL with new query string
+                  window.location.search = urlParams.toString();
+                } else {
+                  alert('Please select a valid user.');
+                }
               });
-            })
-            .catch(error => console.error('Problem fetching JSON:', error));
-
-          goButton.addEventListener('click', () => {
-            const selectedUser = userInput.value;
-            const match = userData.find(u => u.username === selectedUser);
-            // if (match) {
-            //   const url = `menu-users.php?is_menu&portal=${portalTemp}&ukey=${match.ukey}&user=${encodeURIComponent(match.username)}`;
-            //   window.location.href = url;
-            if (match) {
-              // Keep the current page URL, just add/update query parameters
-              const urlParams = new URLSearchParams(window.location.search);
-              urlParams.set('is_menu', '');
-              urlParams.set('portal', portalTemp);
-              urlParams.set('ukey', match.ukey);
-              urlParams.set('user', match.username);
-
-              // Update the current page URL with new query string
-              window.location.search = urlParams.toString();
-            } else {
-              alert('Please select a valid user.');
-            }
-          });
-        </script>
-      <?php } ?>
-    </div>
+            </script>
+          <?php } ?>
+        </div>
+      </div>
   </div>
-</div>
+<?php endif; ?>
 
     
     <!-- ///// The Templates ///// -->
