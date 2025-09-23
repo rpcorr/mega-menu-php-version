@@ -42,6 +42,94 @@
 
     </script>
     <script src='<?php echo getRelativePath(''); ?>assets/js/modal.js' defer></script>
+
+    <div id="userModal" class="modal" role="dialog" aria-hidden="true" aria-labelledby="modalTitle">
+  <div class="modal-content">
+    <span class="close" id="closeModal" aria-label="Close">&times;</span>
+    <h2 id="modalTitle">User List</h2>
+    <div id="modalBody">
+      <?php if ($_COOKIE['ukey'] || $_REQUEST['ukey']) { ?>  
+        <script>
+          const portalTemp = <?php echo json_encode($portal); ?>;
+          const userTemp   = <?php echo json_encode($user); ?>;
+
+          let userJSONfile = '';
+
+          if (portalTemp.toLowerCase() === 'democa')
+            userJSONfile = 'http://localhost/mmenu/assets/json/users-democa.json';
+          else 
+            userJSONfile = 'http://localhost/mmenu/assets/json/users-demo.json';
+
+          const userInput = document.createElement('input');
+          userInput.setAttribute('list', 'userList');
+          userInput.id = 'userInput';
+          userInput.className = 'users-select';
+          userInput.placeholder = 'Type to search...';
+
+          const userList = document.createElement('datalist');
+          userList.id = 'userList';
+
+          const usersFlex = document.createElement('div');
+          usersFlex.className = 'users-flex';
+
+          const label = document.createElement('label');
+          label.setAttribute('for', 'userInput');
+          label.innerHTML = '<strong>Select a User:</strong>';
+
+          const goButton = document.createElement('button');
+          goButton.id = 'goUser';
+          goButton.textContent = 'Go';
+
+          usersFlex.appendChild(label);
+          usersFlex.appendChild(userInput);
+          usersFlex.appendChild(userList);
+          usersFlex.appendChild(goButton);
+
+          document.getElementById('modalBody').appendChild(usersFlex);
+
+          let userData = [];
+
+          fetch(userJSONfile)
+            .then(response => {
+              if (!response.ok) throw new Error('Network response was not ok: ' + response.statusText);
+              return response.json();
+            })
+            .then(data => {
+              userData = data;
+              data.forEach(user => {
+                const option = document.createElement('option');
+                option.value = user.username; // shown in autocomplete
+                userList.appendChild(option);
+              });
+            })
+            .catch(error => console.error('Problem fetching JSON:', error));
+
+          goButton.addEventListener('click', () => {
+            const selectedUser = userInput.value;
+            const match = userData.find(u => u.username === selectedUser);
+            // if (match) {
+            //   const url = `menu-users.php?is_menu&portal=${portalTemp}&ukey=${match.ukey}&user=${encodeURIComponent(match.username)}`;
+            //   window.location.href = url;
+            if (match) {
+              // Keep the current page URL, just add/update query parameters
+              const urlParams = new URLSearchParams(window.location.search);
+              urlParams.set('is_menu', '');
+              urlParams.set('portal', portalTemp);
+              urlParams.set('ukey', match.ukey);
+              urlParams.set('user', match.username);
+
+              // Update the current page URL with new query string
+              window.location.search = urlParams.toString();
+            } else {
+              alert('Please select a valid user.');
+            }
+          });
+        </script>
+      <?php } ?>
+    </div>
+  </div>
+</div>
+
     
     <!-- ///// The Templates ///// -->
     <template id="menuTemplate">
@@ -74,54 +162,7 @@
         <div id="bodyContent"></div>
       </div>
     </template>
-    <!-- Modal Structure -->
-    <div id="userModal" class="modal" role="dialog" aria-hidden="true" aria-labelledby="modalTitle">
-      <div class="modal-content">
-        <span class="close" id="closeModal" aria-label="Close">&times;</span>
-        <h2 id="modalTitle">User List</h2>
-        <div id="modalBody">
-  <?php
-  if ($_COOKIE['ukey'] || $_REQUEST['ukey']) { ?> 
-    <script>
-      const portalTemp = <?php echo json_encode($portal); ?>;
-      const userTemp   = <?php echo json_encode($user); ?>;
-
-      let userJSONfile = '';
-
-      if (portalTemp.toLowerCase() === 'democa')
-        userJSONfile = 'http://localhost/mmenu/assets/json/users-democa.json';
-      else 
-        userJSONfile = 'http://localhost/mmenu/assets/json/users-demo.json';
-
-      fetch(userJSONfile)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok: ' + response.statusText);
-          }
-          return response.json();
-        })
-        .then(data => {
-          const select = document.getElementById('userSelect');
-          data.forEach(user => {
-            const option = document.createElement('option');
-            option.value = `menu-users.php?is_menu&portal=${portalTemp}&ukey=${user.ukey}&user=${encodeURIComponent(user.username)}`;
-            option.textContent = user.username;
-            select.appendChild(option);
-          });
-        })
-        .catch(error => {
-          console.error('There was a problem fetching the JSON file:', error);
-        });
-    </script>
-
-    <div class="users-flex">
-      <label for="userSelect"><strong>Select a User:</strong></label>
-      <select id="userSelect" class="users-select">
-        <option value="">-- Choose a user --</option>
-      </select>
-      <button id="goUser">Go</button>
-    </div>
-  <?php } ?>
+  
 </div>
 
         </div>
