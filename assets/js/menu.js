@@ -257,7 +257,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // Call the function to create the menu
       let menuHTML = createMenu(finalGroupedArray);
 
-      console.log(switchAble);
       // if switchAble session variable is true, show Show Users link
       if (switchAble)
         menuHTML += `<li> <a href="#" id="showUsersLink">Show Users</a></li>`;
