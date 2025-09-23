@@ -41,6 +41,7 @@
       });
 
     </script>
+    <script src='<?php echo getRelativePath(''); ?>assets/js/modal.js' defer></script>
     
     <!-- ///// The Templates ///// -->
     <template id="menuTemplate">
@@ -73,5 +74,59 @@
         <div id="bodyContent"></div>
       </div>
     </template>
+    <!-- Modal Structure -->
+    <div id="userModal" class="modal" role="dialog" aria-hidden="true" aria-labelledby="modalTitle">
+      <div class="modal-content">
+        <span class="close" id="closeModal" aria-label="Close">&times;</span>
+        <h2 id="modalTitle">User List</h2>
+        <div id="modalBody">
+  <?php
+  if ($_COOKIE['ukey'] || $_REQUEST['ukey']) { ?> 
+    <script>
+      const portalTemp = <?php echo json_encode($portal); ?>;
+      const userTemp   = <?php echo json_encode($user); ?>;
+
+      let userJSONfile = '';
+
+      if (portalTemp.toLowerCase() === 'democa')
+        userJSONfile = 'http://localhost/mmenu/assets/json/users-democa.json';
+      else 
+        userJSONfile = 'http://localhost/mmenu/assets/json/users-demo.json';
+
+      fetch(userJSONfile)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok: ' + response.statusText);
+          }
+          return response.json();
+        })
+        .then(data => {
+          const select = document.getElementById('userSelect');
+          data.forEach(user => {
+            const option = document.createElement('option');
+            option.value = `menu-users.php?is_menu&portal=${portalTemp}&ukey=${user.ukey}&user=${encodeURIComponent(user.username)}`;
+            option.textContent = user.username;
+            select.appendChild(option);
+          });
+        })
+        .catch(error => {
+          console.error('There was a problem fetching the JSON file:', error);
+        });
+    </script>
+
+    <div class="users-flex">
+      <label for="userSelect"><strong>Select a User:</strong></label>
+      <select id="userSelect" class="users-select">
+        <option value="">-- Choose a user --</option>
+      </select>
+      <button id="goUser">Go</button>
+    </div>
+  <?php } ?>
+</div>
+
+        </div>
+      </div>
+
+      
   </body>
 </html>

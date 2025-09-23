@@ -187,6 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
       let menuHTML = createMenu(finalGroupedArray);
       //let menuHTML = '';
 
+      menuHTML += `<li> <a href="#" id="showUsersLink">Show Users</a></li>`;
+
       // if logged in, show profile
       if (ukey.trim() !== '') {
         menuHTML += `<li class="menu-item-has-children hover" id="profileMenu" aria-expanded="false">
