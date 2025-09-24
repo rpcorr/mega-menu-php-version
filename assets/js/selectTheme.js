@@ -1,3 +1,5 @@
+'use strict';
+
 // Add event listener to all radio buttons with name "option"
 var radioButtons = document.querySelectorAll('input[name="option"]');
 radioButtons.forEach(function (radioButton) {

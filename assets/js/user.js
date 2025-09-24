@@ -30,24 +30,24 @@ const ukeyUserMap = {
   '695df2b1afc3dee4c6690a30f63abcf7': 'riversideSystem-rm-de-cm.json',
 };
 
-let pagesJSONfile = baseURL;
+let JSONfile = baseURL;
 
 if (!ukey && !user) {
-  pagesJSONfile += 'co-pages.json';
+  JSONfile += 'co-pages.json';
 } else {
   if (ukey && ukeyUserMap[ukey]) {
-    pagesJSONfile += ukeyUserMap[ukey];
+    JSONfile += ukeyUserMap[ukey];
   } else if (user) {
-    pagesJSONfile += 'admin.json';
+    JSONfile += 'admin.json';
   }
 }
 
-//let pagesJSONfile = '';
+//let JSONfile = '';
 
 // Counting Opinions server
 // if (!ukey) {
-//   pagesJSONfile =
+//   JSONfile =
 //     'https://dev.countingopinions.com/ws/portal/get_pages.php?is_menu';
 // } else {
-//   pagesJSONfile = `https://dev.countingopinions.com/ws/portal/get_pages.php?is_menu&portal=${portal}&ukey=${ukey}`;
+//   JSONfile = `https://dev.countingopinions.com/ws/portal/get_pages.php?is_menu&portal=${portal}&ukey=${ukey}`;
 // }

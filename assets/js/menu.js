@@ -91,10 +91,10 @@ const extraContent = [
 
 console.log(`I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}.`);
 
-console.log(pagesJSONfile);
+console.log(JSONfile);
 // Ensure this code runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-  fetch(pagesJSONfile)
+  fetch(JSONfile)
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -103,6 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then((data) => {
       allMenuItemsinArray = data;
+
+      console.log(allMenuItemsinArray);
 
       // Initialize an empty object to hold grouped pages
       const groupedSections = {};
@@ -251,7 +253,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return menuHTML;
       }
 
-      console.log('All the other pages:');
       console.log(finalGroupedArray);
       // Call the function to create the menu
       let menuHTML = createMenu(finalGroupedArray);
