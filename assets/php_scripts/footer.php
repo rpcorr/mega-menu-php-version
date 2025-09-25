@@ -52,7 +52,6 @@
     <script>
       document.addEventListener("DOMContentLoaded", function() {
       const portalTemp = <?php echo json_encode($portal); ?>;
-      const userTemp   = <?php echo json_encode($user); ?>;
 
       let userJSONfile = '';
       if (portalTemp.toLowerCase() === 'democa')
