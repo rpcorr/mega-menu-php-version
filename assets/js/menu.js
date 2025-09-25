@@ -374,11 +374,13 @@ document.addEventListener('DOMContentLoaded', () => {
               '#moreSubMenu li[aria-expanded="true"]'
             );
             subItems.forEach((li) => {
-              li.setAttribute('aria-expanded', 'false');
-              const nestedLinks = li.querySelectorAll('.sub-menu a');
-              nestedLinks.forEach((link) => {
-                link.setAttribute('tabindex', '-1');
-              });
+              if (li.classList.contains('menu-item-has-children')) {
+                li.setAttribute('aria-expanded', 'false');
+                const nestedLinks = li.querySelectorAll('.sub-menu a');
+                nestedLinks.forEach((link) => {
+                  link.setAttribute('tabindex', '-1');
+                });
+              }
             });
 
             // Also set tabindex=-1 on all direct submenu links
@@ -573,7 +575,8 @@ function closeAllMenus() {
 
   // Loop through all links to set aria-expanded attribute to false
   links.forEach((link) => {
-    link.parentElement.setAttribute('aria-expanded', 'false');
+    if (link.parentElement.classList.contains('menu-item-has-children'))
+      link.parentElement.setAttribute('aria-expanded', 'false');
   });
 }
 
@@ -872,7 +875,10 @@ function toggleSubMenu(menuLink) {
   // Toggle expanded state
   const isExpanded = parentLi.getAttribute('aria-expanded') === 'true';
   const newState = !isExpanded;
-  parentLi.setAttribute('aria-expanded', String(newState));
+
+  if (parentLi.classList.contains('menu-item-has-children')) {
+    parentLi.setAttribute('aria-expanded', String(newState));
+  }
 
   // Update tabindex of submenu links
   const subMenu = parentLi.querySelector('ul.sub-menu');
