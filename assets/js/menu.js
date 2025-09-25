@@ -518,6 +518,20 @@ function alignSubMenusToViewport(mode = 'default', debug = false) {
  * @param {Event} e - The click event object.
  */
 function handleLinkClick(e) {
+  // show modal regardless if the link is a top level menu or not
+  if (e.target.id === 'showUsersLink') {
+    const modal = document.getElementById('userModal');
+    const userInput = document.getElementById('userInput');
+    e.preventDefault();
+    modal.style.display = 'block';
+    modal.setAttribute('aria-hidden', 'false');
+
+    if (userInput) {
+      userInput.focus();
+    }
+    return;
+  }
+
   // Check if the clicked link is inside a menu item that has children
   if (this.closest('.menu-item-has-children')) {
     // Toggle the display of the submenu for this top-level menu item
@@ -530,6 +544,8 @@ function handleLinkClick(e) {
       // Toggle top level menu
       toggleTopLevelMenu(this, e); // regular top-level menu
     }
+  } else {
+    console.log('Not a parent menu item');
   }
 }
 
