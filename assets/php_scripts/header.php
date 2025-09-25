@@ -72,7 +72,7 @@
       return $relativePath;
     }
 
-      // Example: set it for testing
+      // Allow current user to switch users
       $_SESSION['switchAble'] = true;
 
     ?>
