@@ -688,7 +688,10 @@ function formatNav() {
       // Ensure submenu links inside "More" menu are not focusable initially
       const innerLinks = item.querySelectorAll('.sub-menu a');
       innerLinks.forEach((link) => {
-        link.setAttribute('tabindex', '-1');
+        // check if parent has class 'menu-item-has-children' beore setting tabindex to -1
+        if (link.parentElement.classList.contains('menu-item-has-children')) {
+          link.setAttribute('tabindex', '-1');
+        }
       });
 
       // Mark the current item as not visible
