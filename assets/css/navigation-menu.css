@@ -289,12 +289,7 @@ ul#menu-main-menu
   padding: 1.5rem 0;
 }
 
-.menu-main-menu-container
-  > #menu-main-menu
-  > li
-  > .sub-menu
-  > li.menu-item-has-children
-  > a {
+.menu-main-menu-container > #menu-main-menu > li > .sub-menu > li > a {
   padding: 1rem 0 1rem 1.5rem;
   width: 100%;
 }
