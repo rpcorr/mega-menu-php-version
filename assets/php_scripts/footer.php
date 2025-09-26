@@ -45,7 +45,7 @@
     <script src='<?php echo getRelativePath(''); ?>assets/js/modal.js' defer></script>
     <div id="userModal" class="modal" role="dialog" aria-hidden="true" aria-labelledby="modalTitle">
   <div class="modal-content">
-    <h2 id="modalTitle">User List</h2>
+    <h2 id="modalTitle">Users List</h2>
     <div id="modalBody">
       <?php if ($_COOKIE['ukey'] || $_REQUEST['ukey']) { ?>  
       <script>
