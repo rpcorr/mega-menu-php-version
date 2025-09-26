@@ -13,6 +13,7 @@
 
 /* Modal box */
 .modal-content {
+  position: relative; /* so the close button positions itself relative to the modal */
   background: #fff;
   margin: 10% auto;
   padding: 1.5rem;
@@ -24,11 +25,17 @@
 
 /* Close button */
 .close {
-  float: right;
+  position: absolute;
+  top: 0.5rem; /* space from top edge */
+  right: 0.5rem; /* space from right edge */
   font-size: 1.5rem;
   font-weight: bold;
   cursor: pointer;
+  line-height: 1;
+  background: none;
+  border: none;
 }
+
 .close:hover {
   color: red;
 }
