@@ -523,12 +523,31 @@ function handleLinkClick(e) {
     const modal = document.getElementById('userModal');
     const userInput = document.getElementById('userInput');
     e.preventDefault();
+
     modal.style.display = 'block';
     modal.setAttribute('aria-hidden', 'false');
 
     if (userInput) {
+      // Save the datalist id and remove it temporarily
+      const listId = userInput.getAttribute('list');
+      userInput.removeAttribute('list');
+
+      // Clear input value and focus
+      userInput.value = '';
       userInput.focus();
+
+      // Show datalist after 1 character typed
+      const showListAfterTyping = (e) => {
+        if (userInput.value.length >= 1) {
+          userInput.setAttribute('list', listId);
+          // Remove listener so it only runs once per modal open
+          userInput.removeEventListener('input', showListAfterTyping);
+        }
+      };
+
+      userInput.addEventListener('input', showListAfterTyping);
     }
+
     return;
   }
 
