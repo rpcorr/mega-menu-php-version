@@ -140,7 +140,11 @@
       <ul class="breadcrumbs" id="breadcrumbs"></ul>
     </nav>
 
-    <?php if ($_REQUEST['selectedUserKey'] && $_REQUEST['selectedUserKey'] !== "" && $_REQUEST['ukey'] !== $_REQUEST['selectedUserKey']) { 
+    <?php if (
+    isset($_REQUEST['selectedUserKey']) &&
+    $_REQUEST['selectedUserKey'] !== "" &&
+    $_REQUEST['ukey'] !== $_REQUEST['selectedUserKey']
+    ) { 
 
       // Get the current query string into an array
       $queryParams = $_GET;
