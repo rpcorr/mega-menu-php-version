@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // if switchAble session variable is true, show Show Users link
       if (switchAble)
-        menuHTML += `<li> <a href="#" id="showUsersLink">Show Users</a></li>`;
+        menuHTML += `<li> <a href="#" id="showUsersLink">View page as...</a></li>`;
 
       // if logged in, show profile
       if (ukey.trim() !== '') {
