@@ -139,5 +139,27 @@
     <nav aria-label="breadcrumbs">
       <ul class="breadcrumbs" id="breadcrumbs"></ul>
     </nav>
+
+    <?php if ($_REQUEST['selectedUserKey'] && $_REQUEST['selectedUserKey'] !== "" && $_REQUEST['ukey'] !== $_REQUEST['selectedUserKey']) { 
+
+      // Get the current query string into an array
+      $queryParams = $_GET;
+
+      // Remove impersonation-related params if they exist
+      unset($queryParams['user']);
+      unset($queryParams['selectedUserKey']);
+
+      // Build the cleaned query string
+      $queryString = http_build_query($queryParams);
+
+      $currentPage = basename($_SERVER['PHP_SELF']);
+      
+      ?>
+      <div class="impersonation-banner">
+        <p>You are currently viewing the portal as user: <?php echo $_REQUEST['user']; ?>. <a href="<?php echo getRelativePath(''); ?><?php echo $currentPage ?>?<?php echo $queryString; ?>">Click here to stop impersonating this user.</a></p>
+      </div>
+
+      <?php  } ?>
+      
     <a id="skipMenu" class="screen-reader-text"></a>
     

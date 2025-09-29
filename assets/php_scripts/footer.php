@@ -111,14 +111,19 @@
             const selectedUser = userInput.value;
             const match = userData.find(u => u.username === selectedUser);
 
-            if (match) {
+            if (match && ukey !== match.ukey) {
               const urlParams = new URLSearchParams(window.location.search);
               urlParams.set('is_menu', '');
               urlParams.set('portal', portalTemp);
-              urlParams.set('ukey', match.ukey);
               urlParams.set('user', match.username);
+              urlParams.set('selectedUserKey', match.ukey);
+
               window.location.search = urlParams.toString();
             } else {
+              if (ukey === match?.ukey) {
+                alert('You are already logged in as this user. Please select a different user.');
+                return;
+              } 
               alert('Please select a valid user.');
             }
           });

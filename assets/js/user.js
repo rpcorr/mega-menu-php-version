@@ -32,10 +32,28 @@ const ukeyUserMap = {
 
 let JSONfile = baseURL;
 
+// Parse current query string
+const urlParams = new URLSearchParams(window.location.search);
+
+// Check for selectedUserKey
+let selectedUserKey = null;
+if (urlParams.has('selectedUserKey')) {
+  selectedUserKey = urlParams.get('selectedUserKey');
+}
+
+console.log('Selected User Key:', selectedUserKey);
+console.log(`ukey is ${ukey}`);
+
 if (!ukey && !user) {
   JSONfile += 'co-pages.json';
 } else {
-  if (ukey && ukeyUserMap[ukey]) {
+  if (
+    selectedUserKey &&
+    ukeyUserMap[selectedUserKey] &&
+    selectedUserKey !== ukey
+  ) {
+    JSONfile += ukeyUserMap[selectedUserKey];
+  } else if (ukey && ukeyUserMap[ukey]) {
     JSONfile += ukeyUserMap[ukey];
   } else if (user) {
     JSONfile += 'admin.json';
