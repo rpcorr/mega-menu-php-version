@@ -42,7 +42,6 @@ if (urlParams.has('selectedUserKey')) {
 }
 
 console.log('Selected User Key:', selectedUserKey);
-console.log(`ukey is ${ukey}`);
 
 if (!ukey && !user) {
   JSONfile += 'co-pages.json';
