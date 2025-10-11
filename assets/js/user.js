@@ -1,7 +1,6 @@
 'use strict';
 
 // Local host
-const baseURL = 'http://localhost/mmenu/assets/json/';
 const ukeyUserMap = {
   b5e79c05b3f12219e725fc167edefdd1: 'co-demo.json',
   aeff1d4962b1fb2aa59a472d2df7efa1: 'cm-demo.json',
@@ -30,29 +29,13 @@ const ukeyUserMap = {
   '695df2b1afc3dee4c6690a30f63abcf7': 'riversideSystem-rm-de-cm.json',
 };
 
-let JSONfile = baseURL;
-
 // Parse current query string
 const urlParams = new URLSearchParams(window.location.search);
-
-// Check for selectedUserKey
-let selectedUserKey = null;
-if (urlParams.has('selectedUserKey')) {
-  selectedUserKey = urlParams.get('selectedUserKey');
-}
-
-console.log('Selected User Key:', selectedUserKey);
 
 if (!ukey && !user) {
   JSONfile += 'co-pages.json';
 } else {
-  if (
-    selectedUserKey &&
-    ukeyUserMap[selectedUserKey] &&
-    selectedUserKey !== ukey
-  ) {
-    JSONfile += ukeyUserMap[selectedUserKey];
-  } else if (ukey && ukeyUserMap[ukey]) {
+  if (ukey && ukeyUserMap[ukey]) {
     JSONfile += ukeyUserMap[ukey];
   } else if (user) {
     JSONfile += 'admin.json';

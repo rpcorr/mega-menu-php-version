@@ -89,7 +89,17 @@ const extraContent = [
   },
 ];
 
-console.log(`I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}.`);
+let user = '';
+document.addEventListener('userReady', () => {
+  console.log('Menu.js: user is ready:', window.user);
+
+  // Now safe to use window.user here
+  user = window.user;
+});
+
+console.log(
+  `I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}. User is ${user}`
+);
 
 console.log(JSONfile);
 // Ensure this code runs after the DOM is fully loaded

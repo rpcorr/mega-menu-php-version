@@ -4,7 +4,38 @@
       const ukey = '<?php echo $ukey; ?>'; 
       const portal = <?php echo json_encode($portal); ?>;
       const queryString = <?php echo json_encode($queryString); ?>;
-      const user = <?php echo json_encode($user); ?> === null ? 'CO&DEMO' : <?php echo json_encode($user); ?>;
+
+      const baseURL = 'http://localhost/mmenu/assets/json/';
+
+      let JSONfile = baseURL;
+
+      let userJSONfile = baseURL + 'users-demo.json';
+
+      console.log(`ukey is ${ukey}`);
+      console.log(`userJSONfile is: ${userJSONfile}`);
+
+      window.user = '';
+
+    // Fetch user data
+    fetch(userJSONfile)
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+      return response.json();
+    })
+    .then((data) => {
+      const match = data.users.find((user) => user.ukey === ukey);
+      console.log(`match is ${match.username}`);
+      window.user = match ? match.username : 'DEMO';
+
+      console.log('Footer: fetched user:', window.user);
+
+      // Notify any script waiting for user
+      document.dispatchEvent(new Event('userReady'));
+    })
+    .catch((error) => {
+      console.error('Error loading JSON file:', error);
+    });
+  
       const switchAble = <?php echo (!empty($_SESSION['switchAble']) && $_SESSION['switchAble'] === true) ? 'true' : 'false'; ?>;
 
       console.log(`I am outside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}.`);
@@ -41,104 +72,10 @@
 
     </script>
     
-  <?php if (!empty($_SESSION['switchAble']) && $_SESSION['switchAble'] === true): ?>
-    <script src='<?php echo getRelativePath(''); ?>assets/js/modal.js' defer></script>
-    <div id="userModal" class="modal" role="dialog" aria-hidden="true" aria-labelledby="modalTitle">
-  <div class="modal-content">
-    <h2 id="modalTitle">Users List</h2>
-    <div id="modalBody">
-      <?php if ($_COOKIE['ukey'] || $_REQUEST['ukey']) { ?>  
-      <script>
-        document.addEventListener("DOMContentLoaded", function() {
-          const portalTemp = <?php echo json_encode($portal); ?>;
-
-          let userJSONfile = '';
-          if (portalTemp.toLowerCase() === 'democa')
-            userJSONfile = `${baseURL}users-democa.json`;
-          else 
-            userJSONfile = `${baseURL}users-demo.json`;
-
-          // Create label
-          const label = document.createElement('label');
-          label.setAttribute('for', 'userInput');
-          label.innerHTML = '<strong>Select a User:</strong>';
-          document.getElementById('modalBody').appendChild(label);
-
-          // Create a container for input and button on its own line
-          const inputContainer = document.createElement('div');
-          inputContainer.style.display = 'flex';
-          inputContainer.style.flexDirection = 'row';
-          inputContainer.style.gap = '0.5rem'; // spacing between input and button
-          inputContainer.style.marginTop = '0.5rem'; // spacing below label
-
-          const userInput = document.createElement('input');
-          userInput.setAttribute('list', 'userList');
-          userInput.id = 'userInput';
-          userInput.className = 'users-select';
-          userInput.placeholder = 'Type to search...';
-
-          const userList = document.createElement('datalist');
-          userList.id = 'userList';
-
-          const goButton = document.createElement('button');
-          goButton.id = 'goUser';
-          goButton.textContent = 'Go';
-
-          inputContainer.appendChild(userInput);
-          inputContainer.appendChild(goButton);
-
-          document.getElementById('modalBody').appendChild(inputContainer);
-          document.getElementById('modalBody').appendChild(userList);
-
-          let userData = [];
-
-          fetch(userJSONfile)
-            .then(response => {
-              if (!response.ok) throw new Error('Network response was not ok: ' + response.statusText);
-              return response.json();
-            })
-            .then(data => {
-              userData = data;
-              data.forEach(user => {
-                const option = document.createElement('option');
-                option.value = user.username; // shown in autocomplete
-                userList.appendChild(option);
-              });
-            })
-            .catch(error => console.error('Problem fetching JSON:', error));
-
-          goButton.addEventListener('click', () => {
-            const selectedUser = userInput.value;
-            const match = userData.find(u => u.username === selectedUser);
-
-            if (match && ukey !== match.ukey) {
-              const urlParams = new URLSearchParams(window.location.search);
-              urlParams.set('is_menu', '');
-              urlParams.set('portal', portalTemp);
-              urlParams.set('user', match.username);
-              urlParams.set('selectedUserKey', match.ukey);
-
-              window.location.search = urlParams.toString();
-            } else {
-              if (ukey === match?.ukey) {
-                alert('You are already logged in as this user. Please select a different user.');
-                return;
-              } 
-              alert('Please select a valid user.');
-            }
-          });
-        });
-      </script>
-      <?php } ?>
-    </div>
-
-    <!-- Close button LAST in DOM for correct tab order -->
-    <span role="button" id="closeModal" class="close" aria-label="Close modal dialog" tabindex="0">
-      &times;
-    </span>
-  </div>
-</div>
-<?php endif; ?>
+  <?php //if (!empty($_SESSION['switchAble']) && $_SESSION['switchAble'] === true): ?>
+    <script src='<?php echo getRelativePath(''); ?>assets/js/switchable.js' defer></script>
+    
+<?php //endif; ?>
 
     
     <!-- ///// The Templates ///// -->
