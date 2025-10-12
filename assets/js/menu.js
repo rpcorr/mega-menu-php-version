@@ -101,7 +101,8 @@ console.log(
   `I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}. User is ${user}`
 );
 
-console.log(JSONfile);
+console.log(`Menu file: ${JSONfile}`);
+
 // Ensure this code runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
   fetch(JSONfile)

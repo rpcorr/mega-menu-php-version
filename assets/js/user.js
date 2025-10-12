@@ -1,6 +1,7 @@
 'use strict';
 
 // Local host
+// determines the menu to display
 const ukeyUserMap = {
   b5e79c05b3f12219e725fc167edefdd1: 'co-demo.json',
   aeff1d4962b1fb2aa59a472d2df7efa1: 'cm-demo.json',
@@ -29,9 +30,7 @@ const ukeyUserMap = {
   '695df2b1afc3dee4c6690a30f63abcf7': 'riversideSystem-rm-de-cm.json',
 };
 
-// Parse current query string
-const urlParams = new URLSearchParams(window.location.search);
-
+// determine which set of pages to show
 if (!ukey && !user) {
   JSONfile += 'co-pages.json';
 } else {
@@ -41,8 +40,6 @@ if (!ukey && !user) {
     JSONfile += 'admin.json';
   }
 }
-
-//let JSONfile = '';
 
 // Counting Opinions server
 // if (!ukey) {

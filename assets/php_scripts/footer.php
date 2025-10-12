@@ -11,8 +11,7 @@
 
       let userJSONfile = baseURL + 'users-demo.json';
 
-      console.log(`ukey is ${ukey}`);
-      console.log(`userJSONfile is: ${userJSONfile}`);
+      console.log(`userJSONfile: ${userJSONfile}`);
 
       window.user = '';
 
@@ -24,7 +23,6 @@
     })
     .then((data) => {
       const match = data.users.find((user) => user.ukey === ukey);
-      console.log(`match is ${match.username}`);
       window.user = match ? match.username : 'DEMO';
 
       console.log('Footer: fetched user:', window.user);
