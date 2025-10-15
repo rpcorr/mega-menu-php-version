@@ -290,6 +290,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       megaMenuLinks = document.querySelectorAll('nav a');
 
+      // remove showUsersLink if present
+      megaMenuLinks = Array.from(megaMenuLinks).filter(
+        (link) => link.id !== 'showUsersLink'
+      );
+
       for (let i = 0; i < megaMenuLinks.length; i++) {
         megaMenuLinks[i].addEventListener('click', handleLinkClick);
       }
@@ -529,39 +534,6 @@ function alignSubMenusToViewport(mode = 'default', debug = false) {
  * @param {Event} e - The click event object.
  */
 function handleLinkClick(e) {
-  // show modal regardless if the link is a top level menu or not
-  if (e.target.id === 'showUsersLink') {
-    const modal = document.getElementById('userModal');
-    const userInput = document.getElementById('userInput');
-    e.preventDefault();
-
-    modal.style.display = 'block';
-    modal.setAttribute('aria-hidden', 'false');
-
-    if (userInput) {
-      // Save the datalist id and remove it temporarily
-      const listId = userInput.getAttribute('list');
-      userInput.removeAttribute('list');
-
-      // Clear input value and focus
-      userInput.value = '';
-      userInput.focus();
-
-      // Show datalist after 1 character typed
-      const showListAfterTyping = (e) => {
-        if (userInput.value.length >= 1) {
-          userInput.setAttribute('list', listId);
-          // Remove listener so it only runs once per modal open
-          userInput.removeEventListener('input', showListAfterTyping);
-        }
-      };
-
-      userInput.addEventListener('input', showListAfterTyping);
-    }
-
-    return;
-  }
-
   // Check if the clicked link is inside a menu item that has children
   if (this.closest('.menu-item-has-children')) {
     // Toggle the display of the submenu for this top-level menu item

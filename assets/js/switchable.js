@@ -480,3 +480,36 @@ function impersonationBanner() {
       });
   }
 }
+
+document.addEventListener('click', (e) => {
+  const target = e.target;
+  if (target && target.id === 'showUsersLink') {
+    e.preventDefault();
+    openUserModal();
+  }
+});
+
+function openUserModal() {
+  const modal = document.getElementById('userModal');
+  const userInput = document.getElementById('userInput');
+
+  modal.style.display = 'block';
+  modal.setAttribute('aria-hidden', 'false');
+
+  if (userInput) {
+    const listId = userInput.getAttribute('list');
+    userInput.removeAttribute('list');
+
+    userInput.value = '';
+    userInput.focus();
+
+    const showListAfterTyping = (e) => {
+      if (userInput.value.length >= 1) {
+        userInput.setAttribute('list', listId);
+        userInput.removeEventListener('input', showListAfterTyping);
+      }
+    };
+
+    userInput.addEventListener('input', showListAfterTyping);
+  }
+}
