@@ -1,6 +1,4 @@
 <?php
-// Start the session
-session_start();
 
 $title = "Welcome - Counting Opinions";
 
