@@ -1,34 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $title ?></title>
-    <?php
+<?php
+session_start();
 
-    // determine which variable to use: Request or Cookie
-    $ukey = '';
-    $portal = '';
+// determine which variable to use: Request or Cookie
+$ukey = '';
+$portal = '';
+$user = '';
 
-    // assign $_SESSION['portal_name'] to $portal if present
-    if ($_SESSION['portal_name'] !== '') {
-        $portal = $_SESSION['portal_name'];
-    }
+// assign $_SESSION['portal_name'] to $portal if present
+if (isset($_SESSION['portal_name']) && $_SESSION['portal_name'] !== '') {
+    $portal = $_SESSION['portal_name'];
+}
 
-    // assign $_COOKIE['ukey'] to $ukey if present
-    if ($_COOKIE['ukey']) {
-        $ukey = $_COOKIE['ukey'];
-    }
+// assign $_COOKIE['ukey'] to $ukey if present
+if (isset($_COOKIE['ukey'])) {
+    $ukey = $_COOKIE['ukey'];
+}
 
-    // assign $_REQUEST['ukey'] to $ukey and $_REQUEST['portal'] to $portal if present
-    if ($_REQUEST['ukey'] && $_REQUEST['portal'] ) {
-        $ukey = $_REQUEST['ukey'];
-        $portal = $_REQUEST['portal'];
-    }
+// assign $_REQUEST['ukey'] to $ukey and $_REQUEST['portal'] to $portal if present
+if (isset($_REQUEST['ukey']) && isset($_REQUEST['portal'])) {
+    $ukey = $_REQUEST['ukey'];
+    $portal = $_REQUEST['portal'];
+}
 
-    if ($_REQUEST['user']) {
-      $user = $_REQUEST['user'];
-    }
+// assign $_REQUEST['user'] to $user if present
+if (isset($_REQUEST['user'])) {
+    $user = $_REQUEST['user'];
+}
 
     include('session_check.php');
             

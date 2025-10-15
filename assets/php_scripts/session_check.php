@@ -1,15 +1,13 @@
 <?php
-session_start();
-
 // Get the current page URL
 $currentUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $redirectUrl;
-
 // prevent updating $redirectUrl value if page is refreshed
-if ($_SESSION['previousUrl'] !== $currentUrl) {
+if (isset($_SESSION['previousUrl']) && $_SESSION['previousUrl'] !== $currentUrl) {
     $redirectUrl = $_SESSION['previousUrl'];
-} else {
-    $redirectUrl = $_SESSION['redirectUrl'];
+}
+ else {
+    $redirectUrl = isset($_SESSION['redirectUrl']) ? $_SESSION['redirectUrl'] : '';
 }
 
 if (!isset($_SESSION['previousUrl'])) {
