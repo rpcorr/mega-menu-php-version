@@ -75,7 +75,7 @@ function displaySwitchableForm() {
   userInput.type = 'text';
   userInput.id = 'userInput';
   userInput.className = 'users-input';
-  userInput.placeholder = 'Start typing a username...';
+  userInput.placeholder = 'Start typing a username or name...';
 
   // Suggestions list
   const suggestionsList = document.createElement('ul');
@@ -95,14 +95,19 @@ function displaySwitchableForm() {
   // Go button
   const goButton = document.createElement('button');
   goButton.id = 'goUser';
-  goButton.textContent = 'Go';
+  goButton.textContent = 'Switch User';
 
-  // Append input and button
+  // DOM order for correct tab sequence: Input / Suggestions / Go
   inputContainer.appendChild(userInput);
+
+  // Add suggestions list directly after the input
+  inputContainer.appendChild(suggestionsList);
+
+  // Then add the Go button last
   inputContainer.appendChild(goButton);
 
+  // Finally append the whole container
   modalBody.appendChild(inputContainer);
-  modalBody.appendChild(suggestionsList);
 
   // Close button
   const closeModal = document.createElement('span');
@@ -120,153 +125,277 @@ function displaySwitchableForm() {
   modal.appendChild(modalContent);
   document.body.appendChild(modal);
 
-  // Fetch users JSON
-  let userData = [];
-  fetch(userJSONfile)
-    .then((response) => {
-      if (!response.ok)
-        throw new Error('Network response was not ok: ' + response.statusText);
-      return response.json();
-    })
-    .then((data) => {
-      userData = data.users;
-      console.log(userData);
-    })
-    .catch((error) => console.error('Problem fetching JSON:', error));
+  const params = new URLSearchParams(window.location.search);
 
-  // =========================
-  // Autocomplete functionality
-  // =========================
-  let currentIndex = -1;
+  if (!params.has('originalUkey')) {
+    console.log(userJSONfile);
 
-  userInput.addEventListener('input', () => {
-    const query = userInput.value.toLowerCase();
+    // Fetch users JSON
+    let userData = [];
+    fetch(userJSONfile)
+      .then((response) => {
+        if (!response.ok)
+          throw new Error(
+            'Network response was not ok: ' + response.statusText
+          );
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data); // { users: [ ... ] }
+        userData = data.users;
+      })
+      .catch((error) => console.error('Problem fetching JSON:', error));
 
-    if (query.length < 1) {
-      suggestionsList.style.display = 'none';
-      return;
-    }
+    // =========================
+    // Autocomplete functionality
+    // =========================
+    let currentIndex = -1;
 
-    const matches = userData.filter((user) =>
-      user.username.toLowerCase().includes(query)
-    );
+    userInput.addEventListener('input', () => {
+      const query = userInput.value.trim().toLowerCase();
 
-    suggestionsList.innerHTML = '';
-
-    if (matches.length === 0) {
-      suggestionsList.style.display = 'none';
-      return;
-    }
-
-    matches.forEach((user) => {
-      const li = document.createElement('li');
-      li.textContent = user.username;
-      li.style.padding = '0.5rem';
-      li.style.cursor = 'pointer';
-
-      li.addEventListener('click', () => {
-        userInput.value = user.username;
-        userInput.dataset.ukey = user.ukey;
+      if (query.length < 1) {
         suggestionsList.style.display = 'none';
-      });
-
-      li.addEventListener('mouseenter', () => {
-        li.style.background = '#eee';
-      });
-      li.addEventListener('mouseleave', () => {
-        li.style.background = '#fff';
-      });
-
-      suggestionsList.appendChild(li);
-    });
-
-    suggestionsList.style.display = 'block';
-    currentIndex = -1;
-  });
-
-  userInput.addEventListener('keydown', (e) => {
-    const items = suggestionsList.querySelectorAll('li');
-    if (items.length === 0) return;
-
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      currentIndex = (currentIndex + 1) % items.length;
-      highlight(items);
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      currentIndex = (currentIndex - 1 + items.length) % items.length;
-      highlight(items);
-    } else if (e.key === 'Enter' && currentIndex >= 0) {
-      e.preventDefault();
-      items[currentIndex].click();
-    }
-  });
-
-  function highlight(items) {
-    items.forEach((item, idx) => {
-      item.style.background = idx === currentIndex ? '#ddd' : '#fff';
-    });
-  }
-
-  // Handle Go button
-  goButton.addEventListener('click', () => {
-    const typedValue = userInput.value.trim();
-    const match =
-      userData.find((u) => u.username === typedValue) ||
-      userData.find((u) => u.ukey === userInput.dataset.ukey);
-
-    if (match) {
-      if (ukey === match.ukey) {
-        alert(
-          'You are already logged in as this user. Please select a different user.'
-        );
         return;
       }
 
-      const urlParams = new URLSearchParams(window.location.search);
+      // Match on EITHER username OR name
+      const matches = userData.filter((user) => {
+        const username = user.username ? user.username.toLowerCase() : '';
+        const name = user.name ? user.name.toLowerCase() : '';
+        return username.includes(query) || name.includes(query);
+      });
 
-      // Always set the new ukey
-      urlParams.set('ukey', match.ukey);
+      suggestionsList.innerHTML = '';
 
-      // Add or keep the original key (URL + COOKIE)
-      let originalKey = getCookie('originalUkey');
-      if (!originalKey) {
-        originalKey = ukey; // current ukey becomes the original
-        setCookie('originalUkey', originalKey, 7); // keep cookie for 7 days
+      if (matches.length === 0) {
+        suggestionsList.style.display = 'none';
+        return;
       }
 
-      urlParams.set('originalUkey', originalKey);
+      matches.forEach((user) => {
+        const li = document.createElement('li');
+        li.style.padding = '0.5rem';
+        li.style.cursor = 'pointer';
+        li.style.display = 'flex';
+        li.style.flexDirection = 'column';
+        li.style.lineHeight = '1.2';
 
-      // Redirect with updated params
-      window.location.search = urlParams.toString();
-    } else {
-      alert('Please select a valid user from suggestions.');
+        // make each suggestion focusable
+        li.setAttribute('tabindex', '0');
+
+        // Create formatted name + username
+        const nameEl = document.createElement('span');
+        nameEl.textContent = user.name || user.username;
+        nameEl.style.fontWeight = '600';
+
+        const usernameEl = document.createElement('span');
+        usernameEl.textContent = user.name ? `(${user.username})` : '';
+        usernameEl.style.color = '#666';
+        usernameEl.style.fontSize = '0.9em';
+
+        li.appendChild(nameEl);
+        li.appendChild(usernameEl);
+
+        li.addEventListener('click', () => {
+          userInput.value = user.username;
+          userInput.dataset.ukey = user.ukey;
+          suggestionsList.style.display = 'none';
+          userInput.focus();
+        });
+
+        li.addEventListener('mouseenter', () => highlightItem(li, true));
+        li.addEventListener('mouseleave', () => highlightItem(li, false));
+
+        suggestionsList.appendChild(li);
+      });
+
+      suggestionsList.style.display = 'block';
+      currentIndex = -1;
+    });
+
+    userInput.addEventListener('keydown', (e) => {
+      const items = suggestionsList.querySelectorAll('li');
+      if (items.length === 0) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        currentIndex = (currentIndex + 1) % items.length;
+        highlight(items);
+        items[currentIndex].focus();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        highlight(items);
+        items[currentIndex].focus();
+      } else if (e.key === 'Enter' && currentIndex >= 0) {
+        e.preventDefault();
+        items[currentIndex].click();
+        userInput.focus();
+      }
+    });
+
+    // Allow navigation when list itself has focus
+    suggestionsList.addEventListener('keydown', (e) => {
+      const items = suggestionsList.querySelectorAll('li');
+      if (items.length === 0) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        currentIndex = (currentIndex + 1) % items.length;
+        highlight(items);
+        items[currentIndex].focus();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        highlight(items);
+        items[currentIndex].focus();
+      } else if (e.key === 'Enter' && currentIndex >= 0) {
+        e.preventDefault();
+        items[currentIndex].click();
+        userInput.focus();
+      }
+    });
+
+    function highlight(items) {
+      items.forEach((item, idx) => {
+        if (idx === currentIndex) {
+          item.style.background = '#0078d4'; // accessible blue
+          item.style.color = '#fff';
+        } else {
+          item.style.background = '#fff';
+          item.style.color = '#000';
+        }
+      });
     }
-  });
 
-  // Handle close
-  const hideModal = () => {
-    console.log('hideModal is called');
-    modal.setAttribute('aria-hidden', 'true');
-    modal.style.display = 'none';
-  };
+    function highlightItem(item, active) {
+      item.style.background = active ? '#0078d4' : '#fff';
+      item.style.color = active ? '#fff' : '#000';
+    }
 
-  closeModal.addEventListener('click', hideModal);
-  closeModal.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') hideModal();
-  });
+    // Handle Go button
+    goButton.addEventListener('click', () => {
+      const typedValue = userInput.value.trim().toLowerCase();
+      const match =
+        userData.find(
+          (u) =>
+            u.username.toLowerCase() === typedValue ||
+            (u.name && u.name.toLowerCase() === typedValue)
+        ) || userData.find((u) => u.ukey === userInput.dataset.ukey);
 
-  function showModal() {
-    console.log('showModal is called');
-    modal.setAttribute('aria-hidden', 'false');
-    modal.style.display = 'block';
-    userInput.focus();
+      if (match) {
+        if (ukey === match.ukey) {
+          alert(
+            'You are already logged in as this user. Please select a different user.'
+          );
+          return;
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+
+        let originalUKey = getCookie('originalUkey');
+        if (!originalUKey) {
+          originalUKey = ukey; // current key becomes the original
+          setCookie('originalUkey', originalUKey, 7); // keep cookie for 7 days
+        }
+
+        urlParams.set('ukey', match.ukey);
+        urlParams.set('originalUkey', originalUKey);
+
+        const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+
+        // Mark that we intentionally switched and need a follow-up reload on next load
+        sessionStorage.setItem('ukey_switch_pending', '1');
+
+        window.location.replace(newUrl);
+      } else {
+        alert('Please select a valid user from suggestions.');
+      }
+    });
+
+    // ============
+    // Modal Logic
+    // ============
+
+    const hideModal = () => {
+      modal.setAttribute('aria-hidden', 'true');
+      modal.style.display = 'none';
+
+      // Restore original tabindex to outside elements
+      const focusableOutside = document.querySelectorAll(
+        'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      focusableOutside.forEach((el) => {
+        if (!modal.contains(el)) {
+          if (el.dataset.prevTabindex !== null) {
+            el.setAttribute('tabindex', el.dataset.prevTabindex);
+            delete el.dataset.prevTabindex;
+          } else {
+            el.removeAttribute('tabindex');
+          }
+        }
+      });
+    };
+
+    function handleKeydown(e) {
+      const focusableInside = modal.querySelectorAll(
+        'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      const firstEl = focusableInside[0];
+      const lastEl = focusableInside[focusableInside.length - 1];
+
+      if (e.key === 'Tab') {
+        if (e.shiftKey) {
+          if (document.activeElement === firstEl) {
+            e.preventDefault();
+            lastEl.focus();
+          }
+        } else {
+          if (document.activeElement === lastEl) {
+            e.preventDefault();
+            firstEl.focus();
+          }
+        }
+      } else if (e.key === 'Escape') {
+        cleanupAndHideModal();
+        const showLink = document.getElementById('showUsersLink');
+        if (showLink) showLink.focus();
+      }
+    }
+
+    function cleanupAndHideModal() {
+      document.removeEventListener('keydown', handleKeydown);
+      hideModal();
+    }
+
+    function showModal() {
+      modal.setAttribute('aria-hidden', 'false');
+      modal.style.display = 'block';
+      userInput.focus();
+
+      // Disable outside tabbing
+      const focusableOutside = document.querySelectorAll(
+        'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      focusableOutside.forEach((el) => {
+        if (!modal.contains(el)) {
+          el.dataset.prevTabindex = el.getAttribute('tabindex');
+          el.setAttribute('tabindex', '-1');
+        }
+      });
+
+      document.addEventListener('keydown', handleKeydown);
+    }
+
+    closeModal.addEventListener('click', cleanupAndHideModal);
+    closeModal.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') cleanupAndHideModal();
+    });
+
+    // Make showModal public to be called from anywhere
+    document.addEventListener('openUserModal', showModal);
   }
-
-  // Make showModal public to be called from anywhere
-  document.addEventListener('openUserModal', showModal);
-
-  console.log(`Calling impersonationBanner: ${window.user} `);
 
   // call impersonationBanner to show or not
   impersonationBanner();
