@@ -1,0 +1,41 @@
+/* Modal background */
+.modal {
+  display: none; /* hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* Modal box */
+.modal-content {
+  position: relative; /* so the close button positions itself relative to the modal */
+  background: #fff;
+  margin: 10% auto;
+  padding: 1.5rem;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: 0.5rem; /* space from top edge */
+  right: 0.5rem; /* space from right edge */
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+  background: none;
+  border: none;
+}
+
+.close:hover {
+  color: red;
+}
