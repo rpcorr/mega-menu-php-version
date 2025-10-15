@@ -27,7 +27,7 @@ if (isset($_REQUEST['user'])) {
     $user = $_REQUEST['user'];
 }
 
-include('session_check.php');
+include(__DIR__ . '/session_check.php');
         
 // Function to get the full URL of the current page
 function getFullUrl() {
@@ -137,7 +137,7 @@ function getRelativePath($targetPath) {
         </div>
       </div>
     </header>
-    <?php include('assets/php_scripts/sidebar.php'); ?>
+    <?php include(__DIR__ . '/sidebar.php'); ?>
     <nav aria-label="breadcrumbs">
       <ul class="breadcrumbs" id="breadcrumbs"></ul>
     </nav>

@@ -2,7 +2,8 @@
 
 $title = 'Products - Counting Opinions';
 
-include('./../../assets/php_scripts/header.php');?>
+include(__DIR__ . '/../../assets/php_scripts/header.php'); ?>
+
     <main>
       <div class="container"> 
 
@@ -24,5 +25,6 @@ include('./../../assets/php_scripts/header.php');?>
 
       </div>
     </main>
-  
-<?php include('./../../assets/php_scripts/footer.php');?>
+
+
+<?php include(__DIR__ . '/../../assets/php_scripts/footer.php'); ?>
