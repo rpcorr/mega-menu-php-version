@@ -19,7 +19,7 @@ include('assets/php_scripts/header.php');
             <?php
             
             // if ukey is present, display preference link
-            if ($_COOKIE['ukey'] || $_REQUEST['ukey']) {  
+            if (isset($_COOKIE['ukey']) || $_REQUEST['ukey']) {  
                    
                 if ($queryString !== null) {
                    echo '<p><a href="preferences.php?'. $queryString . '">Preferences</a></p>';
