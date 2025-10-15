@@ -1,7 +1,4 @@
 <?php
-// Start the session
-session_start();
-
 $protected = true;
 
 $title = "Preferences - Counting Opinions";

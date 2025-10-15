@@ -1,7 +1,4 @@
 <?php
-// Start the session
-session_start();
-
 $title = "Welcome - Counting Opinions";
 
 include('assets/php_scripts/header.php');
