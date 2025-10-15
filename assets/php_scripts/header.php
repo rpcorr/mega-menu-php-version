@@ -67,7 +67,10 @@ if (isset($_REQUEST['user'])) {
       return $relativePath;
     }
 
-    ?>
+    // Allow current user to switch users
+    $_SESSION['switchAble'] = true;
+
+  ?>
 
     <!-- stylesheets -->
     <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/reset.min.css" />
