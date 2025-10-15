@@ -6,7 +6,37 @@
       const ukey = '<?php echo $ukey; ?>'; 
       const portal = <?php echo json_encode($portal); ?>;
       const queryString = <?php echo json_encode($queryString); ?>;
-      const user = <?php echo json_encode($user); ?> === null ? 'CO&DEMO' : <?php echo json_encode($user); ?>;
+
+      const baseURL = 'http://localhost/mmenu/assets/json/';
+
+      let JSONfile = baseURL;
+
+      let userJSONfile = baseURL + 'users-demo.json';
+
+      console.log(`userJSONfile: ${userJSONfile}`);
+
+      window.user = '';
+
+    // Fetch user data
+    fetch(userJSONfile)
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+      return response.json();
+    })
+    .then((data) => {
+      const match = data.users.find((user) => user.ukey === ukey);
+      window.user = match ? match.username : 'DEMO';
+
+      console.log('Footer: fetched user:', window.user);
+
+      // Notify any script waiting for user
+      document.dispatchEvent(new Event('userReady'));
+    })
+    .catch((error) => {
+      console.error('Error loading JSON file:', error);
+    });
+  
+      const switchAble = <?php echo (!empty($_SESSION['switchAble']) && $_SESSION['switchAble'] === true) ? 'true' : 'false'; ?>;
 
       console.log(`I am outside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}.`);
       console.log(`I am outside of breadcrumbs.js. Querystring is ${queryString}`);
@@ -41,6 +71,12 @@
       });
 
     </script>
+    
+  <?php //if (!empty($_SESSION['switchAble']) && $_SESSION['switchAble'] === true): ?>
+    <script src='<?php echo getRelativePath(''); ?>assets/js/switchable.js' defer></script>
+    
+<?php //endif; ?>
+
     
     <!-- ///// The Templates ///// -->
     <template id="menuTemplate">

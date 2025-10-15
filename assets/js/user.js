@@ -1,7 +1,6 @@
 'use strict';
 
 // Local host
-const baseURL = 'http://localhost/mmenu/assets/json/';
 const ukeyUserMap = {
   b5e79c05b3f12219e725fc167edefdd1: 'co-demo.json',
   aeff1d4962b1fb2aa59a472d2df7efa1: 'cm-demo.json',
