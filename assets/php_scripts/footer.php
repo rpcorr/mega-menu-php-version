@@ -70,10 +70,10 @@
 
     </script>
     
-  <?php //if (!empty($_SESSION['switchAble']) && $_SESSION['switchAble'] === true): ?>
+  <?php if (!empty($_SESSION['switchAble']) && $_SESSION['switchAble'] === true): ?>
     <script src='<?php echo getRelativePath(''); ?>assets/js/switchable.js' defer></script>
     
-<?php //endif; ?>
+<?php endif; ?>
 
     
     <!-- ///// The Templates ///// -->
