@@ -481,12 +481,18 @@ function impersonationBanner() {
   }
 }
 
-document.addEventListener('click', (e) => {
-  const target = e.target;
-  if (target && target.id === 'showUsersLink') {
-    e.preventDefault();
-    openUserModal();
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener(
+    'click',
+    (e) => {
+      const link = e.target.closest('#showUsersLink');
+      if (link) {
+        e.preventDefault();
+        openUserModal();
+      }
+    },
+    true
+  );
 });
 
 function openUserModal() {

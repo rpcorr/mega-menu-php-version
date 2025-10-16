@@ -290,11 +290,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       megaMenuLinks = document.querySelectorAll('nav a');
 
-      // remove showUsersLink if present
-      megaMenuLinks = Array.from(megaMenuLinks).filter(
-        (link) => link.id !== 'showUsersLink'
-      );
-
       for (let i = 0; i < megaMenuLinks.length; i++) {
         megaMenuLinks[i].addEventListener('click', handleLinkClick);
       }
@@ -358,7 +353,6 @@ document.addEventListener('DOMContentLoaded', () => {
       document
         .getElementById('menuMoreLink')
         .addEventListener('click', function (event) {
-          console.log('Toggle More');
           event.preventDefault();
 
           const moreMenu = this.parentElement;
@@ -546,8 +540,6 @@ function handleLinkClick(e) {
       // Toggle top level menu
       toggleTopLevelMenu(this, e); // regular top-level menu
     }
-  } else {
-    console.log('Not a parent menu item');
   }
 }
 
