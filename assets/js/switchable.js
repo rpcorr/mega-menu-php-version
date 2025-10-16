@@ -1,5 +1,26 @@
 'use strict';
 
+// this script runs at the top of the app, before other initialization
+// will help switch users when the starting URL doesn't contain ukey variable
+(function () {
+  const FLAG = 'ukey_switch_pending';
+  if (sessionStorage.getItem(FLAG)) {
+    // remove flag immediately to avoid loops
+    sessionStorage.removeItem(FLAG);
+
+    // Optionally check a server-side marker / cookie presence first.
+    // If server has not yet produced the expected change, force one more load with a cache-busting param.
+    const params = new URLSearchParams(window.location.search);
+    if (!params.has('_reloaded')) {
+      params.set('_reloaded', '1'); // avoids infinite loop
+      params.set('_bust', Date.now().toString()); // force a fresh fetch
+      window.location.replace(
+        window.location.pathname + '?' + params.toString()
+      );
+    }
+  }
+})();
+
 function initSwitchable() {
   console.log('Switchable.js: user is ready:', window.user);
   // Do whatever depends on user here
@@ -485,8 +506,10 @@ function impersonationBanner() {
         // Update the ukey parameter
         url.searchParams.set('ukey', originalUkey);
 
-        // Remove the originalUkey parameter
+        // Remove the originalUkey, _reloaded, and _bust parameters
         url.searchParams.delete('originalUkey');
+        url.searchParams.delete('_reloaded');
+        url.searchParams.delete('_bust');
 
         // Redirect to the cleaned-up URL
         window.location.href = url.toString();
