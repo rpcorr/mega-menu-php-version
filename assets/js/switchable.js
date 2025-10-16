@@ -409,8 +409,12 @@ function setCookie(name, value, days) {
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
     expires = '; expires=' + date.toUTCString();
   }
-  document.cookie =
-    name + '=' + encodeURIComponent(value || '') + expires + '; path=/';
+  // use SameSite=None + Secure for cross-site in modern browsers
+  const sameSite = '; SameSite=Lax';
+  const secure = location.protocol === 'https:' ? '; Secure' : '';
+  document.cookie = `${name}=${encodeURIComponent(
+    value || ''
+  )}${expires}; path=/${sameSite}${secure}`;
 }
 
 // Utility: get cookie
@@ -430,9 +434,18 @@ function impersonationBanner() {
   // Determine whether to show the impersonation message or not
   const originalUkey = getCookie('originalUkey');
 
-  console.log(`original UKey is ${originalUkey}`);
+  const params = new URLSearchParams(window.location.search);
 
-  if (originalUkey !== null && originalUkey !== ukey) {
+  // Get value of "ukey"
+
+  const currentUKey = params.get('ukey');
+
+  console.log(`currentUKey ${currentUKey}`);
+
+  console.log(`original Ukey is ${originalUkey}`);
+  console.log(`ukey is ${ukey}`);
+
+  if (originalUkey !== null && originalUkey !== currentUKey) {
     // Create the banner
     const banner = document.createElement('div');
     banner.className = 'impersonation-banner';
