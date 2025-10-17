@@ -1,4 +1,5 @@
 <?php
+
 $title = "Welcome - Counting Opinions";
 
 include(__DIR__ . '/assets/php_scripts/header.php');
