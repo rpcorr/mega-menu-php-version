@@ -41,6 +41,9 @@
       
     </script>
     <script src='<?php echo getRelativePath(''); ?>assets/js/user.js' defer></script>
+<?php if (!empty($_SESSION['switchAble']) && $_SESSION['switchAble'] === true): ?>
+    <script src='<?php echo getRelativePath(''); ?>assets/js/switchable.js' defer></script>
+<?php endif; ?>
     <script src='<?php echo getRelativePath(''); ?>assets/js/menu.js' defer></script>
     <script src='<?php echo getRelativePath(''); ?>assets/js/generateBreadcrumbs.js' defer></script>
     <?php if ($_COOKIE['ukey'] || $_REQUEST['ukey']) { ?>
@@ -69,13 +72,7 @@
       });
 
     </script>
-    
-  <?php if (!empty($_SESSION['switchAble']) && $_SESSION['switchAble'] === true): ?>
-    <script src='<?php echo getRelativePath(''); ?>assets/js/switchable.js' defer></script>
-    
-<?php endif; ?>
 
-    
     <!-- ///// The Templates ///// -->
     <template id="menuTemplate">
       <li role="presentation"><img src="" /><p><a href="" role="tab"><strong></strong><br/><span></span></a></p> <div class="circle">
