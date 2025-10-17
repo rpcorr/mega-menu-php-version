@@ -135,9 +135,8 @@ $_SESSION['switchAble'] = true;
       </div>
     </header>
     <?php include(__DIR__ . '/sidebar.php'); ?>
-    <nav aria-label="breadcrumbs">
+    <nav id="breadcrumbsMenu" aria-label="breadcrumbs">
       <ul class="breadcrumbs" id="breadcrumbs"></ul>
     </nav>
-      
     <a id="skipMenu" class="screen-reader-text"></a>
     
