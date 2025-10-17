@@ -139,7 +139,7 @@ $_SESSION['switchAble'] = true;
         </div>
       </div>
     </header>
-    <?php //include('assets/php_scripts/sidebar.php'); ?>
+    <?php include(__DIR__ . '/sidebar.php'); ?>
     <nav id="breadcrumbsMenu" aria-label="breadcrumbs">
       <ul class="breadcrumbs" id="breadcrumbs"></ul>
     </nav>
