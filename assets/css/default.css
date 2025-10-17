@@ -134,24 +134,21 @@ ul#menu-main-menu a {
   color: #000;
 }
 
-/* list item hover, focus colour */
-/* link background and font colours on hover and focus */
-ul#menu-main-menu li a:hover,
-ul#menu-main-menu li a:focus {
-  background-color: #1fb7f1;
-}
-
 /* first submenu background colour */
 #menu-main-menu > li.menu-item-has-children > ul.sub-menu {
-  background-color: rgba(96, 189, 104, 0.9);
+  background-color: #fff;
 }
 
 /* first submenu text colour */
-.menu-main-menu-container > #menu-main-menu > li > .sub-menu a {
+.menu-main-menu-container > #menu-main-menu > li > .sub-menu a,
+.menu-main-menu-container > #menu-main-menu > li > .mega-menu a {
   color: #000;
 }
 
 /* first submenu hover and focus font colour */
+header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
+.menu-main-menu-container > #menu-main-menu > li > .mega-menu a:hover,
+.menu-main-menu-container > #menu-main-menu > li > .mega-menu a:focus,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:hover,
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:focus {
   color: #000;
