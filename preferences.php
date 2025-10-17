@@ -1,7 +1,4 @@
 <?php
-// Start the session
-session_start();
-
 $protected = true;
 
 $title = "Preferences - Counting Opinions";
@@ -23,7 +20,7 @@ $themes = [
 
 $currentTheme = $_COOKIE['theme'] ?? 'base';
 
-include('assets/php_scripts/header.php');
+include(__DIR__ . '/assets/php_scripts/header.php');
 ?>
   <main>
     <div class="container">
@@ -71,4 +68,4 @@ include('assets/php_scripts/header.php');
   </div>
 </main>
     
-<?php include('assets/php_scripts/footer.php'); ?>
+<?php include(__DIR__ . '/assets/php_scripts/footer.php'); ?>
