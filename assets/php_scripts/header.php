@@ -27,52 +27,51 @@ if (isset($_REQUEST['user'])) {
     $user = $_REQUEST['user'];
 }
 
-    include('session_check.php');
-            
-    // Function to get the full URL of the current page
-    function getFullUrl() {
-      $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-      $host = $_SERVER['HTTP_HOST'];
-      $uri = $_SERVER['REQUEST_URI'];
-      return $protocol . $host . $uri;
-    }
-    
-    // Get the full URL
-    $fullUrl = getFullUrl();
+include(__DIR__ . '/session_check.php');
 
-    // Parse the URL and get the query string
-    $parsed_url = parse_url($fullUrl);
+// Function to get the full URL of the current page
+function getFullUrl() {
+  $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+  $host = $_SERVER['HTTP_HOST'];
+  $uri = $_SERVER['REQUEST_URI'];
+  return $protocol . $host . $uri;
+}
 
-    // retrieve the query string
-    $queryString = $parsed_url['query'];
-    
-    
-    function getRelativePath($targetPath) {
-      // Get the current script's directory
-      $currentDir = dirname($_SERVER['SCRIPT_NAME']);
-      
-      // Split the directories into an array
-      $currentDirParts = explode('/', trim($currentDir, '/'));
-      
-      // Count the number of directories
-      $depth = count($currentDirParts);
-      
-      // Generate the relative path prefix
-      $relativePath = str_repeat('../', $depth-1);
-      
-      // Concatenate the target path
-      $relativePath = rtrim($relativePath, '/') . '/' . ltrim($targetPath, '/');
-      
-      if ($relativePath === '/') $relativePath = '';
-      return $relativePath;
-    }
+// Get the full URL
+$fullUrl = getFullUrl();
 
-    // Allow current user to switch users
-    $_SESSION['switchAble'] = true;
+// Parse the URL and get the query string
+$parsed_url = parse_url($fullUrl);
 
-  ?>
+// retrieve the query string
+$queryString = $parsed_url['query'];
 
+
+function getRelativePath($targetPath) {
+  // Get the current script's directory
+  $currentDir = dirname($_SERVER['SCRIPT_NAME']);
   
+  // Split the directories into an array
+  $currentDirParts = explode('/', trim($currentDir, '/'));
+  
+  // Count the number of directories
+  $depth = count($currentDirParts);
+  
+  // Generate the relative path prefix
+  $relativePath = str_repeat('../', $depth-1);
+  
+  // Concatenate the target path
+  $relativePath = rtrim($relativePath, '/') . '/' . ltrim($targetPath, '/');
+  
+  if ($relativePath === '/') $relativePath = '';
+  return $relativePath;
+}
+
+// Allow current user to switch users
+$_SESSION['switchAble'] = true;
+
+?>
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
