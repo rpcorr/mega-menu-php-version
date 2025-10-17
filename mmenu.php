@@ -2,7 +2,7 @@
 
 $title = "Welcome - Counting Opinions";
 
-include('assets/php_scripts/header.php');
+include(__DIR__ . '/assets/php_scripts/header.php');
 ?>
 
     <main>
@@ -21,11 +21,8 @@ include('assets/php_scripts/header.php');
                    
                 if ($queryString !== null) {
                    echo '<p><a href="preferences.php?'. $queryString . '">Preferences</a></p>';
-
-                   echo '<p><a href="menu-users.php?'. $queryString . '">Users</a></p>';
                 } else {
                    echo '<p><a href="preferences.php">Preferences</a></p>';
-                   echo '<p><a href="menu-users.php">Users</a></p>';
                 }
                 
              } 
@@ -51,4 +48,4 @@ include('assets/php_scripts/header.php');
         </div>
     </main>
 
-<?php include('assets/php_scripts/footer.php'); ?>
+<?php include(__DIR__ . '/assets/php_scripts/footer.php'); ?>
