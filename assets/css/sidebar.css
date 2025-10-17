@@ -3,6 +3,7 @@
   --sidebar-bg: #444;
   --sidebar-hover: #555;
   --sidebar-color: #fff;
+  --sidebar-heading-color: #ffcc00;
 }
 
 .sidebar-container {
@@ -42,6 +43,11 @@
 .sidebar a {
   color: var(--sidebar-color);
   text-decoration: underline;
+}
+
+.sidebar h2 {
+  color: var(--sidebar-heading-color);
+  margin-top: 0;
 }
 
 .toggle-btn {
