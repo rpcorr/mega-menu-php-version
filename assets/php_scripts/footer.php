@@ -103,12 +103,5 @@
         <div id="bodyContent"></div>
       </div>
     </template>
-  
-</div>
-
-        </div>
-      </div>
-
-      
   </body>
 </html>
