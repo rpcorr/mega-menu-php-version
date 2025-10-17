@@ -81,7 +81,7 @@
     </template> 
 
     <template id="oneMenuTemplate">
-      <li><img src="" alt="" /><p><a href="" role="tab" aria-selected="true"><strong></strong><br/><span></span></a></p> </li>
+      <li><img src="" alt="" /><p><a href="" role="tab"><strong></strong><br/><span></span></a></p> </li>
     </template> 
 
     <template id="menuContent">
