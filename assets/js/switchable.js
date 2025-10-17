@@ -1,5 +1,26 @@
 'use strict';
 
+// this script runs at the top of the app, before other initialization
+// will help switch users when the starting URL doesn't contain ukey variable
+(function () {
+  const FLAG = 'ukey_switch_pending';
+  if (sessionStorage.getItem(FLAG)) {
+    // remove flag immediately to avoid loops
+    sessionStorage.removeItem(FLAG);
+
+    // Optionally check a server-side marker / cookie presence first.
+    // If server has not yet produced the expected change, force one more load with a cache-busting param.
+    const params = new URLSearchParams(window.location.search);
+    if (!params.has('_reloaded')) {
+      params.set('_reloaded', '1'); // avoids infinite loop
+      params.set('_bust', Date.now().toString()); // force a fresh fetch
+      window.location.replace(
+        window.location.pathname + '?' + params.toString()
+      );
+    }
+  }
+})();
+
 function initSwitchable() {
   console.log('Switchable.js: user is ready:', window.user);
   // Do whatever depends on user here
@@ -409,8 +430,12 @@ function setCookie(name, value, days) {
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
     expires = '; expires=' + date.toUTCString();
   }
-  document.cookie =
-    name + '=' + encodeURIComponent(value || '') + expires + '; path=/';
+  // use SameSite=None + Secure for cross-site in modern browsers
+  const sameSite = '; SameSite=Lax';
+  const secure = location.protocol === 'https:' ? '; Secure' : '';
+  document.cookie = `${name}=${encodeURIComponent(
+    value || ''
+  )}${expires}; path=/${sameSite}${secure}`;
 }
 
 // Utility: get cookie
@@ -430,9 +455,18 @@ function impersonationBanner() {
   // Determine whether to show the impersonation message or not
   const originalUkey = getCookie('originalUkey');
 
-  console.log(`original UKey is ${originalUkey}`);
+  const params = new URLSearchParams(window.location.search);
 
-  if (originalUkey !== null && originalUkey !== ukey) {
+  // Get value of "ukey"
+
+  const currentUKey = params.get('ukey');
+
+  console.log(`currentUKey ${currentUKey}`);
+
+  console.log(`original Ukey is ${originalUkey}`);
+  console.log(`ukey is ${ukey}`);
+
+  if (originalUkey !== null && originalUkey !== currentUKey) {
     // Create the banner
     const banner = document.createElement('div');
     banner.className = 'impersonation-banner';
@@ -472,11 +506,52 @@ function impersonationBanner() {
         // Update the ukey parameter
         url.searchParams.set('ukey', originalUkey);
 
-        // Remove the originalUkey parameter
+        // Remove the originalUkey, _reloaded, and _bust parameters
         url.searchParams.delete('originalUkey');
+        url.searchParams.delete('_reloaded');
+        url.searchParams.delete('_bust');
 
         // Redirect to the cleaned-up URL
         window.location.href = url.toString();
       });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener(
+    'click',
+    (e) => {
+      const link = e.target.closest('#showUsersLink');
+      if (link) {
+        e.preventDefault();
+        openUserModal();
+      }
+    },
+    true
+  );
+});
+
+function openUserModal() {
+  const modal = document.getElementById('userModal');
+  const userInput = document.getElementById('userInput');
+
+  modal.style.display = 'block';
+  modal.setAttribute('aria-hidden', 'false');
+
+  if (userInput) {
+    const listId = userInput.getAttribute('list');
+    userInput.removeAttribute('list');
+
+    userInput.value = '';
+    userInput.focus();
+
+    const showListAfterTyping = (e) => {
+      if (userInput.value.length >= 1) {
+        userInput.setAttribute('list', listId);
+        userInput.removeEventListener('input', showListAfterTyping);
+      }
+    };
+
+    userInput.addEventListener('input', showListAfterTyping);
   }
 }
