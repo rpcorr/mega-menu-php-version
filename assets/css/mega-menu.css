@@ -11,7 +11,6 @@
   transform: translateY(-500px); /* Start above position */
   /* use this transition to have slide up effect */
   transition: opacity 0.5s ease, transform 0.5s ease, visibility 0s linear 0.5s;
-  /* transition: opacity 0.5s ease, transform 0.5s ease; */
   will-change: transform, opacity; /* for smoother performance */
   z-index: 1000;
 }
@@ -26,7 +25,6 @@
   visibility: visible;
   /* use this transition to have slide up effect */
   transition: opacity 0.5s ease, transform 0.5s ease, visibility 0s;
-  /* transition: opacity 0.5s ease, transform 0.5s ease; */
   transform: translateY(0); /* Slides into place */
   background-color: #fff;
 }
