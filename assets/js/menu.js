@@ -2,18 +2,17 @@
 /* flexbox priority navigation */
 
 // global variables
-let navItems = [];
 const navItemWidth = [];
 const navItemVisible = [];
-const MOBILE_BREAKPOINT = 600;
-let moreWidth = 0;
-let winWidth = 0;
-let output = '';
-let megaMenuLinks = '';
-let initialColumns = '';
 const sidebar = document.getElementById('sidebar');
-
+const MOBILE_BREAKPOINT = 600;
 let allMenuItemsinArray;
+let initialColumns = '';
+let megaMenuLinks = '';
+let moreWidth = 0;
+let navItems = [];
+let output = '';
+let winWidth = 0;
 
 // LibPAS, InformUS, LibSat menu items
 const menuMap = {
