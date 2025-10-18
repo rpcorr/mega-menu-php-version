@@ -1313,34 +1313,36 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
     const templateContent = menuTemplate.content;
 
     menuData.forEach((item) => {
-      // Clone the template content for each menu item
-      const menuContent = templateContent.cloneNode(true);
+      if (item !== undefined) {
+        // Clone the template content for each menu item
+        const menuContent = templateContent.cloneNode(true);
 
-      // Query relevant elements inside the template
-      const img = menuContent.querySelector('img');
-      const anchor = menuContent.querySelector('a');
-      const strong = anchor?.querySelector('strong');
-      const span = anchor?.querySelector('span');
-      const menuItem = menuContent.querySelector('li');
+        // Query relevant elements inside the template
+        const img = menuContent.querySelector('img');
+        const anchor = menuContent.querySelector('a');
+        const strong = anchor?.querySelector('strong');
+        const span = anchor?.querySelector('span');
+        const menuItem = menuContent.querySelector('li');
 
-      if (!anchor || !strong || !span) {
-        console.error('Error: Missing elements inside template.');
-        return;
+        if (!anchor || !strong || !span) {
+          console.error('Error: Missing elements inside template.');
+          return;
+        }
+
+        // Populate the template elements with item data
+        img.src = `/mmenu/assets/imgs/${item.graphic}`;
+        img.width = item.width;
+        img.height = item.height;
+        anchor.href = item.url;
+        strong.textContent = item.menuTitle;
+        span.textContent = item.subText;
+
+        // Assign a unique ID to each menu item based on its title
+        menuItem.setAttribute('id', item.menuTitle);
+
+        // Append the populated menu item to the fragment
+        fragment.appendChild(menuContent);
       }
-
-      // Populate the template elements with item data
-      img.src = `/mmenu/assets/imgs/${item.graphic}`;
-      img.width = item.width;
-      img.height = item.height;
-      anchor.href = item.url;
-      strong.textContent = item.menuTitle;
-      span.textContent = item.subText;
-
-      // Assign a unique ID to each menu item based on its title
-      menuItem.setAttribute('id', item.menuTitle);
-
-      // Append the populated menu item to the fragment
-      fragment.appendChild(menuContent);
     });
 
     // Append all menu items at once for better performance
@@ -1790,15 +1792,20 @@ function createMenuItems(data) {
       // Only keep items that have a matching entry in the menuMap
       .filter((item) => menuMap[item.section_id])
       .map((item) => {
-        const { graphic, width, height, subText } = menuMap[item.section_id];
-        return {
-          graphic, // Path or name of the graphic associated with this menu item
-          width, // Graphic width (used for layout/styling)
-          height, // Graphic height (used for layout/styling)
-          url: `#${item.section_prompt.toLowerCase()}`, // Anchor link generated from the section prompt
-          menuTitle: item.section_prompt, // Display text for the menu item
-          subText, // Optional subtitle or description for the menu item
-        };
+        if (item.section_prompt !== null && menuMap[item.section_id]) {
+          const { graphic, width, height, subText } = menuMap[item.section_id];
+          // optional extra check in case some fields are missing
+          if (graphic && width && height && subText) {
+            return {
+              graphic, // Path or name of the graphic associated with this menu item
+              width, // Graphic width (used for layout/styling)
+              height, // Graphic height (used for layout/styling)
+              url: `#${item.section_prompt.toLowerCase()}`, // Anchor link generated from the section prompt
+              menuTitle: item.section_prompt, // Display text for the menu item
+              subText, // Optional subtitle or description for the menu item
+            };
+          }
+        }
       })
   );
 }
