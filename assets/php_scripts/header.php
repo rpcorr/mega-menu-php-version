@@ -83,7 +83,6 @@ $_SESSION['switchAble'] = true;
     <!-- stylesheets -->
     <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/reset.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-menu.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/default.css" />
     
     <?php if (basename($_SERVER['PHP_SELF']) === 'preferences.php') { ?>
 
