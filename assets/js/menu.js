@@ -65,7 +65,7 @@ const extraContent = [
     graphic: 'light-bulb.gif',
     width: '32',
     height: '37',
-    heading: 'Did you know that you can do this if you do that?',
+    heading: 'Did you know?',
     extraBodyContent: [
       {
         bodyText: 'Extra Content',
