@@ -272,11 +272,17 @@ document.addEventListener('DOMContentLoaded', () => {
       if (switchAble)
         menuHTML += `<li> <a href="#" id="showUsersLink">View page as...</a></li>`;
 
+      let initials = '';
+      let profileName = '';
+
+      if (user) {
+        initials = getInitials(user);
+        profileName = user;
+      }
+
       // if logged in, show profile
       if (ukey.trim() !== '') {
-        menuHTML += `<li class="menu-item-has-children hover" aria-expanded="false"><a href="#" aria-label="${user} profile has a sub menu. Click enter to open" id="profile"><div class="profile"><span aria-hidden="true">${getInitials(
-          user
-        )}</span></div>${user} <span class="hidden-text">profile</span> <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="#" tabindex='-1'>My Profile</a></li><li><a href="#" tabindex='-1'>Settings</a></li><li><a href="#" tabindex='-1'>Notifications</a></li><li><a href="#" tabindex='-1'>Help &amp; Support</a></li><li><a href="logout.php" tabindex='-1'>Sign Out</a></li></ul></li>`;
+        menuHTML += `<li class="menu-item-has-children hover" aria-expanded="false"><a href="#" aria-label="${profileName} profile has a sub menu. Click enter to open" id="profile"><div class="profile"><span aria-hidden="true">${initials}</span></div>${profileName} <span class="hidden-text">profile</span> <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="#" tabindex='-1'>My Profile</a></li><li><a href="#" tabindex='-1'>Settings</a></li><li><a href="#" tabindex='-1'>Notifications</a></li><li><a href="#" tabindex='-1'>Help &amp; Support</a></li><li><a href="logout.php" tabindex='-1'>Sign Out</a></li></ul></li>`;
       }
 
       document.getElementById('menu-main-menu').innerHTML = menuHTML;
