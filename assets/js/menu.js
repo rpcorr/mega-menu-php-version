@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let menuHTML = createMenu(finalGroupedArray);
 
       // if switchAble session variable is true, show Show Users link
-      if (switchAble)
+      if (switchAble === true)
         menuHTML += `<li> <a href="#" id="showUsersLink">View page as...</a></li>`;
 
       let initials = '';
