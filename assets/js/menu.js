@@ -2,21 +2,18 @@
 /* flexbox priority navigation */
 
 // global variables
-let navItems = [];
 const navItemWidth = [];
 const navItemVisible = [];
+const sidebar = document.getElementById('sidebar');
+const MOBILE_BREAKPOINT = 960;
+let allMenuItemsinArray;
+let initialColumns = '';
+let lastClickedTabId = null;
 let moreWidth = 0;
-let winWidth = 0;
+let navItems = [];
 let output = '';
 let megaMenuLinks = '';
-let initialColumns = '';
-const sidebar = document.getElementById('sidebar');
-
-let allMenuItemsinArray;
-
-const BREAKPOINT = 960;
-
-let lastClickedTabId = null;
+let winWidth = 0;
 
 // LibPAS, InformUS, LibSat menu items
 const menuMap = {
@@ -1233,7 +1230,7 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
     pTag.classList.add('selected-tab');
 
     // run code snippet after renderMenu initial run and on small devices
-    if (callCount > 1 && window.innerWidth <= BREAKPOINT) {
+    if (callCount > 1 && window.innerWidth <= MOBILE_BREAKPOINT) {
       const iTag = pTag.querySelector('i');
 
       iTag.classList.remove('angle-down');
@@ -2445,7 +2442,7 @@ function toggleTabPanelsLayout(calledFromResized) {
   const menuList = tabList?.querySelector('.menu-list') || null;
   const tabPanels = container.querySelectorAll('.tabs__panels');
 
-  const screenIsMobile = window.innerWidth <= BREAKPOINT;
+  const screenIsMobile = window.innerWidth <= MOBILE_BREAKPOINT;
 
   if (screenIsMobile) {
     // Switch to mobile layout
