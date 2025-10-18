@@ -7,12 +7,12 @@ const navItemVisible = [];
 const sidebar = document.getElementById('sidebar');
 const MOBILE_BREAKPOINT = 960;
 let allMenuItemsinArray;
+let megaMenuLinks = '';
 let initialColumns = '';
 let lastClickedTabId = null;
 let moreWidth = 0;
 let navItems = [];
 let output = '';
-let megaMenuLinks = '';
 let winWidth = 0;
 
 // LibPAS, InformUS, LibSat menu items
