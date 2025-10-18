@@ -90,10 +90,7 @@ $_SESSION['switchAble'] = true;
 
     <?php }  
   
-    if ($ukey || $user) {   ?>
-        <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-colour-template.min.css" />
-    <?php
-      
+    if ($ukey || $user) {   
       if (isset($_COOKIE['theme'])) { ?>
         <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php echo $_COOKIE['theme'] ?>.css" />
       <?php 
