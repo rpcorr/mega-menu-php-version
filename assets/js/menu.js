@@ -90,14 +90,12 @@ const extraContent = [
 
 let user = '';
 document.addEventListener('userReady', () => {
-  console.log('Menu.js: user is ready:', window.user);
-
   // Now safe to use window.user here
   user = window.user;
 });
 
 console.log(
-  `I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}. User is ${user}.`
+  `I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}. User is ${user}. Switchable is ${switchAble}`
 );
 
 console.log(`Menu file: ${JSONfile}`);
@@ -480,6 +478,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
   moreWidth = document.getElementById('menu-main-menu').offsetWidth;
+
+  if (switchAble) {
+    //dymanically add switchable.js
+    const newScript = document.createElement('script');
+    newScript.src = 'assets/widgets/switchable/switchable.js';
+    newScript.defer = true;
+
+    // Find the script element that loaded menu.js
+    const currentScript = document.querySelector('script[src*="menu.js"]');
+
+    // Insert the new script before menu.js
+    currentScript.parentNode.insertBefore(newScript, currentScript);
+  }
 });
 ///// FUNCTIONS /////
 /**

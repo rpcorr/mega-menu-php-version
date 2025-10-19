@@ -22,11 +22,20 @@
 })();
 
 function initSwitchable() {
-  console.log('Switchable.js: user is ready:', window.user);
-  // Do whatever depends on user here
-
   console.log(
-    `Inside switchable.js.  Portal is: ${portal}.  Ukey is: ${ukey}. User is: ${window.user}`
+    `Inside switchable.js.  Portal is: ${portal}.  Ukey is: ${ukey}. User is: ${window.user}. Switchable is ${switchAble}.`
+  );
+
+  document.addEventListener(
+    'click',
+    (e) => {
+      const link = e.target.closest('#showUsersLink');
+      if (link) {
+        e.preventDefault();
+        openUserModal();
+      }
+    },
+    true
   );
 
   displaySwitchableForm();
@@ -41,12 +50,21 @@ if (window.user) {
 }
 
 function displaySwitchableForm() {
-  // Dynamically add modal.css
+  // Dynamically add switchable.css
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   link.type = 'text/css';
   link.href = basePath + 'assets/widgets/switchable/switchable.css';
-  document.head.appendChild(link);
+
+  // Find the navigation-menu.css link
+  const navLink = document.querySelector('link[href*="navigation-menu.css"]');
+
+  // If we find it, insert before it. Otherwise, just append to head.
+  if (navLink && navLink.parentNode) {
+    navLink.parentNode.insertBefore(link, navLink);
+  } else {
+    document.head.appendChild(link);
+  }
 
   // Decide which JSON file to fetch
   let userJSONfile = '';
@@ -149,8 +167,6 @@ function displaySwitchableForm() {
   const params = new URLSearchParams(window.location.search);
 
   if (!params.has('originalUkey')) {
-    console.log(userJSONfile);
-
     // Fetch users JSON
     let userData = [];
     fetch(userJSONfile)
@@ -516,20 +532,6 @@ function impersonationBanner() {
       });
   }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.addEventListener(
-    'click',
-    (e) => {
-      const link = e.target.closest('#showUsersLink');
-      if (link) {
-        e.preventDefault();
-        openUserModal();
-      }
-    },
-    true
-  );
-});
 
 function openUserModal() {
   const modal = document.getElementById('userModal');

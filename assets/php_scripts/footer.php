@@ -25,8 +25,6 @@
       const match = data.users.find((user) => user.ukey === ukey);
       window.user = match ? match.username : 'DEMO';
 
-      console.log('Footer: fetched user:', window.user);
-
       // Notify any script waiting for user
       document.dispatchEvent(new Event('userReady'));
     })
@@ -41,9 +39,6 @@
       
     </script>
     <script src='<?php echo getRelativePath(''); ?>assets/js/user.js' defer></script>
-<?php if (!empty($_SESSION['switchAble']) && $_SESSION['switchAble'] === true): ?>
-    <script src='<?php echo getRelativePath(''); ?>assets/widgets/switchable/switchable.js' defer></script>
-<?php endif; ?>
     <script src='<?php echo getRelativePath(''); ?>assets/js/menu.js' defer></script>
     <script src='<?php echo getRelativePath(''); ?>assets/js/generateBreadcrumbs.js' defer></script>
     <?php if ($_COOKIE['ukey'] || $_REQUEST['ukey']) { ?>
