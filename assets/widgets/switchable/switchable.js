@@ -45,7 +45,7 @@ function displaySwitchableForm() {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   link.type = 'text/css';
-  link.href = basePath + 'assets/css/modal.css';
+  link.href = basePath + 'assets/widgets/switchable/switchable.css';
   document.head.appendChild(link);
 
   // Decide which JSON file to fetch
