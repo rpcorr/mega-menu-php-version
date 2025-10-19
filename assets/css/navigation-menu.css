@@ -1,8 +1,15 @@
-/* This file is divided into x sections */
+/****************************************/
+/* This file is divided into 5 sections */
+/* 1. Navigation Menu                   */
+/* 2. Mega Menu Styles                  */
+/* 3. Defaults Navigation Styles        */
+/* 4. Navigation Colour Template        */
+/* 5. Breadcrumbs                       */
+/****************************************/
 
-/**********************************************/
-/*  1. Navigation Menu                        */
-/*********************************************/
+/*****************************************/
+/*  1. Navigation Menu                   */
+/*****************************************/
 
 /* -- SKIP NAV LINK STYLES -- */
 .skip-nav-link {
@@ -384,9 +391,9 @@ ul.sub-menu li > ul.sub-menu {
   text-decoration: none;
 }
 
-/**********************************************/
-/*  2. Mega Menu Styles                       */
-/*********************************************/
+/*****************************************/
+/*  2. Mega Menu Styles                  */
+/*****************************************/
 
 /* styles for Mega menu */
 header nav ul.menu > li.menu-item-has-children > .mega-menu {
@@ -1038,9 +1045,9 @@ header nav ul.menu > li.menu-item-has-children > .mega-menu {
   display: none;
 }
 
-/**********************************************/
-/*  3. Defaults Navigation Styles             */
-/**********************************************/
+/*****************************************/
+/*  3. Defaults Navigation Styles        */
+/*****************************************/
 
 /* default colours */
 html {
@@ -1594,9 +1601,9 @@ footer p {
   text-align: center;
 }
 
-/**********************************************/
-/*  4. Navigation Colour Template             */
-/*********************************************/
+/*****************************************/
+/*  4. Navigation Colour Template        */
+/*****************************************/
 
 /* default colours */
 html {
@@ -2026,9 +2033,9 @@ li > ul.sub-menu > li > .active {
   color: var(--textColourHoverActiveFocusAlt) !important;
 }
 
-/**********************************************/
-/*  5. Breadcrumbs                           */
-/*********************************************/
+/*****************************************/
+/*  5. Breadcrumbs                       */
+/*****************************************/
 
 .breadcrumbs {
   display: flex;
