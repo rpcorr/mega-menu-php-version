@@ -502,7 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
     segments.length > 0 && segments[segments.length - 1] === 'preferences.php';
 
   // Dynamically add switchable.js if switchAble is true and place it right before menu.js
-  if (switchAble) {
+  if (switchAble && ukey !== undefined && ukey !== null && ukey !== '') {
     const newScript = document.createElement('script');
     newScript.src = `${prefix}assets/widgets/switchable/switchable.js`;
     newScript.defer = true;
