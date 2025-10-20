@@ -282,8 +282,8 @@ document.addEventListener('DOMContentLoaded', () => {
     prefix += '../';
   }
 
+  //dynamically add switchable.js if switchAble is true
   if (switchAble) {
-    //dymanically add switchable.js
     const newScript = document.createElement('script');
     newScript.src = `${prefix}assets/widgets/switchable/switchable.js`;
     newScript.defer = true;
@@ -295,14 +295,21 @@ document.addEventListener('DOMContentLoaded', () => {
     currentScript.parentNode.insertBefore(newScript, currentScript);
   }
 
-  // Create the script element
-  const breadcrumbScript = document.createElement('script');
-  breadcrumbScript.src = `${prefix}assets/js/generateBreadcrumbs.js`;
-  breadcrumbScript.defer = true;
+  // dynamically add breadcrumbs.js if tag exists
+  const breadcrumbContainer = document.getElementById('breadcrumbsMenu');
 
-  // Insert after menu.js
-  const menuScript = document.querySelector('script[src*="menu.js"]');
-  menuScript.parentNode.insertBefore(breadcrumbScript, menuScript.nextSibling);
+  if (breadcrumbContainer) {
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.src = `${prefix}assets/js/generateBreadcrumbs.js`;
+    breadcrumbScript.defer = true;
+
+    // Insert after menu.js
+    const menuScript = document.querySelector('script[src*="menu.js"]');
+    menuScript.parentNode.insertBefore(
+      breadcrumbScript,
+      menuScript.nextSibling
+    );
+  }
 });
 ///// FUNCTIONS /////
 
