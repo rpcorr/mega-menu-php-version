@@ -40,7 +40,6 @@
     </script>
     <script src='<?php echo getRelativePath(''); ?>assets/js/user.js' defer></script>
     <script src='<?php echo getRelativePath(''); ?>assets/js/menu.js' defer></script>
-    <script src='<?php echo getRelativePath(''); ?>assets/js/generateBreadcrumbs.js' defer></script>
     <?php if ($_COOKIE['ukey'] || $_REQUEST['ukey']) { ?>
       <script src='<?php echo getRelativePath(''); ?>assets/js/selectTheme.js' defer></script>
     <!-- <script src='<?php //echo getRelativePath(''); ?>assets/js/checkTimerInactivity.min.js' defer></script> -->
