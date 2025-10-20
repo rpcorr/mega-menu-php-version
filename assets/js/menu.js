@@ -268,6 +268,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
   moreWidth = document.getElementById('menu-main-menu').offsetWidth;
+
+  // Dynamically add generateBreadcrumbs.js right after menu.js
+  // Get the current path (e.g. /, /mmenu/, /a/b/c/page.php)
+  const path = window.location.pathname;
+
+  // Count how many segments deep we are (ignoring empty ones)
+  const depth = path.split('/').filter(Boolean).length - 1;
+
+  // Build the relative prefix (e.g. '', '../', '../../', etc.)
+  let prefix = '';
+  for (let i = 0; i < depth - 1; i++) {
+    prefix += '../';
+  }
+
+  if (switchAble) {
+    //dymanically add switchable.js
+    const newScript = document.createElement('script');
+    newScript.src = `${prefix}assets/widgets/switchable/switchable.js`;
+    newScript.defer = true;
+
+    // Find the script element that loaded menu.js
+    const currentScript = document.querySelector('script[src*="menu.js"]');
+
+    // Insert the new script before menu.js
+    currentScript.parentNode.insertBefore(newScript, currentScript);
+  }
+
+  // Create the script element
+  const breadcrumbScript = document.createElement('script');
+  breadcrumbScript.src = `${prefix}assets/js/generateBreadcrumbs.js`;
+  breadcrumbScript.defer = true;
+
+  // Insert after menu.js
+  const menuScript = document.querySelector('script[src*="menu.js"]');
+  menuScript.parentNode.insertBefore(breadcrumbScript, menuScript.nextSibling);
 });
 ///// FUNCTIONS /////
 
