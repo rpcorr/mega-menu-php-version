@@ -68,7 +68,8 @@ function getRelativePath($targetPath) {
 }
 
 // Allow current user to switch users
-$_SESSION['switchAble'] = true;
+if ($ukey !== '') $_SESSION['switchAble'] = true;
+else $_SESSION['switchAble'] = false;
 
 ?>
 
