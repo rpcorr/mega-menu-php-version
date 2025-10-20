@@ -67,13 +67,10 @@ function displaySwitchableForm() {
   }
 
   // Decide which JSON file to fetch
-  let userJSONfile = '';
+  let userJSONfile = `${baseURL}users-demo.json`;
 
   if (portal.toLowerCase() === 'democa')
     userJSONfile = `${baseURL}users-democa.json`;
-
-  if (portal.toLowerCase() === 'demo')
-    userJSONfile = `${baseURL}users-demo.json`;
 
   console.log(userJSONfile);
 
