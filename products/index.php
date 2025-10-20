@@ -15,9 +15,9 @@ include(__DIR__ . '/../assets/php_scripts/header.php'); ?>
         <?php   
           
           if ($queryString !== null) { 
-              echo '<p><a href="product-1?'. $queryString . '">Product 1</a></p>';
+              echo '<p><a href="product-1/index.php?'. $queryString . '">Product 1</a></p>';
           } else {
-                  echo '<p><a href="product-1/">Product 1</a></p>';
+                  echo '<p><a href="product-1/index.php">Product 1</a></p>';
           }
     
         ?>
