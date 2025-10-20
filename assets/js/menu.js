@@ -272,14 +272,24 @@ document.addEventListener('DOMContentLoaded', () => {
   // Get the current path (e.g. /, /mmenu/, /a/b/c/page.php)
   const path = window.location.pathname;
 
-  // Count how many segments deep we are (ignoring empty ones)
-  const depth = path.split('/').filter(Boolean).length - 1;
+  // Break it into segments
+  const segments = path.split('/').filter(Boolean);
+
+  // If last segment looks like a file (e.g. has a dot), don't count it as a folder
+  let depth = segments.length;
+  if (segments.length > 0 && segments[segments.length - 1].includes('.')) {
+    depth -= 1;
+  }
 
   // Build the relative prefix (e.g. '', '../', '../../', etc.)
   let prefix = '';
   for (let i = 0; i < depth - 1; i++) {
     prefix += '../';
   }
+
+  // Detect if we're on preferences.php
+  const isPreferencesPage =
+    segments.length > 0 && segments[segments.length - 1] === 'preferences.php';
 
   // Dynamically add switchable.js if switchAble is true and place it right before menu.js
   if (switchAble) {
@@ -295,9 +305,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Dynamically add generateBreadcrumbs.js if tag exists and place it right after menu.js
-  const breadcrumbContainer = document.getElementById('breadcrumbsMenu');
+  const breadcrumbsContainer = document.getElementById('breadcrumbsMenu');
 
-  if (breadcrumbContainer) {
+  if (breadcrumbsContainer) {
     const breadcrumbScript = document.createElement('script');
     breadcrumbScript.src = `${prefix}assets/js/generateBreadcrumbs.js`;
     breadcrumbScript.defer = true;
@@ -308,6 +318,22 @@ document.addEventListener('DOMContentLoaded', () => {
       breadcrumbScript,
       menuScript.nextSibling
     );
+  }
+
+  // Dynamically add selectTheme.js only on preferences.php
+  if (isPreferencesPage && ukey) {
+    const selectThemeScript = document.createElement('script');
+    selectThemeScript.src = `${prefix}assets/js/selectTheme.js`;
+    selectThemeScript.defer = true;
+
+    const menuScript = document.querySelector('script[src*="menu.js"]');
+    if (menuScript) {
+      menuScript.parentNode.insertBefore(
+        selectThemeScript,
+        menuScript.nextSibling
+      );
+      console.log(`Injected selectTheme.js: ${selectThemeScript.src}`);
+    }
   }
 });
 ///// FUNCTIONS /////
