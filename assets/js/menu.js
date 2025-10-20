@@ -479,7 +479,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   moreWidth = document.getElementById('menu-main-menu').offsetWidth;
 
-  // Dynamically add generateBreadcrumbs.js right after menu.js
   // Get the current path (e.g. /, /mmenu/, /a/b/c/page.php)
   const path = window.location.pathname;
 
@@ -492,7 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
     prefix += '../';
   }
 
-  //dynamically add switchable.js if switchAble is true
+  // Dynamically add switchable.js if switchAble is true and place it right before menu.js
   if (switchAble) {
     const newScript = document.createElement('script');
     newScript.src = `${prefix}assets/widgets/switchable/switchable.js`;
@@ -505,7 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
     currentScript.parentNode.insertBefore(newScript, currentScript);
   }
 
-  // dynamically add breadcrumbs.js if tag exists
+  // Dynamically add generateBreadcrumbs.js if tag exists and place it right after menu.js
   const breadcrumbContainer = document.getElementById('breadcrumbsMenu');
 
   if (breadcrumbContainer) {
