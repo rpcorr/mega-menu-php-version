@@ -4,19 +4,20 @@
 // will help switch users when the starting URL doesn't contain ukey variable
 (function () {
   const FLAG = 'ukey_switch_pending';
-  if (sessionStorage.getItem(FLAG)) {
-    // remove flag immediately to avoid loops
-    sessionStorage.removeItem(FLAG);
 
-    // Optionally check a server-side marker / cookie presence first.
-    // If server has not yet produced the expected change, force one more load with a cache-busting param.
+  if (localStorage.getItem(FLAG)) {
     const params = new URLSearchParams(window.location.search);
+
+    // If we haven't already reloaded once, add busting params
     if (!params.has('_reloaded')) {
-      params.set('_reloaded', '1'); // avoids infinite loop
-      params.set('_bust', Date.now().toString()); // force a fresh fetch
+      params.set('_reloaded', '1'); // avoid infinite loop
+      params.set('_bust', Date.now().toString()); // cache buster
       window.location.replace(
         window.location.pathname + '?' + params.toString()
       );
+    } else {
+      // After the forced reload, remove the flag
+      //localStorage.removeItem(FLAG);
     }
   }
 })();
@@ -507,6 +508,8 @@ function impersonationBanner() {
         url.searchParams.delete('originalUkey');
         url.searchParams.delete('_reloaded');
         url.searchParams.delete('_bust');
+
+        localStorage.removeItem('ukey_switch_pending');
 
         // Redirect to the cleaned-up URL
         window.location.href = url.toString();
