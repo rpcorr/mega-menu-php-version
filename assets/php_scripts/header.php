@@ -86,11 +86,7 @@ else $_SESSION['switchAble'] = false;
     <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/mega-menu.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/default.css" />
     
-    <?php if (basename($_SERVER['PHP_SELF']) === 'preferences.php') { ?>
-
-        <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/colourswatch.min.css" />
-
-    <?php }  
+    <?php  
   
     if ($ukey || $user) {   ?>
         <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-colour-template.min.css" />
