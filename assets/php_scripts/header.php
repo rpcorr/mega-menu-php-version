@@ -88,7 +88,7 @@ else $_SESSION['switchAble'] = false;
     
     <?php  
   
-    if ($ukey || $user) {   ?>
+    if ( isset($ukey) || $user) {   ?>
         <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-colour-template.min.css" />
     <?php
       
