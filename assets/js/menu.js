@@ -394,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Create sidebar.js script element
     const script = document.createElement('script');
-    script.src = `${prefix}assets/js/sidebar.js`;
+    script.src = `${prefix}assets/widgets/sidebar/sidebar.js`;
     script.defer = true;
 
     // Find reference scripts
@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.type = 'text/css';
-    link.href = `${prefix}assets/css/sidebar.css`;
+    link.href = `${prefix}assets/widgets/sidebar/sidebar.css`;
 
     // --- Determine where navigation-menu.css is ---
     const navLink = document.querySelector(`link[href*="navigation-menu.css"]`);

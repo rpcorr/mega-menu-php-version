@@ -135,7 +135,7 @@ else $_SESSION['switchAble'] = false;
         </div>
       </div>
     </header>
-    <?php include(__DIR__ . '/sidebar.php'); ?>
+    <?php include(__DIR__ . '/../widgets/sidebar/sidebar.php'); ?>
     <nav id="breadcrumbsMenu" aria-label="breadcrumbs">
       <ul class="breadcrumbs" id="breadcrumbs"></ul>
     </nav>
