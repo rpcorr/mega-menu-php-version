@@ -4,7 +4,7 @@ session_start();
 
 
 // Load the JSON file
-$jsonFile = '../json/users.json';
+$jsonFile = '../../json/users.json';
 $jsonData = file_get_contents($jsonFile);
 $users = json_decode($jsonData, true);
 
