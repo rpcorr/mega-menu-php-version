@@ -559,8 +559,9 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   }
 
-  // Dynamically add selectTheme.js only on preferences.php
+  // Dynamically add selectTheme.js and colourswatch.min.css only on preferences.php
   if (isPreferencesPage && ukey) {
+    // --- Insert selectTheme.js ---
     const selectThemeScript = document.createElement('script');
     selectThemeScript.src = `${prefix}assets/js/selectTheme.js`;
     selectThemeScript.defer = true;
@@ -571,7 +572,24 @@ document.addEventListener('DOMContentLoaded', () => {
         selectThemeScript,
         menuScript.nextSibling
       );
-      console.log(`Injected selectTheme.js: ${selectThemeScript.src}`);
+    }
+
+    // --- Insert colourswatch.min.css ---
+    const linkColours = document.createElement('link');
+    linkColours.rel = 'stylesheet';
+    linkColours.type = 'text/css';
+    linkColours.href = `${prefix}assets/css/colourswatch.min.css`;
+
+    // Insert after navigation-menu.css in its current container
+    const navLink = document.querySelector('link[href*="navigation-menu.css"]');
+    const container = navLink
+      ? navLink.parentNode
+      : document.head || document.body || document.documentElement;
+
+    if (navLink) {
+      container.insertBefore(linkColours, navLink.nextSibling);
+    } else {
+      container.appendChild(linkColours);
     }
   }
 

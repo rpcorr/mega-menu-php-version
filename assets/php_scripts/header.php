@@ -84,11 +84,7 @@ else $_SESSION['switchAble'] = false;
     <!-- stylesheets -->
     <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-menu.css" />
     
-    <?php if (basename($_SERVER['PHP_SELF']) === 'preferences.php') { ?>
-
-        <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/colourswatch.min.css" />
-
-    <?php }  
+    <?php  
   
     if ($ukey || $user) {   
       if (isset($_COOKIE['theme'])) { ?>
