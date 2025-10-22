@@ -335,6 +335,43 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log(`Injected selectTheme.js: ${selectThemeScript.src}`);
     }
   }
+
+  // Dynamically add sidebar.js if sidebar exists
+  const sidebar = document.getElementById('sidebar');
+
+  if (sidebar) {
+    // Helper to insert after a reference node
+    function insertAfter(newNode, referenceNode) {
+      referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    }
+
+    // Create sidebar.js script element
+    const script = document.createElement('script');
+    script.src = `${prefix}assets/js/sidebar.js`;
+    script.defer = true;
+
+    // Find reference scripts
+    const breadcrumbsScript = document.querySelector(
+      'script[src*="generateBreadcrumbs.js"]'
+    );
+    const menuScript = document.querySelector('script[src*="menu.js"]');
+
+    if (breadcrumbsScript) {
+      insertAfter(script, breadcrumbsScript);
+    } else if (menuScript) {
+      insertAfter(script, menuScript);
+    } else {
+      // fallback: append to body if neither script exists
+      document.body.appendChild(script);
+    }
+
+    // Add sidebar.css dynamically
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = `${prefix}assets/css/sidebar.css`;
+    document.head.appendChild(link);
+  }
 });
 ///// FUNCTIONS /////
 

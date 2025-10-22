@@ -51,28 +51,6 @@
     <!-- <script src='<?php //echo getRelativePath(''); ?>assets/js/checkTimerInactivity.min.js' defer></script> -->
     <?php } ?>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-
-        // if sidebar exist add styles and js files
-        if (document.getElementById('sidebar')) {
-          const script = document.createElement('script');
-          script.src = '<?php echo getRelativePath(''); ?>assets/js/sidebar.js';
-          script.defer = true;
-          document.body.appendChild(script);
-        }
-
-        if (document.getElementById('sidebar')) {
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.type = 'text/css';
-            link.href = "<?php echo getRelativePath(''); ?>assets/css/sidebar.css";
-            document.head.appendChild(link);
-          }
-      });
-
-    </script>
-
     <!-- ///// The Templates ///// -->
     <template id="menuTemplate">
       <li role="presentation"><img src="" alt="" /><p><a href="" role="tab"><strong></strong><span></span></a></p> <div class="circle">
