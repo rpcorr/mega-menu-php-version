@@ -643,6 +643,41 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   }
+
+  // --- Check if user/ukey is defined ---
+  if (
+    (typeof ukey !== 'undefined' && ukey) ||
+    (typeof user !== 'undefined' && user)
+  ) {
+    // --- Helper: get cookie value ---
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+      return null;
+    }
+
+    // --- Determine which theme to use ---
+    const theme = getCookie('theme') || 'base';
+
+    // --- Build link element ---
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = `${prefix}assets/css/templatesStyles/${theme}.css`;
+
+    // --- Insert theme link right after navigation-menu.css (if exists) ---
+    const navLink = document.querySelector('link[href*="navigation-menu.css"]');
+    const container = navLink
+      ? navLink.parentNode
+      : document.head || document.body;
+
+    if (navLink) {
+      container.insertBefore(link, navLink.nextSibling);
+    } else {
+      container.appendChild(link);
+    }
+  }
 });
 ///// FUNCTIONS /////
 /**
