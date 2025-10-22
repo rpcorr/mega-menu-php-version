@@ -15,7 +15,7 @@ radioButtons.forEach(function (radioButton) {
     xhr.open(
       'GET',
       prefix +
-        'assets/php_scripts/update_theme_preference.php?themePreference=' +
+        'assets/widgets/selectTheme/update_theme_preference.php?themePreference=' +
         this.id,
       true
     );
