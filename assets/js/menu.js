@@ -349,11 +349,11 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   }
 
-  // Dynamically add selectTheme.js and colourswatch.min.css only on preferences.php
+  // Dynamically add selectTheme.js and selectTheme.min.css only on preferences.php
   if (isPreferencesPage && ukey) {
     // --- Insert selectTheme.js ---
     const selectThemeScript = document.createElement('script');
-    selectThemeScript.src = `${prefix}assets/js/selectTheme.js`;
+    selectThemeScript.src = `${prefix}assets/widgets/selectTheme/selectTheme.js`;
     selectThemeScript.defer = true;
 
     const menuScript = document.querySelector('script[src*="menu.js"]');
@@ -368,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const linkColours = document.createElement('link');
     linkColours.rel = 'stylesheet';
     linkColours.type = 'text/css';
-    linkColours.href = `${prefix}assets/css/colourswatch.min.css`;
+    linkColours.href = `${prefix}assets/widgets/selectTheme/selectTheme.min.css`;
 
     // Insert after navigation-menu.css in its current container
     const navLink = document.querySelector('link[href*="navigation-menu.css"]');
