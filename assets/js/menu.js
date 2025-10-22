@@ -609,7 +609,21 @@ document.addEventListener('DOMContentLoaded', () => {
     link.rel = 'stylesheet';
     link.type = 'text/css';
     link.href = `${prefix}assets/css/sidebar.css`;
-    document.head.appendChild(link);
+
+    // --- Determine where navigation-menu.css is ---
+    const navLink = document.querySelector(`link[href*="navigation-menu.css"]`);
+    if (navLink && navLink.parentNode) {
+      navLink.parentNode.insertBefore(link, navLink.nextSibling);
+    } else {
+      // fallback: append to head if exists, otherwise body
+      const head = document.head;
+      if (head) {
+        head.appendChild(link);
+      } else {
+        const body = document.body || document.documentElement;
+        body.appendChild(link);
+      }
+    }
   }
 });
 ///// FUNCTIONS /////
