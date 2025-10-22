@@ -82,7 +82,6 @@ else $_SESSION['switchAble'] = false;
     <script>const basePath = "<?php echo getRelativePath(''); ?>";</script>
 
     <!-- stylesheets -->
-    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/reset.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-menu.css" />
     
     <?php if (basename($_SERVER['PHP_SELF']) === 'preferences.php') { ?>
