@@ -4,7 +4,6 @@
 /* 2. Mega Menu Styles                  */
 /* 3. Defaults Navigation Styles        */
 /* 4. Navigation Colour Template        */
-/* 5. Breadcrumbs                       */
 /****************************************/
 
 /*****************************************/
@@ -84,7 +83,7 @@ ul#menu-main-menu li > ul {
 .menu-item-has-children[aria-expanded='false'] .sub-menu a {
   pointer-events: none;
   cursor: default;
-  color: #999; /* Optional: dimmed color */
+  color: #999;
   text-decoration: none;
 }
 
@@ -95,9 +94,8 @@ ul#menu-main-menu li > ul {
 }
 
 ul#menu-main-menu li[aria-expanded='true'] > ul {
-  /* Add your desired styles here */
   opacity: 1;
-  display: block; /* Example: Make the submenu visible */
+  display: block;
 }
 
 /* position sub-menu under moreSubMenu to relative in order to display */
@@ -120,7 +118,7 @@ ul#menu-main-menu li > ul > li > a.active > ul {
 }
 
 #menu .menu-item-has-children.active > .sub-menu {
-  display: block; /* Show the sub-menu */
+  display: block;
 }
 
 ul#menu-main-menu li > ul > li > a.active > ul {
@@ -154,35 +152,43 @@ ul#menu-main-menu li.menu-item-has-children > a {
   padding-right: 1.75rem;
 }
 
-ul#menu-main-menu li.menu-item-has-children > a.class::after {
-  top: calc(50% - 0.4rem);
-  transform: rotate(225deg) translate(-25%, -25%);
-}
-
 /* header and main menu bar styles */
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: #fff;
   border-bottom: 0.15rem solid #555;
 }
 
 header nav ul.menu > li.menu-item-has-children > .mega-menu {
-  right: 6em; /* Ensure the menu starts aligned to the parent */
-  left: auto; /* Prevent conflicting left/right declarations */
+  right: 6em;
+  left: auto;
 }
 
-header {
-  position: fixed;
-  width: 100%;
-}
-
+/* === UPDATED NAVIGATION LAYOUT === */
 #mainNavigation {
   position: relative;
   z-index: 99;
   background-color: #60bd68;
+  margin-top: 0; /* remove top margin so nav touches header */
 }
 
+/* === MAIN CONTENT OFFSET === */
+main {
+  margin-top: 80px; /* fallback spacing when nav is missing */
+}
+
+/* If nav exists, let main follow naturally */
+body:has(nav) main {
+  margin-top: 0;
+}
+
+/* branding area */
 #branding {
   width: 11rem;
-  /* height: 5rem; */
   float: left;
   padding: 0.75rem 0 0.5rem;
   display: flex;
@@ -214,8 +220,7 @@ header {
   display: block;
 }
 
-/* main navigation */
-
+/* main navigation width */
 #mainNavigation nav {
   width: calc(100% - 15rem);
   float: right;
@@ -223,17 +228,17 @@ header {
 
 /* profile menu */
 .profile {
-  width: 30px; /* Adjust size as needed */
-  height: 30px; /* Must be equal to width for a perfect circle */
+  width: 30px;
+  height: 30px;
   float: left;
   background-color: white;
   color: #60bd68;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%; /* Makes it a circle */
-  border: 2px solid #60bd68; /* Optional border */
-  font-weight: bold; /* Optional styling */
+  border-radius: 50%;
+  border: 2px solid #60bd68;
+  font-weight: bold;
   text-align: center;
 }
 
@@ -248,7 +253,6 @@ header {
   opacity: 1;
 }
 
-/* When the link is hovered and active, reveal the submenu */
 #menuMoreLink.active:hover + #moreSubMenu,
 #menuMoreLink.active + #moreSubMenu:hover {
   opacity: 1;
@@ -259,33 +263,7 @@ ul#menu-main-menu li.menu-item-has-children > a.active > ul ul.sub-menu {
   position: relative;
 }
 
-.sub-menu > li {
-  display: block;
-  position: relative;
-}
-
-ul#menu-main-menu li.menu-item-has-children > a {
-  padding-right: 1.75rem;
-}
-
-ul#menu-main-menu li.menu-item-has-children > a.active::after {
-  top: calc(50% - 0.4rem);
-  transform: rotate(225deg) translate(-25%, -25%);
-}
-
-ul#menu-main-menu li.menu-item-has-children li.menu-item-has-children::after {
-  top: 1.35rem;
-}
-
-ul#menu-main-menu
-  li.menu-item-has-children
-  li.menu-item-has-children
-  > a.active::after {
-  top: 1.25rem;
-}
-
 /* link styles */
-
 #menu-main-menu > li > a {
   text-transform: uppercase;
 }
@@ -307,9 +285,7 @@ ul#menu-main-menu
 .menu-main-menu-container > #menu-main-menu > li > .mega-menu a {
   text-align: left;
   font-weight: 600;
-  /* font-size: 1rem; */ /* this was overriding font size in tabs for smaller devices */
   line-height: 1.25;
-  /* the style below may not be needed any more after completing the mega-menu */
   padding: 1rem 1.5rem;
   display: block !important;
 }
@@ -372,13 +348,10 @@ ul.sub-menu li > ul.sub-menu {
 }
 
 .menu-main-menu-container > #menu-main-menu > li li > .sub-menu a {
-  /* padding top and bottom are needed to prevent overflow of focus the border */
   padding: 0.74rem 0 0.63rem 2rem;
 }
 
 .menu-main-menu-container > #menu-main-menu > li li li > .sub-menu a {
-  /* padding top and bottom are needed to prevent overflow of focus the border 
-     when under the "More" menu item */
   padding: 0.74rem 0 0.63rem 2.5rem;
 }
 
@@ -2031,44 +2004,6 @@ li > li > .active {
 li > ul.sub-menu > li > .active {
   background-color: var(--bgColourHoverActiveFocusAlt) !important;
   color: var(--textColourHoverActiveFocusAlt) !important;
-}
-
-/*****************************************/
-/*  5. Breadcrumbs                       */
-/*****************************************/
-
-.breadcrumbs {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  margin: 6.5em 0 0 2em;
-}
-.breadcrumbs li {
-  margin-right: 5px;
-}
-.breadcrumbs li a {
-  text-decoration: none;
-  color: blue;
-}
-
-.breadcrumbs li::after {
-  content: '';
-}
-
-.breadcrumbs li::after {
-  content: attr(data-symbol);
-  margin-left: 5px;
-}
-
-.breadcrumbs li span {
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-  white-space: nowrap;
 }
 
 @media (min-width: 27.0625rem) {
