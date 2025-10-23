@@ -1,8 +1,7 @@
 <!-- Outside your render logic, ideally in the layout near the tabs -->
 <div id="itemCountAnnouncement" class="sr-only" aria-live="polite" aria-atomic="true" aria-relevant="additions text"></div>
 <script>
-      // create js variables from the PHP variables
-      // Assign PHP session variable to JavaScript variable
+      // create JS variables from the PHP variables
       const ukey = '<?php echo $ukey; ?>'; 
       const portal = <?php echo json_encode($portal); ?>;
       const queryString = <?php echo json_encode($queryString); ?>;
@@ -47,9 +46,7 @@
     <script src='<?php echo getRelativePath(''); ?>assets/js/switchable.js' defer></script>
 <?php endif; ?>
     <script src='<?php echo getRelativePath(''); ?>assets/js/menu.js' defer></script>
-    <?php if ($_COOKIE['ukey'] || $_REQUEST['ukey']) { ?>
-    <!-- <script src='<?php //echo getRelativePath(''); ?>assets/js/checkTimerInactivity.min.js' defer></script> -->
-    <?php } ?>
+
 
     <!-- ///// The Templates ///// -->
     <template id="menuTemplate">
