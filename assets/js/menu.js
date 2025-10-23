@@ -554,20 +554,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Dynamically add selectTheme.js and selectTheme.min.css only on preferences.php
   if (isPreferencesPage && ukey) {
-    // --- Insert selectTheme.js ---
+    // Insert selectTheme.js after menu.js
     const selectThemeScript = document.createElement('script');
     selectThemeScript.src = `${prefix}assets/widgets/selectTheme/selectTheme.js`;
     selectThemeScript.defer = true;
 
     const menuScript = document.querySelector('script[src*="menu.js"]');
-    if (menuScript) {
+    if (menuScript)
       menuScript.parentNode.insertBefore(
         selectThemeScript,
         menuScript.nextSibling
       );
-    }
 
-    // --- Insert colourswatch.min.css ---
+    // --- Insert selectTheme.min.css ---
     const linkColours = document.createElement('link');
     linkColours.rel = 'stylesheet';
     linkColours.type = 'text/css';
@@ -584,6 +583,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       container.appendChild(linkColours);
     }
+
+    console.log(`Injected selectTheme.min.css: ${linkColours.href}`);
   }
 
   // Dynamically add sidebar.js if sidebar exists
@@ -615,7 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.appendChild(script);
     }
 
-    // Add sidebar.css dynamically
+    // --- Create sidebar.css link element ---
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.type = 'text/css';
@@ -716,6 +717,37 @@ document.addEventListener('DOMContentLoaded', () => {
       container.insertBefore(link, navLink.nextSibling);
     } else {
       container.appendChild(link);
+    }
+
+    // Check for ukey in cookies or URL params
+    const cookieUkey = getCookie('ukey');
+    const urlParams = new URLSearchParams(window.location.search);
+    const requestUkey = urlParams.get('ukey');
+
+    if (cookieUkey || requestUkey) {
+      // Create the new script element
+      const script = document.createElement('script');
+      script.src = `${prefix}assets/widgets/timerInactivity/timerInactivity.js`;
+      script.defer = true;
+
+      // Find scripts in priority order
+      const scripts = [...document.getElementsByTagName('script')];
+
+      const sidebarScript = scripts.find((s) => s.src.includes('sidebar.js'));
+      const breadcrumbsScript = scripts.find((s) =>
+        s.src.includes('breadcrumbs.js')
+      );
+      const menuScript = scripts.find((s) => s.src.includes('menu.js'));
+
+      // Choose target in priority: sidebar > breadcrumbs > menu
+      const targetScript = sidebarScript || breadcrumbsScript || menuScript;
+
+      if (targetScript && targetScript.parentNode) {
+        targetScript.insertAdjacentElement('afterend', script);
+      } else {
+        // Fallback if none found — append to body
+        document.body.appendChild(script);
+      }
     }
   }
 });
