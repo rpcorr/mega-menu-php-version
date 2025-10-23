@@ -291,32 +291,41 @@ document.addEventListener('DOMContentLoaded', () => {
   const isPreferencesPage =
     segments.length > 0 && segments[segments.length - 1] === 'preferences.php';
 
-  // Dynamically add reset.min.css and palce it as the first style
-  const resetHref = `${prefix}assets/css/reset.css`;
+  // Dynamically add reset.css or reset.min.css as the first style if not already present
+  const resetHref = `${prefix}assets/css/reset.min.css`;
 
-  // --- Create reset link ---
-  const linkReset = document.createElement('link');
-  linkReset.rel = 'stylesheet';
-  linkReset.type = 'text/css';
-  linkReset.href = resetHref;
+  // Check if reset.css or reset.min.css already exists
+  const existingReset = document.querySelector(
+    `link[href*="reset.css"], link[href*="reset.min.css"]`
+  );
 
-  // --- Determine where navigation-menu.css currently is ---
-  const navLink = document.querySelector(`link[href*="navigation-menu.css"]`);
-  const parent = navLink ? navLink.parentNode : document.head || document.body;
+  if (!existingReset) {
+    // --- Create reset link ---
+    const linkReset = document.createElement('link');
+    linkReset.rel = 'stylesheet';
+    linkReset.type = 'text/css';
+    linkReset.href = resetHref;
 
-  if (navLink && parent) {
-    // Insert reset.css immediately **before** the existing navigation link
-    parent.insertBefore(linkReset, navLink);
-  } else {
-    // Fallback: insert at the top of head or body
-    const head = document.head;
-    if (head) {
-      const firstLink = head.querySelector('link[rel="stylesheet"]');
-      head.insertBefore(linkReset, firstLink || null);
+    // --- Determine where navigation-menu.css currently is ---
+    const navLink = document.querySelector(`link[href*="navigation-menu.css"]`);
+    const parent = navLink
+      ? navLink.parentNode
+      : document.head || document.body;
+
+    if (navLink && parent) {
+      // Insert reset.css immediately before the existing navigation link
+      parent.insertBefore(linkReset, navLink);
     } else {
-      const body = document.body || document.documentElement;
-      const firstStyleLink = body.querySelector('link[rel="stylesheet"]');
-      body.insertBefore(linkReset, firstStyleLink || null);
+      // Fallback: insert at the top of head or body
+      const head = document.head;
+      if (head) {
+        const firstLink = head.querySelector('link[rel="stylesheet"]');
+        head.insertBefore(linkReset, firstLink || null);
+      } else {
+        const body = document.body || document.documentElement;
+        const firstStyleLink = body.querySelector('link[rel="stylesheet"]');
+        body.insertBefore(linkReset, firstStyleLink || null);
+      }
     }
   }
 
