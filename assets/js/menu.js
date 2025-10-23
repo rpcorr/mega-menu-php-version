@@ -333,22 +333,6 @@ document.addEventListener('DOMContentLoaded', () => {
     currentScript.parentNode.insertBefore(newScript, currentScript);
   }
 
-  // Dynamically add generateBreadcrumbs.js if tag exists and place it right after menu.js
-  const breadcrumbsContainer = document.getElementById('breadcrumbsMenu');
-
-  if (breadcrumbsContainer) {
-    const breadcrumbScript = document.createElement('script');
-    breadcrumbScript.src = `${prefix}assets/js/generateBreadcrumbs.js`;
-    breadcrumbScript.defer = true;
-
-    // Insert after menu.js
-    const menuScript = document.querySelector('script[src*="menu.js"]');
-    menuScript.parentNode.insertBefore(
-      breadcrumbScript,
-      menuScript.nextSibling
-    );
-  }
-
   // Dynamically add selectTheme.js and selectTheme.min.css only on preferences.php
   if (isPreferencesPage && ukey) {
     // --- Insert selectTheme.js ---
@@ -431,6 +415,53 @@ document.addEventListener('DOMContentLoaded', () => {
         const body = document.body || document.documentElement;
         body.appendChild(link);
       }
+    }
+  }
+
+  // Dynamically add breadcrumbs.js if tag exists and place it right after menu.js
+  // Paths
+  const breadcrumbCssHref = `${prefix}assets/widgets/breadcrumbs/breadcrumbs.css`;
+  const breadcrumbScriptSrc = `${prefix}assets/widgets/breadcrumbs/breadcrumbs.js`;
+
+  // Check if breadcrumbs container exists
+  const breadcrumbsContainer = document.getElementById('breadcrumbsMenu');
+
+  if (breadcrumbsContainer) {
+    // --- Insert breadcrumbs.css right after navigation-menu.css ---
+    const linkBreadcrumbs = document.createElement('link');
+    linkBreadcrumbs.rel = 'stylesheet';
+    linkBreadcrumbs.type = 'text/css';
+    linkBreadcrumbs.href = breadcrumbCssHref;
+
+    const navCss = document.querySelector('link[href*="navigation-menu.css"]');
+    if (navCss && navCss.parentNode) {
+      navCss.parentNode.insertBefore(linkBreadcrumbs, navCss.nextSibling);
+    } else {
+      // fallback (rare)
+      (document.head || document.body).appendChild(linkBreadcrumbs);
+    }
+
+    // --- Insert breadcrumbs.js after menu.js ---
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.src = breadcrumbScriptSrc;
+    breadcrumbScript.defer = true;
+
+    // Insert after menu.js
+    const menuScript = document.querySelector('script[src*="menu.js"]');
+    if (menuScript && menuScript.parentNode) {
+      menuScript.parentNode.insertBefore(
+        breadcrumbScript,
+        menuScript.nextSibling
+      );
+    } else {
+      // fallback (should never happen)
+      (document.body || document.head).appendChild(breadcrumbScript);
+    }
+  } else {
+    // No breadcrumbs: push <main> down
+    const mainElement = document.querySelector('main');
+    if (mainElement) {
+      mainElement.style.marginTop = '8em';
     }
   }
 

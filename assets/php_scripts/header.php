@@ -136,8 +136,6 @@ else $_SESSION['switchAble'] = false;
       </div>
     </header>
     <?php include(__DIR__ . '/../widgets/sidebar/sidebar.php'); ?>
-    <nav id="breadcrumbsMenu" aria-label="breadcrumbs">
-      <ul class="breadcrumbs" id="breadcrumbs"></ul>
-    </nav>
+    <?php include(__DIR__ . '/../widgets/breadcrumbs/breadcrumbs.php'); ?>
     <a id="skipMenu" class="screen-reader-text"></a>
     
