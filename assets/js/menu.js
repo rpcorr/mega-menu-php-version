@@ -130,6 +130,9 @@ console.log(`Menu file: ${JSONfile}`);
 
 // Ensure this code runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+  // iniltialize menu templates
+  initMenuTemplates();
+
   fetch(JSONfile)
     .then((response) => {
       if (!response.ok) {
@@ -2161,4 +2164,58 @@ function getRelativePath() {
     prefix += '../';
   }
   return prefix;
+}
+
+function initMenuTemplates() {
+  const templates = [
+    {
+      id: 'menuTemplate',
+      html: `
+        <li role="presentation">
+          <img src="" alt="" />
+          <p><a href="" role="tab"><strong></strong><br/><span></span></a></p>
+          <div class="circle">
+            <div class="caret"></div>
+          </div>
+        </li>
+      `,
+    },
+    {
+      id: 'oneMenuTemplate',
+      html: `
+        <li>
+          <img src="" alt="" />
+          <p><a href="" role="tab"><strong></strong><br/><span></span></a></p>
+        </li>
+      `,
+    },
+    {
+      id: 'menuContent',
+      html: `
+        <div role="listitem">
+          <img src="" width="" height="" alt="" />
+          <p><a href="#"><strong></strong><br/><span></span></a></p>
+        </div>
+      `,
+    },
+    {
+      id: 'menuExtraContent',
+      html: `
+        <div class="extra-content">
+          <div>
+            <img src="" width="" height="" align="left" alt="" />
+            <p><strong></strong></p>
+          </div>
+          <div id="bodyContent"></div>
+        </div>
+      `,
+    },
+  ];
+
+  templates.forEach((t) => {
+    const template = document.createElement('template');
+    template.id = t.id;
+    template.innerHTML = t.html.trim();
+    document.body.appendChild(template);
+  });
 }
