@@ -2,6 +2,8 @@
 /* flexbox priority navigation */
 
 // global variables
+const bTimerInactivity = false; // set to enable/disable timer inactivity widget
+
 const navItemWidth = [];
 const navItemVisible = [];
 const sidebar = document.getElementById('sidebar');
@@ -509,34 +511,36 @@ document.addEventListener('DOMContentLoaded', () => {
       container.appendChild(link);
     }
 
-    // Check for ukey in cookies or URL params
-    const cookieUkey = getCookie('ukey');
-    const urlParams = new URLSearchParams(window.location.search);
-    const requestUkey = urlParams.get('ukey');
+    if (bTimerInactivity) {
+      // Check for ukey in cookies or URL params
+      const cookieUkey = getCookie('ukey');
+      const urlParams = new URLSearchParams(window.location.search);
+      const requestUkey = urlParams.get('ukey');
 
-    if (cookieUkey || requestUkey) {
-      // Create the new script element
-      const script = document.createElement('script');
-      script.src = `${prefix}assets/widgets/timerInactivity/timerInactivity.js`;
-      script.defer = true;
+      if (cookieUkey || requestUkey) {
+        // Create the new script element
+        const script = document.createElement('script');
+        script.src = `${prefix}assets/widgets/timerInactivity/timerInactivity.js`;
+        script.defer = true;
 
-      // Find scripts in priority order
-      const scripts = [...document.getElementsByTagName('script')];
+        // Find scripts in priority order
+        const scripts = [...document.getElementsByTagName('script')];
 
-      const sidebarScript = scripts.find((s) => s.src.includes('sidebar.js'));
-      const breadcrumbsScript = scripts.find((s) =>
-        s.src.includes('breadcrumbs.js')
-      );
-      const menuScript = scripts.find((s) => s.src.includes('menu.js'));
+        const sidebarScript = scripts.find((s) => s.src.includes('sidebar.js'));
+        const breadcrumbsScript = scripts.find((s) =>
+          s.src.includes('breadcrumbs.js')
+        );
+        const menuScript = scripts.find((s) => s.src.includes('menu.js'));
 
-      // Choose target in priority: sidebar > breadcrumbs > menu
-      const targetScript = sidebarScript || breadcrumbsScript || menuScript;
+        // Choose target in priority: sidebar > breadcrumbs > menu
+        const targetScript = sidebarScript || breadcrumbsScript || menuScript;
 
-      if (targetScript && targetScript.parentNode) {
-        targetScript.insertAdjacentElement('afterend', script);
-      } else {
-        // Fallback if none found — append to body
-        document.body.appendChild(script);
+        if (targetScript && targetScript.parentNode) {
+          targetScript.insertAdjacentElement('afterend', script);
+        } else {
+          // Fallback if none found — append to body
+          document.body.appendChild(script);
+        }
       }
     }
   }

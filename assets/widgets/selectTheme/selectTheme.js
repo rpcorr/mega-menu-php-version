@@ -24,18 +24,6 @@ radioButtons.forEach(function (radioButton) {
   });
 });
 
-// Get path depth and build correct prefix
-const path = window.location.pathname;
-const segments = path.split('/').filter(Boolean);
-let depth = segments.length;
-if (segments.length > 0 && segments[segments.length - 1].includes('.')) {
-  depth -= 1;
-}
-let prefix = '';
-for (let i = 0; i < depth - 1; i++) {
-  prefix += '../';
-}
-
 function selectStylesheet(stylesheetName) {
   const newHref = `${prefix}assets/css/templatesStyles/${stylesheetName}.css`;
   console.log('Applying theme:', newHref);
