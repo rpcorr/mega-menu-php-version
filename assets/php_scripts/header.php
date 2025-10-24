@@ -83,9 +83,6 @@ else $_SESSION['switchAble'] = false;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title ?></title>
     <script>const basePath = "<?php echo getRelativePath(''); ?>";</script>
-
-    <!-- stylesheets -->
-    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-menu.css" />
 </head>
 <body>
 
