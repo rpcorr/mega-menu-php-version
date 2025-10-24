@@ -133,6 +133,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // render header
   renderHeader();
 
+  insertSkipMenuAnchor();
+
   // iniltialize menu templates
   initMenuTemplates();
 
@@ -2279,4 +2281,17 @@ function injectNavigationMenuCSS() {
   link.href = `${relPath}assets/css/navigation-menu.css`;
 
   document.head.appendChild(link);
+}
+
+function insertSkipMenuAnchor() {
+  const skip = document.createElement('a');
+  skip.id = 'skipMenu';
+  skip.className = 'screen-reader-text';
+
+  const main = document.querySelector('main');
+  if (main) {
+    main.parentNode.insertBefore(skip, main);
+  } else {
+    console.warn('<main> not found in document');
+  }
 }

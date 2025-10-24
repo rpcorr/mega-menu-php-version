@@ -88,4 +88,3 @@ else $_SESSION['switchAble'] = false;
 
 <?php if ($showSidebar) include(__DIR__ . '/../widgets/sidebar/sidebar.php'); ?>
 <?php if ($showBreadcrumbs) include(__DIR__ . '/../widgets/breadcrumbs/breadcrumbs.php'); ?>
-<a id="skipMenu" class="screen-reader-text"></a>
