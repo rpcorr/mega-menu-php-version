@@ -1,8 +1,34 @@
 'use strict';
 /* flexbox priority navigation */
 
-// global variables
-const bTimerInactivity = false; // set to enable/disable timer inactivity widget
+// -- Global variables
+
+// get getRelativePath prefix
+const prefix = getRelativePath();
+
+////////////////////////////////////////////////////
+// Widgets file paths needs to be defined here
+const widgetsPath = `${prefix}assets/widgets/`;
+
+const resetCssPath = `${prefix}assets/css/reset.min.css`;
+const switchableJsPath = `${widgetsPath}switchable/switchable.js`;
+
+const selectThemeJsPath = `${widgetsPath}selectTheme/selectTheme.js`;
+const selectThemeCssPath = `${widgetsPath}selectTheme/selectTheme.min.css`;
+
+const sidebarJsPath = `${widgetsPath}sidebar/sidebar.js`;
+const sidebarCssPath = `${widgetsPath}sidebar/sidebar.css`;
+
+const breadcrumbsJsPath = `${widgetsPath}breadcrumbs/breadcrumbs.js`;
+const breadcrumbsCssPath = `${widgetsPath}breadcrumbs/breadcrumbs.css`;
+
+const timerInactivityJsPath = `${widgetsPath}timerInactivity/timerInactivity.js`;
+////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////
+// Enable/disable widgets
+const bTimerInactivity = false;
+////////////////////////////////////////////////////
 
 const navItemWidth = [];
 const navItemVisible = [];
@@ -481,30 +507,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   moreWidth = document.getElementById('menu-main-menu').offsetWidth;
 
-  // Get the current path (e.g. /, /mmenu/, /a/b/c/page.php)
-  const path = window.location.pathname;
-
-  // Break it into segments
-  const segments = path.split('/').filter(Boolean);
-
-  // If last segment looks like a file (e.g. has a dot), don't count it as a folder
-  let depth = segments.length;
-  if (segments.length > 0 && segments[segments.length - 1].includes('.')) {
-    depth -= 1;
-  }
-
-  // Build the relative prefix (e.g. '', '../', '../../', etc.)
-  let prefix = '';
-  for (let i = 0; i < depth - 1; i++) {
-    prefix += '../';
-  }
+  // Begin to Insert CSS and JS dynamically
 
   // Detect if we're on preferences.php
   const isPreferencesPage =
-    segments.length > 0 && segments[segments.length - 1] === 'preferences.php';
+    window.location.pathname.endsWith('preferences.php');
 
   // Dynamically add reset.css or reset.min.css as the first style if not already present
-  const resetHref = `${prefix}assets/css/reset.min.css`;
+  const resetHref = resetCssPath;
 
   // Check if reset.css or reset.min.css already exists
   const existingReset = document.querySelector(
@@ -543,22 +553,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Dynamically add switchable.js if switchAble is true and place it right before menu.js
   if (switchAble || Number(localStorage.getItem('ukey_switch_pending'))) {
-    const newScript = document.createElement('script');
-    newScript.src = `${prefix}assets/widgets/switchable/switchable.js`;
-    newScript.defer = true;
+    const switchableScriptSrc = switchableJsPath;
+    const switchableScript = document.createElement('script');
+    switchableScript.src = switchableScriptSrc;
+    switchableScript.defer = true;
 
     // Find the script element that loaded menu.js
     const currentScript = document.querySelector('script[src*="menu.js"]');
 
     // Insert the new script before menu.js
-    currentScript.parentNode.insertBefore(newScript, currentScript);
+    currentScript.parentNode.insertBefore(switchableScript, currentScript);
   }
 
   // Dynamically add selectTheme.js and selectTheme.min.css only on preferences.php
   if (isPreferencesPage && ukey) {
     // Insert selectTheme.js after menu.js
     const selectThemeScript = document.createElement('script');
-    selectThemeScript.src = `${prefix}assets/widgets/selectTheme/selectTheme.js`;
+    selectThemeScript.src = selectThemeJsPath;
     selectThemeScript.defer = true;
 
     const menuScript = document.querySelector('script[src*="menu.js"]');
@@ -572,7 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const linkColours = document.createElement('link');
     linkColours.rel = 'stylesheet';
     linkColours.type = 'text/css';
-    linkColours.href = `${prefix}assets/widgets/selectTheme/selectTheme.min.css`;
+    linkColours.href = selectThemeCssPath;
 
     // Insert after navigation-menu.css in its current container
     const navLink = document.querySelector('link[href*="navigation-menu.css"]');
@@ -600,7 +611,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Create sidebar.js script element
     const script = document.createElement('script');
-    script.src = `${prefix}assets/widgets/sidebar/sidebar.js`;
+    script.src = sidebarJsPath;
     script.defer = true;
 
     // Find reference scripts
@@ -622,7 +633,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.type = 'text/css';
-    link.href = `${prefix}assets/widgets/sidebar/sidebar.css`;
+    link.href = sidebarCssPath;
 
     // --- Determine where navigation-menu.css is ---
     const navLink = document.querySelector(`link[href*="navigation-menu.css"]`);
@@ -641,14 +652,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Dynamically add breadcrumbs.js if tag exists and place it right after menu.js
-  // Paths
-  const breadcrumbCssHref = `${prefix}assets/widgets/breadcrumbs/breadcrumbs.css`;
-  const breadcrumbScriptSrc = `${prefix}assets/widgets/breadcrumbs/breadcrumbs.js`;
 
   // Check if breadcrumbs container exists
   const breadcrumbsContainer = document.getElementById('breadcrumbsMenu');
 
   if (breadcrumbsContainer) {
+    const breadcrumbScriptSrc = breadcrumbsJsPath;
+    const breadcrumbCssHref = breadcrumbsCssPath;
+
     // --- Insert breadcrumbs.css right after navigation-menu.css ---
     const linkBreadcrumbs = document.createElement('link');
     linkBreadcrumbs.rel = 'stylesheet';
@@ -728,9 +739,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const requestUkey = urlParams.get('ukey');
 
       if (cookieUkey || requestUkey) {
+        const timerScriptSrc = timerInactivityJsPath;
+
         // Create the new script element
         const script = document.createElement('script');
-        script.src = `${prefix}assets/widgets/timerInactivity/timerInactivity.js`;
+        script.src = timerScriptSrc;
         script.defer = true;
 
         // Find scripts in priority order
@@ -2127,4 +2140,25 @@ function getInitials(user) {
 
   // Fallback: just return first letter
   return firstLetter;
+}
+
+function getRelativePath() {
+  // Get the current path (e.g. /, /mmenu/, /a/b/c/page.php)
+  const path = window.location.pathname;
+
+  // Break it into segments
+  const segments = path.split('/').filter(Boolean);
+
+  // If last segment looks like a file (e.g. has a dot), don't count it as a folder
+  let depth = segments.length;
+  if (segments.length > 0 && segments[segments.length - 1].includes('.')) {
+    depth -= 1;
+  }
+
+  // Build the relative prefix (e.g. '', '../', '../../', etc.)
+  let prefix = '';
+  for (let i = 0; i < depth - 1; i++) {
+    prefix += '../';
+  }
+  return prefix;
 }
