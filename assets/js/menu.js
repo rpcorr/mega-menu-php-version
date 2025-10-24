@@ -130,6 +130,9 @@ console.log(`Menu file: ${JSONfile}`);
 
 // Ensure this code runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+  // render header
+  renderHeader();
+
   // iniltialize menu templates
   initMenuTemplates();
 
@@ -2218,4 +2221,48 @@ function initMenuTemplates() {
     template.innerHTML = t.html.trim();
     document.body.appendChild(template);
   });
+}
+
+function renderHeader() {
+  const relPath = getRelativePath();
+
+  const headerHTML = `
+    <p>
+      <a href="#skipMenu" class="skip-nav-link" id="skip-top-nav-link">
+        Skip to main content
+      </a>
+    </p>
+
+    <header id="header" role="banner">
+      <div id="mainNavigation" class="group">
+        <div class="max-width">
+          <section id="branding">
+            <div id="siteIdentity">
+              <div class="logo">
+                <a href="${relPath}index.php" rel="home">
+                  <img src="${relPath}assets/imgs/CO_logo.svg"
+                       alt="Counting Opinions" height="60">
+                </a>
+              </div>
+              <div class="simple-logo">
+                <a href="${relPath}index.php" rel="home">
+                  <img src="${relPath}assets/imgs/CO_simple_logo.svg"
+                       alt="Counting Opinions" height="60">
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <nav id="menu" aria-label="Menu will change once you log in">
+            <div class="menu-main-menu-container">
+              <ul id="menu-main-menu" class="menu"></ul>
+            </div>
+          </nav>
+
+        </div>
+      </div>
+    </header>
+  `;
+
+  document.body.insertAdjacentHTML('afterbegin', headerHTML);
 }
