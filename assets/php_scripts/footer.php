@@ -46,38 +46,5 @@
     <script src='<?php echo getRelativePath(''); ?>assets/js/switchable.js' defer></script>
 <?php endif; ?>
     <script src='<?php echo getRelativePath(''); ?>assets/js/menu.js' defer></script>
-
-
-    <!-- ///// The Templates ///// -->
-    <template id="menuTemplate">
-      <li role="presentation"><img src="" alt="" /><p><a href="" role="tab"><strong></strong><span></span></a></p> <div class="circle">
-          <div class="caret"></div>
-        </div></li>
-        <div>Content goes here</div>
-    </template> 
-
-    <template id="oneMenuTemplate">
-      <li><img src="" alt="" /><p><a href="" role="tab"><strong></strong><br/><span></span></a></p> </li>
-    </template> 
-
-    <template id="menuContent">
-      <div role="listitem">
-        <img src="" width="" height="" alt=""  />
-        <p><a href="#" tabindex="-1"><strong></strong><span></span></a></p>
-      </div>
-    </template>
-
-    <template id="menuExtraContent">
-      <div class="extra-content">
-        <div>
-          <img src="" width="" height="" align="left" alt="" />
-          <p>
-            <strong></strong>
-          </p>
-        </div>
-
-        <div id="bodyContent"></div>
-      </div>
-    </template>
   </body>
 </html>
