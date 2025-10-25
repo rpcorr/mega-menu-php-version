@@ -488,7 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     breadcrumbsScript.onload = () => {
       // Make sure the nav exists before generating
-      insertBreadcrumbNav();
+      //insertBreadcrumbNav();
 
       if (typeof generateBreadcrumbs === 'function') {
         generateBreadcrumbs();
@@ -550,7 +550,7 @@ document.addEventListener('DOMContentLoaded', () => {
       container.appendChild(link);
     }
 
-    if (bTimerInactivity) {
+    if (bTimerInactivityWidget) {
       // Check for ukey in cookies or URL params
       const cookieUkey = getCookie('ukey');
       const urlParams = new URLSearchParams(window.location.search);
