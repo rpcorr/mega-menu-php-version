@@ -67,12 +67,10 @@ Handles:
 
 Current:
 
-- Contains conditional breadcrumb + sidebar markup
 - Uses a global `basePath` variable for relative URL logic
 
 Upcoming improvements:
 
-- Generate breadcrumb + sidebar markup **inside `menu.js`**
 - Remove global `basePath`; widgets determine paths internally
 
 ---
