@@ -69,12 +69,10 @@ Widgets file paths are defined at the top of **menu.js**
 
 Current:
 
-- Contains conditional breadcrumb + sidebar markup
 - Uses a global `basePath` variable for relative URL logic
 
 Upcoming improvements:
 
-- Generate sidebar markup **inside `menu.js`**
 - Remove global `basePath`; widgets determine paths internally
 
 ---
