@@ -170,10 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
   button.setAttribute('aria-label', 'Open sidebar');
 });
 
-// Event listeners
-document.querySelector('.toggle-btn').addEventListener('click', toggleSidebar);
-document.addEventListener('keydown', handleEscapeKey);
-
 // Function to update sidebar content and announce changes
 function populateSidebar() {
   // Find all expanded anchor elements
@@ -398,4 +394,69 @@ function announceOnce(message) {
   setTimeout(() => {
     region.textContent = message;
   }, 100); // Small delay to ensure only one announcement
+}
+
+function insertSidebar() {
+  // Prevent duplicates if called more than once
+  if (document.getElementById('sidebar')) {
+    console.warn('Sidebar already exists — skipping create.');
+    return;
+  }
+
+  // Wrapper container (sidebar + announcement + nav)
+  const sidebarContainer = document.createElement('div');
+  sidebarContainer.id = 'sidebar';
+  sidebarContainer.className = 'sidebar-container';
+
+  // Announcement live region
+  const announcement = document.createElement('div');
+  announcement.id = 'sidebar-announcement';
+  announcement.className = 'visually-hidden-live';
+  announcement.setAttribute('aria-live', 'polite');
+  announcement.setAttribute('role', 'status');
+
+  // Sidebar nav
+  const nav = document.createElement('nav');
+  nav.className = 'sidebar';
+  nav.setAttribute('role', 'navigation');
+  nav.setAttribute('aria-label', 'Sidebar');
+  nav.setAttribute('aria-hidden', 'true');
+
+  const heading = document.createElement('h2');
+  heading.textContent = 'Default Menu Items';
+
+  const ul = document.createElement('ul');
+  ul.innerHTML = `
+    <li><a href="#" tabindex="-1">Menu Item 1</a></li>
+    <li><a href="#" tabindex="-1">Menu Item 2</a></li>
+    <li><a href="#" tabindex="-1">Menu Item 3</a></li>
+    <li><a href="#" tabindex="-1">Menu Item 4</a></li>
+  `;
+
+  nav.append(heading, ul);
+
+  // Add children to container
+  sidebarContainer.append(announcement, nav);
+
+  // Insert into the DOM → before </body> or before <main>
+  const main = document.querySelector('main');
+  if (main && main.parentNode) {
+    main.parentNode.insertBefore(sidebarContainer, main);
+  } else {
+    document.body.appendChild(sidebarContainer);
+  }
+
+  // Insert toggle button just before sidebar container
+  const toggleBtn = document.createElement('button');
+  toggleBtn.className = 'toggle-btn';
+  toggleBtn.innerHTML = `
+    <div class="sidebar-hamburger" aria-hidden="true">
+      <div></div><div></div><div></div>
+    </div>
+  `;
+  toggleBtn.setAttribute('aria-controls', 'sidebar');
+  toggleBtn.setAttribute('aria-expanded', 'false');
+  toggleBtn.setAttribute('aria-label', 'Open sidebar');
+
+  sidebarContainer.parentNode.insertBefore(toggleBtn, sidebarContainer);
 }

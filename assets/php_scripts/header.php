@@ -100,6 +100,7 @@ else $_SESSION['switchAble'] = false;
     } ?>
 </head>
 <body>
+
     
     <?php if ($showSidebar) include(__DIR__ . '/../widgets/sidebar/sidebar.php'); ?>
     <?php if ($showBreadcrumbs) include(__DIR__ . '/../widgets/breadcrumbs/breadcrumbs.php'); ?>
