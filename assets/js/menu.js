@@ -128,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // render header
   renderHeader();
 
+  // render Skip to main content link
   insertSkipMenuAnchor();
 
   // iniltialize menu templates
@@ -459,11 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Dynamically add breadcrumbs.js if tag exists and place it right after menu.js
-
-  // Check if breadcrumbs container exists
-  const breadcrumbsContainer = document.getElementById('breadcrumbsMenu');
-
-  if (breadcrumbsContainer) {
+  if (bBreadcrumbsWidget) {
     const breadcrumbScriptSrc = breadcrumbsJsPath;
     const breadcrumbCssHref = breadcrumbsCssPath;
 
@@ -489,6 +486,19 @@ document.addEventListener('DOMContentLoaded', () => {
     breadcrumbsScript.onload = () => {
       // Make sure the nav exists before generating
       //insertBreadcrumbNav();
+
+      if (typeof generateBreadcrumbs === 'function') {
+        generateBreadcrumbs();
+      } else {
+        console.warn('GenerateBreadcrumbs() not found yet');
+      }
+    };
+
+    breadcrumbsScript.onload = () => {
+      console.log('Breadcrumbs.js loaded');
+
+      // Make sure the nav exists before generating
+      insertBreadcrumbNav();
 
       if (typeof generateBreadcrumbs === 'function') {
         generateBreadcrumbs();
