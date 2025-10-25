@@ -74,7 +74,7 @@ Current:
 
 Upcoming improvements:
 
-- Generate breadcrumb + sidebar markup **inside `menu.js`**
+- Generate sidebar markup **inside `menu.js`**
 - Remove global `basePath`; widgets determine paths internally
 
 ---
