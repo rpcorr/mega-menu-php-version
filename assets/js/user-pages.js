@@ -2,7 +2,7 @@
 
 // Local host
 // determines the menu to display
-const ukeyUserMap = {
+const ukeyUserPagesMap = {
   b5e79c05b3f12219e725fc167edefdd1: 'co-demo.json',
   aeff1d4962b1fb2aa59a472d2df7efa1: 'cm-demo.json',
   b312f517b7bcfe3177d6cb4da6922884: 'co-paul.json',
@@ -34,8 +34,8 @@ const ukeyUserMap = {
 if (!ukey && !user) {
   JSONfile += 'co-pages.json';
 } else {
-  if (ukey && ukeyUserMap[ukey]) {
-    JSONfile += ukeyUserMap[ukey];
+  if (ukey && ukeyUserPagesMap[ukey]) {
+    JSONfile += ukeyUserPagesMap[ukey];
   } else if (user) {
     JSONfile += 'admin.json';
   }

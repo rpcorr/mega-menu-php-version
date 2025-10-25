@@ -8,7 +8,7 @@ This project generate a dynamic accessible mega menu on any page with optional U
 
 Include these scripts at the **bottom** of each page before `</body>`:
 
-1. `assets/js/user.js` → _(soon renamed to `pages.js`)_
+1. `assets/js/user-pages.js`
 2. `assets/js/menu.js`
 
 Once included, the menu system initializes automatically —
@@ -18,9 +18,9 @@ no `<header>` markup required in the page itself.
 
 ## Script Responsibilities
 
-### `user.js` _(to be renamed `pages.js`)_
+### `user-pages.js`
 
-- Determines which **pages** or menu items appear
+- Determines which **pages** or menu items appear for user
 - Acts as a controller for menu visibility logic
 
 ---
@@ -92,9 +92,9 @@ Upcoming improvements:
                    ▲
                    │
     ┌─────────────────────────────────┐
-    │           user/pages.js         │
-    │  - determines which pages       │
-    │    are shown in the menu        │
+    │           user-pages.js         │
+    │  - determines the pages         │
+    │    shown in the menu for user   │
     └─────────────────────────────────┘
                    │
                    ▼
