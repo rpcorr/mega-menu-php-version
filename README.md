@@ -65,18 +65,6 @@ Widgets file paths are defined at the top of **menu.js**
 
 ---
 
-## `header.php` Status + Refactor Plan
-
-Current:
-
-- Uses a global `basePath` variable for relative URL logic
-
-Upcoming improvements:
-
-- Remove global `basePath`; widgets determine paths internally
-
----
-
 ## Architecture Sketch
 
             [Page HTML]
