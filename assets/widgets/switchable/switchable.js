@@ -51,6 +51,8 @@ if (window.user) {
 }
 
 function displaySwitchableForm() {
+  const basePath = getRelativePath('');
+
   // Dynamically add switchable.css
   const link = document.createElement('link');
   link.rel = 'stylesheet';
@@ -556,4 +558,28 @@ function openUserModal() {
 
     userInput.addEventListener('input', showListAfterTyping);
   }
+}
+
+function getRelativePath(targetPath) {
+  // Get the current script's directory path
+  const currentDir = window.location.pathname;
+
+  // Break into path segments, remove empty ones
+  const currentDirParts = currentDir.split('/').filter(Boolean);
+
+  // Count directory depth
+  const depth = currentDirParts.length;
+
+  // Create prefix like ../../
+  let relativePath = '../'.repeat(depth - 2);
+
+  // Normalize slashes & combine
+  relativePath =
+    relativePath.replace(/\/+$/, '') + '/' + targetPath.replace(/^\/+/, '');
+
+  if (relativePath === '/') {
+    relativePath = '';
+  }
+
+  return relativePath;
 }
