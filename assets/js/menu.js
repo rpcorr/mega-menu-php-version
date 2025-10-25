@@ -27,7 +27,8 @@ const timerInactivityJsPath = `${widgetsPath}timerInactivity/timerInactivity.js`
 
 ////////////////////////////////////////////////////
 // Enable/disable widgets
-const bTimerInactivity = false;
+const bBreadcrumbsWidget = true;
+const bTimerInactivityWidget = false;
 ////////////////////////////////////////////////////
 
 const navItemWidth = [];
@@ -133,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // render header
   renderHeader();
 
+  // render Skip to main content link
   insertSkipMenuAnchor();
 
   // iniltialize menu templates
@@ -663,11 +665,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Dynamically add breadcrumbs.js if tag exists and place it right after menu.js
-
-  // Check if breadcrumbs container exists
-  const breadcrumbsContainer = document.getElementById('breadcrumbsMenu');
-
-  if (breadcrumbsContainer) {
+  if (bBreadcrumbsWidget) {
     const breadcrumbScriptSrc = breadcrumbsJsPath;
     const breadcrumbCssHref = breadcrumbsCssPath;
 
@@ -686,15 +684,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Insert breadcrumbs.js after menu.js ---
-    const breadcrumbScript = document.createElement('script');
-    breadcrumbScript.src = breadcrumbScriptSrc;
-    breadcrumbScript.defer = true;
+    const breadcrumbsScript = document.createElement('script');
+    breadcrumbsScript.src = breadcrumbScriptSrc;
+    breadcrumbsScript.defer = true;
+
+    breadcrumbsScript.onload = () => {
+      console.log('Breadcrumbs.js loaded');
+
+      // Make sure the nav exists before generating
+      insertBreadcrumbNav();
+
+      if (typeof generateBreadcrumbs === 'function') {
+        generateBreadcrumbs();
+      } else {
+        console.warn('GenerateBreadcrumbs() not found yet');
+      }
+    };
 
     // Insert after menu.js
     const menuScript = document.querySelector('script[src*="menu.js"]');
     if (menuScript && menuScript.parentNode) {
       menuScript.parentNode.insertBefore(
-        breadcrumbScript,
+        breadcrumbsScript,
         menuScript.nextSibling
       );
     } else {
@@ -743,7 +754,7 @@ document.addEventListener('DOMContentLoaded', () => {
       container.appendChild(link);
     }
 
-    if (bTimerInactivity) {
+    if (bTimerInactivityWidget) {
       // Check for ukey in cookies or URL params
       const cookieUkey = getCookie('ukey');
       const urlParams = new URLSearchParams(window.location.search);

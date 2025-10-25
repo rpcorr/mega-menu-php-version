@@ -98,5 +98,22 @@ function capitalizeFirstLetterOfEachWord(text) {
   return text.replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-// Run the breadcrumb generation on page load
-window.onload = generateBreadcrumbs;
+function insertBreadcrumbNav() {
+  const nav = document.createElement('nav');
+  nav.id = 'breadcrumbsMenu';
+  nav.setAttribute('aria-label', 'breadcrumbs');
+
+  const ul = document.createElement('ul');
+  ul.id = 'breadcrumbs';
+  ul.className = 'breadcrumbs';
+
+  nav.appendChild(ul);
+
+  // Insert before <main> (best UX placement)
+  const main = document.querySelector('main');
+  if (main) {
+    main.parentNode.insertBefore(nav, main);
+  } else {
+    console.warn('<main> not found — breadcrumbs not inserted');
+  }
+}

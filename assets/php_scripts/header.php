@@ -67,9 +67,8 @@ function getRelativePath($targetPath) {
   return $relativePath;
 }
 
-// Determine to hide or show sidebar, breadcrumbs, or switchAble widgets
+// Determine to hide or show sidebar, switchAble widgets
 $showSidebar = true;
-$showBreadcrumbs = true;
 
 if ($ukey !== '') $_SESSION['switchAble'] = true;
 else $_SESSION['switchAble'] = false;
@@ -87,4 +86,3 @@ else $_SESSION['switchAble'] = false;
 <body>
 
 <?php if ($showSidebar) include(__DIR__ . '/../widgets/sidebar/sidebar.php'); ?>
-<?php if ($showBreadcrumbs) include(__DIR__ . '/../widgets/breadcrumbs/breadcrumbs.php'); ?>
