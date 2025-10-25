@@ -82,21 +82,6 @@ else $_SESSION['switchAble'] = false;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title ?></title>
     <script>const basePath = "<?php echo getRelativePath(''); ?>";</script>
-
-    <!-- stylesheets -->
-
-    <?php  
-  
-    if ( isset($ukey) || $user) {   
-      
-      if (isset($_COOKIE['theme'])) { ?>
-        <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php echo $_COOKIE['theme'] ?>.css" />
-      <?php 
-      } else { ?>
-        <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/base.css" />
-      <?php 
-      }
-    } ?>
 </head>
 <body>
 
