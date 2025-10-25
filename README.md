@@ -47,6 +47,8 @@ Handles:
 
 #### Loads JavaScript Widgets
 
+Widgets file paths are defined at the top of **menu.js**
+
 | File                                        | Purpose                |
 | ------------------------------------------- | ---------------------- |
 | `assets/widgets/switchable/switchable.js`   | User login state modal |
@@ -79,23 +81,22 @@ Upcoming improvements:
 
 ## Architecture Sketch
 
-             [Page HTML]
-                   │
-                   ▼
-    ┌─────────────────────────────────┐
-    │              menu.js            │
-    │  - loads CSS                    │
-    │  - loads widgets                │
-    │  - generates header +           |
-    |    mega menu templates          │
-    └─────────────────────────────────┘
-                   ▲
-                   │
-    ┌─────────────────────────────────┐
-    │           user-pages.js         │
-    │  - determines the pages         │
-    │    shown in the menu for user   │
-    └─────────────────────────────────┘
-                   │
-                   ▼
-      Fully-rendered dynamic menu UI
+            [Page HTML]
+                   |
+    ------------------------------
+    |          menu.js           |
+    |                            |
+    |  - loads CSS               |
+    |  - loads widgets           |
+    |  - generates header +      |
+    |    mega menu templates     |
+    ------------------------------
+                   |
+    --------------------------------
+    |          user-pages.js       |
+    |                              |
+    | - determines the pages       |
+    | - shown in the menu for user |
+    --------------------------------
+                  |
+    Fully-rendered dynamic menu UI
