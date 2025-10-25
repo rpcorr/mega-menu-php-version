@@ -67,8 +67,6 @@ function getRelativePath($targetPath) {
   return $relativePath;
 }
 
-// Determine to hide or show sidebar, switchAble widgets
-$showSidebar = true;
 
 if ($ukey !== '') $_SESSION['switchAble'] = true;
 else $_SESSION['switchAble'] = false;
@@ -84,5 +82,3 @@ else $_SESSION['switchAble'] = false;
     <script>const basePath = "<?php echo getRelativePath(''); ?>";</script>
 </head>
 <body>
-
-<?php if ($showSidebar) include(__DIR__ . '/../widgets/sidebar/sidebar.php'); ?>

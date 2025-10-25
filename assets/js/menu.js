@@ -28,12 +28,12 @@ const timerInactivityJsPath = `${widgetsPath}timerInactivity/timerInactivity.js`
 ////////////////////////////////////////////////////
 // Enable/disable widgets
 const bBreadcrumbsWidget = true;
+const bSidebarWidget = true;
 const bTimerInactivityWidget = false;
 ////////////////////////////////////////////////////
 
 const navItemWidth = [];
 const navItemVisible = [];
-const sidebar = document.getElementById('sidebar');
 const MOBILE_BREAKPOINT = 600;
 let allMenuItemsinArray;
 let initialColumns = '';
@@ -444,7 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
 
           // Update sidebar content
-          if (sidebar) populateSidebar();
+          if (bSidebarWidget) populateSidebar();
         });
 
       // collapse all sub-menus when user clicks off
@@ -613,54 +613,59 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(`Injected selectTheme.min.css: ${linkColours.href}`);
   }
 
-  // Dynamically add sidebar.js if sidebar exists
-  const sidebar = document.getElementById('sidebar');
+  // Dynamically add sidebar.js if sidebar enabled and place it right after menu.js or breadcrumbs.js
+  if (bSidebarWidget) {
+    // Create sidebar.css link
+    const linkSidebar = document.createElement('link');
+    linkSidebar.rel = 'stylesheet';
+    linkSidebar.type = 'text/css';
+    linkSidebar.href = sidebarCssPath;
 
-  if (sidebar) {
-    // Helper to insert after a reference node
-    function insertAfter(newNode, referenceNode) {
-      referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    // Insert CSS right after navigation-menu.css
+    const navCss = document.querySelector('link[href*="navigation-menu.css"]');
+    if (navCss && navCss.parentNode) {
+      navCss.parentNode.insertBefore(linkSidebar, navCss.nextSibling);
+    } else {
+      (document.head || document.body).appendChild(linkSidebar);
     }
 
-    // Create sidebar.js script element
-    const script = document.createElement('script');
-    script.src = sidebarJsPath;
-    script.defer = true;
+    // Create sidebar.js script
+    const sidebarScript = document.createElement('script');
+    sidebarScript.src = sidebarJsPath;
+    sidebarScript.defer = true;
 
-    // Find reference scripts
+    // When sidebar.js has fully loaded…
+    sidebarScript.onload = () => {
+      if (typeof insertSidebar === 'function') insertSidebar();
+
+      // Now the button exists — safe to add listener
+      const toggleBtn = document.querySelector('.toggle-btn');
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', toggleSidebar);
+      } else {
+        console.warn('⚠️ Toggle button not found — event not attached');
+      }
+
+      // Optional: Escape key handler
+      document.addEventListener('keydown', handleEscapeKey);
+    };
+
+    // Insert JS right after menu.js or breadcrumbs.js
     const breadcrumbsScript = document.querySelector(
       'script[src*="generateBreadcrumbs.js"]'
     );
     const menuScript = document.querySelector('script[src*="menu.js"]');
 
-    if (breadcrumbsScript) {
-      insertAfter(script, breadcrumbsScript);
-    } else if (menuScript) {
-      insertAfter(script, menuScript);
+    if (breadcrumbsScript && breadcrumbsScript.parentNode) {
+      breadcrumbsScript.parentNode.insertBefore(
+        sidebarScript,
+        breadcrumbsScript.nextSibling
+      );
+    } else if (menuScript && menuScript.parentNode) {
+      menuScript.parentNode.insertBefore(sidebarScript, menuScript.nextSibling);
     } else {
-      // fallback: append to body if neither script exists
-      document.body.appendChild(script);
-    }
-
-    // --- Create sidebar.css link element ---
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    link.href = sidebarCssPath;
-
-    // --- Determine where navigation-menu.css is ---
-    const navLink = document.querySelector(`link[href*="navigation-menu.css"]`);
-    if (navLink && navLink.parentNode) {
-      navLink.parentNode.insertBefore(link, navLink.nextSibling);
-    } else {
-      // fallback: append to head if exists, otherwise body
-      const head = document.head;
-      if (head) {
-        head.appendChild(link);
-      } else {
-        const body = document.body || document.documentElement;
-        body.appendChild(link);
-      }
+      // fallback
+      (document.body || document.head).appendChild(sidebarScript);
     }
   }
 
@@ -689,8 +694,6 @@ document.addEventListener('DOMContentLoaded', () => {
     breadcrumbsScript.defer = true;
 
     breadcrumbsScript.onload = () => {
-      console.log('Breadcrumbs.js loaded');
-
       // Make sure the nav exists before generating
       insertBreadcrumbNav();
 
@@ -1188,7 +1191,7 @@ function toggleTopLevelMenu(menuLink, e) {
   }
 
   // Update the sidebar content based on the selected top-level menu
-  if (sidebar) populateSidebar();
+  if (bSidebarWidget) populateSidebar();
 }
 
 /**
@@ -1220,7 +1223,7 @@ function toggleSubMenu(menuLink) {
     });
   }
 
-  if (sidebar) populateSidebar('more');
+  if (bSidebarWidget) populateSidebar('more');
 }
 
 /**
@@ -1672,7 +1675,7 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
         tab.setAttribute('tabindex', '0');
         tab.focus(); // Focus on the selected tab for accessibility
 
-        if (sidebar && typeof sidebar !== 'undefined') populateSidebar(); // Populate sidebar if available
+        if (bSidebarWidget) populateSidebar(); // Populate sidebar if available
       } else {
         // Deactivate non-selected or non-expanded tabs
         tab.removeAttribute('aria-selected');
