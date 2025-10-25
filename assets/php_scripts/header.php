@@ -46,28 +46,7 @@ $parsed_url = parse_url($fullUrl);
 // retrieve the query string
 $queryString = $parsed_url['query'];
 
-
-function getRelativePath($targetPath) {
-  // Get the current script's directory
-  $currentDir = dirname($_SERVER['SCRIPT_NAME']);
-  
-  // Split the directories into an array
-  $currentDirParts = explode('/', trim($currentDir, '/'));
-  
-  // Count the number of directories
-  $depth = count($currentDirParts);
-  
-  // Generate the relative path prefix
-  $relativePath = str_repeat('../', $depth-1);
-  
-  // Concatenate the target path
-  $relativePath = rtrim($relativePath, '/') . '/' . ltrim($targetPath, '/');
-  
-  if ($relativePath === '/') $relativePath = '';
-  return $relativePath;
-}
-
-
+// Set switchAble session variable based on presence of ukey
 if ($ukey !== '') $_SESSION['switchAble'] = true;
 else $_SESSION['switchAble'] = false;
 
@@ -79,6 +58,6 @@ else $_SESSION['switchAble'] = false;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title ?></title>
-    <script>const basePath = "<?php echo getRelativePath(''); ?>";</script>
+    <script>//const basePath = "<?php //echo getRelativePath(''); ?>";</script>
 </head>
 <body>
