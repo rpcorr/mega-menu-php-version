@@ -149,13 +149,8 @@ ul#menu-main-menu li > .mega-menu > a {
   white-space: normal;
 }
 
-ul#menu-main-menu li.menu-item-has-children > a {
+ul#menu-main-menu li > a {
   padding-right: 1.75rem;
-}
-
-ul#menu-main-menu li.menu-item-has-children > a.class::after {
-  /* top: calc(50% - 0.4rem); */
-  /* transform: rotate(225deg) translate(-25%, -25%); */
 }
 
 /* header and main menu bar styles */
@@ -255,22 +250,6 @@ header {
 body.has-hover ul#menu-main-menu .hover:hover > ul ul.sub-menu,
 ul#menu-main-menu li.menu-item-has-children > a.active > ul ul.sub-menu {
   position: relative;
-}
-
-ul#menu-main-menu li.menu-item-has-children > a.active::after {
-  /* top: calc(50% - 0.4rem); */
-  /* transform: rotate(225deg) translate(-25%, -25%); */
-}
-
-ul#menu-main-menu li.menu-item-has-children li.menu-item-has-children::after {
-  /* top: 1.35rem; */
-}
-
-ul#menu-main-menu
-  li.menu-item-has-children
-  li.menu-item-has-children
-  > a.active::after {
-  /* top: 1.25rem; */
 }
 
 /* link styles */
