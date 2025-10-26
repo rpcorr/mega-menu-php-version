@@ -501,12 +501,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuScript = document.querySelector('script[src*="menu.js"]');
     if (menuScript && menuScript.parentNode) {
       menuScript.parentNode.insertBefore(
-        breadcrumbScript,
+        breadcrumbsScript,
         menuScript.nextSibling
       );
     } else {
       // fallback (should never happen)
-      (document.body || document.head).appendChild(breadcrumbScript);
+      (document.body || document.head).appendChild(breadcrumbsScript);
     }
   } else {
     // No breadcrumbs: push <main> down
