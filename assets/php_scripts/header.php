@@ -86,14 +86,10 @@ else $_SESSION['switchAble'] = false;
 
     <!-- stylesheets -->
     <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-menu.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/mega-menu.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/default.css" />
-    
+
     <?php  
   
-    if ( isset($ukey) || $user) {   ?>
-        <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-colour-template.min.css" />
-    <?php
+    if ( isset($ukey) || $user) {   
       
       if (isset($_COOKIE['theme'])) { ?>
         <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/templatesStyles/<?php echo $_COOKIE['theme'] ?>.css" />
