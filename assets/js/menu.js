@@ -130,6 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // iniltialize menu templates
   initMenuTemplates();
 
+  // call injectNavigationMenuCSS to ensure navigation-menu.css is present
+  injectNavigationMenuCSS();
+
   fetch(pagesJSONfile)
     .then((response) => {
       if (!response.ok) {
@@ -3110,4 +3113,15 @@ function renderHeader() {
   `;
 
   document.body.insertAdjacentHTML('afterbegin', headerHTML);
+}
+
+function injectNavigationMenuCSS() {
+  const relPath = getRelativePath();
+
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = `${relPath}assets/css/navigation-menu.css`;
+
+  document.head.appendChild(link);
 }

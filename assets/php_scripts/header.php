@@ -85,7 +85,6 @@ else $_SESSION['switchAble'] = false;
     <script>const basePath = "<?php echo getRelativePath(''); ?>";</script>
 
     <!-- stylesheets -->
-    <link rel="stylesheet" type="text/css" href="<?php echo getRelativePath(''); ?>assets/css/navigation-menu.css" />
 
     <?php  
   
