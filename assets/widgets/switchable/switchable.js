@@ -23,11 +23,20 @@
 })();
 
 function initSwitchable() {
-  console.log('Switchable.js: user is ready:', window.user);
-  // Do whatever depends on user here
-
   console.log(
-    `Inside switchable.js.  Portal is: ${portal}.  Ukey is: ${ukey}. User is: ${window.user}`
+    `Inside switchable.js.  Portal is: ${portal}.  Ukey is: ${ukey}. User is: ${window.user}. Switchable is ${switchAble}.`
+  );
+
+  document.addEventListener(
+    'click',
+    (e) => {
+      const link = e.target.closest('#showUsersLink');
+      if (link) {
+        e.preventDefault();
+        openUserModal();
+      }
+    },
+    true
   );
 
   displaySwitchableForm();
@@ -42,12 +51,23 @@ if (window.user) {
 }
 
 function displaySwitchableForm() {
-  // Dynamically add modal.css
+  const basePath = getRelativePath('');
+
+  // Dynamically add switchable.css
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   link.type = 'text/css';
-  link.href = basePath + 'assets/css/modal.css';
-  document.head.appendChild(link);
+  link.href = basePath + 'assets/widgets/switchable/switchable.css';
+
+  // Find the navigation-menu.css link
+  const navLink = document.querySelector('link[href*="navigation-menu.css"]');
+
+  // If we find it, insert before it. Otherwise, just append to head.
+  if (navLink && navLink.parentNode) {
+    navLink.parentNode.insertBefore(link, navLink);
+  } else {
+    document.head.appendChild(link);
+  }
 
   // Decide which JSON file to fetch
   let userJSONfile = `${baseURL}users-demo.json`;
@@ -147,8 +167,6 @@ function displaySwitchableForm() {
   const params = new URLSearchParams(window.location.search);
 
   if (!params.has('originalUkey')) {
-    console.log(userJSONfile);
-
     // Fetch users JSON
     let userData = [];
     fetch(userJSONfile)
@@ -517,20 +535,6 @@ function impersonationBanner() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.addEventListener(
-    'click',
-    (e) => {
-      const link = e.target.closest('#showUsersLink');
-      if (link) {
-        e.preventDefault();
-        openUserModal();
-      }
-    },
-    true
-  );
-});
-
 function openUserModal() {
   const modal = document.getElementById('userModal');
   const userInput = document.getElementById('userInput');
@@ -554,4 +558,28 @@ function openUserModal() {
 
     userInput.addEventListener('input', showListAfterTyping);
   }
+}
+
+function getRelativePath(targetPath) {
+  // Get the current script's directory path
+  const currentDir = window.location.pathname;
+
+  // Break into path segments, remove empty ones
+  const currentDirParts = currentDir.split('/').filter(Boolean);
+
+  // Count directory depth
+  const depth = currentDirParts.length;
+
+  // Create prefix like ../../
+  let relativePath = '../'.repeat(depth - 2);
+
+  // Normalize slashes & combine
+  relativePath =
+    relativePath.replace(/\/+$/, '') + '/' + targetPath.replace(/^\/+/, '');
+
+  if (relativePath === '/') {
+    relativePath = '';
+  }
+
+  return relativePath;
 }

@@ -1,3 +1,24 @@
+<?php
+  function getRelativePath($targetPath) {
+  // Get the current script's directory
+  $currentDir = dirname($_SERVER['SCRIPT_NAME']);
+  
+  // Split the directories into an array
+  $currentDirParts = explode('/', trim($currentDir, '/'));
+  
+  // Count the number of directories
+  $depth = count($currentDirParts);
+  
+  // Generate the relative path prefix
+  $relativePath = str_repeat('../', $depth-1);
+  
+  // Concatenate the target path
+  $relativePath = rtrim($relativePath, '/') . '/' . ltrim($targetPath, '/');
+  
+  if ($relativePath === '/') $relativePath = '';
+  return $relativePath;
+}
+?>
 <!-- Outside your render logic, ideally in the layout near the tabs -->
 <div id="itemCountAnnouncement" class="sr-only" aria-live="polite" aria-atomic="true" aria-relevant="additions text"></div>
 <script>
