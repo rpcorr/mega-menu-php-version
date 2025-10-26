@@ -1191,7 +1191,8 @@ function toggleTopLevelMenu(menuLink, e) {
   }
 
   // Update the sidebar content based on the selected top-level menu
-  if (bSidebarWidget) populateSidebar();
+  if (bSidebarWidget && typeof populateSidebar === 'function')
+    populateSidebar();
 }
 
 /**
@@ -1675,7 +1676,8 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
         tab.setAttribute('tabindex', '0');
         tab.focus(); // Focus on the selected tab for accessibility
 
-        if (bSidebarWidget) populateSidebar(); // Populate sidebar if available
+        if (bSidebarWidget && typeof populateSidebar === 'function')
+          populateSidebar(); // Populate sidebar if available
       } else {
         // Deactivate non-selected or non-expanded tabs
         tab.removeAttribute('aria-selected');
