@@ -936,7 +936,8 @@ function toggleTopLevelMenu(menuLink, e) {
   }
 
   // Update the sidebar content based on the selected top-level menu
-  if (bSidebarWidget) populateSidebar();
+  if (bSidebarWidget && typeof populateSidebar === 'function')
+    populateSidebar();
 
   // call toggleTabPanelsLayout
   toggleTabPanelsLayout(false);
@@ -1535,7 +1536,8 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
         tab.setAttribute('tabindex', '0');
         tab.focus();
 
-        if (bSidebarWidget) populateSidebar(); // Populate sidebar if available
+        if (bSidebarWidget && typeof populateSidebar === 'function')
+          populateSidebar(); // Populate sidebar if available
       } else {
         tab.removeAttribute('aria-selected');
         tab.setAttribute('tabindex', '-1');
