@@ -105,39 +105,7 @@ else $_SESSION['switchAble'] = false;
     } ?>
 </head>
 <body>
-<p>
-      <a href="#skipMenu" class="skip-nav-link" id="skip-top-nav-link"
-        >Skip to main content</a
-      >
-    </p>
-
-    <header id="header" role="banner">
-      <div id="mainNavigation" class="group">
-        <div class="max-width">
-            <section id="branding">
-                <div id="siteIdentity">
-                <div class="logo">
-                    <a href="index.php" rel="home"> <img src="<?php echo getRelativePath(''); ?>assets/imgs/CO_logo.png" alt="Counting Opinions" height="50"> </a>
-                </div>
-                <div class="simple-logo">
-                    <a href="index.php" rel="home"> <img src="<?php echo getRelativePath(''); ?>assets/imgs/CO_simple_logo.svg" alt="Counting Opinions" height="60"> </a>
-                </div>
-                </div>
-            </section>
-          <nav id="menu" aria-label="Menu will change once you log in">
-            <button id="menuToggle" class="hamburger" aria-controls="menu-main-menu" aria-expanded="false" aria-label="Toggle navigation menu">
-              <span class="hamburger-bar"></span>
-              <span class="hamburger-bar"></span>
-              <span class="hamburger-bar"></span>
-            </button>
-            <div class="menu-main-menu-container">
-              <ul id="menu-main-menu"></ul>  
-            </div>
-          </nav>
-          
-        </div>
-      </div>
-    </header>
+    
     <?php if ($showSidebar) include(__DIR__ . '/../widgets/sidebar/sidebar.php'); ?>
     <?php if ($showBreadcrumbs) include(__DIR__ . '/../widgets/breadcrumbs/breadcrumbs.php'); ?>
     <a id="skipMenu" class="screen-reader-text"></a>
