@@ -148,7 +148,7 @@ ul#menu-main-menu li > ul > li a {
   white-space: normal;
 }
 
-ul#menu-main-menu li.menu-item-has-children > a {
+ul#menu-main-menu li > a {
   padding: 0 1rem;
 }
 
@@ -577,7 +577,7 @@ ul.sub-menu li > ul.sub-menu {
     border-radius: unset;
   }
 
-  #menu-main-menu li.menu-item-has-children > a {
+  #menu-main-menu li > a {
     display: flex;
     justify-content: space-between;
     align-items: center;
