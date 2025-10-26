@@ -2339,11 +2339,12 @@ function initMenuTemplates() {
       html: `
         <li role="presentation">
           <img src="" alt="" />
-          <p><a href="" role="tab"><strong></strong><br/><span></span></a></p>
+          <p><a href="" role="tab"><strong></strong><span></span></a></p>
           <div class="circle">
             <div class="caret"></div>
           </div>
         </li>
+        <div></div>
       `,
     },
     {
