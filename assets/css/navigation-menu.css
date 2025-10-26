@@ -32,6 +32,21 @@
   transform: translate(-50%, 0);
 }
 
+.hidden-text {
+  position: absolute;
+  left: -9999px;
+}
+
+.max-width {
+  max-width: 90%;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center; /* Vertically center logo + nav/hamburger */
+  justify-content: space-between; /* Logo on left, nav/hamburger on right */
+  width: 100%;
+}
+
 /* navigation base styles and functionality */
 nav ul,
 nav ul li {
@@ -305,11 +320,6 @@ nav#menu {
   color: #333; /* Change color as needed */
 }
 
-.hidden-text {
-  position: absolute;
-  left: -9999px;
-}
-
 .hidden {
   display: none !important;
 }
@@ -478,16 +488,6 @@ ul.sub-menu li > ul.sub-menu {
 
 .profile {
   display: none;
-}
-
-.max-width {
-  max-width: 90%;
-  margin: 0 auto;
-
-  display: flex;
-  align-items: center; /* Vertically center logo + nav/hamburger */
-  justify-content: space-between; /* Logo on left, nav/hamburger on right */
-  width: 100%;
 }
 
 .sr-only {
