@@ -21,7 +21,7 @@
 ?>
 
 <script>
-      // create JS variables from the PHP variables
+      // create JS variables from the PHP variables and assign values
       const ukey = '<?php echo $ukey; ?>'; 
       const portal = <?php echo json_encode($portal); ?>;
       const queryString = <?php echo json_encode($queryString); ?>;
@@ -57,7 +57,7 @@
   
       const switchAble = <?php echo (!empty($_SESSION['switchAble']) && $_SESSION['switchAble'] === true) ? 'true' : 'false'; ?>;
 
-      console.log(`I am outside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}.`);
+      console.log(`I am outside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}. User is ${window.user}.`);
       console.log(`I am outside of breadcrumbs.js. Querystring is ${queryString}`);
       
     </script>
