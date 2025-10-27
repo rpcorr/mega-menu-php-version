@@ -70,7 +70,6 @@ nav ul > li ul > li ul > li ul > li {
 #menu-main-menu > li {
   position: relative;
   text-align: center;
-  width: 0 0 auto;
   flex: 0 0 auto;
   padding: 1.75rem 0;
 }
