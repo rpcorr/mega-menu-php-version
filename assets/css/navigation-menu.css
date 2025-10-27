@@ -41,6 +41,9 @@
   /* width: 93.75rem; */ /* uncomment if a defined width is needed */
   max-width: 90%;
   margin: 0 auto;
+  display: flex;
+  align-items: center; /* Vertically center logo + nav/hamburger */
+  justify-content: space-between; /* Logo on left, nav/hamburger on right */
 }
 
 /* navigation base styles and functionality */
