@@ -46,8 +46,7 @@ $parsed_url = parse_url($fullUrl);
 // retrieve the query string
 $queryString = $parsed_url['query'];
 
-// Determine to hide or show switchAble widgets
-
+// Set switchAble session variable based on presence of ukey
 if ($ukey !== '') $_SESSION['switchAble'] = true;
 else $_SESSION['switchAble'] = false;
 
