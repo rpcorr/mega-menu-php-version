@@ -119,10 +119,11 @@ const extraContent = [
 ];
 
 console.log(
-  `I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}. User is ${user}.`
+  `I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}. User is ${user}. Switchable is ${switchAble}`
 );
 
-console.log(pagesJSONfile);
+console.log(`Menu file: ${pagesJSONfile}`);
+
 // Ensure this code runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
   // render header
