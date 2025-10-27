@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let menuHTML = createMenu(finalGroupedArray);
 
       // if switchAble session variable is true, show Show Users link
-      if (switchAble === true)
+      if (switchAble)
         menuHTML += `<li> <a href="#" id="showUsersLink">View page as...</a></li>`;
 
       let initials = '';
@@ -787,6 +787,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
+
 ///// FUNCTIONS /////
 /**
  * Aligns visible sub-menus (<ul class="sub-menu">) so they stay within the viewport on narrow screens,
