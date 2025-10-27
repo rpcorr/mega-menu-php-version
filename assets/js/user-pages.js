@@ -31,20 +31,22 @@ const ukeyUserPagesMap = {
 };
 
 // determine which set of pages to show
+let pagesJSONfile = baseURL;
+
 if (!ukey && !user) {
-  JSONfile += 'co-pages.json';
+  pagesJSONfile += 'co-pages.json';
 } else {
   if (ukey && ukeyUserPagesMap[ukey]) {
-    JSONfile += ukeyUserPagesMap[ukey];
+    pagesJSONfile += ukeyUserPagesMap[ukey];
   } else if (user) {
-    JSONfile += 'admin.json';
+    pagesJSONfile += 'admin.json';
   }
 }
 
 // Counting Opinions server
 // if (!ukey) {
-//   JSONfile =
+//   pagesJSONfile =
 //     'https://dev.countingopinions.com/ws/portal/get_pages.php?is_menu';
 // } else {
-//   JSONfile = `https://dev.countingopinions.com/ws/portal/get_pages.php?is_menu&portal=${portal}&ukey=${ukey}`;
+//   pagesJSONfile = `https://dev.countingopinions.com/ws/portal/get_pages.php?is_menu&portal=${portal}&ukey=${ukey}`;
 // }

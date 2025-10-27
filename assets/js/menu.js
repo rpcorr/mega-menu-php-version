@@ -127,7 +127,7 @@ console.log(
   `I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}. User is ${user}. Switchable is ${switchAble}`
 );
 
-console.log(`Menu file: ${JSONfile}`);
+console.log(`Menu file: ${pagesJSONfile}`);
 
 // Ensure this code runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // call injectNavigationMenuCSS to ensure navigation-menu.css is present
   injectNavigationMenuCSS();
 
-  fetch(JSONfile)
+  fetch(pagesJSONfile)
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
