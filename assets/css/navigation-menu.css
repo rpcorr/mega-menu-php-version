@@ -62,7 +62,6 @@ nav ul > li ul > li ul > li ul > li {
 
 #menu-main-menu {
   display: flex;
-  flex: 1 1 85%;
   align-items: center;
   justify-content: flex-end;
   font-weight: 600;
