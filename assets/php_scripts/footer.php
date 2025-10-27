@@ -46,6 +46,8 @@
       const match = data.users.find((user) => user.ukey === ukey);
       window.user = match ? match.username : 'DEMO';
 
+      console.log('Footer: fetched user:', window.user);
+
       // Notify any script waiting for user
       document.dispatchEvent(new Event('userReady'));
     })
