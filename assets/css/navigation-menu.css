@@ -72,6 +72,14 @@ nav ul > li ul > li ul > li ul > li {
   padding: 1.75rem 0;
 }
 
+#menu-main-menu > li > a {
+  border-radius: 0;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+  background: transparent;
+  text-transform: uppercase;
+}
+
 /* https://codepen.io/scottb/pen/gixIv */
 ul#menu-main-menu li > ul {
   opacity: 0;
@@ -252,12 +260,6 @@ header {
 body.has-hover ul#menu-main-menu .hover:hover > ul ul.sub-menu,
 ul#menu-main-menu li.menu-item-has-children > a.active > ul ul.sub-menu {
   position: relative;
-}
-
-/* link styles */
-
-#menu-main-menu > li > a {
-  text-transform: uppercase;
 }
 
 .menu-main-menu-container > #menu-main-menu > li > a,
