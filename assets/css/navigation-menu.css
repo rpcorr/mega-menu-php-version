@@ -38,13 +38,12 @@
 }
 
 .max-width {
+  width: 100%;
   max-width: 90%;
   margin: 0 auto;
-
   display: flex;
   align-items: center; /* Vertically center logo + nav/hamburger */
   justify-content: space-between; /* Logo on left, nav/hamburger on right */
-  width: 100%;
 }
 
 /* navigation base styles and functionality */
