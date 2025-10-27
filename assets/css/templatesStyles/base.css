@@ -10,9 +10,11 @@
 
   --topMenuBgColour: #1fb7f1;
   --topMenuTextColour: #0a2939;
+  --topMenuTextColourActiveFocus: #000;
 
   --firstSubLevelBgColour: rgba(127, 213, 247, 0.9);
   --firstSubLevelTextColour: #0a2939;
+  --firstSubLevelTextColourActiveFocus: #0a2939;
 
   --secondSubLevelBgColour: #4fc7f4;
   --secondSubLevelTextColour: #0a2939;

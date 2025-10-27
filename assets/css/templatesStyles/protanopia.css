@@ -6,12 +6,15 @@
   --skipNavTextColour: #fff;
 
   --headingOneTextColour: #235fa4;
+  --headdingTwoTextColour: #ff4242;
 
   --topMenuBgColour: #6fde6e;
   --topMenuTextColour: #000;
+  --topMenuTextColourActiveFocus: #fff;
 
   --firstSubLevelBgColour: rgba(255, 66, 66, 0.9);
   --firstSubLevelTextColour: #000;
+  --firstSubLevelTextColourActiveFocus: #fff;
 
   --secondSubLevelBgColour: #a691ae;
   --secondSubLevelTextColour: #000;
@@ -29,4 +32,6 @@
   --textColourHoverActiveFocusAlt: #fff;
 
   --bottomBorderColour: #235fa4;
+
+  --bodyBackgroundColour: #fff;
 }
