@@ -6,6 +6,7 @@
   --skipNavTextColour: #303136;
 
   --headingOneTextColour: #303136;
+  --headingTwoTextColour: #833a4c;
 
   --topMenuBgColour: #dbd8c7;
   --topMenuTextColour: #303136;
@@ -29,4 +30,6 @@
   --textColourHoverActiveFocusAlt: #303136;
 
   --bottomBorderColour: #cca386;
+
+  --bodyBackgroundColour: #fff;
 }
