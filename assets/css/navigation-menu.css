@@ -22,6 +22,9 @@
   padding: 0.5rem;
   border-radius: 0 0 0.25rem 0.25rem;
   text-decoration: none;
+  outline: none;
+  border: 3px solid;
+  border-top: none;
 }
 
 .skip-nav-link:focus {
