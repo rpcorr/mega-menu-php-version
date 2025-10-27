@@ -80,6 +80,31 @@ nav ul > li ul > li ul > li ul > li {
   text-transform: uppercase;
 }
 
+#menu-main-menu > li > a:focus-visible {
+  outline: none;
+}
+
+#menu-main-menu > li > a:hover,
+#menu-main-menu > li[aria-expanded='true'] > a,
+#menu-main-menu > li > a:focus-visible {
+  border-color: var(--defaultTextColour);
+  background-color: var(--bgColourHoverActiveFocus);
+}
+
+#menu-main-menu > li > a:focus-visible {
+  outline: none; /* remove default blue outline */
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.5); /* match #000000 with transparency */
+  border-radius: 4px; /* optional: softens edges */
+}
+
+#menu-main-menu > li:not(.hidden-links) {
+  white-space: wrap;
+}
+
+ul#menu-main-menu a:active {
+  color: #000;
+}
+
 /* https://codepen.io/scottb/pen/gixIv */
 ul#menu-main-menu li > ul {
   opacity: 0;
