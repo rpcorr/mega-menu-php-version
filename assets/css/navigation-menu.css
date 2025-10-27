@@ -148,6 +148,7 @@ ul#menu-main-menu li.menu-item-has-children > a.active > ul ul.sub-menu {
   display: block;
   position: relative;
 }
+
 .sub-menu > li a {
   outline: none;
 }
