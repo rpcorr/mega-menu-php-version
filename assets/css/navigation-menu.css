@@ -1213,12 +1213,6 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
   color: var(--firstSubLevelTextColourActiveFocus);
 }
 
-li.menu-item-has-children[aria-expanded='true'] > a,
-li.menu-item-has-children[aria-expanded='true'] > a .caret {
-  /* color: var(--textColourHoverActiveFocus); */
-  /* color: peru; */
-}
-
 /* maintain submenu background colour on hover when another menu item is selected */
 .menu-main-menu-container
   > #menu-main-menu
@@ -1292,9 +1286,7 @@ i.angle-up:before {
 
 /* down arrow fill area */
 i.angle-down:after {
-  /* left: 3px; */
   left: -10px;
-  /* top: 5px; */
   bottom: -2px;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
@@ -1302,9 +1294,7 @@ i.angle-down:after {
 
 /* up arrow fill area */
 i.angle-up:after {
-  /* left: 3px; */
   left: -10px;
-  /* top: 8px; */
   top: -17px;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
@@ -1321,7 +1311,7 @@ i.angle-up:after {
 
 /* down arrow stroke colour on hover */
 .menu-item-has-children:hover i.angle-down:before {
-  border-top: 7px solid #000;
+  border-top: 7px solid var(--topMenuTextColour);
 }
 
 /* down arrow fill colour */
@@ -1331,7 +1321,7 @@ i.angle-up:after {
 
 /* down arrow fill colour on hover */
 .menu-item-has-children:hover i.angle-down:after {
-  border-top: 4px solid #1fb7f1;
+  border-top: 4px solid var(--topMenuBgColour);
 }
 
 /*---- ---- */
@@ -1445,7 +1435,17 @@ ul#menu-main-menu > li > a:focus {
 
 /* Maintain main menu text when submenu active */
 ul#menu-main-menu > li.menu-item-has-children:hover > a {
-  color: var(--topMenuTextColour);
+  color: var(--topMenuTextColourActiveFocus);
+  /* color: var(--topMenuTextColour); */
+}
+
+/* Hovering anywhere inside the sub-menu of a collapsed top-level menu */
+.menu-item-has-children[aria-expanded='false']:has(> .sub-menu:hover),
+.menu-item-has-children[aria-expanded='false']:has(> .sub-menu:hover *) {
+  /* Target the top-level anchor */
+  > a {
+    color: var(--topMenuTextColour) !important;
+  }
 }
 
 /* ===============================
@@ -1497,11 +1497,19 @@ ul#menu-main-menu > li.menu-item-has-children:hover > a {
   border-top: 7px solid var(--textColourHoverActiveFocus);
 }
 
+.menu-item-has-children[aria-expanded='true'] > a i.angle-down:before {
+  border-top: 7px solid var(--textColourHoverActiveFocus);
+}
+
 .menu-item-has-children > a i.angle-down:after {
   border-top: 4px solid var(--topMenuBgColour);
 }
 .menu-item-has-children > a:hover i.angle-down:after,
 .menu-item-has-children > a:focus i.angle-down:after {
+  border-top: 4px solid var(--bgColourHoverActiveFocus);
+}
+
+.menu-item-has-children[aria-expanded='true'] > a i.angle-down:after {
   border-top: 4px solid var(--bgColourHoverActiveFocus);
 }
 
