@@ -175,6 +175,10 @@ ul#menu-main-menu li.menu-item-has-children > a.active > ul ul.sub-menu {
   position: relative;
 }
 
+.sub-menu > li a {
+  outline: none;
+}
+
 ul#menu-main-menu li > ul > li a,
 ul#menu-main-menu li > .mega-menu > a {
   text-decoration: none;
