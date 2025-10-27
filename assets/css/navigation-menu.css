@@ -20,7 +20,7 @@
   transition: transform 0.3s;
   font-size: 12px;
   padding: 0.5rem;
-  border-radius: 0 0 0.25rem 0.25rem;
+  border-radius: 0 0 3px 3px;
   text-decoration: none;
   outline: none;
   border: 3px solid;
