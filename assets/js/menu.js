@@ -117,12 +117,6 @@ const extraContent = [
   },
 ];
 
-let user = '';
-document.addEventListener('userReady', () => {
-  // Now safe to use window.user here
-  user = window.user;
-});
-
 console.log(
   `I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}. User is ${user}. Switchable is ${switchAble}`
 );
