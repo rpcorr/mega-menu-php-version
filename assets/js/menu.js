@@ -11,7 +11,7 @@ const prefix = getRelativePath();
 const widgetsPath = `${prefix}assets/widgets/`;
 
 const resetCssPath = `${prefix}assets/css/reset.min.css`;
-const switchableJsPath = `${widgetsPath}switchable/switchable.js`;
+const switchableJsPath = `widgets/switchable/switchable.js`;
 
 const selectThemeJsPath = `widgets/selectTheme/selectTheme.js`;
 const selectThemeCssPath = `widgets/selectTheme/selectTheme.min.css`;

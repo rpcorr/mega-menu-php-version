@@ -57,7 +57,7 @@ function displaySwitchableForm() {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   link.type = 'text/css';
-  link.href = basePath + 'assets/widgets/switchable/switchable.css';
+  link.href = basePath + 'widgets/switchable/switchable.css';
 
   // Find the navigation-menu.css link
   const navLink = document.querySelector('link[href*="navigation-menu.css"]');
