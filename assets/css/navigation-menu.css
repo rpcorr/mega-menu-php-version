@@ -312,12 +312,8 @@ ul#menu-main-menu li.menu-item-has-children > a.active > ul ul.sub-menu {
   /* font-size: 1rem; */ /* this was overriding font size in tabs for smaller devices */
   line-height: 1.25;
   /* the style below may not be needed any more after completing the mega-menu */
-  padding: 1rem 1.5rem;
+  padding: 1rem 1rem;
   display: block !important;
-}
-
-.menu-main-menu-container > #menu-main-menu > li > .mega-menu a {
-  padding: 1.5rem 0;
 }
 
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu > li > a {
@@ -1198,10 +1194,6 @@ ul#menu-main-menu a {
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a {
   color: var(--firstSubLevelTextColour);
   /* background-color: pink; */
-}
-
-.menu-main-menu-container > #menu-main-menu > li > .mega-menu a {
-  color: #000;
 }
 
 /* first submenu hover and focus font colour */
