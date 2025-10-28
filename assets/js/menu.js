@@ -22,7 +22,7 @@ const sidebarCssPath = `widgets/sidebar/sidebar.css`;
 const breadcrumbsJsPath = `widgets/breadcrumbs/breadcrumbs.js`;
 const breadcrumbsCssPath = `widgets/breadcrumbs/breadcrumbs.css`;
 
-const timerInactivityJsPath = `${widgetsPath}timerInactivity/timerInactivity.js`;
+const timerInactivityJsPath = `widgets/timerInactivity/timerInactivity.js`;
 ////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////
