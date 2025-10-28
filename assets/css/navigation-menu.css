@@ -1186,14 +1186,12 @@ ul#menu-main-menu a {
 
 /* first submenu background colour */
 #menu-main-menu > li.menu-item-has-children > ul.sub-menu {
-  /* background-color: #fff; */
   background-color: var(--firstSubLevelBgColour);
 }
 
 /* first submenu text colour */
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a {
   color: var(--firstSubLevelTextColour);
-  /* background-color: pink; */
 }
 
 /* first submenu hover and focus font colour */
@@ -1442,10 +1440,6 @@ ul#menu-main-menu > li.menu-item-has-children:hover > a {
 /* ===============================
    Submenu Levels Background + Text
    =============================== */
-#menu-main-menu .sub-menu {
-  background-color: var(--firstSubLevelBgColour);
-  color: var(--firstSubLevelTextColour);
-}
 
 /* First level submenu links */
 #menu-main-menu .sub-menu a,
@@ -1458,7 +1452,7 @@ ul#menu-main-menu > li.menu-item-has-children:hover > a {
 #menu-main-menu .sub-menu a:focus,
 #menu-main-menu .mega-menu a:hover,
 #menu-main-menu .mega-menu a:focus {
-  background-color: var(--firstSubLevelBgColour);
+  background-color: var(--bgColourHoverActiveFocus);
   color: var(--firstSubLevelTextColour);
 }
 
