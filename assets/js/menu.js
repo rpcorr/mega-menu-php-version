@@ -13,8 +13,8 @@ const widgetsPath = `${prefix}assets/widgets/`;
 const resetCssPath = `${prefix}assets/css/reset.min.css`;
 const switchableJsPath = `${widgetsPath}switchable/switchable.js`;
 
-const selectThemeJsPath = `${widgetsPath}selectTheme/selectTheme.js`;
-const selectThemeCssPath = `${widgetsPath}selectTheme/selectTheme.min.css`;
+const selectThemeJsPath = `widgets/selectTheme/selectTheme.js`;
+const selectThemeCssPath = `widgets/selectTheme/selectTheme.min.css`;
 
 const sidebarJsPath = `widgets/sidebar/sidebar.js`;
 const sidebarCssPath = `widgets/sidebar/sidebar.css`;
