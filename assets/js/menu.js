@@ -19,8 +19,8 @@ const selectThemeCssPath = `${widgetsPath}selectTheme/selectTheme.min.css`;
 const sidebarJsPath = `${widgetsPath}sidebar/sidebar.js`;
 const sidebarCssPath = `${widgetsPath}sidebar/sidebar.css`;
 
-const breadcrumbsJsPath = `${widgetsPath}breadcrumbs/breadcrumbs.js`;
-const breadcrumbsCssPath = `${widgetsPath}breadcrumbs/breadcrumbs.css`;
+const breadcrumbsJsPath = `widgets/breadcrumbs/breadcrumbs.js`;
+const breadcrumbsCssPath = `widgets/breadcrumbs/breadcrumbs.css`;
 
 const timerInactivityJsPath = `${widgetsPath}timerInactivity/timerInactivity.js`;
 ////////////////////////////////////////////////////
