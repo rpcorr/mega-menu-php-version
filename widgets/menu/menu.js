@@ -737,7 +737,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.type = 'text/css';
-    link.href = `${prefix}assets/css/templatesStyles/${theme}.css`;
+    link.href = `widgets/menu/css/templatesStyles/${theme}.css`;
 
     // --- Insert theme link right after navigation-menu.css (if exists) ---
     const navLink = document.querySelector('link[href*="navigation-menu.css"]');
