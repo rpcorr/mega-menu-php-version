@@ -2256,13 +2256,13 @@ function renderHeader() {
             <div id="siteIdentity">
               <div class="logo">
                 <a href="${relPath}index.php" rel="home">
-                  <img src="${relPath}assets/imgs/CO_logo.svg"
+                  <img src="widgets/menu/imgs/CO_logo.svg"
                        alt="Counting Opinions" height="60">
                 </a>
               </div>
               <div class="simple-logo">
                 <a href="${relPath}index.php" rel="home">
-                  <img src="${relPath}assets/imgs/CO_simple_logo.svg"
+                  <img src="widgets/menu/imgs/CO_simple_logo.svg"
                        alt="Counting Opinions" height="60">
                 </a>
               </div>
