@@ -10,7 +10,7 @@ const prefix = getRelativePath();
 // Widgets file paths needs to be defined here
 const widgetsPath = `${prefix}assets/widgets/`;
 
-const resetCssPath = `${prefix}assets/css/reset.min.css`;
+const resetCssPath = `${prefix}widgets/menu/css/reset.min.css`;
 const switchableJsPath = `widgets/switchable/switchable.js`;
 
 const selectThemeJsPath = `widgets/selectTheme/selectTheme.js`;
