@@ -16,8 +16,8 @@ const switchableJsPath = `${widgetsPath}switchable/switchable.js`;
 const selectThemeJsPath = `${widgetsPath}selectTheme/selectTheme.js`;
 const selectThemeCssPath = `${widgetsPath}selectTheme/selectTheme.min.css`;
 
-const sidebarJsPath = `${widgetsPath}sidebar/sidebar.js`;
-const sidebarCssPath = `${widgetsPath}sidebar/sidebar.css`;
+const sidebarJsPath = `widgets/sidebar/sidebar.js`;
+const sidebarCssPath = `widgets/sidebar/sidebar.css`;
 
 const breadcrumbsJsPath = `widgets/breadcrumbs/breadcrumbs.js`;
 const breadcrumbsCssPath = `widgets/breadcrumbs/breadcrumbs.css`;
