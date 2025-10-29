@@ -1624,7 +1624,7 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
         }
 
         // Populate the template elements with item data
-        img.src = `/mmenu/assets/imgs/${item.graphic}`;
+        img.src = `${prefix}widgets/menu/imgs/${item.graphic}`;
         img.width = item.width;
         img.height = item.height;
         anchor.href = item.url;
@@ -1733,7 +1733,7 @@ function renderBodyContent(contentContainer, type, menuData) {
       bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
 
     if (ukey && menuItem.prompt.toLowerCase() !== 'login') {
-      img.src = `/mmenu/assets/imgs/${randomIcon.graphic}`;
+      img.src = `${prefix}widgets/menu/imgs/${randomIcon.graphic}`;
       img.width = randomIcon.width;
       img.height = randomIcon.height;
       img.alt = '';
@@ -1897,7 +1897,7 @@ function renderExtraContent(contentData, menuContainer) {
     }
 
     // Set image attributes based on the provided item data
-    img.src = `/mmenu/assets/imgs/${item.graphic}`;
+    img.src = `${prefix}widgets/menu/imgs/${item.graphic}`;
     img.width = item.width;
     img.height = item.height;
 
