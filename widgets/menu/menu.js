@@ -724,7 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.type = 'text/css';
-    link.href = `widgets/menu/css/templatesStyles/${theme}.css`;
+    link.href = `${prefix}widgets/menu/css/templatesStyles/${theme}.css`;
 
     // --- Insert theme link right after navigation-menu.css (if exists) ---
     const navLink = document.querySelector('link[href*="navigation-menu.css"]');
@@ -2243,13 +2243,13 @@ function renderHeader() {
             <div id="siteIdentity">
               <div class="logo">
                 <a href="${relPath}index.php" rel="home">
-                  <img src="widgets/menu/imgs/CO_logo.svg"
+                  <img src="${relPath}widgets/menu/imgs/CO_logo.svg"
                        alt="Counting Opinions" height="60">
                 </a>
               </div>
               <div class="simple-logo">
                 <a href="${relPath}index.php" rel="home">
-                  <img src="widgets/menu/imgs/CO_simple_logo.svg"
+                  <img src="${relPath}widgets/menu/imgs/CO_simple_logo.svg"
                        alt="Counting Opinions" height="60">
                 </a>
               </div>
@@ -2279,7 +2279,7 @@ function injectNavigationMenuCSS() {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   link.type = 'text/css';
-  link.href = `widgets/menu/css/navigation-menu.css`;
+  link.href = `${relPath}widgets/menu/css/navigation-menu.css`;
 
   document.head.appendChild(link);
 }
