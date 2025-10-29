@@ -11,18 +11,17 @@ const prefix = getRelativePath();
 const widgetsPath = `${prefix}assets/widgets/`;
 
 const resetCssPath = `${prefix}widgets/menu/css/reset.min.css`;
-const switchableJsPath = `widgets/switchable/switchable.js`;
+const switchableJsPath = `${prefix}widgets/switchable/switchable.js`;
 
-const selectThemeJsPath = `widgets/selectTheme/selectTheme.js`;
-const selectThemeCssPath = `widgets/selectTheme/selectTheme.min.css`;
+const selectThemeJsPath = `${prefix}widgets/selectTheme/selectTheme.js`;
+const selectThemeCssPath = `${prefix}widgets/selectTheme/selectTheme.min.css`;
 
-const sidebarJsPath = `widgets/sidebar/sidebar.js`;
-const sidebarCssPath = `widgets/sidebar/sidebar.css`;
+const sidebarJsPath = `${prefix}widgets/sidebar/sidebar.js`;
+const sidebarCssPath = `${prefix}widgets/sidebar/sidebar.css`;
 
-const breadcrumbsJsPath = `widgets/breadcrumbs/breadcrumbs.js`;
-const breadcrumbsCssPath = `widgets/breadcrumbs/breadcrumbs.css`;
+const breadcrumbsJsPath = `${prefix}widgets/breadcrumbs/breadcrumbs.js`;
 
-const timerInactivityJsPath = `widgets/timerInactivity/timerInactivity.js`;
+const timerInactivityJsPath = `${prefix}widgets/timerInactivity/timerInactivity.js`;
 ////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////
@@ -666,21 +665,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Dynamically add breadcrumbs.js if tag exists and place it right after menu.js
   if (bBreadcrumbsWidget) {
     const breadcrumbScriptSrc = breadcrumbsJsPath;
-    const breadcrumbCssHref = breadcrumbsCssPath;
-
-    // --- Insert breadcrumbs.css right after navigation-menu.css ---
-    const linkBreadcrumbs = document.createElement('link');
-    linkBreadcrumbs.rel = 'stylesheet';
-    linkBreadcrumbs.type = 'text/css';
-    linkBreadcrumbs.href = breadcrumbCssHref;
-
-    const navCss = document.querySelector('link[href*="navigation-menu.css"]');
-    if (navCss && navCss.parentNode) {
-      navCss.parentNode.insertBefore(linkBreadcrumbs, navCss.nextSibling);
-    } else {
-      // fallback (rare)
-      (document.head || document.body).appendChild(linkBreadcrumbs);
-    }
 
     // --- Insert breadcrumbs.js after menu.js ---
     const breadcrumbsScript = document.createElement('script');
