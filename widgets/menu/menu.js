@@ -126,13 +126,15 @@ console.log(`Menu file: ${pagesJSONfile}`);
 document.addEventListener('DOMContentLoaded', () => {
   // render header  a custom logo can be set, else it is Counting Opinions logo
 
-  // renderHeader({
-  //   logo: 'custom-logo.png',
-  //   simpleLogo: 'custom-logo-m.png',
-  //   logoPath: '',
-  // });
+  renderHeader({
+    logo: 'custom-logo.png',
+    simpleLogo: 'custom-logo-m.png',
+    logoPath: '',
+    logoAlt: 'Company Full Logo',
+    simpleLogoAlt: 'Company Simplified Logo',
+  });
 
-  renderHeader();
+  //renderHeader();
 
   // render Skip to main content link
   insertSkipMenuAnchor();
@@ -2238,6 +2240,8 @@ function renderHeader(options = {}) {
     logo = 'CO_logo.svg',
     simpleLogo = 'CO_simple_logo.svg',
     logoPath = 'widgets/menu/imgs/',
+    logoAlt = 'Counting Opinions',
+    simpleLogoAlt = 'Counting Opinions',
   } = options;
 
   const relPath = getRelativePath();
@@ -2256,13 +2260,13 @@ function renderHeader(options = {}) {
               <div class="logo">
                 <a href="${relPath}index.php" rel="home">
                   <img src="${relPath}${logoPath}${logo}"
-                       alt="Counting Opinions" height="60">
+                       alt="${logoAlt}" height="60">
                 </a>
               </div>
               <div class="simple-logo">
                 <a href="${relPath}index.php" rel="home">
                   <img src="${relPath}${logoPath}${simpleLogo}"
-                       alt="Counting Opinions" height="60">
+                       alt="${simpleLogoAlt}" height="60">
                 </a>
               </div>
             </div>
