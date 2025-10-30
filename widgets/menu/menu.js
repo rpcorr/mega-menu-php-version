@@ -2260,13 +2260,13 @@ function renderHeader(options = {}) {
               <div class="logo">
                 <a href="${relPath}index.php" rel="home">
                   <img src="${relPath}${logoPath}${logo}"
-                       alt="${logoAlt}" height="60">
+                       alt="${logoAlt}" height="60" width="170">
                 </a>
               </div>
               <div class="simple-logo">
                 <a href="${relPath}index.php" rel="home">
                   <img src="${relPath}${logoPath}${simpleLogo}"
-                       alt="${simpleLogoAlt}" height="60">
+                       alt="${simpleLogoAlt}" height="60" width="60">
                 </a>
               </div>
             </div>
