@@ -124,7 +124,14 @@ console.log(`Menu file: ${pagesJSONfile}`);
 
 // Ensure this code runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-  // render header
+  // render header  a custom logo can be set, else it is Counting Opinions logo
+
+  // renderHeader({
+  //   logo: 'custom-logo.png',
+  //   simpleLogo: 'custom-logo-m.png',
+  //   logoPath: '',
+  // });
+
   renderHeader();
 
   // render Skip to main content link
@@ -2226,9 +2233,14 @@ function initMenuTemplates() {
   });
 }
 
-function renderHeader() {
-  const relPath = getRelativePath();
+function renderHeader(options = {}) {
+  const {
+    logo = 'CO_logo.svg',
+    simpleLogo = 'CO_simple_logo.svg',
+    logoPath = 'widgets/menu/imgs/',
+  } = options;
 
+  const relPath = getRelativePath();
   const headerHTML = `
     <p>
       <a href="#skipMenu" class="skip-nav-link" id="skip-top-nav-link">
@@ -2243,13 +2255,13 @@ function renderHeader() {
             <div id="siteIdentity">
               <div class="logo">
                 <a href="${relPath}index.php" rel="home">
-                  <img src="${relPath}widgets/menu/imgs/CO_logo.svg"
+                  <img src="${relPath}${logoPath}${logo}"
                        alt="Counting Opinions" height="60">
                 </a>
               </div>
               <div class="simple-logo">
                 <a href="${relPath}index.php" rel="home">
-                  <img src="${relPath}widgets/menu/imgs/CO_simple_logo.svg"
+                  <img src="${relPath}${logoPath}${simpleLogo}"
                        alt="Counting Opinions" height="60">
                 </a>
               </div>
