@@ -118,6 +118,7 @@ else $_SESSION['switchAble'] = false;
     <title><?php echo $title ?></title>
 </head>
 <body>
+    <?php include getRelativePath('') . 'widgets/menu/icons/icons.svg'; ?>
     <main>
     <div class="container">
       <h1>Preferences</h1>

@@ -1916,11 +1916,6 @@ function renderExtraContent(contentData, menuContainer) {
       return;
     }
 
-    // Set image attributes based on the provided item data
-    // img.src = `${prefix}widgets/menu/imgs/${item.graphic}`;
-    // img.width = item.width;
-    // img.height = item.height;
-
     // Set heading text
     strong.textContent = item.heading;
 
@@ -2229,81 +2224,7 @@ function initMenuTemplates() {
       html: `
         <div class="extra-content">
           <div class="info-box">
-          <svg
-  width="100"
-  height="100"
-  viewBox="0 0 200 200"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <!-- Light rays -->
-  <g stroke="#FFD700" stroke-width="3" opacity="0.8">
-    <line x1="100" y1="20" x2="100" y2="35" />
-    <line x1="141.4" y1="28.6" x2="133.5" y2="41.5" />
-    <line x1="171.4" y1="58.6" x2="158.5" y2="66.5" />
-    <line x1="180" y1="100" x2="165" y2="100" />
-    <line x1="171.4" y1="141.4" x2="158.5" y2="133.5" />
-    <line x1="141.4" y1="171.4" x2="133.5" y2="158.5" />
-    <line x1="100" y1="180" x2="100" y2="165" />
-    <line x1="58.6" y1="171.4" x2="66.5" y2="158.5" />
-    <line x1="28.6" y1="141.4" x2="41.5" y2="133.5" />
-    <line x1="20" y1="100" x2="35" y2="100" />
-    <line x1="28.6" y1="58.6" x2="41.5" y2="66.5" />
-    <line x1="58.6" y1="28.6" x2="66.5" y2="41.5" />
-  </g>
-
-  <!-- Bulb body -->
-  <circle
-    cx="100"
-    cy="100"
-    r="40"
-    fill="#FFFACD"
-    stroke="#FFD700"
-    stroke-width="2"
-  />
-
-  <!-- Filament -->
-  <g stroke="#FF6B35" stroke-width="2" fill="none">
-    <path d="M85 90 Q100 85 115 90" />
-    <path d="M85 100 Q100 95 115 100" />
-    <path d="M85 110 Q100 105 115 110" />
-  </g>
-
-  <!-- Base/Screw -->
-  <rect
-    x="85"
-    y="135"
-    width="30"
-    height="8"
-    fill="#C0C0C0"
-    stroke="#999"
-    stroke-width="1"
-  />
-  <rect x="85" y="143" width="30" height="3" fill="#999" />
-  <rect x="85" y="146" width="30" height="3" fill="#C0C0C0" />
-  <rect x="85" y="149" width="30" height="3" fill="#999" />
-
-  <!-- Glow effect -->
-  <circle
-    cx="100"
-    cy="100"
-    r="45"
-    fill="none"
-    stroke="#FFFF99"
-    stroke-width="1"
-    opacity="0.3"
-  />
-  <circle
-    cx="100"
-    cy="100"
-    r="50"
-    fill="none"
-    stroke="#FFFF99"
-    stroke-width="0.5"
-    opacity="0.2"
-  />
-</svg>
-
-            <img src="" width="" height="" align="left" alt="" />
+            <svg width="50" height="50"><use href="#icon-lightbulb"></use></svg>
             <p><strong></strong></p>
           </div>
           <div id="bodyContent"></div>
