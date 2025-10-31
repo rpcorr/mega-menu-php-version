@@ -45,21 +45,21 @@ let winWidth = 0;
 // LibPAS, InformUS, LibSat menu items
 const menuMap = {
   2: {
-    graphic: 'pie.gif',
-    width: '36',
-    height: '33',
+    graphic: 'pie.svg',
+    width: '40',
+    height: '40',
     subText: 'Periodic data',
   },
   5: {
-    graphic: 'puzzle-pieces.gif',
+    graphic: 'puzzle-pieces.svg',
     width: '40',
     height: '40',
     subText: 'Survey data',
   },
   1: {
-    graphic: 'medal.gif',
-    width: '43',
-    height: '43',
+    graphic: 'medal.svg',
+    width: '40',
+    height: '40',
     subText: 'Qualitative data',
   },
 };
@@ -77,12 +77,12 @@ const menuSingle = [
 
 const bodyContentIcons = [
   {
-    graphic: 'reports.gif',
+    graphic: 'file-generic.svg',
     width: '42',
     height: '55',
   },
   {
-    graphic: 'data-input.gif',
+    graphic: 'file-generic.svg',
     width: '42',
     height: '55',
   },
@@ -90,8 +90,8 @@ const bodyContentIcons = [
 
 const extraContent = [
   {
-    graphic: 'light-bulb.gif',
-    width: '32',
+    graphic: 'light-bulb.svg',
+    width: '37',
     height: '37',
     heading: 'Did you know?',
     extraBodyContent: [
@@ -126,15 +126,26 @@ console.log(`Menu file: ${pagesJSONfile}`);
 document.addEventListener('DOMContentLoaded', () => {
   // render header  a custom logo can be set, else it is Counting Opinions logo
 
-  renderHeader({
-    logo: 'custom-logo.png',
-    simpleLogo: 'custom-logo-m.png',
-    logoPath: '',
-    logoAlt: 'Company Full Logo',
-    simpleLogoAlt: 'Company Simplified Logo',
-  });
+  // renderHeader({
+  //   logo: 'custom-logo.png',
+  //   simpleLogo: 'custom-logo-m.png',
+  //   logoPath: '',
+  //   logoAlt: 'Company Full Logo',
+  //   simpleLogoAlt: 'Company Simplified Logo',
+  // });
 
-  //renderHeader();
+  // renderHeader({
+  //   logo: 'CO_logo.svg',
+  //   simpleLogo: 'CO_simple_logo.svg',
+  //   logoPath: 'widgets/menu/imgs/',
+  //   logoAlt: 'Counting Opinions',
+  //   simpleLogoAlt: 'Counting Opinions',
+  //   brandingWidth: '80rem',
+  //   brandingBgColour: 'red',
+  //   logoBgColour: 'green',
+  // });
+
+  renderHeader();
 
   // render Skip to main content link
   insertSkipMenuAnchor();
@@ -1895,20 +1906,20 @@ function renderExtraContent(contentData, menuContainer) {
 
   contentData.forEach((item) => {
     const menuContent = contentTemplate.content.cloneNode(true); // Clone template content
-    const img = menuContent.querySelector('img');
+    //const img = menuContent.querySelector('img');
     const strong = menuContent.querySelector('p > strong');
     const bodyContent = menuContent.querySelector('#bodyContent');
 
     // Ensure all required elements exist in the template
-    if (!img || !strong || !bodyContent) {
+    if (!strong || !bodyContent) {
       console.error('Error: Missing elements inside body content template.');
       return;
     }
 
     // Set image attributes based on the provided item data
-    img.src = `${prefix}widgets/menu/imgs/${item.graphic}`;
-    img.width = item.width;
-    img.height = item.height;
+    // img.src = `${prefix}widgets/menu/imgs/${item.graphic}`;
+    // img.width = item.width;
+    // img.height = item.height;
 
     // Set heading text
     strong.textContent = item.heading;
@@ -2217,7 +2228,81 @@ function initMenuTemplates() {
       id: 'menuExtraContent',
       html: `
         <div class="extra-content">
-          <div>
+          <div class="info-box">
+          <svg
+  width="100"
+  height="100"
+  viewBox="0 0 200 200"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Light rays -->
+  <g stroke="#FFD700" stroke-width="3" opacity="0.8">
+    <line x1="100" y1="20" x2="100" y2="35" />
+    <line x1="141.4" y1="28.6" x2="133.5" y2="41.5" />
+    <line x1="171.4" y1="58.6" x2="158.5" y2="66.5" />
+    <line x1="180" y1="100" x2="165" y2="100" />
+    <line x1="171.4" y1="141.4" x2="158.5" y2="133.5" />
+    <line x1="141.4" y1="171.4" x2="133.5" y2="158.5" />
+    <line x1="100" y1="180" x2="100" y2="165" />
+    <line x1="58.6" y1="171.4" x2="66.5" y2="158.5" />
+    <line x1="28.6" y1="141.4" x2="41.5" y2="133.5" />
+    <line x1="20" y1="100" x2="35" y2="100" />
+    <line x1="28.6" y1="58.6" x2="41.5" y2="66.5" />
+    <line x1="58.6" y1="28.6" x2="66.5" y2="41.5" />
+  </g>
+
+  <!-- Bulb body -->
+  <circle
+    cx="100"
+    cy="100"
+    r="40"
+    fill="#FFFACD"
+    stroke="#FFD700"
+    stroke-width="2"
+  />
+
+  <!-- Filament -->
+  <g stroke="#FF6B35" stroke-width="2" fill="none">
+    <path d="M85 90 Q100 85 115 90" />
+    <path d="M85 100 Q100 95 115 100" />
+    <path d="M85 110 Q100 105 115 110" />
+  </g>
+
+  <!-- Base/Screw -->
+  <rect
+    x="85"
+    y="135"
+    width="30"
+    height="8"
+    fill="#C0C0C0"
+    stroke="#999"
+    stroke-width="1"
+  />
+  <rect x="85" y="143" width="30" height="3" fill="#999" />
+  <rect x="85" y="146" width="30" height="3" fill="#C0C0C0" />
+  <rect x="85" y="149" width="30" height="3" fill="#999" />
+
+  <!-- Glow effect -->
+  <circle
+    cx="100"
+    cy="100"
+    r="45"
+    fill="none"
+    stroke="#FFFF99"
+    stroke-width="1"
+    opacity="0.3"
+  />
+  <circle
+    cx="100"
+    cy="100"
+    r="50"
+    fill="none"
+    stroke="#FFFF99"
+    stroke-width="0.5"
+    opacity="0.2"
+  />
+</svg>
+
             <img src="" width="" height="" align="left" alt="" />
             <p><strong></strong></p>
           </div>
@@ -2242,6 +2327,9 @@ function renderHeader(options = {}) {
     logoPath = 'widgets/menu/imgs/',
     logoAlt = 'Counting Opinions',
     simpleLogoAlt = 'Counting Opinions',
+    brandingWidth = '11rem',
+    brandingBgColour = '',
+    logoBgColour = '',
   } = options;
 
   const relPath = getRelativePath();
@@ -2255,18 +2343,18 @@ function renderHeader(options = {}) {
     <header id="header" role="banner">
       <div id="mainNavigation" class="group">
         <div class="max-width">
-          <section id="branding">
-            <div id="siteIdentity">
+          <section id="branding" style="width:${brandingWidth}; background-color:${brandingBgColour}">
+            <div id="siteIdentity" style="background-color: ${logoBgColour}; "> 
               <div class="logo">
                 <a href="${relPath}index.php" rel="home">
                   <img src="${relPath}${logoPath}${logo}"
-                       alt="${logoAlt}" height="60" width="170">
+                       alt="${logoAlt}" height="60">
                 </a>
               </div>
               <div class="simple-logo">
                 <a href="${relPath}index.php" rel="home">
                   <img src="${relPath}${logoPath}${simpleLogo}"
-                       alt="${simpleLogoAlt}" height="60" width="60">
+                       alt="${simpleLogoAlt}" height="60">
                 </a>
               </div>
             </div>

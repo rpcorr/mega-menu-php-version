@@ -1,0 +1,39 @@
+<!--?xml version="1.0" encoding="utf-8"?-->
+<!-- Monochrome pie chart icon with one slice separated -->
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 128 128" role="img" aria-label="Pie chart icon with one slice separated">
+  <defs>
+    <style>
+      .slice { stroke: #000; stroke-width:2; stroke-linejoin:round; fill: #fff; }
+      .slice.fill { fill: #000; }
+    </style>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.15"></feDropShadow>
+    </filter>
+  </defs>
+
+  <!-- Outer circle outline -->
+  <circle cx="64" cy="64" r="48" fill="none" stroke="#000" stroke-width="3"></circle>
+
+  <!-- slice 1 (right side) -->
+  <path class="slice" d="
+    M64 64
+    L112 64
+    A48 48 0 0 1 40 105.569
+    Z"></path>
+
+  <!-- slice 2 (broken away) -->
+  <g transform="translate(-10,0)" filter="url(#shadow)">
+    <path class="slice fill" d="
+      M64 64
+      L40 105.569
+      A48 48 0 0 1 40 22.431
+      Z"></path>
+  </g>
+
+  <!-- slice 3 (top-left) -->
+  <path class="slice" d="
+    M64 64
+    L40 22.431
+    A48 48 0 0 1 112 64
+    Z"></path>
+</svg>
