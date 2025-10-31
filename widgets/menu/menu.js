@@ -45,19 +45,19 @@ let winWidth = 0;
 // LibPAS, InformUS, LibSat menu items
 const menuMap = {
   2: {
-    graphic: 'pie.svg',
+    iconId: 'icon-pie',
     width: '40',
     height: '40',
     subText: 'Periodic data',
   },
   5: {
-    graphic: 'puzzle-pieces.svg',
+    iconId: 'icon-puzzle',
     width: '40',
     height: '40',
     subText: 'Survey data',
   },
   1: {
-    graphic: 'medal.svg',
+    iconId: 'icon-medal',
     width: '40',
     height: '40',
     subText: 'Qualitative data',
@@ -66,7 +66,7 @@ const menuMap = {
 
 const menuSingle = [
   {
-    graphic: 'pie.gif',
+    iconId: 'icon-pie',
     width: '36',
     height: '33',
     url: '#',
@@ -1632,7 +1632,7 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
         const menuContent = templateContent.cloneNode(true);
 
         // Query relevant elements inside the template
-        const img = menuContent.querySelector('img');
+        const svgUse = menuContent.querySelector('svg use');
         const anchor = menuContent.querySelector('a');
         const strong = anchor?.querySelector('strong');
         const span = anchor?.querySelector('span');
@@ -1644,9 +1644,15 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
         }
 
         // Populate the template elements with item data
-        img.src = `${prefix}widgets/menu/imgs/${item.graphic}`;
-        img.width = item.width;
-        img.height = item.height;
+        if (svgUse) {
+          const iconId = item.iconId || 'icon-medal'; // fallback if not provided
+          svgUse.setAttribute('href', `#${iconId}`);
+
+          // Optionally allow per-item width/height
+          const svg = menuContent.querySelector('svg');
+          if (item.width) svg.setAttribute('width', item.width);
+          if (item.height) svg.setAttribute('height', item.height);
+        }
         anchor.href = item.url;
         strong.textContent = item.menuTitle;
         span.textContent = item.subText;
@@ -2103,11 +2109,11 @@ function createMenuItems(data) {
       .filter((item) => menuMap[item.section_id])
       .map((item) => {
         if (item.section_prompt !== null && menuMap[item.section_id]) {
-          const { graphic, width, height, subText } = menuMap[item.section_id];
+          const { iconId, width, height, subText } = menuMap[item.section_id];
           // optional extra check in case some fields are missing
-          if (graphic && width && height && subText) {
+          if (iconId && width && height && subText) {
             return {
-              graphic, // Path or name of the graphic associated with this menu item
+              iconId, // Name of the graphic associated with this menu item
               width, // Graphic width (used for layout/styling)
               height, // Graphic height (used for layout/styling)
               url: `#${item.section_prompt.toLowerCase()}`, // Anchor link generated from the section prompt
@@ -2193,7 +2199,7 @@ function initMenuTemplates() {
       id: 'menuTemplate',
       html: `
         <li role="presentation">
-          <img src="" alt="" />
+          <svg width="50" height="50"><use href=""></use></svg>
           <p><a href="" role="tab"><strong></strong><br/><span></span></a></p>
           <div class="circle">
             <div class="caret"></div>
@@ -2205,7 +2211,7 @@ function initMenuTemplates() {
       id: 'oneMenuTemplate',
       html: `
         <li>
-          <img src="" alt="" />
+          <svg width="50" height="50"><use href=""></use></svg>
           <p><a href="" role="tab"><strong></strong><br/><span></span></a></p>
         </li>
       `,
