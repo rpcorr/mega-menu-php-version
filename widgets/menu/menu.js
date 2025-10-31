@@ -78,13 +78,15 @@ const menuSingle = [
 const bodyContentIcons = [
   {
     graphic: 'file-generic.svg',
-    width: '42',
-    height: '55',
+    iconId: 'icon-generic-file',
+    width: '95',
+    height: '100',
   },
   {
     graphic: 'file-generic.svg',
-    width: '42',
-    height: '55',
+    iconId: 'icon-generic-file',
+    width: '95',
+    height: '100',
   },
 ];
 
@@ -1746,11 +1748,11 @@ function renderBodyContent(contentContainer, type, menuData) {
    */
   function createMenuContent(menuItem) {
     const menuContent = contentTemplate.content.cloneNode(true);
-    const img = menuContent.querySelector('img');
+    const svgUse = menuContent.querySelector('svg use');
     const p = menuContent.querySelector('p');
     const anchor = menuContent.querySelector('a');
 
-    if (!img || !p || !anchor) {
+    if (!svgUse || !p || !anchor) {
       console.error('Error: Missing elements inside body content template.');
       return;
     }
@@ -1758,11 +1760,19 @@ function renderBodyContent(contentContainer, type, menuData) {
     const randomIcon =
       bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
 
+    console.log(bodyContentIcons);
+    console.log(randomIcon);
+
     if (ukey && menuItem.prompt.toLowerCase() !== 'login') {
-      img.src = `${prefix}widgets/menu/imgs/${randomIcon.graphic}`;
-      img.width = randomIcon.width;
-      img.height = randomIcon.height;
-      img.alt = '';
+      if (svgUse) {
+        const iconId = randomIcon.iconId || 'icon-medal'; // fallback if not provided
+        svgUse.setAttribute('href', `#${iconId}`);
+
+        // Optionally allow per-item width/height
+        const svg = menuContent.querySelector('svg');
+        if (randomIcon.width) svg.setAttribute('width', randomIcon.width);
+        if (randomIcon.height) svg.setAttribute('height', randomIcon.height);
+      }
 
       p.querySelector('strong').textContent = menuItem.prompt;
       p.querySelector(
@@ -2199,7 +2209,7 @@ function initMenuTemplates() {
       id: 'menuTemplate',
       html: `
         <li role="presentation">
-          <svg width="50" height="50"><use href=""></use></svg>
+          <svg width="" height=""><use href=""></use></svg>
           <p><a href="" role="tab"><strong></strong><br/><span></span></a></p>
           <div class="circle">
             <div class="caret"></div>
@@ -2211,7 +2221,7 @@ function initMenuTemplates() {
       id: 'oneMenuTemplate',
       html: `
         <li>
-          <svg width="50" height="50"><use href=""></use></svg>
+          <svg width="" height=""><use href=""></use></svg>
           <p><a href="" role="tab"><strong></strong><br/><span></span></a></p>
         </li>
       `,
@@ -2220,7 +2230,7 @@ function initMenuTemplates() {
       id: 'menuContent',
       html: `
         <div role="listitem">
-          <img src="" width="" height="" alt="" />
+          <svg width="" height=""><use href=""></use></svg>
           <p><a href="#"><strong></strong><br/><span></span></a></p>
         </div>
       `,
