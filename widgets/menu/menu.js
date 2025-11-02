@@ -51,7 +51,7 @@ const menuMap = {
     subText: 'Periodic data',
   },
   5: {
-    iconId: 'co-icons-puzzle',
+    iconId: 'co-icons-puzzle-piece',
     width: '40',
     height: '40',
     subText: 'Survey data',
