@@ -155,6 +155,30 @@
     <text x="18" y="44" class="small">File</text>
   </symbol>
 
+  <symbol id="co-icons-generic-report" viewBox="0 0 200 200">
+  <defs>
+    <style type="text/css"><![CDATA[
+      .file { fill: none; stroke: #333; stroke-width:4; stroke-linejoin:round; }
+      .fold { fill: #6c757d; stroke: #333; stroke-width:2; }
+      .bar { fill: #333; }
+      .small { font-size:14px; fill:#333; font-weight:600; }
+    ]]></style>
+  </defs>
+
+  <!-- file shape -->
+  <path class="file" d="M12 12h70l34 34v102a8 8 0 0 1-8 8H20a8 8 0 0 1-8-8V20a8 8 0 0 1 8-8z"/>
+  
+  <!-- folded corner -->
+  <path class="fold" d="M82 12v34h34" />
+
+  <!-- three taller vertical bars near the bottom of the page -->
+  <rect x="36" y="95" width="8" height="25" class="bar"/>
+  <rect x="52" y="90" width="8" height="30" class="bar"/>
+  <rect x="68" y="100" width="8" height="20" class="bar"/>
+
+  <!-- optional small descriptor top-left -->
+  <text x="18" y="44" class="small">Report</text>
+</symbol>
 
 
   <!-- Add more <symbol> blocks here -->

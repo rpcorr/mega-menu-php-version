@@ -78,7 +78,7 @@ const menuSingle = [
 const bodyContentIcons = [
   {
     graphic: 'file-generic.svg',
-    iconId: 'co-icons-generic-file',
+    iconId: 'co-icons-generic-report',
     width: '95',
     height: '100',
   },
