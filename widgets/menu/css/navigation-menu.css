@@ -313,7 +313,7 @@ ul#menu-main-menu li.menu-item-has-children > a.active > ul ul.sub-menu {
   /* font-size: 1rem; */ /* this was overriding font size in tabs for smaller devices */
   line-height: 1.25;
   /* the style below may not be needed any more after completing the mega-menu */
-  padding: 1rem 1rem;
+  padding: 1rem 0rem;
   display: block !important;
 }
 
@@ -610,8 +610,8 @@ header nav ul.menu > li > .mega-menu {
 
 .mega-menu .tabs__panels svg {
   flex-shrink: 0; /* prevents squishing */
-  width: 95px;
-  height: 100px;
+  width: 85px;
+  height: 90px;
   display: block;
 }
 

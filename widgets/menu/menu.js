@@ -79,14 +79,14 @@ const bodyContentIcons = [
   {
     graphic: 'file-generic.svg',
     iconId: 'co-icons-generic-report',
-    width: '95',
-    height: '100',
+    width: '85',
+    height: '90',
   },
   {
     graphic: 'file-generic.svg',
     iconId: 'co-icons-generic-file',
-    width: '95',
-    height: '100',
+    width: '85',
+    height: '90',
   },
 ];
 
