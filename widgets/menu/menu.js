@@ -45,19 +45,19 @@ let winWidth = 0;
 // LibPAS, InformUS, LibSat menu items
 const menuMap = {
   2: {
-    iconId: 'icon-pie',
+    iconId: 'co-icons-pie',
     width: '40',
     height: '40',
     subText: 'Periodic data',
   },
   5: {
-    iconId: 'icon-puzzle',
+    iconId: 'co-icons-puzzle',
     width: '40',
     height: '40',
     subText: 'Survey data',
   },
   1: {
-    iconId: 'icon-medal',
+    iconId: 'co-icons-medal',
     width: '40',
     height: '40',
     subText: 'Qualitative data',
@@ -66,7 +66,7 @@ const menuMap = {
 
 const menuSingle = [
   {
-    iconId: 'icon-pie',
+    iconId: 'co-icons-pie',
     width: '36',
     height: '33',
     url: '#',
@@ -78,13 +78,13 @@ const menuSingle = [
 const bodyContentIcons = [
   {
     graphic: 'file-generic.svg',
-    iconId: 'icon-generic-file',
+    iconId: 'co-icons-generic-file',
     width: '95',
     height: '100',
   },
   {
     graphic: 'file-generic.svg',
-    iconId: 'icon-generic-file',
+    iconId: 'co-icons-generic-file',
     width: '95',
     height: '100',
   },
@@ -1647,7 +1647,7 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
 
         // Populate the template elements with item data
         if (svgUse) {
-          const iconId = item.iconId || 'icon-medal'; // fallback if not provided
+          const iconId = item.iconId || 'co-icons-medal'; // fallback if not provided
           svgUse.setAttribute('href', `#${iconId}`);
 
           // Optionally allow per-item width/height
@@ -1765,7 +1765,7 @@ function renderBodyContent(contentContainer, type, menuData) {
 
     if (ukey && menuItem.prompt.toLowerCase() !== 'login') {
       if (svgUse) {
-        const iconId = randomIcon.iconId || 'icon-medal'; // fallback if not provided
+        const iconId = randomIcon.iconId || 'co-icons-medal'; // fallback if not provided
         svgUse.setAttribute('href', `#${iconId}`);
 
         // Optionally allow per-item width/height
@@ -2240,7 +2240,7 @@ function initMenuTemplates() {
       html: `
         <div class="extra-content">
           <div class="info-box">
-            <svg width="50" height="50"><use href="#icon-lightbulb"></use></svg>
+            <svg width="50" height="50"><use href="#co-icons-lightbulb"></use></svg>
             <p><strong></strong></p>
           </div>
           <div id="bodyContent"></div>

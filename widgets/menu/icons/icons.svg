@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-  <symbol id="icon-lightbulb" viewBox="0 0 200 200">
+  <symbol id="co-icons-lightbulb" viewBox="0 0 200 200">
     <!-- Light bulb SVG contents -->
     <g stroke="#FFD700" stroke-width="3" opacity="0.8">
       <line x1="100" y1="20" x2="100" y2="35" />
@@ -30,7 +30,7 @@
     <circle cx="100" cy="100" r="50" fill="none" stroke="#FFFF99" stroke-width="0.5" opacity="0.2" />
   </symbol>
 
-  <symbol id="icon-pie" viewBox="0 0 128 128">
+  <symbol id="co-icons-pie" viewBox="0 0 128 128">
   <defs>
     <style>
       .slice { stroke: #000; stroke-width:2; stroke-linejoin:round; fill: none; }
@@ -68,7 +68,7 @@
     Z"></path>
 </symbol>
 
-  <symbol id="icon-medal" viewBox="0 0 100 100">
+  <symbol id="co-icons-medal" viewBox="0 0 100 100">
     <!-- Your medal SVG goes here -->
     <!-- Ribbon -->
     <polygon points="40,0 50,20 60,0 70,0 50,30 30,0" fill="black"></polygon>
@@ -80,7 +80,7 @@
     <polygon points="50,50 54,62 66,62 56,70 60,82 50,75 40,82 44,70 34,62 46,62" fill="black"></polygon>
   </symbol>
 
-  <symbol id="icon-puzzle" viewBox="0 0 360 360">
+  <symbol id="co-icons-puzzle" viewBox="0 0 360 360">
     <!-- Your medal SVG goes here -->
     <g>
 	<g>
@@ -131,7 +131,7 @@
 
 
   <!-- Generic File -->
-  <symbol id="icon-generic-file" viewBox="0 0 200 200">
+  <symbol id="co-icons-generic-file" viewBox="0 0 200 200">
     <defs>
     <style type="text/css"><![CDATA[
       .file { fill: none; stroke: #333; stroke-width:4; stroke-linejoin:round; }
