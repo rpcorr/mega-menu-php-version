@@ -1769,9 +1769,9 @@ function renderBodyContent(contentContainer, type, menuData) {
         svgUse.setAttribute('href', `#${iconId}`);
 
         // Optionally allow per-item width/height
-        const svg = menuContent.querySelector('svg');
-        if (randomIcon.width) svg.setAttribute('width', randomIcon.width);
-        if (randomIcon.height) svg.setAttribute('height', randomIcon.height);
+        //const svg = menuContent.querySelector('svg');
+        //if (randomIcon.width) svg.setAttribute('width', randomIcon.width);
+        //if (randomIcon.height) svg.setAttribute('height', randomIcon.height);
       }
 
       p.querySelector('strong').textContent = menuItem.prompt;
