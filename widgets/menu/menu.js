@@ -88,6 +88,12 @@ const bodyContentIcons = [
     width: '85',
     height: '90',
   },
+  {
+    graphic: 'file-generic.svg',
+    iconId: 'co-icons-data-input',
+    width: '85',
+    height: '90',
+  },
 ];
 
 const extraContent = [
