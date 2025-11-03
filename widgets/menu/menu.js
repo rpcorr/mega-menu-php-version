@@ -77,19 +77,16 @@ const menuSingle = [
 
 const bodyContentIcons = [
   {
-    graphic: 'file-generic.svg',
     iconId: 'co-icons-generic-report',
     width: '85',
     height: '90',
   },
   {
-    graphic: 'file-generic.svg',
     iconId: 'co-icons-generic-file',
     width: '85',
     height: '90',
   },
   {
-    graphic: 'file-generic.svg',
     iconId: 'co-icons-data-input',
     width: '85',
     height: '90',
@@ -1760,9 +1757,6 @@ function renderBodyContent(contentContainer, type, menuData) {
 
     const randomIcon =
       bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
-
-    console.log(bodyContentIcons);
-    console.log(randomIcon);
 
     if (ukey && menuItem.prompt.toLowerCase() !== 'login') {
       if (svgUse) {
