@@ -42,4 +42,7 @@
   --titleBannerColour: #ffe6f2;
 
   --subTitleColour: #66004d;
+
+  --menuListTextColour: #000;
+  --menuListTextColourActiveFocus: #000;
 }

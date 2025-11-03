@@ -12,8 +12,8 @@
   --topMenuTextColour: #2a3338;
   --topMenuTextColourActiveFocus: #e8d3e4;
 
-  --firstSubLevelBgColour: rgba(206, 43, 43, 0.9);
-  --firstSubLevelTextColour: #fff;
+  --firstSubLevelBgColour: rgba(1, 149, 159, 0.9);
+  --firstSubLevelTextColour: #000;
   --firstSubLevelTextColourActiveFocus: #e8d3e4;
 
   --secondSubLevelBgColour: #01959f;
@@ -42,4 +42,7 @@
   --titleBannerColour: #e8d3e4;
 
   --subTitleColour: #2a3338;
+
+  --menuListTextColour: #000;
+  --menuListTextColourActiveFocus: #000;
 }

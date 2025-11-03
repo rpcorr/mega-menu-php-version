@@ -505,7 +505,7 @@ header nav ul.menu > li > .mega-menu {
   grid-template-rows: 1fr;
   grid-template-columns: 250px 2fr 1fr;
   border: 1px solid #000;
-  background-color: #999;
+  background-color: var(--firstSubLevelBgColour);
   padding-bottom: 1rem;
   padding-right: 2rem;
   height: 100%;
@@ -532,7 +532,10 @@ header nav ul.menu > li > .mega-menu {
 .mega-menu .menu-list a:hover,
 .mega-menu .menu-list a:focus {
   background-color: #fff !important;
-  color: #000 !important;
+}
+
+.mega-menu .menu-list li:hover a {
+  color: var(--menuListTextColourActiveFocus) !important;
 }
 
 .mega-menu .menu-list a:focus,
@@ -678,7 +681,7 @@ header nav ul.menu > li > .mega-menu {
   grid-template-rows: 1fr;
   grid-template-columns: 2fr 1fr 1fr;
   border: 1px solid #000;
-  background-color: #999;
+  background-color: var(--firstSubLevelBgColour);
   padding-bottom: 1rem;
   padding-right: 2rem;
   height: 100%;
@@ -1054,6 +1057,28 @@ header nav ul.menu > li > .mega-menu {
 /* first submenu text colour */
 .menu-main-menu-container > #menu-main-menu > li > .mega-menu a {
   color: #000;
+}
+
+.menu-main-menu-container > #menu-main-menu > li > .mega-menu .menu-list a {
+  color: var(--menuListTextColour);
+}
+
+.menu-main-menu-container
+  > #menu-main-menu
+  > li
+  > .mega-menu
+  .menu-list
+  a:hover {
+  color: var(--menuListTextColourActiveFocus);
+}
+
+.menu-main-menu-container
+  > #menu-main-menu
+  > li
+  > .mega-menu
+  .menu-list
+  a[aria-selected='true'] {
+  color: var(--menuListTextColourActiveFocus);
 }
 
 /* first submenu hover and focus font colour */
