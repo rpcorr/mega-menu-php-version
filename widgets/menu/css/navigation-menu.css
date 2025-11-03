@@ -604,6 +604,12 @@ header nav ul.menu > li > .mega-menu {
   padding-left: 1em !important;
 }
 
+.mega-menu .menu-list svg {
+  flex-shrink: 0; /* prevents squishing */
+  width: 40px;
+  height: 40px;
+}
+
 .mega-menu .tabs__panels svg,
 .mega-menu .left-content svg {
   flex-shrink: 0; /* prevents squishing */

@@ -1655,11 +1655,6 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
         if (svgUse) {
           const iconId = item.iconId || 'co-icons-medal'; // fallback if not provided
           svgUse.setAttribute('href', `#${iconId}`);
-
-          // Optionally allow per-item width/height
-          const svg = menuContent.querySelector('svg');
-          if (item.width) svg.setAttribute('width', item.width);
-          if (item.height) svg.setAttribute('height', item.height);
         }
         anchor.href = item.url;
         strong.textContent = item.menuTitle;
@@ -2210,7 +2205,7 @@ function initMenuTemplates() {
       id: 'menuTemplate',
       html: `
         <li role="presentation">
-          <svg width="" height=""><use href=""></use></svg>
+          <svg><use href=""></use></svg>
           <p><a href="" role="tab"><strong></strong><br/><span></span></a></p>
           <div class="circle">
             <div class="caret"></div>
