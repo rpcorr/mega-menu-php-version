@@ -134,11 +134,13 @@
   <symbol id="co-icons-generic-file" viewBox="12 12 100 154">
     <defs>
     <style type="text/css"><![CDATA[
-      .file { fill: none; stroke: #333; stroke-width:4; stroke-linejoin:round; }
-      .fold { fill: #6c757d; stroke: #333; stroke-width:2; }
-      .badge { fill: #6c757d; }
+      .file { fill: none; stroke: inherit; stroke-width:4; stroke-linejoin:round; }
+      .fold { fill: inherit; stroke: inherit; stroke-width:2; }
+      .badge { fill: inherit; }
       .ext { font-family: Arial, Helvetica, sans-serif; font-weight:700; font-size:28px; fill: #fff; }
       .small { font-size:14px; fill:#333; font-weight:600; }
+      .bar { fill: inherit; }
+      .arrow { fill: inherit; }
     ]]></style>
   </defs>
 
@@ -156,15 +158,6 @@
   </symbol>
 
   <symbol id="co-icons-generic-report" viewBox="12 12 100 154">
-  <defs>
-    <style type="text/css"><![CDATA[
-      .file { fill: none; stroke: #333; stroke-width:4; stroke-linejoin:round; }
-      .fold { fill: #6c757d; stroke: #333; stroke-width:2; }
-      .bar { fill: #333; }
-      .small { font-size:14px; fill:#333; font-weight:600; }
-    ]]></style>
-  </defs>
-
   <!-- file shape -->
   <path class="file" d="M12 12h70l34 34v102a8 8 0 0 1-8 8H20a8 8 0 0 1-8-8V20a8 8 0 0 1 8-8z"/>
   
@@ -181,15 +174,6 @@
 </symbol>
 
 <symbol id="co-icons-data-input" viewBox="12 12 100 154">
-  <defs>
-    <style type="text/css"><![CDATA[
-      .file { fill: none; stroke: #333; stroke-width:4; stroke-linejoin:round; }
-      .fold { fill: #6c757d; stroke: #333; stroke-width:2; }
-      .arrow { fill: #333; }
-      .small { font-size:14px; fill:#333; font-weight:600; }
-    ]]></style>
-  </defs>
-
   <!-- file shape -->
   <path class="file" d="M12 12h70l34 34v102a8 8 0 0 1-8 8H20a8 8 0 0 1-8-8V20a8 8 0 0 1 8-8z"/>
   

@@ -604,7 +604,8 @@ header nav ul.menu > li > .mega-menu {
   padding-left: 1em !important;
 }
 
-.mega-menu .tabs__panels svg {
+.mega-menu .tabs__panels svg,
+.mega-menu .left-content svg {
   flex-shrink: 0; /* prevents squishing */
   width: 80px;
   height: 85px;
@@ -1607,4 +1608,18 @@ li > .active {
   clip: rect(0, 0, 0, 0);
   border: 0;
   white-space: nowrap;
+}
+
+/*******************************************
+      SVG styles
+/********************************************/
+
+svg {
+  fill: #000;
+  stroke: #000;
+}
+
+[role='listitem'] svg {
+  fill: var(--bodyIconFillColour);
+  stroke: var(--bodyIconStrokeColour);
 }
