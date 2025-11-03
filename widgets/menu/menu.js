@@ -1773,11 +1773,6 @@ function renderBodyContent(contentContainer, type, menuData) {
       if (svgUse) {
         const iconId = randomIcon.iconId || 'co-icons-medal'; // fallback if not provided
         svgUse.setAttribute('href', `#${iconId}`);
-
-        // Optionally allow per-item width/height
-        //const svg = menuContent.querySelector('svg');
-        //if (randomIcon.width) svg.setAttribute('width', randomIcon.width);
-        //if (randomIcon.height) svg.setAttribute('height', randomIcon.height);
       }
 
       p.querySelector('strong').textContent = menuItem.prompt;
@@ -2227,7 +2222,7 @@ function initMenuTemplates() {
       id: 'oneMenuTemplate',
       html: `
         <li>
-          <svg width="" height=""><use href=""></use></svg>
+          <svg><use href=""></use></svg>
           <p><a href="" role="tab"><strong></strong><br/><span></span></a></p>
         </li>
       `,
@@ -2236,7 +2231,7 @@ function initMenuTemplates() {
       id: 'menuContent',
       html: `
         <div role="listitem">
-          <svg width="" height=""><use href=""></use></svg>
+          <svg><use href=""></use></svg>
           <p><a href="#"><strong></strong><br/><span></span></a></p>
         </div>
       `,
