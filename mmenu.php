@@ -210,7 +210,7 @@ else $_SESSION['switchAble'] = false;
       console.log(`I am outside of breadcrumbs.js. Querystring is ${queryString}`);
       
     </script>
-    <script src='<?php echo getRelativePath(''); ?>assets/js/user-pages.js' defer></script>
-    <script src='<?php echo getRelativePath(''); ?>assets/js/menu.js' defer></script>
+    <script src='<?php echo getRelativePath(''); ?>widgets/menu/js/user-pages.js' defer></script>
+    <script src='<?php echo getRelativePath(''); ?>widgets/menu/js/menu.js' defer></script>
   </body>
 </html>
