@@ -35,8 +35,14 @@
 
   --bodyBackgroundColour: #fff;
 
-  --bodyIconStrokeColour: #ff0000;
-  --bodyIconFillColour: #ff0000;
+  --bodyReportIconStrokeColour: #ff0000;
+  --bodyReportIconFillColour: #ff0000;
+
+  --bodyDataInputIconStrokeColour: #2b9f84;
+  --bodyDataInputIconFillColour: #2b9f84;
+
+  --bodyFileIconStrokeColour: #ff90b7;
+  --bodyFileIconFillColour: #ff90b7;
 
   --titleBannerBgColour: #ff90b7;
   --titleBannerColour: #000;

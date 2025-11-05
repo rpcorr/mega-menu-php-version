@@ -1746,11 +1746,12 @@ function renderBodyContent(contentContainer, type, menuData) {
    */
   function createMenuContent(menuItem) {
     const menuContent = contentTemplate.content.cloneNode(true);
+    const svg = menuContent.querySelector('svg');
     const svgUse = menuContent.querySelector('svg use');
     const p = menuContent.querySelector('p');
     const anchor = menuContent.querySelector('a');
 
-    if (!svgUse || !p || !anchor) {
+    if (!svg || !svgUse || !p || !anchor) {
       console.error('Error: Missing elements inside body content template.');
       return;
     }
@@ -1762,6 +1763,19 @@ function renderBodyContent(contentContainer, type, menuData) {
       if (svgUse) {
         const iconId = randomIcon.iconId || 'co-icons-medal'; // fallback if not provided
         svgUse.setAttribute('href', `#${iconId}`);
+
+        const fileType = extractIconName(iconId);
+        console.log(fileType);
+
+        svg.classList.add(fileType);
+
+        function extractIconName(input) {
+          const prefix = 'co-icons-';
+          if (input.startsWith(prefix)) {
+            return input.substring(prefix.length);
+          }
+          return null; // or return input if you'd rather return the full input when it doesn't match
+        }
       }
 
       p.querySelector('strong').textContent = menuItem.prompt;

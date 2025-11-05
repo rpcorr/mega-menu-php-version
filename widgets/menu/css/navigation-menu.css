@@ -1649,7 +1649,22 @@ svg {
   stroke: #000;
 }
 
-[role='listitem'] svg {
+/* [role='listitem'] svg {
   fill: var(--bodyIconFillColour);
   stroke: var(--bodyIconStrokeColour);
+} */
+
+[role='listitem'] svg.generic-file {
+  fill: var(--bodyFileIconFillColour);
+  stroke: var(--bodyFileIconStrokeColour);
+}
+
+[role='listitem'] svg.generic-report {
+  fill: var(--bodyReportIconFillColour);
+  stroke: var(--bodyReportIconStrokeColour);
+}
+
+[role='listitem'] svg.data-input {
+  fill: var(--bodyDataInputIconFillColour);
+  stroke: var(--bodyDataInputIconStrokeColour);
 }
