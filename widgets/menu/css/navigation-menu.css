@@ -216,18 +216,28 @@ header {
 }
 
 #branding {
-  width: 11rem;
   float: left;
   padding: 0.75rem 0 0.5rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   background-color: #fff;
+
+  /* Make container responsive */
+  /*width: 70rem;*/ /* Desktop default */
+  max-width: 70%; /* Never overflow on smaller screens */
+}
+
+#branding img {
+  height: auto; /* Maintain aspect ratio */
+  max-height: 60px; /* Keep original max height */
+  width: auto; /* Let width adjust proportionally */
+  max-width: 100%; /* Shrink to fit container */
 }
 
 #siteIdentity {
   padding: 0;
-  width: 9rem;
+  min-width: 9rem;
   max-width: 100%;
   margin-right: 0;
   text-align: center;
@@ -246,6 +256,10 @@ header {
 
 #siteIdentity a {
   display: block;
+}
+
+.logo {
+  margin-left: 2em;
 }
 
 /* main navigation */
@@ -982,10 +996,11 @@ header nav ul.menu > li > .mega-menu {
 
   .simple-logo {
     display: block;
+    margin-left: 1.5em;
   }
 
   #branding {
-    width: 30%;
+    width: 30% !important;
   }
 
   .menu-main-menu-container > #menu-main-menu > li > a,
@@ -1020,6 +1035,10 @@ header nav ul.menu > li > .mega-menu {
   .mega-menu .tabs__panels [role='listitem'] p {
     margin: 0;
     padding-right: 0.5rem;
+  }
+
+  .simple-logo {
+    margin-left: 1em;
   }
 }
 
@@ -1128,6 +1147,10 @@ main {
 @media (max-width: 27em) {
   main {
     min-height: 85vh;
+  }
+
+  #siteIdentity {
+    min-width: unset;
   }
 }
 
