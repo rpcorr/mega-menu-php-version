@@ -19,14 +19,11 @@ const selectThemeCssPath = `${prefix}widgets/selectTheme/selectTheme.min.css`;
 const sidebarJsPath = `${prefix}widgets/sidebar/sidebar.js`;
 const sidebarCssPath = `${prefix}widgets/sidebar/sidebar.css`;
 
-const breadcrumbsJsPath = `${prefix}widgets/breadcrumbs/breadcrumbs.js`;
-
 const timerInactivityJsPath = `${prefix}widgets/timerInactivity/timerInactivity.js`;
 ////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////
 // Enable/disable widgets
-const bBreadcrumbsWidget = true;
 const bSidebarWidget = true;
 const bTimerInactivityWidget = false;
 ////////////////////////////////////////////////////
@@ -687,45 +684,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       // fallback
       (document.body || document.head).appendChild(sidebarScript);
-    }
-  }
-
-  // Dynamically add breadcrumbs.js if tag exists and place it right after menu.js
-  if (bBreadcrumbsWidget) {
-    const breadcrumbScriptSrc = breadcrumbsJsPath;
-
-    // --- Insert breadcrumbs.js after menu.js ---
-    const breadcrumbsScript = document.createElement('script');
-    breadcrumbsScript.src = breadcrumbScriptSrc;
-    breadcrumbsScript.defer = true;
-
-    // breadcrumbsScript.onload = () => {
-    //   // Make sure the nav exists before generating
-    //   insertBreadcrumbNav();
-
-    //   if (typeof generateBreadcrumbs === 'function') {
-    //     generateBreadcrumbs();
-    //   } else {
-    //     console.warn('GenerateBreadcrumbs() not found yet');
-    //   }
-    // };
-
-    // Insert after menu.js
-    // const menuScript = document.querySelector('script[src*="menu.js"]');
-    // if (menuScript && menuScript.parentNode) {
-    //   menuScript.parentNode.insertBefore(
-    //     breadcrumbsScript,
-    //     menuScript.nextSibling
-    //   );
-    // } else {
-    //   // fallback (should never happen)
-    //   (document.body || document.head).appendChild(breadcrumbScript);
-    // }
-  } else {
-    // No breadcrumbs: push <main> down
-    const mainElement = document.querySelector('main');
-    if (mainElement) {
-      mainElement.style.marginTop = '8em';
     }
   }
 
