@@ -1723,7 +1723,6 @@ function renderBodyContent(contentContainer, type, menuData) {
         svgUse.setAttribute('href', `#${iconId}`);
 
         const fileType = extractIconName(iconId);
-        console.log(fileType);
 
         svg.classList.add(fileType);
 
