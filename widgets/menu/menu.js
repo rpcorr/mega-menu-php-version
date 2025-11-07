@@ -39,6 +39,156 @@ let navItems = [];
 let output = '';
 let winWidth = 0;
 
+/* ============================================================================
+   UTILITY FUNCTIONS - Path Building
+   ============================================================================ */
+
+/**
+ * Builds consistent paths for menu widget resources
+ */
+const MenuPaths = {
+  _base: getRelativePath(),
+
+  widget(name, file) {
+    return `${this._base}widgets/${name}/${file}`;
+  },
+
+  menuCss(file) {
+    return `${this._base}widgets/menu/css/${file}`;
+  },
+
+  menuImg(file) {
+    return `${this._base}widgets/menu/imgs/${file}`;
+  },
+};
+
+/* ============================================================================
+   UTILITY FUNCTIONS - Resource Loading
+   ============================================================================ */
+
+/**
+ * Loads a JavaScript file dynamically
+ * @param {string} src - Path to the script file
+ * @param {HTMLElement} insertAfter - Element to insert after (optional)
+ * @returns {HTMLScriptElement} The created script element
+ */
+function loadScript(src, insertAfter = null) {
+  const script = document.createElement('script');
+  script.src = src;
+  script.defer = true;
+
+  if (insertAfter && insertAfter.nextSibling) {
+    insertAfter.parentNode.insertBefore(script, insertAfter.nextSibling);
+  } else if (insertAfter) {
+    insertAfter.parentNode.appendChild(script);
+  } else {
+    document.body.appendChild(script);
+  }
+
+  return script;
+}
+
+/**
+ * Loads a CSS file dynamically
+ * @param {string} href - Path to the CSS file
+ * @param {HTMLElement} insertAfter - Element to insert after (optional)
+ * @returns {HTMLLinkElement} The created link element
+ */
+function loadCSS(href, insertAfter = null) {
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = href;
+
+  if (insertAfter && insertAfter.nextSibling) {
+    insertAfter.parentNode.insertBefore(link, insertAfter.nextSibling);
+  } else if (insertAfter) {
+    insertAfter.parentNode.appendChild(link);
+  } else {
+    (document.head || document.body).appendChild(link);
+  }
+
+  return link;
+}
+
+/* ============================================================================
+   UTILITY FUNCTIONS - API & Network
+   ============================================================================ */
+
+/**
+ * Fetches data with automatic retry on failure
+ * @param {string} url - URL to fetch
+ * @param {number} maxRetries - Maximum retry attempts (default: 3)
+ * @returns {Promise} Parsed JSON response
+ */
+async function fetchWithRetry(url, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error(
+        `Fetch attempt ${attempt}/${maxRetries} failed:`,
+        error.message
+      );
+
+      if (attempt === maxRetries) {
+        showErrorAlert('Unable to load menu. Please refresh the page.');
+        throw error;
+      }
+
+      // Wait before retry (exponential backoff)
+      await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
+    }
+  }
+}
+
+/**
+ * Shows a dismissible error alert to the user
+ * @param {string} message - Error message to display
+ */
+function showErrorAlert(message) {
+  const alert = document.createElement('div');
+  alert.className = 'menu-error-alert';
+  alert.setAttribute('role', 'alert');
+  alert.innerHTML = `
+    <strong>Error:</strong> ${message}
+    <button onclick="this.parentElement.remove()" aria-label="Close alert">×</button>
+  `;
+
+  document.body.insertAdjacentElement('afterbegin', alert);
+
+  // Auto-dismiss after 10 seconds
+  setTimeout(() => alert.remove(), 10000);
+}
+
+/* ============================================================================
+   UTILITY FUNCTIONS - Validation & Helpers
+   ============================================================================ */
+
+/**
+ * Checks if a section ID is a service section (LibPAS, InformsUs, LibSat)
+ * @param {string} sectionId - Section ID to check
+ * @returns {boolean} True if service section
+ */
+function isServiceSection(sectionId) {
+  return ['2', '5', '1'].includes(sectionId);
+}
+
+/**
+ * Checks if a string is empty or contains only whitespace
+ * @param {string} str - String to check
+ * @returns {boolean} True if empty
+ */
+function isEmpty(str) {
+  return !str || str.trim().length === 0;
+}
+
 // LibPAS, InformUS, LibSat menu items
 const menuMap = {
   2: {
@@ -161,13 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // call injectNavigationMenuCSS to ensure navigation-menu.css is present
   injectNavigationMenuCSS();
 
-  fetch(pagesJSONfile)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
+  fetchWithRetry(pagesJSONfile)
     .then((data) => {
       allMenuItemsinArray = data;
 
@@ -266,11 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </li>`;
             }
-          } else if (
-            section.section_id === '2' ||
-            section.section_id === '5' ||
-            section.section_id === ' 1'
-          ) {
+          } else if (isServiceSection(section.section_id)) {
             if (createdServicesMenu === false) {
               createdServicesMenu = true;
               menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
@@ -279,7 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </li>`;
             }
-          } else if (section.section_id === '0' && ukey == '') {
+          } else if (section.section_id === '0' && ukey === '') {
             // Logout state
             data.pages.forEach((page) => {
               menuHTML += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
@@ -533,7 +673,8 @@ document.addEventListener('DOMContentLoaded', () => {
       watchForHover();
     })
     .catch((error) => {
-      console.error('There was a problem with the fetch operation:', error);
+      console.error('Failed to load menu data:', error);
+      // Error alert already shown to user by fetchWithRetry
     });
 
   moreWidth = document.getElementById('menu-main-menu').offsetWidth;
@@ -583,108 +724,49 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Dynamically add switchable.js if switchAble is true and place it right before menu.js
-  if (switchAble || Number(localStorage.getItem('ukey_switch_pending'))) {
-    const switchableScriptSrc = switchableJsPath;
-    const switchableScript = document.createElement('script');
-    switchableScript.src = switchableScriptSrc;
-    switchableScript.defer = true;
-
-    // Find the script element that loaded menu.js
+  if (switchAble === 1 || Number(localStorage.getItem('ukey_switch_pending'))) {
     const currentScript = document.querySelector('script[src*="menu.js"]');
-
-    // Insert the new script before menu.js
-    currentScript.parentNode.insertBefore(switchableScript, currentScript);
+    loadScript(switchableJsPath, currentScript);
   }
 
   // Dynamically add selectTheme.js and selectTheme.min.css only on preferences.php
   if (isPreferencesPage && ukey) {
-    // Insert selectTheme.js after menu.js
-    const selectThemeScript = document.createElement('script');
-    selectThemeScript.src = selectThemeJsPath;
-    selectThemeScript.defer = true;
-
     const menuScript = document.querySelector('script[src*="menu.js"]');
-    if (menuScript)
-      menuScript.parentNode.insertBefore(
-        selectThemeScript,
-        menuScript.nextSibling
-      );
+    loadScript(selectThemeJsPath, menuScript);
 
-    // --- Insert selectTheme.min.css ---
-    const linkColours = document.createElement('link');
-    linkColours.rel = 'stylesheet';
-    linkColours.type = 'text/css';
-    linkColours.href = selectThemeCssPath;
-
-    // Insert after navigation-menu.css in its current container
     const navLink = document.querySelector('link[href*="navigation-menu.css"]');
-    const container = navLink
-      ? navLink.parentNode
-      : document.head || document.body || document.documentElement;
+    loadCSS(selectThemeCssPath, navLink);
 
-    if (navLink) {
-      container.insertBefore(linkColours, navLink.nextSibling);
-    } else {
-      container.appendChild(linkColours);
-    }
-
-    console.log(`Injected selectTheme.min.css: ${linkColours.href}`);
+    console.log(`Injected selectTheme.min.css: ${selectThemeCssPath}`);
   }
 
   // Dynamically add sidebar.js if sidebar enabled and place it right after menu.js or breadcrumbs.js
   if (bSidebarWidget) {
-    // Create sidebar.css link
-    const linkSidebar = document.createElement('link');
-    linkSidebar.rel = 'stylesheet';
-    linkSidebar.type = 'text/css';
-    linkSidebar.href = sidebarCssPath;
-
-    // Insert CSS right after navigation-menu.css
+    // Load CSS
     const navCss = document.querySelector('link[href*="navigation-menu.css"]');
-    if (navCss && navCss.parentNode) {
-      navCss.parentNode.insertBefore(linkSidebar, navCss.nextSibling);
-    } else {
-      (document.head || document.body).appendChild(linkSidebar);
-    }
+    loadCSS(sidebarCssPath, navCss);
 
-    // Create sidebar.js script
-    const sidebarScript = document.createElement('script');
-    sidebarScript.src = sidebarJsPath;
-    sidebarScript.defer = true;
-
-    // When sidebar.js has fully loaded…
-    sidebarScript.onload = () => {
-      if (typeof insertSidebar === 'function') insertSidebar();
-
-      // Now the button exists — safe to add listener
-      const toggleBtn = document.querySelector('.toggle-btn');
-      if (toggleBtn) {
-        toggleBtn.addEventListener('click', toggleSidebar);
-      } else {
-        console.warn('⚠️ Toggle button not found — event not attached');
-      }
-
-      // Optional: Escape key handler
-      document.addEventListener('keydown', handleEscapeKey);
-    };
-
-    // Insert JS right after menu.js or breadcrumbs.js
+    // Load script with onload handler
     const breadcrumbsScript = document.querySelector(
       'script[src*="generateBreadcrumbs.js"]'
     );
     const menuScript = document.querySelector('script[src*="menu.js"]');
+    const insertAfter = breadcrumbsScript || menuScript;
 
-    if (breadcrumbsScript && breadcrumbsScript.parentNode) {
-      breadcrumbsScript.parentNode.insertBefore(
-        sidebarScript,
-        breadcrumbsScript.nextSibling
-      );
-    } else if (menuScript && menuScript.parentNode) {
-      menuScript.parentNode.insertBefore(sidebarScript, menuScript.nextSibling);
-    } else {
-      // fallback
-      (document.body || document.head).appendChild(sidebarScript);
-    }
+    const sidebarScript = loadScript(sidebarJsPath, insertAfter);
+
+    sidebarScript.onload = () => {
+      if (typeof insertSidebar === 'function') insertSidebar();
+
+      const toggleBtn = document.querySelector('.toggle-btn');
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', toggleSidebar);
+      } else {
+        console.warn('⚠️ Toggle button not found – event not attached');
+      }
+
+      document.addEventListener('keydown', handleEscapeKey);
+    };
   }
 
   // --- Check if user/ukey is defined ---
@@ -707,7 +789,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.type = 'text/css';
-    link.href = `${prefix}widgets/menu/css/templatesStyles/${theme}.css`;
+    link.href = MenuPaths.menuCss(`templatesStyles/${theme}.css`);
 
     // --- Insert theme link right after navigation-menu.css (if exists) ---
     const navLink = document.querySelector('link[href*="navigation-menu.css"]');
@@ -722,22 +804,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (bTimerInactivityWidget) {
-      // Check for ukey in cookies or URL params
       const cookieUkey = getCookie('ukey');
       const urlParams = new URLSearchParams(window.location.search);
       const requestUkey = urlParams.get('ukey');
 
       if (cookieUkey || requestUkey) {
-        const timerScriptSrc = timerInactivityJsPath;
-
-        // Create the new script element
-        const script = document.createElement('script');
-        script.src = timerScriptSrc;
-        script.defer = true;
-
         // Find scripts in priority order
         const scripts = [...document.getElementsByTagName('script')];
-
         const sidebarScript = scripts.find((s) => s.src.includes('sidebar.js'));
         const breadcrumbsScript = scripts.find((s) =>
           s.src.includes('breadcrumbs.js')
@@ -746,13 +819,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Choose target in priority: sidebar > breadcrumbs > menu
         const targetScript = sidebarScript || breadcrumbsScript || menuScript;
-
-        if (targetScript && targetScript.parentNode) {
-          targetScript.insertAdjacentElement('afterend', script);
-        } else {
-          // Fallback if none found — append to body
-          document.body.appendChild(script);
-        }
+        loadScript(timerInactivityJsPath, targetScript);
       }
     }
   }
@@ -2245,13 +2312,13 @@ function renderHeader(options = {}) {
             <div id="siteIdentity" style="background-color: ${logoBgColour}; "> 
               <div class="logo">
                 <a href="${relPath}index.php" rel="home">
-                  <img src="${relPath}${logoPath}${logo}"
+                  <img src="${MenuPaths.menuImg(logo)}"
                        alt="${logoAlt}" height="60">
                 </a>
               </div>
               <div class="simple-logo">
                 <a href="${relPath}index.php" rel="home">
-                  <img src="${relPath}${logoPath}${simpleLogo}"
+                  <img src="${MenuPaths.menuImg(simpleLogo)}"
                        alt="${simpleLogoAlt}" height="60">
                 </a>
               </div>
@@ -2276,14 +2343,7 @@ function renderHeader(options = {}) {
 }
 
 function injectNavigationMenuCSS() {
-  const relPath = getRelativePath();
-
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.type = 'text/css';
-  link.href = `${relPath}widgets/menu/css/navigation-menu.css`;
-
-  document.head.appendChild(link);
+  loadCSS(MenuPaths.menuCss('navigation-menu.css'));
 }
 
 function insertSkipMenuAnchor() {
