@@ -24,7 +24,7 @@ const timerInactivityJsPath = `${prefix}widgets/timerInactivity/timerInactivity.
 
 ////////////////////////////////////////////////////
 // Enable/disable widgets
-const bSidebarWidget = true;
+const bSidebarWidget = false;
 const bTimerInactivityWidget = false;
 ////////////////////////////////////////////////////
 
