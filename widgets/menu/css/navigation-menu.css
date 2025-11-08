@@ -1544,10 +1544,21 @@ svg {
 
   .menu-main-menu-container > #menu-main-menu > li > .sub-menu a:focus {
     color: var(--mobileMenuTextColour);
-    /* color: peru; */
   }
 
   .tabs__panels a:focus {
+    color: var(--mobileMenuTextColourFocus) !important;
+  }
+
+  .menu-main-menu-container > #menu-main-menu > li > .mega-menu .menu-list a {
+    color: var(--menuListTextColour);
+  }
+
+  .menu-list a:not([aria-selected='true']) {
+    color: var(--menuListTextColour) !important;
+  }
+
+  .mega-menu .menu-list a:focus {
     color: var(--mobileMenuTextColourFocus) !important;
   }
 }
