@@ -25,12 +25,12 @@ radioButtons.forEach(function (radioButton) {
 });
 
 function selectStylesheet(stylesheetName) {
-  const newHref = `${prefix}assets/css/templatesStyles/${stylesheetName}.css`;
+  const newHref = `${prefix}widgets/menu/css/templatesStyles/${stylesheetName}.css`;
   console.log('Applying theme:', newHref);
 
   // Find existing theme <link> (even if it's in <body>)
   let existing = document.querySelector(
-    'link[rel="stylesheet"][href*="assets/css/templatesStyles/"]'
+    'link[rel="stylesheet"][href*="widgets/menu/css/templatesStyles/"]'
   );
 
   if (existing) {
