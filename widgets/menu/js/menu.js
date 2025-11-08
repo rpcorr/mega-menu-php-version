@@ -3152,7 +3152,7 @@ function injectNavigationMenuCSS() {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   link.type = 'text/css';
-  link.href = `${relPath}assets/css/navigation-menu.css`;
+  link.href = `${relPath}widgets/menu/css/navigation-menu.css`;
 
   document.head.appendChild(link);
 }
