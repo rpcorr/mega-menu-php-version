@@ -196,7 +196,7 @@ else $_SESSION['switchAble'] = false;
       const portal = <?php echo json_encode($portal); ?>;
       const queryString = <?php echo json_encode($queryString); ?>;
 
-      const baseURL = 'http://localhost/mmenu/assets/json/';
+      const baseURL = 'http://localhost/mmenu/widgets/menu/json/';
 
       let JSONfile = baseURL;
 
