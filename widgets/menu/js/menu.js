@@ -3120,10 +3120,10 @@ function renderHeader() {
             <section id="branding">
                 <div id="siteIdentity">
                 <div class="logo">
-                    <a href="index.php" rel="home"> <img src="${relPath}assets/imgs/CO_logo.png" alt="Counting Opinions" height="50"> </a>
+                    <a href="index.php" rel="home"> <img src="${relPath}widgets/menu/imgs/CO_logo.png" alt="Counting Opinions" height="50"> </a>
                 </div>
                 <div class="simple-logo">
-                    <a href="index.php" rel="home"> <img src="${relPath}assets/imgs/CO_simple_logo.svg" alt="Counting Opinions" height="60"> </a>
+                    <a href="index.php" rel="home"> <img src="${relPath}widgets/menu/imgs/CO_simple_logo.svg" alt="Counting Opinions" height="60"> </a>
                 </div>
                 </div>
             </section>
