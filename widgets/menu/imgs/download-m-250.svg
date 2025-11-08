@@ -1,0 +1,16 @@
+<svg width="250" height="60" viewBox="0 0 250 60" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad250" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4CAF50; stop-opacity:1"></stop>
+      <stop offset="100%" style="stop-color:#2E7D32; stop-opacity:1"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="250" height="60" fill="url(#grad250)"></rect>
+
+  <!-- Sample text (you can replace or remove) -->
+  <text x="50%" y="50%" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="middle">
+    Sample
+  </text>
+</svg>
