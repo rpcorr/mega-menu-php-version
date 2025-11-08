@@ -279,8 +279,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // render header  a custom logo can be set, else it is Counting Opinions logo
 
   // renderHeader({
-  //   logo: 'custom-logo.png',
-  //   simpleLogo: 'custom-logo-m.png',
+  //   logo: 'download-1350.svg',
+  //   simpleLogo: 'download-m.svg',
   //   logoPath: '',
   //   logoAlt: 'Company Full Logo',
   //   simpleLogoAlt: 'Company Simplified Logo',
@@ -972,7 +972,9 @@ function formatNav() {
   const navPadding = 5;
 
   // Maximum number of top-level items to display before triggering "More"
-  const numItems = 5;
+  let numItems = 5;
+  if (containerWidth <= 536) numItems = 2;
+  if (containerWidth <= 550) numItems = 3;
 
   // Loop through each navigation item and decide whether to show it or move it to "More"
   navItems.forEach(function (item) {
@@ -980,9 +982,16 @@ function formatNav() {
     tempWidth = totalWidth + navItemWidth[count] + navPadding;
 
     // Check if item fits within the container (adjusting for "More" menu space)
+    /*
+     if (
+       (tempWidth < containerWidth - moreWidth - navPadding ||
+       (tempWidth < containerWidth && count === numItems)) &&
+       room === true
+     ) {
+    */
     if (
-      (tempWidth < containerWidth - moreWidth - navPadding ||
-        (tempWidth < containerWidth && count === numItems)) &&
+      count < numItems &&
+      tempWidth < containerWidth - moreWidth - navPadding &&
       room === true
     ) {
       // Item fits: update the total used width
@@ -2289,7 +2298,6 @@ function renderHeader(options = {}) {
   const {
     logo = 'CO_logo.svg',
     simpleLogo = 'CO_simple_logo.svg',
-    logoPath = 'widgets/menu/imgs/',
     logoAlt = 'Counting Opinions',
     simpleLogoAlt = 'Counting Opinions',
     brandingWidth = '11rem',
