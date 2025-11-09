@@ -953,6 +953,10 @@ a[role='tab'] .menu-row {
   background-color: #fbd3af !important;
 }
 
+[aria-labelledby='tab-LibPAS'] [role='listitem'] strong {
+  border-bottom: 3px solid rgb(242, 153, 74);
+}
+
 [aria-labelledby='tab-LibPAS'] .open {
   background-color: #fbd3af;
   border-color: #f2994a;
@@ -990,6 +994,10 @@ a[role='tab'] .menu-row {
   background-color: #f0dcfb !important;
 }
 
+[aria-labelledby='tab-InformsUs'] [role='listitem'] strong {
+  border-bottom: 3px solid rgb(155, 81, 224);
+}
+
 [aria-labelledby='tab-InformsUs'] .open {
   background-color: #f0dcfb;
   border-color: #9b51e0;
@@ -1025,6 +1033,10 @@ a[role='tab'] .menu-row {
 
 #LibSat a:hover {
   background-color: #fff4d6 !important;
+}
+
+[aria-labelledby='tab-LibSat'] [role='listitem'] strong {
+  border-bottom: 3px solid rgb(242, 201, 76);
 }
 
 [aria-labelledby='tab-LibSat'] .open {
