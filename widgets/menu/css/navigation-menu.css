@@ -892,6 +892,7 @@ a[role='tab'] .menu-row {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  border-bottom: #000 3px solid;
 }
 
 [role='listitem'] strong > span {
