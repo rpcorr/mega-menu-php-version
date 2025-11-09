@@ -643,14 +643,14 @@ function handleLinkClick(e) {
 let id;
 
 // Add event listener for window resize event
-window.addEventListener('resize', function () {
-  // Clear any previously set timeout to prevent multiple calls
-  clearTimeout(id);
+// window.addEventListener('resize', function () {
+//   // Clear any previously set timeout to prevent multiple calls
+//   clearTimeout(id);
 
-  // Set a new timeout to call the onResize function after 10 milliseconds
-  // This ensures the onResize function is only called once after resizing finishes
-  id = setTimeout(onResize, 10);
-});
+//   // Set a new timeout to call the onResize function after 10 milliseconds
+//   // This ensures the onResize function is only called once after resizing finishes
+//   //id = setTimeout(onResize, 10);
+// });
 
 /**
  * Closes all open menus and toggles the aria-expanded attribute for accessibility.
@@ -710,58 +710,58 @@ function resetArrows() {
   });
 }
 
-function onResize() {
-  // Only proceed if the window's width has actually changed
-  if (winWidth != window.innerWidth) {
-    let count = 0;
+// function onResize() {
+//   // Only proceed if the window's width has actually changed
+//   if (winWidth != window.innerWidth) {
+//     let count = 0;
 
-    // Loop through each navigation item
-    navItems.forEach(function (item) {
-      // If the item has a submenu, add a 'hover' class to enable hover behavior
-      if (item.classList.contains('menu-item-has-children')) {
-        item.classList.add('hover');
-      }
+//     // Loop through each navigation item
+//     navItems.forEach(function (item) {
+//       // If the item has a submenu, add a 'hover' class to enable hover behavior
+//       if (item.classList.contains('menu-item-has-children')) {
+//         item.classList.add('hover');
+//       }
 
-      // Get and store the width of each visible item
-      let itemWidth = item.offsetWidth;
-      if (itemWidth > 0) {
-        navItemWidth[count] = itemWidth;
-      }
-    });
+//       // Get and store the width of each visible item
+//       let itemWidth = item.offsetWidth;
+//       if (itemWidth > 0) {
+//         navItemWidth[count] = itemWidth;
+//       }
+//     });
 
-    // Close all open submenus to reset the navigation state
-    closeAllMenus();
+//     // Close all open submenus to reset the navigation state
+//     closeAllMenus();
 
-    // Reset any toggled arrows back to the default (downward) position
-    resetArrows();
+//     // Reset any toggled arrows back to the default (downward) position
+//     resetArrows();
 
-    // Update ARIA labels for all menu items for better accessibility
-    updateAllAriaLabels();
+//     // Update ARIA labels for all menu items for better accessibility
+//     updateAllAriaLabels();
 
-    // Update stored window width for the next resize event
-    winWidth = window.innerWidth;
+//     // Update stored window width for the next resize event
+//     winWidth = window.innerWidth;
 
-    const menu = document.getElementById('menu-main-menu');
-    const lastLi = menu.lastElementChild;
+//     const menu = document.getElementById('menu-main-menu');
+//     const lastLi = menu.lastElementChild;
 
-    if (menu) {
-      const allExtraContent = document.querySelectorAll('.extra-content');
-      const extraContentExceptLast = Array.from(allExtraContent).slice(0, -1);
-      if (window.innerWidth >= 961) {
-        // hide the last element of the main nav and show extra content in mega menu  - (large screens)
-        lastLi.classList.add('hidden');
-        extraContentExceptLast.forEach((el) => el.classList.remove('hidden'));
-      } else {
-        // show the last element of the main nav and hide extra content in mega menu  - small screens
-        lastLi.classList.remove('hidden');
-        extraContentExceptLast.forEach((el) => el.classList.add('hidden'));
-      }
+//     if (menu) {
+//       const allExtraContent = document.querySelectorAll('.extra-content');
+//       const extraContentExceptLast = Array.from(allExtraContent).slice(0, -1);
+//       if (window.innerWidth >= 961) {
+//         // hide the last element of the main nav and show extra content in mega menu  - (large screens)
+//         lastLi.classList.add('hidden');
+//         extraContentExceptLast.forEach((el) => el.classList.remove('hidden'));
+//       } else {
+//         // show the last element of the main nav and hide extra content in mega menu  - small screens
+//         lastLi.classList.remove('hidden');
+//         extraContentExceptLast.forEach((el) => el.classList.add('hidden'));
+//       }
 
-      //call toggleTabPanelsLayout
-      toggleTabPanelsLayout(true);
-    }
-  }
-}
+//       //call toggleTabPanelsLayout
+//       toggleTabPanelsLayout(true);
+//     }
+//   }
+// }
 
 /**
  * Toggles the open/close state of a top-level menu item, updates accessibility attributes,
