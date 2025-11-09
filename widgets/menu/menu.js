@@ -465,7 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let menuHTML = createMenu(finalGroupedArray);
 
       // if switchAble session variable is true, show Show Users link
-      if (switchAble)
+      if (switchAble === true)
         menuHTML += `<li> <a href="#" id="showUsersLink">View page as...</a></li>`;
 
       let initials = '';
@@ -724,7 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Dynamically add switchable.js if switchAble is true and place it right before menu.js
-  if (switchAble === 1 || Number(localStorage.getItem('ukey_switch_pending'))) {
+  if (switchAble || Number(localStorage.getItem('ukey_switch_pending'))) {
     const currentScript = document.querySelector('script[src*="menu.js"]');
     loadScript(switchableJsPath, currentScript);
   }
