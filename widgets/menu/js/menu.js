@@ -2314,6 +2314,40 @@ function generateBreadcrumbs() {
   });
 }
 
+/* ============================================================================
+   EVENT HANDLERS
+   ============================================================================ */
+
+// Event listener to format navigation when the window is resized
+let id;
+
+// Add event listener for window resize event
+window.addEventListener('resize', function () {
+  // Clear any previously set timeout to prevent multiple calls
+  clearTimeout(id);
+
+  // Set a new timeout to call the onResize function after 10 milliseconds
+  // This ensures the onResize function is only called once after resizing finishes
+  id = setTimeout(onResize, 10);
+});
+
+// Add an event listener to detect keydown events across the document
+document.addEventListener('keydown', function (event) {
+  // Check if the pressed key is the Escape key
+  if (event.key === 'Escape') {
+    // Locate the first top-level menu item that is currently expanded
+    const expandedMenuItem = document.querySelector(
+      '.menu-item-has-children > [aria-expanded="true"]'
+    );
+
+    // If an expanded menu item is found
+    if (expandedMenuItem) {
+      // Call the toggle function to collapse/close the expanded menu
+      toggleTopLevelMenu(expandedMenuItem, event);
+    }
+  }
+});
+
 function determineMegaMenuPosition() {
   // Get the "More" menu item and all main menu items
   const menuMore = document.getElementById('menu-more');
@@ -2510,35 +2544,3 @@ console.log(
 console.log(`Menu file: ${pagesJSONfile}`);
 
 // Ensure this code runs after the DOM is fully loaded
-
-///// FUNCTIONS /////
-
-// Event listener to format navigation when the window is resized
-let id;
-
-// Add event listener for window resize event
-window.addEventListener('resize', function () {
-  // Clear any previously set timeout to prevent multiple calls
-  clearTimeout(id);
-
-  // Set a new timeout to call the onResize function after 10 milliseconds
-  // This ensures the onResize function is only called once after resizing finishes
-  id = setTimeout(onResize, 10);
-});
-
-// Add an event listener to detect keydown events across the document
-document.addEventListener('keydown', function (event) {
-  // Check if the pressed key is the Escape key
-  if (event.key === 'Escape') {
-    // Locate the first top-level menu item that is currently expanded
-    const expandedMenuItem = document.querySelector(
-      '.menu-item-has-children > [aria-expanded="true"]'
-    );
-
-    // If an expanded menu item is found
-    if (expandedMenuItem) {
-      // Call the toggle function to collapse/close the expanded menu
-      toggleTopLevelMenu(expandedMenuItem, event);
-    }
-  }
-});
