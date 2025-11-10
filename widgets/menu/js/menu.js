@@ -305,15 +305,6 @@ function isServiceSection(sectionId) {
   return SERVICE_SECTIONS.includes(sectionId);
 }
 
-/**
- * Checks if a string is empty or contains only whitespace
- * @param {string} str - String to check
- * @returns {boolean} True if empty
- */
-function isEmpty(str) {
-  return !str || str.trim().length === 0;
-}
-
 function getInitials(user) {
   const firstLetter = user.charAt(0);
 
@@ -359,6 +350,7 @@ function getRelativePath() {
    INITIALIZATION - DOM Ready
    ============================================================================ */
 
+// Ensure this code runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
   // render header  a custom logo can be set, else it is Counting Opinions logo
 
@@ -2348,6 +2340,82 @@ document.addEventListener('keydown', function (event) {
   }
 });
 
+/* ============================================================================
+   HELPERS - Various
+   ============================================================================ */
+
+function watchForHover() {
+  let hasHoverClass = false;
+  let lastTouchTime = 0;
+
+  function enableHover() {
+    // filter emulated events coming from touch events
+    if (new Date() - lastTouchTime < 500) return;
+    if (hasHoverClass) return;
+
+    document.body.classList.add('has-hover');
+    hasHoverClass = true;
+  }
+
+  function disableHover() {
+    if (!hasHoverClass) return;
+
+    document.body.classList.remove('has-hover');
+    hasHoverClass = false;
+  }
+
+  function updateLastTouchTime() {
+    lastTouchTime = new Date();
+  }
+
+  document.addEventListener('touchstart', updateLastTouchTime, true);
+  document.addEventListener('touchstart', disableHover, true);
+  document.addEventListener('mousemove', enableHover, true);
+
+  enableHover();
+}
+
+/**
+ * Preserve the active menu link color when hovering over the "More" menu item.
+ *
+ * - Adds 'active' class if the submenu is already expanded when mouse enters.
+ * - Removes 'active' class when mouse leaves.
+ * - Cleans up by removing the class attribute if no other classes remain.
+ */
+function preserveMenuColour() {
+  const menuMore = document.getElementById('menu-more');
+  const menuMoreLink = document.getElementById('menuMoreLink');
+
+  if (!menuMore || !menuMoreLink) return; // Exit if required elements are not found
+
+  menuMore.addEventListener('mouseenter', () => {
+    // If the submenu is expanded, add the 'active' class to highlight it
+    if (menuMoreLink.parentElement.getAttribute('aria-expanded') === 'true') {
+      menuMoreLink.classList.add('active');
+    }
+  });
+
+  menuMore.addEventListener('mouseleave', () => {
+    // Remove 'active' class on mouse leave
+    menuMoreLink.classList.remove('active');
+
+    // If no classes are left, remove the entire class attribute
+    if (menuMoreLink.className.trim() === '') {
+      menuMoreLink.removeAttribute('class');
+    }
+  });
+}
+
+function removeActiveClass() {
+  // Select all anchor elements within the Menu more
+  const moreAnchorLinks = document.querySelectorAll('#menu-more a');
+
+  // Remove 'active' class from each element
+  moreAnchorLinks.forEach((link) => {
+    link.classList.remove('active');
+  });
+}
+
 function determineMegaMenuPosition() {
   // Get the "More" menu item and all main menu items
   const menuMore = document.getElementById('menu-more');
@@ -2458,81 +2526,18 @@ function updateMenuMoreTabIndex() {
   }
 }
 
-function watchForHover() {
-  let hasHoverClass = false;
-  let lastTouchTime = 0;
-
-  function enableHover() {
-    // filter emulated events coming from touch events
-    if (new Date() - lastTouchTime < 500) return;
-    if (hasHoverClass) return;
-
-    document.body.classList.add('has-hover');
-    hasHoverClass = true;
-  }
-
-  function disableHover() {
-    if (!hasHoverClass) return;
-
-    document.body.classList.remove('has-hover');
-    hasHoverClass = false;
-  }
-
-  function updateLastTouchTime() {
-    lastTouchTime = new Date();
-  }
-
-  document.addEventListener('touchstart', updateLastTouchTime, true);
-  document.addEventListener('touchstart', disableHover, true);
-  document.addEventListener('mousemove', enableHover, true);
-
-  enableHover();
-}
-
-/**
- * Preserve the active menu link color when hovering over the "More" menu item.
- *
- * - Adds 'active' class if the submenu is already expanded when mouse enters.
- * - Removes 'active' class when mouse leaves.
- * - Cleans up by removing the class attribute if no other classes remain.
- */
-function preserveMenuColour() {
-  const menuMore = document.getElementById('menu-more');
-  const menuMoreLink = document.getElementById('menuMoreLink');
-
-  if (!menuMore || !menuMoreLink) return; // Exit if required elements are not found
-
-  menuMore.addEventListener('mouseenter', () => {
-    // If the submenu is expanded, add the 'active' class to highlight it
-    if (menuMoreLink.parentElement.getAttribute('aria-expanded') === 'true') {
-      menuMoreLink.classList.add('active');
-    }
-  });
-
-  menuMore.addEventListener('mouseleave', () => {
-    // Remove 'active' class on mouse leave
-    menuMoreLink.classList.remove('active');
-
-    // If no classes are left, remove the entire class attribute
-    if (menuMoreLink.className.trim() === '') {
-      menuMoreLink.removeAttribute('class');
-    }
-  });
-}
-
-function removeActiveClass() {
-  // Select all anchor elements within the Menu more
-  const moreAnchorLinks = document.querySelectorAll('#menu-more a');
-
-  // Remove 'active' class from each element
-  moreAnchorLinks.forEach((link) => {
-    link.classList.remove('active');
-  });
-}
-
 // Helper function to capitalize the first letter of each word
 function capitalizeFirstLetterOfEachWord(text) {
   return text.replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+/**
+ * Checks if a string is empty or contains only whitespace
+ * @param {string} str - String to check
+ * @returns {boolean} True if empty
+ */
+function isEmpty(str) {
+  return !str || str.trim().length === 0;
 }
 
 /*********************************************************** */
@@ -2542,5 +2547,3 @@ console.log(
 );
 
 console.log(`Menu file: ${pagesJSONfile}`);
-
-// Ensure this code runs after the DOM is fully loaded
