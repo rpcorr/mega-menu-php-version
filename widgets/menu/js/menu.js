@@ -355,1074 +355,6 @@ function getRelativePath() {
   return prefix;
 }
 
-/*********************************************************** */
-
-console.log(
-  `I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}. User is ${user}. Switchable is ${switchAble}`
-);
-
-console.log(`Menu file: ${pagesJSONfile}`);
-
-// Ensure this code runs after the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-  // render header  a custom logo can be set, else it is Counting Opinions logo
-
-  // renderHeader({
-  //   logo: 'download-1350.svg',
-  //   simpleLogo: 'download-m.svg',
-  //   logoPath: '',
-  //   logoAlt: 'Company Full Logo',
-  //   simpleLogoAlt: 'Company Simplified Logo',
-  // });
-
-  // renderHeader({
-  //   logo: 'CO_logo.svg',
-  //   simpleLogo: 'CO_simple_logo.svg',
-  //   logoPath: 'widgets/menu/imgs/',
-  //   logoAlt: 'Counting Opinions',
-  //   simpleLogoAlt: 'Counting Opinions',
-  //   brandingWidth: '80rem',
-  //   brandingBgColour: 'red',
-  //   logoBgColour: 'green',
-  // });
-
-  renderHeader();
-
-  // render Skip to main content link
-  insertSkipMenuAnchor();
-
-  // generate Breadcrumbs
-  generateBreadcrumbs();
-
-  // iniltialize menu templates
-  initMenuTemplates();
-
-  // call injectNavigationMenuCSS to ensure navigation-menu.css is present
-  injectNavigationMenuCSS();
-
-  fetchWithRetry(pagesJSONfile)
-    .then((data) => {
-      allMenuItemsinArray = data;
-
-      console.log(allMenuItemsinArray);
-
-      // Initialize an empty object to hold grouped pages
-      const groupedSections = {};
-
-      // Loop through each page in the data
-      data.pages.forEach((page) => {
-        const { section_id, section_prompt } = page;
-
-        // Ensure the section_id exists in the groupedSections object
-        if (!groupedSections[section_id]) {
-          groupedSections[section_id] = {
-            nonNull: [],
-            null: [],
-          };
-        }
-
-        // Push the page to the appropriate array based on section_prompt
-        if (section_prompt === null) {
-          groupedSections[section_id].null.push(page);
-        } else {
-          groupedSections[section_id].nonNull.push(page);
-        }
-      });
-
-      // Create a final array of grouped results with section_prompt
-      const finalGroupedArray = Object.entries(groupedSections).map(
-        ([section_id, { nonNull, null: nullPages }]) => {
-          // Get the section_prompt from the first non-null page (if exists) or use null
-          const section_prompt =
-            nonNull.length > 0 ? nonNull[0].section_prompt : null;
-
-          return {
-            section_id,
-            section_prompt, // Add the section_prompt
-            pages: [...nonNull, ...nullPages], // Combine non-null pages with null pages at the end
-          };
-        }
-      );
-
-      // Check if there's no entry with section_id equal to zero
-      const hasSectionZero = finalGroupedArray.some(
-        (section) => section.section_id === '0'
-      );
-
-      if (!hasSectionZero) {
-        // Add an entry for section_id = 0 with an empty pages array
-        finalGroupedArray.push({
-          section_id: '0',
-          section_prompt: null,
-          pages: [],
-        });
-      }
-
-      // Define the custom order for section_ids
-      const customOrder = ['0', '8', '2', '5', '1'];
-
-      // Sort the finalGroupedArray based on the custom order
-      finalGroupedArray.sort((a, b) => {
-        return (
-          customOrder.indexOf(a.section_id) - customOrder.indexOf(b.section_id)
-        );
-      });
-
-      if (finalGroupedArray.length > 1) {
-        // Create a deep clone and modify it
-        const cloneGroupedArray = JSON.parse(JSON.stringify(finalGroupedArray)); // Deep clone
-
-        // Modify the cloned array
-        cloneGroupedArray.forEach((section) => {
-          if (section.section_id !== '1') {
-            // If you want to keep the pages, uncomment the next line
-            delete section.pages;
-          }
-          delete section.section_id; // Remove from section
-          delete section.section_prompt; // Remove from section
-        });
-      }
-
-      function createMenu(menuData) {
-        let menuHTML = '';
-        let createdPagesMenu = false;
-        let createdServicesMenu = false;
-
-        menuData.forEach((section) => {
-          // If section_id is 0, create top-level menu items
-          if (section.section_id === '0' && ukey !== '') {
-            if (createdPagesMenu === false) {
-              createdPagesMenu = true;
-              menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="Pages has a sub menu. Click enter to open">Pages <i class="caret angle-down"></i></a>
-            <div class="mega-menu">
-            <div class="grid-container-pages tabs-container"></div>
-            </div>
-          </li>`;
-            }
-          } else if (isServiceSection(section.section_id)) {
-            if (createdServicesMenu === false) {
-              createdServicesMenu = true;
-              menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
-            <div class="mega-menu">
-            <div class="grid-container-multiple tabs-container"></div>
-            </div>
-          </li>`;
-            }
-          } else if (section.section_id === '0' && ukey === '') {
-            // Logout state
-            data.pages.forEach((page) => {
-              menuHTML += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
-            });
-          } else {
-            if (section.section_prompt != 'LibSat') {
-              let openSubmenu = false;
-              // Create submenus for other sections
-              if (section.section_prompt) {
-                menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="${section.section_prompt} has a sub menu. Click enter to open">${section.section_prompt} <i class="caret angle-down"></i></a>`;
-
-                menuHTML += '<ul class="sub-menu">';
-
-                section.pages.forEach((page, index) => {
-                  if (
-                    page.page_prompt.toLowerCase() !==
-                    section.section_prompt.toLowerCase()
-                  )
-                    if (page.page_link === '') {
-                      menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#"aria-label="${page.page_prompt} has a sub menu. Click enter to open">${page.page_prompt} <i class="caret angle-down"></i></a>`;
-                      menuHTML += '<ul class="sub-menu">';
-                      openSubmenu = true;
-                    } else {
-                      menuHTML += `<li><a href="${page.page_link}" tabindex="-1">${page.page_prompt}</a></li>`;
-                    }
-
-                  // close sub menu if index is at the end of section and openSubmenu is true
-                  if (index === section.pages.length - 1 && openSubmenu) {
-                    menuHTML += '</ul></li>';
-                  }
-                });
-                menuHTML += '</ul></li>';
-              }
-            }
-          }
-        });
-
-        return menuHTML;
-      }
-
-      console.log(finalGroupedArray);
-      // Call the function to create the menu
-      let menuHTML = createMenu(finalGroupedArray);
-
-      // if switchAble session variable is true, show Show Users link
-      if (switchAble === true)
-        menuHTML += `<li> <a href="#" id="showUsersLink">View page as...</a></li>`;
-
-      let initials = '';
-      let profileName = '';
-
-      if (user) {
-        initials = getInitials(user);
-        profileName = user;
-      }
-
-      // if logged in, show profile
-      if (ukey.trim() !== '') {
-        menuHTML += `<li class="menu-item-has-children hover" aria-expanded="false"><a href="#" aria-label="${profileName} profile has a sub menu. Click enter to open" id="profile"><div class="profile"><span aria-hidden="true">${initials}</span></div>${profileName} <span class="hidden-text">profile</span> <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="#" tabindex='-1'>My Profile</a></li><li><a href="#" tabindex='-1'>Settings</a></li><li><a href="#" tabindex='-1'>Notifications</a></li><li><a href="#" tabindex='-1'>Help &amp; Support</a></li><li><a href="logout.php" tabindex='-1'>Sign Out</a></li></ul></li>`;
-      }
-
-      document.getElementById('menu-main-menu').innerHTML = menuHTML;
-
-      populateMegaMenu(finalGroupedArray);
-
-      navItems = document.querySelectorAll('#menu-main-menu > li');
-
-      // call alignSubMenusToViewport to initially align them
-      alignSubMenusToViewport('initial');
-
-      megaMenuLinks = document.querySelectorAll('nav a');
-
-      for (let i = 0; i < megaMenuLinks.length; i++) {
-        megaMenuLinks[i].addEventListener('click', handleLinkClick);
-      }
-
-      // assign window width to winWidth
-      winWidth = window.innerWidth;
-
-      // close All Menus when the esc is pressed
-      document
-        .getElementById('menu-main-menu')
-        .addEventListener('keydown', function (e) {
-          if (e.key === 'Escape') {
-            closeAllMenus();
-          }
-        });
-
-      navItems = document.querySelectorAll('#menu-main-menu > li');
-
-      // add hover class to those with class menu-item-has-children
-      navItems.forEach(function (item) {
-        if (item.classList.contains('menu-item-has-children')) {
-          item.classList.add('hover');
-        }
-      });
-
-      // get width of each item, and list each as visible
-      navItems.forEach(function (item) {
-        navItemWidth.push(item.offsetWidth);
-        navItemVisible.push(true);
-      });
-
-      // add more link
-      const menuMainMenu = document.getElementById('menu-main-menu');
-      const newMenuItem = document.createElement('li');
-      newMenuItem.setAttribute('aria-expanded', 'false');
-
-      newMenuItem.id = 'menu-more';
-      newMenuItem.className = 'menu-item menu-item-has-children';
-
-      const newMenuLink = document.createElement('a');
-      newMenuLink.id = 'menuMoreLink';
-      newMenuLink.href = '#';
-      newMenuLink.setAttribute(
-        'aria-label',
-        'More has a sub menu. Click enter to open'
-      );
-
-      const newSubMenu = document.createElement('ul');
-      newSubMenu.id = 'moreSubMenu';
-      newSubMenu.className = 'sub-menu';
-
-      newMenuItem.appendChild(newMenuLink);
-      newMenuItem.appendChild(newSubMenu);
-      menuMainMenu.appendChild(newMenuItem);
-
-      moreWidth = document.getElementById('menu-more').offsetWidth;
-
-      adjustMoreSubMenuOffset();
-
-      // toggle More menu
-      document
-        .getElementById('menuMoreLink')
-        .addEventListener('click', function (event) {
-          event.preventDefault();
-
-          const moreMenu = this.parentElement;
-          const icon = this.querySelector('i');
-
-          const expanded = moreMenu.getAttribute('aria-expanded') === 'true';
-          const newState = !expanded;
-
-          moreMenu.setAttribute('aria-expanded', String(newState));
-
-          // Adjust icon direction
-          if (icon) {
-            icon.classList.replace(
-              expanded ? 'angle-up' : 'angle-down',
-              newState ? 'angle-up' : 'angle-down'
-            );
-          }
-
-          const subLinks = document.querySelectorAll('#moreSubMenu a');
-
-          if (newState) {
-            // Opening: make all submenu links focusable
-            subLinks.forEach((link) => {
-              link.removeAttribute('tabindex');
-            });
-          } else {
-            // Closing: close all expanded submenus and hide links from tab order
-            const subItems = document.querySelectorAll(
-              '#moreSubMenu li[aria-expanded="true"]'
-            );
-            subItems.forEach((li) => {
-              if (li.classList.contains('menu-item-has-children')) {
-                li.setAttribute('aria-expanded', 'false');
-                const nestedLinks = li.querySelectorAll('.sub-menu a');
-                nestedLinks.forEach((link) => {
-                  link.setAttribute('tabindex', '-1');
-                });
-              }
-            });
-
-            // Also set tabindex=-1 on all direct submenu links
-            subLinks.forEach((link) => {
-              link.setAttribute('tabindex', '-1');
-            });
-          }
-
-          // Update sidebar content
-          if (bSidebarWidget) populateSidebar();
-        });
-
-      // collapse all sub-menus when user clicks off
-      document.body.addEventListener('click', function (event) {
-        if (event.target.getAttribute('onClick') === 'toggleSidebar()') return;
-
-        if (!event.target.closest('li')) {
-          document
-            .querySelectorAll('.menu-item-has-children')
-            .forEach(function (element) {
-              //element.classList.remove('visible');
-            });
-        }
-
-        // reset arrows to down position
-        resetArrows();
-
-        //  reset aria-labels to Click enter to open
-        document
-          .querySelectorAll('.menu-item-has-children > a')
-          .forEach(function (element) {
-            element.setAttribute(
-              'aria-label',
-              `${element.textContent} has a sub menu. Click enter to open`
-            );
-            //element.setAttribute('aria-expanded', 'false');
-          });
-        // call removeActiveClass
-        removeActiveClass();
-      });
-
-      preserveMenuColour();
-
-      // stop propagation for .menu-item-has-children a
-      document
-        .querySelectorAll('.menu-item-has-children a')
-        .forEach(function (element) {
-          element.addEventListener('click', function (e) {
-            e.stopPropagation();
-          });
-        });
-
-      // stop propagation for .menu-item-has-children ul
-      document
-        .querySelectorAll('.menu-item-has-children ul')
-        .forEach(function (element) {
-          element.addEventListener('click', function (e) {
-            e.stopPropagation();
-          });
-        });
-
-      // stop propagation for .menu-item-has-children li
-      document
-        .querySelectorAll('.menu-item-has-children li')
-        .forEach(function (element) {
-          element.addEventListener('click', function (e) {
-            e.stopPropagation();
-          });
-        });
-
-      // format navigation on page load
-      formatNav();
-
-      // set More Menu tabindex to -1 if there are no children
-      updateMenuMoreTabIndex();
-
-      // watch for difference between touchscreen and mouse
-      watchForHover();
-    })
-    .catch((error) => {
-      console.error('Failed to load menu data:', error);
-      // Error alert already shown to user by fetchWithRetry
-    });
-
-  moreWidth = document.getElementById('menu-main-menu').offsetWidth;
-
-  // Begin to Insert CSS and JS dynamically
-
-  // Detect if we're on preferences.php
-  const isPreferencesPage =
-    window.location.pathname.endsWith('preferences.php');
-
-  // Dynamically add reset.css or reset.min.css as the first style if not already present
-  const resetHref = resetCssPath;
-
-  // Check if reset.css or reset.min.css already exists
-  const existingReset = document.querySelector(
-    `link[href*="reset.css"], link[href*="reset.min.css"]`
-  );
-
-  if (!existingReset) {
-    // --- Create reset link ---
-    const linkReset = document.createElement('link');
-    linkReset.rel = 'stylesheet';
-    linkReset.type = 'text/css';
-    linkReset.href = resetHref;
-
-    // --- Determine where navigation-menu.css currently is ---
-    const navLink = document.querySelector(`link[href*="navigation-menu.css"]`);
-    const parent = navLink
-      ? navLink.parentNode
-      : document.head || document.body;
-
-    if (navLink && parent) {
-      // Insert reset.css immediately before the existing navigation link
-      parent.insertBefore(linkReset, navLink);
-    } else {
-      // Fallback: insert at the top of head or body
-      const head = document.head;
-      if (head) {
-        const firstLink = head.querySelector('link[rel="stylesheet"]');
-        head.insertBefore(linkReset, firstLink || null);
-      } else {
-        const body = document.body || document.documentElement;
-        const firstStyleLink = body.querySelector('link[rel="stylesheet"]');
-        body.insertBefore(linkReset, firstStyleLink || null);
-      }
-    }
-  }
-
-  // Dynamically add switchable.js if switchAble is true and place it right before menu.js
-  if (switchAble || Number(localStorage.getItem('ukey_switch_pending'))) {
-    const currentScript = document.querySelector('script[src*="menu.js"]');
-    loadScript(switchableJsPath, currentScript);
-  }
-
-  // Dynamically add selectTheme.js and selectTheme.min.css only on preferences.php
-  if (isPreferencesPage && ukey) {
-    const menuScript = document.querySelector('script[src*="menu.js"]');
-    loadScript(selectThemeJsPath, menuScript);
-
-    const navLink = document.querySelector('link[href*="navigation-menu.css"]');
-    loadCSS(selectThemeCssPath, navLink);
-
-    console.log(`Injected selectTheme.min.css: ${selectThemeCssPath}`);
-  }
-
-  // Dynamically add sidebar.js if sidebar enabled and place it right after menu.js or breadcrumbs.js
-  if (bSidebarWidget) {
-    // Load CSS
-    const navCss = document.querySelector('link[href*="navigation-menu.css"]');
-    loadCSS(sidebarCssPath, navCss);
-
-    // Load script with onload handler
-    const breadcrumbsScript = document.querySelector(
-      'script[src*="generateBreadcrumbs.js"]'
-    );
-    const menuScript = document.querySelector('script[src*="menu.js"]');
-    const insertAfter = breadcrumbsScript || menuScript;
-
-    const sidebarScript = loadScript(sidebarJsPath, insertAfter);
-
-    sidebarScript.onload = () => {
-      if (typeof insertSidebar === 'function') insertSidebar();
-
-      const toggleBtn = document.querySelector('.toggle-btn');
-      if (toggleBtn) {
-        toggleBtn.addEventListener('click', toggleSidebar);
-      } else {
-        console.warn('⚠️ Toggle button not found – event not attached');
-      }
-
-      document.addEventListener('keydown', handleEscapeKey);
-    };
-  }
-
-  // --- Check if user/ukey is defined ---
-  if (
-    (typeof ukey !== 'undefined' && ukey) ||
-    (typeof user !== 'undefined' && user)
-  ) {
-    // --- Helper: get cookie value ---
-    function getCookie(name) {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(';').shift();
-      return null;
-    }
-
-    // --- Determine which theme to use ---
-    const theme = getCookie('theme') || 'base';
-
-    // --- Build link element ---
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    link.href = MenuPaths.menuCss(`templatesStyles/${theme}.css`);
-
-    // --- Insert theme link right after navigation-menu.css (if exists) ---
-    const navLink = document.querySelector('link[href*="navigation-menu.css"]');
-    const container = navLink
-      ? navLink.parentNode
-      : document.head || document.body;
-
-    if (navLink) {
-      container.insertBefore(link, navLink.nextSibling);
-    } else {
-      container.appendChild(link);
-    }
-
-    if (bTimerInactivityWidget) {
-      const cookieUkey = getCookie('ukey');
-      const urlParams = new URLSearchParams(window.location.search);
-      const requestUkey = urlParams.get('ukey');
-
-      if (cookieUkey || requestUkey) {
-        // Find scripts in priority order
-        const scripts = [...document.getElementsByTagName('script')];
-        const sidebarScript = scripts.find((s) => s.src.includes('sidebar.js'));
-        const breadcrumbsScript = scripts.find((s) =>
-          s.src.includes('breadcrumbs.js')
-        );
-        const menuScript = scripts.find((s) => s.src.includes('menu.js'));
-
-        // Choose target in priority: sidebar > breadcrumbs > menu
-        const targetScript = sidebarScript || breadcrumbsScript || menuScript;
-        loadScript(timerInactivityJsPath, targetScript);
-      }
-    }
-  }
-});
-
-///// FUNCTIONS /////
-/**
- * Aligns visible sub-menus (<ul class="sub-menu">) so they stay within the viewport on narrow screens,
- * except those under <ul id="moreSubMenu">.
- *
- * @param {string} mode - Can be 'initial' or 'default'. 'initial' applies an extra offset.
- * @param {boolean} debug - If true, logs debug information.
- */
-function alignSubMenusToViewport(mode = 'default', debug = false) {
-  const OFFSET_FOR_INITIAL_MODE = 209;
-
-  if (window.innerWidth > MOBILE_BREAKPOINT) return;
-
-  const subMenus = document.querySelectorAll('ul.sub-menu');
-
-  subMenus.forEach((subMenu) => {
-    // Skip sub-menus inside #moreSubMenu
-    if (subMenu.closest('#moreSubMenu')) return;
-
-    const parentLi = subMenu.closest('li');
-    if (!parentLi) return;
-
-    const parentRightEdge = parentLi.getBoundingClientRect().right;
-    let offsetFromRight = window.innerWidth - parentRightEdge;
-
-    if (mode === 'initial') {
-      offsetFromRight -= OFFSET_FOR_INITIAL_MODE;
-
-      if (debug) {
-        console.log(
-          'SubMenu:',
-          subMenu,
-          '\nParent Element:',
-          subMenu.parentElement,
-          '\n#moreSubMenu Ancestor:',
-          subMenu.closest('#moreSubMenu')
-        );
-      }
-    }
-
-    subMenu.style.right = `-${offsetFromRight}px`;
-  });
-}
-
-/**
- * Handles click events on menu links.
- * If the clicked link belongs to a menu item that has child items,
- * it toggles the corresponding top-level submenu.
- *
- * @param {Event} e - The click event object.
- */
-function handleLinkClick(e) {
-  // Check if the clicked link is inside a menu item that has children
-  if (this.closest('.menu-item-has-children')) {
-    // Toggle the display of the submenu for this top-level menu item
-    const isInMoreMenu = document.getElementById('moreSubMenu').contains(this);
-
-    if (isInMoreMenu) {
-      // Toggle sub menu
-      toggleSubMenu(this); // submenu item inside "More"
-    } else {
-      // Toggle top level menu
-      toggleTopLevelMenu(this, e); // regular top-level menu
-    }
-  }
-}
-
-// Event listener to format navigation when the window is resized
-let id;
-
-// Add event listener for window resize event
-window.addEventListener('resize', function () {
-  // Clear any previously set timeout to prevent multiple calls
-  clearTimeout(id);
-
-  // Set a new timeout to call the onResize function after 10 milliseconds
-  // This ensures the onResize function is only called once after resizing finishes
-  id = setTimeout(onResize, 10);
-});
-
-/**
- * Closes all open menus and toggles the aria-expanded attribute for accessibility.
- *
- * @param {HTMLElement|string} menuItem - The current menu item or a string.
- *                                   This parameter is not currently used in the function but could be utilized for targeting a specific menu item in the future.
- * @returns {void} This function doesn't return anything. It modifies the aria-expanded attributes of menu links.
- */
-function closeAllMenus() {
-  // Select all anchor elements that are within menu items containing children
-  const links = document.querySelectorAll('.menu-item-has-children a');
-
-  // Initialize variables to track the closest link to the top of the viewport
-  let closestLink = null;
-  let minDistance = Infinity;
-
-  // Loop through all links to determine which one is closest to the top of the viewport
-  links.forEach((link) => {
-    const rect = link.getBoundingClientRect(); // Get the position and size of each link
-    const distance = Math.abs(rect.top); // Calculate the distance from the top of the viewport
-
-    // If this link is closer to the top than the previously found closest link, update closestLink
-    if (distance < minDistance) {
-      minDistance = distance;
-      closestLink = link;
-    }
-  });
-
-  // Loop through all links to set aria-expanded attribute to false
-  links.forEach((link) => {
-    if (link.parentElement.classList.contains('menu-item-has-children'))
-      link.parentElement.setAttribute('aria-expanded', 'false');
-  });
-}
-
-/**
- * Dynamically formats the top navigation bar by showing or hiding menu items
- * based on available horizontal space in the container. Items that do not fit
- * are moved into a "More" dropdown menu.
- *
- * This function assumes the existence of the following global variables:
- * - navItems: NodeList or array of navigation <li> items.
- * - navItemWidth: Array of each navigation item’s width.
- * - navItemVisible: Array of booleans tracking which items are currently visible.
- * - moreWidth: Width of the "More" dropdown menu item.
- */
-
-function formatNav() {
-  // Track whether there's still room to display more menu items
-  let room = true;
-
-  // Index counter for each menu item
-  let count = 0;
-
-  // Temporary and total width calculations for placing items
-  let tempWidth = 0;
-  let totalWidth = 0;
-
-  // Get the width of the navigation container (rounded to nearest integer)
-  const containerWidth = Math.round(
-    document.querySelector('.menu-main-menu-container').getBoundingClientRect()
-      .width
-  );
-
-  // Padding applied around each nav item (buffer for spacing)
-  const navPadding = 5;
-
-  // Maximum number of top-level items to display before triggering "More"
-  let numItems = 5;
-  if (containerWidth <= 536) numItems = 2;
-  if (containerWidth <= 550) numItems = 3;
-
-  // Loop through each navigation item and decide whether to show it or move it to "More"
-  navItems.forEach(function (item) {
-    // Predict total width if this item were added
-    tempWidth = totalWidth + navItemWidth[count] + navPadding;
-
-    // Check if item fits within the container (adjusting for "More" menu space)
-    /*
-     if (
-       (tempWidth < containerWidth - moreWidth - navPadding ||
-       (tempWidth < containerWidth && count === numItems)) &&
-       room === true
-     ) {
-    */
-    if (
-      count < numItems &&
-      tempWidth < containerWidth - moreWidth - navPadding &&
-      room === true
-    ) {
-      // Item fits: update the total used width
-      totalWidth = tempWidth;
-
-      // If the item is not already marked visible, move it from "More" back to main nav
-      if (navItemVisible[count] !== true) {
-        // Move the first child of the "More" submenu back to the main menu
-        const menuMore = document.getElementById('menu-more');
-        const moreSubMenu = document.getElementById('moreSubMenu');
-        const firstChild = moreSubMenu.firstElementChild;
-
-        // If there is a first child, insert it before the 'More' menu
-        if (firstChild) {
-          menuMore.parentNode.insertBefore(firstChild, menuMore);
-        }
-
-        // If "More" submenu is now empty, reset its visual label and accessibility
-        if (menuMore.children[1].children.length === 0) {
-          const moreLink = document.getElementById('menuMoreLink');
-          moreLink.innerHTML = '';
-          moreLink.setAttribute('tabindex', '-1');
-        }
-        // Mark the current item as visible
-        navItemVisible[count] = true;
-      }
-    } else {
-      // Item does not fit: begin using "More" menu if not already
-      if (room === true) {
-        room = false;
-
-        const nav = document.querySelector('nav');
-        const moreLink = document.getElementById('menuMoreLink');
-
-        // If no items fit at all, hide the entire nav and show "Menu" label
-        if (count === 0) {
-          nav.classList.add('all-hidden');
-
-          // Set the HTML content for the 'More' dropdown link
-          moreLink.innerHTML = 'Menu <i class="caret angle-down"></i>';
-        } else {
-          // Remove the class to show navigation items when more are revealed
-          nav.classList.remove('all-hidden');
-
-          // Update the 'More' dropdown link content
-          moreLink.innerHTML = 'More <i class="caret angle-down"></i>';
-
-          // Remove tabindex attribute from the 'More' link and its subitems
-          moreLink.removeAttribute('tabindex');
-
-          const subLinks = document.querySelectorAll('#moreSubMenu a');
-          subLinks.forEach((link) => {
-            link.removeAttribute('tabindex');
-          });
-        }
-      }
-
-      // Remove hover behavior and move item into the "More" submenu
-      item.classList.remove('hover');
-      document.getElementById('moreSubMenu').appendChild(item);
-
-      // Ensure submenu links inside "More" menu are not focusable initially
-      const innerLinks = item.querySelectorAll('.sub-menu a');
-      innerLinks.forEach((link) => {
-        // check if parent has class 'menu-item-has-children' beore setting tabindex to -1
-        if (link.parentElement.classList.contains('menu-item-has-children')) {
-          link.setAttribute('tabindex', '-1');
-        }
-      });
-
-      // Mark the current item as not visible
-      navItemVisible[count] = false;
-    }
-
-    count += 1; // Move to next nav item
-  });
-
-  // Cleanup: remove inline 'right' style from submenus under "More"
-  const subMenus = document.querySelectorAll('#moreSubMenu ul.sub-menu');
-  subMenus.forEach((ul) => {
-    if (ul.style.right) {
-      ul.style.removeProperty('right');
-    }
-  });
-}
-
-/**
- * Resets the direction of all arrows by switching their classes from 'angle-up' to 'angle-down'.
- * This is typically used for collapsing or resetting UI elements like dropdown menus or accordions.
- */
-function resetArrows() {
-  // Select all elements with the class '.caret'
-  document.querySelectorAll('.caret').forEach(function (element) {
-    // Remove the 'angle-up' class, indicating the arrow is pointing upwards
-    element.classList.remove('angle-up');
-
-    // Add the 'angle-down' class, indicating the arrow is pointing downwards
-    element.classList.add('angle-down');
-  });
-}
-
-function onResize() {
-  // Only proceed if the window's width has actually changed
-  if (winWidth != window.innerWidth) {
-    let count = 0;
-
-    // Loop through each navigation item
-    navItems.forEach(function (item) {
-      // If the item has a submenu, add a 'hover' class to enable hover behavior
-      if (item.classList.contains('menu-item-has-children')) {
-        item.classList.add('hover');
-      }
-
-      // Get and store the width of each visible item
-      let itemWidth = item.offsetWidth;
-      if (itemWidth > 0) {
-        navItemWidth[count] = itemWidth;
-      }
-    });
-
-    // Close all open submenus to reset the navigation state
-    closeAllMenus();
-
-    // Reset any toggled arrows back to the default (downward) position
-    resetArrows();
-
-    // Update ARIA labels for all menu items for better accessibility
-    updateAllAriaLabels();
-
-    // Update tab indices to manage focusability of dynamic menu items
-    updateMenuMoreTabIndex();
-
-    // Reformat navigation layout, e.g., move overflowing items into "More" dropdown
-    formatNav();
-
-    // Adjust mega menu positioning if necessary based on new window size
-    determineMegaMenuPosition();
-
-    // Update stored window width for the next resize event
-    winWidth = window.innerWidth;
-
-    alignSubMenusToViewport('onResize');
-  }
-}
-
-/**
- * Toggles the open/close state of a top-level menu item, updates accessibility attributes,
- * manages submenus, and dynamically adjusts mega menu positioning.
- *
- * @param {HTMLElement} menuLink - The <a> element inside a top-level menu item that was clicked.
- */
-function toggleTopLevelMenu(menuLink, e) {
-  if (e && menuLink.getAttribute('href') === '#') {
-    e.preventDefault(); // only stop jump-to-# links
-  }
-
-  const allMenuItems = document.querySelectorAll('.menu-item-has-children > a');
-  const isExpanded =
-    menuLink.parentElement.getAttribute('aria-expanded') === 'true';
-
-  // Close all other open menus (set aria-expanded to false and update icons)
-  allMenuItems.forEach((link) => {
-    if (link !== menuLink) {
-      link.parentElement.setAttribute('aria-expanded', 'false');
-    }
-  });
-
-  // Toggle the aria-expanded state of the clicked menu item
-  menuLink.parentElement.setAttribute(
-    'aria-expanded',
-    isExpanded ? 'false' : 'true'
-  );
-
-  // Toggle tabindex on sub-menu links based on aria-expanded state
-  const subMenuList = menuLink.parentElement.querySelector('.sub-menu');
-  if (subMenuList) {
-    const isNowExpanded =
-      menuLink.parentElement.getAttribute('aria-expanded') === 'true';
-    const links = subMenuList.querySelectorAll('a');
-    links.forEach((link) => {
-      if (isNowExpanded) {
-        link.removeAttribute('tabindex');
-      } else {
-        link.setAttribute('tabindex', '-1');
-      }
-    });
-  }
-
-  // Update all aria-labels if the clicked link is not inside a submenu
-  if (!menuLink.closest('.mega-menu')) {
-    updateAllAriaLabels();
-  }
-
-  // Toggle the arrow icon direction based on expanded/collapsed state
-  const icon = menuLink.querySelector('i');
-  if (icon) {
-    icon.classList.toggle('angle-down', isExpanded);
-    icon.classList.toggle('angle-up', !isExpanded);
-  }
-
-  // If inside "More" menu, keep the parent "More" link open
-  const li = menuLink.parentElement.closest('li');
-
-  // Allow interaction with the submenu without closing it
-  const subMenu = li?.querySelector('.mega-menu');
-
-  if (subMenu) {
-    // Adjust mega menu position after submenu interaction
-    determineMegaMenuPosition();
-  }
-
-  // Handle showing or hiding the submenu div based on expanded state
-  const subMenuDiv = menuLink.nextElementSibling;
-  if (menuLink.parentElement.getAttribute('aria-expanded') === 'false') {
-    // If submenu exists, remove inline styles to reset its display
-    if (subMenuDiv?.classList.contains('mega-menu')) {
-      //subMenuDiv.style.removeProperty('opacity');
-      subMenuDiv.style.removeProperty('pointer-events');
-      subMenuDiv.style.removeProperty('transform');
-    }
-  }
-
-  if (
-    menuLink.parentElement.getAttribute('aria-expanded') === 'true' &&
-    subMenuDiv &&
-    subMenuDiv.tagName === 'DIV'
-  ) {
-    // Slide in and show the submenu (mega menu)
-    displaySubMegaMenu(subMenuDiv);
-  }
-
-  // Check if the mega menu overflows off the left side of the screen
-  // Adjust the width dynamically based on viewport size
-  const menuMore = document.getElementById('menu-more');
-  if (menuMore) {
-    const subMenuDivs = menuMore.querySelectorAll('.mega-menu');
-    const viewportWidth = window.innerWidth;
-  }
-
-  // Update the sidebar content based on the selected top-level menu
-  if (bSidebarWidget && typeof populateSidebar === 'function')
-    populateSidebar();
-}
-
-/**
- * Toggles a submenu's open/closed state and ensures "More" menu stays open.
- *
- * @param {HTMLElement} menuLink - The <a> element clicked to toggle a submenu.
- */
-function toggleSubMenu(menuLink) {
-  const parentLi = menuLink.closest('li');
-
-  // Toggle expanded state
-  const isExpanded = parentLi.getAttribute('aria-expanded') === 'true';
-  const newState = !isExpanded;
-
-  if (parentLi.classList.contains('menu-item-has-children')) {
-    parentLi.setAttribute('aria-expanded', String(newState));
-  }
-
-  // Update tabindex of submenu links
-  const subMenu = parentLi.querySelector('ul.sub-menu');
-  if (subMenu) {
-    const links = subMenu.querySelectorAll('a');
-    links.forEach((link) => {
-      if (newState) {
-        link.removeAttribute('tabindex'); // make focusable
-      } else {
-        link.setAttribute('tabindex', '-1'); // hide from tab order
-      }
-    });
-  }
-
-  if (bSidebarWidget) populateSidebar('more');
-}
-
-/**
- * Updates the aria-label of a link based on its open or closed state
- * to improve screen reader accessibility.
- *
- * @param {HTMLElement} link - The link element whose aria-label will be updated.
- * @param {boolean} isOpen - Indicates whether the submenu is currently open (true) or closed (false).
- */
-function setAriaLabel(link, isOpen) {
-  // Create a temporary container to safely parse the link's HTML content
-  const tempElement = document.createElement('div');
-  tempElement.innerHTML = link.innerHTML;
-
-  // Remove the <div class="profile"> element if it exists,
-  // so it doesn't get included in the aria-label text
-  const profileElement = tempElement.querySelector('.profile');
-  if (profileElement) {
-    profileElement.remove();
-  }
-
-  // Extract the visible menu text after removing the profile element
-  const menuText = tempElement.textContent.trim();
-
-  // Set an appropriate aria-label based on whether the submenu is open or closed
-  link.setAttribute(
-    'aria-label',
-    isOpen
-      ? `Click enter to close ${menuText} sub menu`
-      : `${menuText} has a sub menu. Click enter to open`
-  );
-}
-
-/**
- * Updates the aria-label for all parent menu links based on their current expanded state.
- *
- * This function finds all anchor tags (<a>) that are direct children of elements
- * with the class 'menu-item-has-children'. It checks if each link is currently expanded
- * (aria-expanded="true") and updates its aria-label accordingly using the setAriaLabel function.
- */
-function updateAllAriaLabels() {
-  // Select all menu links that have submenus
-  document.querySelectorAll('.menu-item-has-children > a').forEach((link) => {
-    // Check if the menu item is expanded
-    const isExpanded =
-      link.parentElement.getAttribute('aria-expanded') === 'true';
-    // Update the aria-label to reflect the current state (expanded or collapsed)
-    setAriaLabel(link, isExpanded);
-  });
-}
-
-// Add an event listener to detect keydown events across the document
-document.addEventListener('keydown', function (event) {
-  // Check if the pressed key is the Escape key
-  if (event.key === 'Escape') {
-    // Locate the first top-level menu item that is currently expanded
-    const expandedMenuItem = document.querySelector(
-      '.menu-item-has-children > [aria-expanded="true"]'
-    );
-
-    // If an expanded menu item is found
-    if (expandedMenuItem) {
-      // Call the toggle function to collapse/close the expanded menu
-      toggleTopLevelMenu(expandedMenuItem, event);
-    }
-  }
-});
-
 function determineMegaMenuPosition() {
   // Get the "More" menu item and all main menu items
   const menuMore = document.getElementById('menu-more');
@@ -2512,3 +1444,1071 @@ function generateBreadcrumbs() {
 function capitalizeFirstLetterOfEachWord(text) {
   return text.replace(/\b\w/g, (char) => char.toUpperCase());
 }
+
+/*********************************************************** */
+
+console.log(
+  `I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}. User is ${user}. Switchable is ${switchAble}`
+);
+
+console.log(`Menu file: ${pagesJSONfile}`);
+
+// Ensure this code runs after the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+  // render header  a custom logo can be set, else it is Counting Opinions logo
+
+  // renderHeader({
+  //   logo: 'download-1350.svg',
+  //   simpleLogo: 'download-m.svg',
+  //   logoPath: '',
+  //   logoAlt: 'Company Full Logo',
+  //   simpleLogoAlt: 'Company Simplified Logo',
+  // });
+
+  // renderHeader({
+  //   logo: 'CO_logo.svg',
+  //   simpleLogo: 'CO_simple_logo.svg',
+  //   logoPath: 'widgets/menu/imgs/',
+  //   logoAlt: 'Counting Opinions',
+  //   simpleLogoAlt: 'Counting Opinions',
+  //   brandingWidth: '80rem',
+  //   brandingBgColour: 'red',
+  //   logoBgColour: 'green',
+  // });
+
+  renderHeader();
+
+  // render Skip to main content link
+  insertSkipMenuAnchor();
+
+  // generate Breadcrumbs
+  generateBreadcrumbs();
+
+  // iniltialize menu templates
+  initMenuTemplates();
+
+  // call injectNavigationMenuCSS to ensure navigation-menu.css is present
+  injectNavigationMenuCSS();
+
+  fetchWithRetry(pagesJSONfile)
+    .then((data) => {
+      allMenuItemsinArray = data;
+
+      console.log(allMenuItemsinArray);
+
+      // Initialize an empty object to hold grouped pages
+      const groupedSections = {};
+
+      // Loop through each page in the data
+      data.pages.forEach((page) => {
+        const { section_id, section_prompt } = page;
+
+        // Ensure the section_id exists in the groupedSections object
+        if (!groupedSections[section_id]) {
+          groupedSections[section_id] = {
+            nonNull: [],
+            null: [],
+          };
+        }
+
+        // Push the page to the appropriate array based on section_prompt
+        if (section_prompt === null) {
+          groupedSections[section_id].null.push(page);
+        } else {
+          groupedSections[section_id].nonNull.push(page);
+        }
+      });
+
+      // Create a final array of grouped results with section_prompt
+      const finalGroupedArray = Object.entries(groupedSections).map(
+        ([section_id, { nonNull, null: nullPages }]) => {
+          // Get the section_prompt from the first non-null page (if exists) or use null
+          const section_prompt =
+            nonNull.length > 0 ? nonNull[0].section_prompt : null;
+
+          return {
+            section_id,
+            section_prompt, // Add the section_prompt
+            pages: [...nonNull, ...nullPages], // Combine non-null pages with null pages at the end
+          };
+        }
+      );
+
+      // Check if there's no entry with section_id equal to zero
+      const hasSectionZero = finalGroupedArray.some(
+        (section) => section.section_id === '0'
+      );
+
+      if (!hasSectionZero) {
+        // Add an entry for section_id = 0 with an empty pages array
+        finalGroupedArray.push({
+          section_id: '0',
+          section_prompt: null,
+          pages: [],
+        });
+      }
+
+      // Define the custom order for section_ids
+      const customOrder = ['0', '8', '2', '5', '1'];
+
+      // Sort the finalGroupedArray based on the custom order
+      finalGroupedArray.sort((a, b) => {
+        return (
+          customOrder.indexOf(a.section_id) - customOrder.indexOf(b.section_id)
+        );
+      });
+
+      if (finalGroupedArray.length > 1) {
+        // Create a deep clone and modify it
+        const cloneGroupedArray = JSON.parse(JSON.stringify(finalGroupedArray)); // Deep clone
+
+        // Modify the cloned array
+        cloneGroupedArray.forEach((section) => {
+          if (section.section_id !== '1') {
+            // If you want to keep the pages, uncomment the next line
+            delete section.pages;
+          }
+          delete section.section_id; // Remove from section
+          delete section.section_prompt; // Remove from section
+        });
+      }
+
+      function createMenu(menuData) {
+        let menuHTML = '';
+        let createdPagesMenu = false;
+        let createdServicesMenu = false;
+
+        menuData.forEach((section) => {
+          // If section_id is 0, create top-level menu items
+          if (section.section_id === '0' && ukey !== '') {
+            if (createdPagesMenu === false) {
+              createdPagesMenu = true;
+              menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="Pages has a sub menu. Click enter to open">Pages <i class="caret angle-down"></i></a>
+            <div class="mega-menu">
+            <div class="grid-container-pages tabs-container"></div>
+            </div>
+          </li>`;
+            }
+          } else if (isServiceSection(section.section_id)) {
+            if (createdServicesMenu === false) {
+              createdServicesMenu = true;
+              menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
+            <div class="mega-menu">
+            <div class="grid-container-multiple tabs-container"></div>
+            </div>
+          </li>`;
+            }
+          } else if (section.section_id === '0' && ukey === '') {
+            // Logout state
+            data.pages.forEach((page) => {
+              menuHTML += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
+            });
+          } else {
+            if (section.section_prompt != 'LibSat') {
+              let openSubmenu = false;
+              // Create submenus for other sections
+              if (section.section_prompt) {
+                menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="${section.section_prompt} has a sub menu. Click enter to open">${section.section_prompt} <i class="caret angle-down"></i></a>`;
+
+                menuHTML += '<ul class="sub-menu">';
+
+                section.pages.forEach((page, index) => {
+                  if (
+                    page.page_prompt.toLowerCase() !==
+                    section.section_prompt.toLowerCase()
+                  )
+                    if (page.page_link === '') {
+                      menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#"aria-label="${page.page_prompt} has a sub menu. Click enter to open">${page.page_prompt} <i class="caret angle-down"></i></a>`;
+                      menuHTML += '<ul class="sub-menu">';
+                      openSubmenu = true;
+                    } else {
+                      menuHTML += `<li><a href="${page.page_link}" tabindex="-1">${page.page_prompt}</a></li>`;
+                    }
+
+                  // close sub menu if index is at the end of section and openSubmenu is true
+                  if (index === section.pages.length - 1 && openSubmenu) {
+                    menuHTML += '</ul></li>';
+                  }
+                });
+                menuHTML += '</ul></li>';
+              }
+            }
+          }
+        });
+
+        return menuHTML;
+      }
+
+      console.log(finalGroupedArray);
+      // Call the function to create the menu
+      let menuHTML = createMenu(finalGroupedArray);
+
+      // if switchAble session variable is true, show Show Users link
+      if (switchAble === true)
+        menuHTML += `<li> <a href="#" id="showUsersLink">View page as...</a></li>`;
+
+      let initials = '';
+      let profileName = '';
+
+      if (user) {
+        initials = getInitials(user);
+        profileName = user;
+      }
+
+      // if logged in, show profile
+      if (ukey.trim() !== '') {
+        menuHTML += `<li class="menu-item-has-children hover" aria-expanded="false"><a href="#" aria-label="${profileName} profile has a sub menu. Click enter to open" id="profile"><div class="profile"><span aria-hidden="true">${initials}</span></div>${profileName} <span class="hidden-text">profile</span> <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="#" tabindex='-1'>My Profile</a></li><li><a href="#" tabindex='-1'>Settings</a></li><li><a href="#" tabindex='-1'>Notifications</a></li><li><a href="#" tabindex='-1'>Help &amp; Support</a></li><li><a href="logout.php" tabindex='-1'>Sign Out</a></li></ul></li>`;
+      }
+
+      document.getElementById('menu-main-menu').innerHTML = menuHTML;
+
+      populateMegaMenu(finalGroupedArray);
+
+      navItems = document.querySelectorAll('#menu-main-menu > li');
+
+      // call alignSubMenusToViewport to initially align them
+      alignSubMenusToViewport('initial');
+
+      megaMenuLinks = document.querySelectorAll('nav a');
+
+      for (let i = 0; i < megaMenuLinks.length; i++) {
+        megaMenuLinks[i].addEventListener('click', handleLinkClick);
+      }
+
+      // assign window width to winWidth
+      winWidth = window.innerWidth;
+
+      // close All Menus when the esc is pressed
+      document
+        .getElementById('menu-main-menu')
+        .addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            closeAllMenus();
+          }
+        });
+
+      navItems = document.querySelectorAll('#menu-main-menu > li');
+
+      // add hover class to those with class menu-item-has-children
+      navItems.forEach(function (item) {
+        if (item.classList.contains('menu-item-has-children')) {
+          item.classList.add('hover');
+        }
+      });
+
+      // get width of each item, and list each as visible
+      navItems.forEach(function (item) {
+        navItemWidth.push(item.offsetWidth);
+        navItemVisible.push(true);
+      });
+
+      // add more link
+      const menuMainMenu = document.getElementById('menu-main-menu');
+      const newMenuItem = document.createElement('li');
+      newMenuItem.setAttribute('aria-expanded', 'false');
+
+      newMenuItem.id = 'menu-more';
+      newMenuItem.className = 'menu-item menu-item-has-children';
+
+      const newMenuLink = document.createElement('a');
+      newMenuLink.id = 'menuMoreLink';
+      newMenuLink.href = '#';
+      newMenuLink.setAttribute(
+        'aria-label',
+        'More has a sub menu. Click enter to open'
+      );
+
+      const newSubMenu = document.createElement('ul');
+      newSubMenu.id = 'moreSubMenu';
+      newSubMenu.className = 'sub-menu';
+
+      newMenuItem.appendChild(newMenuLink);
+      newMenuItem.appendChild(newSubMenu);
+      menuMainMenu.appendChild(newMenuItem);
+
+      moreWidth = document.getElementById('menu-more').offsetWidth;
+
+      adjustMoreSubMenuOffset();
+
+      // toggle More menu
+      document
+        .getElementById('menuMoreLink')
+        .addEventListener('click', function (event) {
+          event.preventDefault();
+
+          const moreMenu = this.parentElement;
+          const icon = this.querySelector('i');
+
+          const expanded = moreMenu.getAttribute('aria-expanded') === 'true';
+          const newState = !expanded;
+
+          moreMenu.setAttribute('aria-expanded', String(newState));
+
+          // Adjust icon direction
+          if (icon) {
+            icon.classList.replace(
+              expanded ? 'angle-up' : 'angle-down',
+              newState ? 'angle-up' : 'angle-down'
+            );
+          }
+
+          const subLinks = document.querySelectorAll('#moreSubMenu a');
+
+          if (newState) {
+            // Opening: make all submenu links focusable
+            subLinks.forEach((link) => {
+              link.removeAttribute('tabindex');
+            });
+          } else {
+            // Closing: close all expanded submenus and hide links from tab order
+            const subItems = document.querySelectorAll(
+              '#moreSubMenu li[aria-expanded="true"]'
+            );
+            subItems.forEach((li) => {
+              if (li.classList.contains('menu-item-has-children')) {
+                li.setAttribute('aria-expanded', 'false');
+                const nestedLinks = li.querySelectorAll('.sub-menu a');
+                nestedLinks.forEach((link) => {
+                  link.setAttribute('tabindex', '-1');
+                });
+              }
+            });
+
+            // Also set tabindex=-1 on all direct submenu links
+            subLinks.forEach((link) => {
+              link.setAttribute('tabindex', '-1');
+            });
+          }
+
+          // Update sidebar content
+          if (bSidebarWidget) populateSidebar();
+        });
+
+      // collapse all sub-menus when user clicks off
+      document.body.addEventListener('click', function (event) {
+        if (event.target.getAttribute('onClick') === 'toggleSidebar()') return;
+
+        if (!event.target.closest('li')) {
+          document
+            .querySelectorAll('.menu-item-has-children')
+            .forEach(function (element) {
+              //element.classList.remove('visible');
+            });
+        }
+
+        // reset arrows to down position
+        resetArrows();
+
+        //  reset aria-labels to Click enter to open
+        document
+          .querySelectorAll('.menu-item-has-children > a')
+          .forEach(function (element) {
+            element.setAttribute(
+              'aria-label',
+              `${element.textContent} has a sub menu. Click enter to open`
+            );
+            //element.setAttribute('aria-expanded', 'false');
+          });
+        // call removeActiveClass
+        removeActiveClass();
+      });
+
+      preserveMenuColour();
+
+      // stop propagation for .menu-item-has-children a
+      document
+        .querySelectorAll('.menu-item-has-children a')
+        .forEach(function (element) {
+          element.addEventListener('click', function (e) {
+            e.stopPropagation();
+          });
+        });
+
+      // stop propagation for .menu-item-has-children ul
+      document
+        .querySelectorAll('.menu-item-has-children ul')
+        .forEach(function (element) {
+          element.addEventListener('click', function (e) {
+            e.stopPropagation();
+          });
+        });
+
+      // stop propagation for .menu-item-has-children li
+      document
+        .querySelectorAll('.menu-item-has-children li')
+        .forEach(function (element) {
+          element.addEventListener('click', function (e) {
+            e.stopPropagation();
+          });
+        });
+
+      // format navigation on page load
+      formatNav();
+
+      // set More Menu tabindex to -1 if there are no children
+      updateMenuMoreTabIndex();
+
+      // watch for difference between touchscreen and mouse
+      watchForHover();
+    })
+    .catch((error) => {
+      console.error('Failed to load menu data:', error);
+      // Error alert already shown to user by fetchWithRetry
+    });
+
+  moreWidth = document.getElementById('menu-main-menu').offsetWidth;
+
+  // Begin to Insert CSS and JS dynamically
+
+  // Detect if we're on preferences.php
+  const isPreferencesPage =
+    window.location.pathname.endsWith('preferences.php');
+
+  // Dynamically add reset.css or reset.min.css as the first style if not already present
+  const resetHref = resetCssPath;
+
+  // Check if reset.css or reset.min.css already exists
+  const existingReset = document.querySelector(
+    `link[href*="reset.css"], link[href*="reset.min.css"]`
+  );
+
+  if (!existingReset) {
+    // --- Create reset link ---
+    const linkReset = document.createElement('link');
+    linkReset.rel = 'stylesheet';
+    linkReset.type = 'text/css';
+    linkReset.href = resetHref;
+
+    // --- Determine where navigation-menu.css currently is ---
+    const navLink = document.querySelector(`link[href*="navigation-menu.css"]`);
+    const parent = navLink
+      ? navLink.parentNode
+      : document.head || document.body;
+
+    if (navLink && parent) {
+      // Insert reset.css immediately before the existing navigation link
+      parent.insertBefore(linkReset, navLink);
+    } else {
+      // Fallback: insert at the top of head or body
+      const head = document.head;
+      if (head) {
+        const firstLink = head.querySelector('link[rel="stylesheet"]');
+        head.insertBefore(linkReset, firstLink || null);
+      } else {
+        const body = document.body || document.documentElement;
+        const firstStyleLink = body.querySelector('link[rel="stylesheet"]');
+        body.insertBefore(linkReset, firstStyleLink || null);
+      }
+    }
+  }
+
+  // Dynamically add switchable.js if switchAble is true and place it right before menu.js
+  if (switchAble || Number(localStorage.getItem('ukey_switch_pending'))) {
+    const currentScript = document.querySelector('script[src*="menu.js"]');
+    loadScript(switchableJsPath, currentScript);
+  }
+
+  // Dynamically add selectTheme.js and selectTheme.min.css only on preferences.php
+  if (isPreferencesPage && ukey) {
+    const menuScript = document.querySelector('script[src*="menu.js"]');
+    loadScript(selectThemeJsPath, menuScript);
+
+    const navLink = document.querySelector('link[href*="navigation-menu.css"]');
+    loadCSS(selectThemeCssPath, navLink);
+
+    console.log(`Injected selectTheme.min.css: ${selectThemeCssPath}`);
+  }
+
+  // Dynamically add sidebar.js if sidebar enabled and place it right after menu.js or breadcrumbs.js
+  if (bSidebarWidget) {
+    // Load CSS
+    const navCss = document.querySelector('link[href*="navigation-menu.css"]');
+    loadCSS(sidebarCssPath, navCss);
+
+    // Load script with onload handler
+    const breadcrumbsScript = document.querySelector(
+      'script[src*="generateBreadcrumbs.js"]'
+    );
+    const menuScript = document.querySelector('script[src*="menu.js"]');
+    const insertAfter = breadcrumbsScript || menuScript;
+
+    const sidebarScript = loadScript(sidebarJsPath, insertAfter);
+
+    sidebarScript.onload = () => {
+      if (typeof insertSidebar === 'function') insertSidebar();
+
+      const toggleBtn = document.querySelector('.toggle-btn');
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', toggleSidebar);
+      } else {
+        console.warn('⚠️ Toggle button not found – event not attached');
+      }
+
+      document.addEventListener('keydown', handleEscapeKey);
+    };
+  }
+
+  // --- Check if user/ukey is defined ---
+  if (
+    (typeof ukey !== 'undefined' && ukey) ||
+    (typeof user !== 'undefined' && user)
+  ) {
+    // --- Helper: get cookie value ---
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+      return null;
+    }
+
+    // --- Determine which theme to use ---
+    const theme = getCookie('theme') || 'base';
+
+    // --- Build link element ---
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = MenuPaths.menuCss(`templatesStyles/${theme}.css`);
+
+    // --- Insert theme link right after navigation-menu.css (if exists) ---
+    const navLink = document.querySelector('link[href*="navigation-menu.css"]');
+    const container = navLink
+      ? navLink.parentNode
+      : document.head || document.body;
+
+    if (navLink) {
+      container.insertBefore(link, navLink.nextSibling);
+    } else {
+      container.appendChild(link);
+    }
+
+    if (bTimerInactivityWidget) {
+      const cookieUkey = getCookie('ukey');
+      const urlParams = new URLSearchParams(window.location.search);
+      const requestUkey = urlParams.get('ukey');
+
+      if (cookieUkey || requestUkey) {
+        // Find scripts in priority order
+        const scripts = [...document.getElementsByTagName('script')];
+        const sidebarScript = scripts.find((s) => s.src.includes('sidebar.js'));
+        const breadcrumbsScript = scripts.find((s) =>
+          s.src.includes('breadcrumbs.js')
+        );
+        const menuScript = scripts.find((s) => s.src.includes('menu.js'));
+
+        // Choose target in priority: sidebar > breadcrumbs > menu
+        const targetScript = sidebarScript || breadcrumbsScript || menuScript;
+        loadScript(timerInactivityJsPath, targetScript);
+      }
+    }
+  }
+});
+
+///// FUNCTIONS /////
+/**
+ * Aligns visible sub-menus (<ul class="sub-menu">) so they stay within the viewport on narrow screens,
+ * except those under <ul id="moreSubMenu">.
+ *
+ * @param {string} mode - Can be 'initial' or 'default'. 'initial' applies an extra offset.
+ * @param {boolean} debug - If true, logs debug information.
+ */
+function alignSubMenusToViewport(mode = 'default', debug = false) {
+  const OFFSET_FOR_INITIAL_MODE = 209;
+
+  if (window.innerWidth > MOBILE_BREAKPOINT) return;
+
+  const subMenus = document.querySelectorAll('ul.sub-menu');
+
+  subMenus.forEach((subMenu) => {
+    // Skip sub-menus inside #moreSubMenu
+    if (subMenu.closest('#moreSubMenu')) return;
+
+    const parentLi = subMenu.closest('li');
+    if (!parentLi) return;
+
+    const parentRightEdge = parentLi.getBoundingClientRect().right;
+    let offsetFromRight = window.innerWidth - parentRightEdge;
+
+    if (mode === 'initial') {
+      offsetFromRight -= OFFSET_FOR_INITIAL_MODE;
+
+      if (debug) {
+        console.log(
+          'SubMenu:',
+          subMenu,
+          '\nParent Element:',
+          subMenu.parentElement,
+          '\n#moreSubMenu Ancestor:',
+          subMenu.closest('#moreSubMenu')
+        );
+      }
+    }
+
+    subMenu.style.right = `-${offsetFromRight}px`;
+  });
+}
+
+/**
+ * Handles click events on menu links.
+ * If the clicked link belongs to a menu item that has child items,
+ * it toggles the corresponding top-level submenu.
+ *
+ * @param {Event} e - The click event object.
+ */
+function handleLinkClick(e) {
+  // Check if the clicked link is inside a menu item that has children
+  if (this.closest('.menu-item-has-children')) {
+    // Toggle the display of the submenu for this top-level menu item
+    const isInMoreMenu = document.getElementById('moreSubMenu').contains(this);
+
+    if (isInMoreMenu) {
+      // Toggle sub menu
+      toggleSubMenu(this); // submenu item inside "More"
+    } else {
+      // Toggle top level menu
+      toggleTopLevelMenu(this, e); // regular top-level menu
+    }
+  }
+}
+
+// Event listener to format navigation when the window is resized
+let id;
+
+// Add event listener for window resize event
+window.addEventListener('resize', function () {
+  // Clear any previously set timeout to prevent multiple calls
+  clearTimeout(id);
+
+  // Set a new timeout to call the onResize function after 10 milliseconds
+  // This ensures the onResize function is only called once after resizing finishes
+  id = setTimeout(onResize, 10);
+});
+
+/**
+ * Closes all open menus and toggles the aria-expanded attribute for accessibility.
+ *
+ * @param {HTMLElement|string} menuItem - The current menu item or a string.
+ *                                   This parameter is not currently used in the function but could be utilized for targeting a specific menu item in the future.
+ * @returns {void} This function doesn't return anything. It modifies the aria-expanded attributes of menu links.
+ */
+function closeAllMenus() {
+  // Select all anchor elements that are within menu items containing children
+  const links = document.querySelectorAll('.menu-item-has-children a');
+
+  // Initialize variables to track the closest link to the top of the viewport
+  let closestLink = null;
+  let minDistance = Infinity;
+
+  // Loop through all links to determine which one is closest to the top of the viewport
+  links.forEach((link) => {
+    const rect = link.getBoundingClientRect(); // Get the position and size of each link
+    const distance = Math.abs(rect.top); // Calculate the distance from the top of the viewport
+
+    // If this link is closer to the top than the previously found closest link, update closestLink
+    if (distance < minDistance) {
+      minDistance = distance;
+      closestLink = link;
+    }
+  });
+
+  // Loop through all links to set aria-expanded attribute to false
+  links.forEach((link) => {
+    if (link.parentElement.classList.contains('menu-item-has-children'))
+      link.parentElement.setAttribute('aria-expanded', 'false');
+  });
+}
+
+/**
+ * Dynamically formats the top navigation bar by showing or hiding menu items
+ * based on available horizontal space in the container. Items that do not fit
+ * are moved into a "More" dropdown menu.
+ *
+ * This function assumes the existence of the following global variables:
+ * - navItems: NodeList or array of navigation <li> items.
+ * - navItemWidth: Array of each navigation item’s width.
+ * - navItemVisible: Array of booleans tracking which items are currently visible.
+ * - moreWidth: Width of the "More" dropdown menu item.
+ */
+
+function formatNav() {
+  // Track whether there's still room to display more menu items
+  let room = true;
+
+  // Index counter for each menu item
+  let count = 0;
+
+  // Temporary and total width calculations for placing items
+  let tempWidth = 0;
+  let totalWidth = 0;
+
+  // Get the width of the navigation container (rounded to nearest integer)
+  const containerWidth = Math.round(
+    document.querySelector('.menu-main-menu-container').getBoundingClientRect()
+      .width
+  );
+
+  // Padding applied around each nav item (buffer for spacing)
+  const navPadding = 5;
+
+  // Maximum number of top-level items to display before triggering "More"
+  let numItems = 5;
+  if (containerWidth <= 536) numItems = 2;
+  if (containerWidth <= 550) numItems = 3;
+
+  // Loop through each navigation item and decide whether to show it or move it to "More"
+  navItems.forEach(function (item) {
+    // Predict total width if this item were added
+    tempWidth = totalWidth + navItemWidth[count] + navPadding;
+
+    // Check if item fits within the container (adjusting for "More" menu space)
+    /*
+     if (
+       (tempWidth < containerWidth - moreWidth - navPadding ||
+       (tempWidth < containerWidth && count === numItems)) &&
+       room === true
+     ) {
+    */
+    if (
+      count < numItems &&
+      tempWidth < containerWidth - moreWidth - navPadding &&
+      room === true
+    ) {
+      // Item fits: update the total used width
+      totalWidth = tempWidth;
+
+      // If the item is not already marked visible, move it from "More" back to main nav
+      if (navItemVisible[count] !== true) {
+        // Move the first child of the "More" submenu back to the main menu
+        const menuMore = document.getElementById('menu-more');
+        const moreSubMenu = document.getElementById('moreSubMenu');
+        const firstChild = moreSubMenu.firstElementChild;
+
+        // If there is a first child, insert it before the 'More' menu
+        if (firstChild) {
+          menuMore.parentNode.insertBefore(firstChild, menuMore);
+        }
+
+        // If "More" submenu is now empty, reset its visual label and accessibility
+        if (menuMore.children[1].children.length === 0) {
+          const moreLink = document.getElementById('menuMoreLink');
+          moreLink.innerHTML = '';
+          moreLink.setAttribute('tabindex', '-1');
+        }
+        // Mark the current item as visible
+        navItemVisible[count] = true;
+      }
+    } else {
+      // Item does not fit: begin using "More" menu if not already
+      if (room === true) {
+        room = false;
+
+        const nav = document.querySelector('nav');
+        const moreLink = document.getElementById('menuMoreLink');
+
+        // If no items fit at all, hide the entire nav and show "Menu" label
+        if (count === 0) {
+          nav.classList.add('all-hidden');
+
+          // Set the HTML content for the 'More' dropdown link
+          moreLink.innerHTML = 'Menu <i class="caret angle-down"></i>';
+        } else {
+          // Remove the class to show navigation items when more are revealed
+          nav.classList.remove('all-hidden');
+
+          // Update the 'More' dropdown link content
+          moreLink.innerHTML = 'More <i class="caret angle-down"></i>';
+
+          // Remove tabindex attribute from the 'More' link and its subitems
+          moreLink.removeAttribute('tabindex');
+
+          const subLinks = document.querySelectorAll('#moreSubMenu a');
+          subLinks.forEach((link) => {
+            link.removeAttribute('tabindex');
+          });
+        }
+      }
+
+      // Remove hover behavior and move item into the "More" submenu
+      item.classList.remove('hover');
+      document.getElementById('moreSubMenu').appendChild(item);
+
+      // Ensure submenu links inside "More" menu are not focusable initially
+      const innerLinks = item.querySelectorAll('.sub-menu a');
+      innerLinks.forEach((link) => {
+        // check if parent has class 'menu-item-has-children' beore setting tabindex to -1
+        if (link.parentElement.classList.contains('menu-item-has-children')) {
+          link.setAttribute('tabindex', '-1');
+        }
+      });
+
+      // Mark the current item as not visible
+      navItemVisible[count] = false;
+    }
+
+    count += 1; // Move to next nav item
+  });
+
+  // Cleanup: remove inline 'right' style from submenus under "More"
+  const subMenus = document.querySelectorAll('#moreSubMenu ul.sub-menu');
+  subMenus.forEach((ul) => {
+    if (ul.style.right) {
+      ul.style.removeProperty('right');
+    }
+  });
+}
+
+/**
+ * Resets the direction of all arrows by switching their classes from 'angle-up' to 'angle-down'.
+ * This is typically used for collapsing or resetting UI elements like dropdown menus or accordions.
+ */
+function resetArrows() {
+  // Select all elements with the class '.caret'
+  document.querySelectorAll('.caret').forEach(function (element) {
+    // Remove the 'angle-up' class, indicating the arrow is pointing upwards
+    element.classList.remove('angle-up');
+
+    // Add the 'angle-down' class, indicating the arrow is pointing downwards
+    element.classList.add('angle-down');
+  });
+}
+
+function onResize() {
+  // Only proceed if the window's width has actually changed
+  if (winWidth != window.innerWidth) {
+    let count = 0;
+
+    // Loop through each navigation item
+    navItems.forEach(function (item) {
+      // If the item has a submenu, add a 'hover' class to enable hover behavior
+      if (item.classList.contains('menu-item-has-children')) {
+        item.classList.add('hover');
+      }
+
+      // Get and store the width of each visible item
+      let itemWidth = item.offsetWidth;
+      if (itemWidth > 0) {
+        navItemWidth[count] = itemWidth;
+      }
+    });
+
+    // Close all open submenus to reset the navigation state
+    closeAllMenus();
+
+    // Reset any toggled arrows back to the default (downward) position
+    resetArrows();
+
+    // Update ARIA labels for all menu items for better accessibility
+    updateAllAriaLabels();
+
+    // Update tab indices to manage focusability of dynamic menu items
+    updateMenuMoreTabIndex();
+
+    // Reformat navigation layout, e.g., move overflowing items into "More" dropdown
+    formatNav();
+
+    // Adjust mega menu positioning if necessary based on new window size
+    determineMegaMenuPosition();
+
+    // Update stored window width for the next resize event
+    winWidth = window.innerWidth;
+
+    alignSubMenusToViewport('onResize');
+  }
+}
+
+/**
+ * Toggles the open/close state of a top-level menu item, updates accessibility attributes,
+ * manages submenus, and dynamically adjusts mega menu positioning.
+ *
+ * @param {HTMLElement} menuLink - The <a> element inside a top-level menu item that was clicked.
+ */
+function toggleTopLevelMenu(menuLink, e) {
+  if (e && menuLink.getAttribute('href') === '#') {
+    e.preventDefault(); // only stop jump-to-# links
+  }
+
+  const allMenuItems = document.querySelectorAll('.menu-item-has-children > a');
+  const isExpanded =
+    menuLink.parentElement.getAttribute('aria-expanded') === 'true';
+
+  // Close all other open menus (set aria-expanded to false and update icons)
+  allMenuItems.forEach((link) => {
+    if (link !== menuLink) {
+      link.parentElement.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Toggle the aria-expanded state of the clicked menu item
+  menuLink.parentElement.setAttribute(
+    'aria-expanded',
+    isExpanded ? 'false' : 'true'
+  );
+
+  // Toggle tabindex on sub-menu links based on aria-expanded state
+  const subMenuList = menuLink.parentElement.querySelector('.sub-menu');
+  if (subMenuList) {
+    const isNowExpanded =
+      menuLink.parentElement.getAttribute('aria-expanded') === 'true';
+    const links = subMenuList.querySelectorAll('a');
+    links.forEach((link) => {
+      if (isNowExpanded) {
+        link.removeAttribute('tabindex');
+      } else {
+        link.setAttribute('tabindex', '-1');
+      }
+    });
+  }
+
+  // Update all aria-labels if the clicked link is not inside a submenu
+  if (!menuLink.closest('.mega-menu')) {
+    updateAllAriaLabels();
+  }
+
+  // Toggle the arrow icon direction based on expanded/collapsed state
+  const icon = menuLink.querySelector('i');
+  if (icon) {
+    icon.classList.toggle('angle-down', isExpanded);
+    icon.classList.toggle('angle-up', !isExpanded);
+  }
+
+  // If inside "More" menu, keep the parent "More" link open
+  const li = menuLink.parentElement.closest('li');
+
+  // Allow interaction with the submenu without closing it
+  const subMenu = li?.querySelector('.mega-menu');
+
+  if (subMenu) {
+    // Adjust mega menu position after submenu interaction
+    determineMegaMenuPosition();
+  }
+
+  // Handle showing or hiding the submenu div based on expanded state
+  const subMenuDiv = menuLink.nextElementSibling;
+  if (menuLink.parentElement.getAttribute('aria-expanded') === 'false') {
+    // If submenu exists, remove inline styles to reset its display
+    if (subMenuDiv?.classList.contains('mega-menu')) {
+      //subMenuDiv.style.removeProperty('opacity');
+      subMenuDiv.style.removeProperty('pointer-events');
+      subMenuDiv.style.removeProperty('transform');
+    }
+  }
+
+  if (
+    menuLink.parentElement.getAttribute('aria-expanded') === 'true' &&
+    subMenuDiv &&
+    subMenuDiv.tagName === 'DIV'
+  ) {
+    // Slide in and show the submenu (mega menu)
+    displaySubMegaMenu(subMenuDiv);
+  }
+
+  // Check if the mega menu overflows off the left side of the screen
+  // Adjust the width dynamically based on viewport size
+  const menuMore = document.getElementById('menu-more');
+  if (menuMore) {
+    const subMenuDivs = menuMore.querySelectorAll('.mega-menu');
+    const viewportWidth = window.innerWidth;
+  }
+
+  // Update the sidebar content based on the selected top-level menu
+  if (bSidebarWidget && typeof populateSidebar === 'function')
+    populateSidebar();
+}
+
+/**
+ * Toggles a submenu's open/closed state and ensures "More" menu stays open.
+ *
+ * @param {HTMLElement} menuLink - The <a> element clicked to toggle a submenu.
+ */
+function toggleSubMenu(menuLink) {
+  const parentLi = menuLink.closest('li');
+
+  // Toggle expanded state
+  const isExpanded = parentLi.getAttribute('aria-expanded') === 'true';
+  const newState = !isExpanded;
+
+  if (parentLi.classList.contains('menu-item-has-children')) {
+    parentLi.setAttribute('aria-expanded', String(newState));
+  }
+
+  // Update tabindex of submenu links
+  const subMenu = parentLi.querySelector('ul.sub-menu');
+  if (subMenu) {
+    const links = subMenu.querySelectorAll('a');
+    links.forEach((link) => {
+      if (newState) {
+        link.removeAttribute('tabindex'); // make focusable
+      } else {
+        link.setAttribute('tabindex', '-1'); // hide from tab order
+      }
+    });
+  }
+
+  if (bSidebarWidget) populateSidebar('more');
+}
+
+/**
+ * Updates the aria-label of a link based on its open or closed state
+ * to improve screen reader accessibility.
+ *
+ * @param {HTMLElement} link - The link element whose aria-label will be updated.
+ * @param {boolean} isOpen - Indicates whether the submenu is currently open (true) or closed (false).
+ */
+function setAriaLabel(link, isOpen) {
+  // Create a temporary container to safely parse the link's HTML content
+  const tempElement = document.createElement('div');
+  tempElement.innerHTML = link.innerHTML;
+
+  // Remove the <div class="profile"> element if it exists,
+  // so it doesn't get included in the aria-label text
+  const profileElement = tempElement.querySelector('.profile');
+  if (profileElement) {
+    profileElement.remove();
+  }
+
+  // Extract the visible menu text after removing the profile element
+  const menuText = tempElement.textContent.trim();
+
+  // Set an appropriate aria-label based on whether the submenu is open or closed
+  link.setAttribute(
+    'aria-label',
+    isOpen
+      ? `Click enter to close ${menuText} sub menu`
+      : `${menuText} has a sub menu. Click enter to open`
+  );
+}
+
+/**
+ * Updates the aria-label for all parent menu links based on their current expanded state.
+ *
+ * This function finds all anchor tags (<a>) that are direct children of elements
+ * with the class 'menu-item-has-children'. It checks if each link is currently expanded
+ * (aria-expanded="true") and updates its aria-label accordingly using the setAriaLabel function.
+ */
+function updateAllAriaLabels() {
+  // Select all menu links that have submenus
+  document.querySelectorAll('.menu-item-has-children > a').forEach((link) => {
+    // Check if the menu item is expanded
+    const isExpanded =
+      link.parentElement.getAttribute('aria-expanded') === 'true';
+    // Update the aria-label to reflect the current state (expanded or collapsed)
+    setAriaLabel(link, isExpanded);
+  });
+}
+
+// Add an event listener to detect keydown events across the document
+document.addEventListener('keydown', function (event) {
+  // Check if the pressed key is the Escape key
+  if (event.key === 'Escape') {
+    // Locate the first top-level menu item that is currently expanded
+    const expandedMenuItem = document.querySelector(
+      '.menu-item-has-children > [aria-expanded="true"]'
+    );
+
+    // If an expanded menu item is found
+    if (expandedMenuItem) {
+      // Call the toggle function to collapse/close the expanded menu
+      toggleTopLevelMenu(expandedMenuItem, event);
+    }
+  }
+});
