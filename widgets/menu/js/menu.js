@@ -1429,186 +1429,28 @@ function resetArrows() {
    MEGA MENU - Rendering
    ============================================================================ */
 
-function determineMegaMenuPosition() {
-  // Get the "More" menu item and all main menu items
-  const menuMore = document.getElementById('menu-more');
-  const menuItems = document.querySelectorAll('#menu-main-menu > li');
-
-  // Get the screen width (specifically, the header width)
-  const screenWidth = Math.round(
-    document.querySelector('#header').getBoundingClientRect().width
-  );
-
-  let count = 0; // Counter for number of processed menu items before hitting "More"
-
-  // Loop through each menu item up to the "More" item
-  for (const li of menuItems) {
-    count++;
-    if (li === menuMore) break; // Stop once we reach the "More" menu item
-
-    // Check if this menu item has an expanded submenu
-    // let ariaExpanded = li.querySelector('a').getAttribute('aria-expanded');
-    let ariaExpanded = li.getAttribute('aria-expanded');
-
-    // Find the mega menu container inside the current menu item (if any)
-    const subMenuDiv = li.querySelector('.mega-menu');
-
-    if (ariaExpanded === 'true') {
-      if (subMenuDiv && !subMenuDiv.dataset.positioned) {
-        // Hide initially (for smooth animation later)
-        //subMenuDiv.style.opacity = '0';
-        subMenuDiv.style.pointerEvents = 'none';
-        subMenuDiv.style.transform = 'translateY(-200px)';
-
-        // Get reference to the main nav
-        const mainNav = document.getElementById('mainNavigation');
-        const navRect = mainNav.getBoundingClientRect();
-        const subMenuRect = subMenuDiv.getBoundingClientRect();
-
-        // Calculate horizontal center
-        const viewportWidth = window.innerWidth;
-        const subMenuWidth = subMenuRect.width;
-        const leftPosition = (viewportWidth - subMenuWidth) / 2;
-
-        // Position submenu just below the nav
-        const topPosition = navRect.bottom; // distance from top of viewport
-
-        // Apply positioning
-        subMenuDiv.style.position = 'fixed'; // position relative to viewport
-        subMenuDiv.style.left = `${leftPosition}px`;
-        subMenuDiv.style.top = `${topPosition}px`;
-        subMenuDiv.style.right = 'auto'; // clear any conflicting style
-
-        // Mark it as positioned
-        subMenuDiv.dataset.positioned = 'true';
-
-        // Show the submenu (your existing animation logic)
-        displaySubMegaMenu(subMenuDiv);
-      }
-    }
-  }
-}
-
-function displaySubMegaMenu(subMenuDiv) {
-  requestAnimationFrame(() => {
-    //subMenuDiv.style.opacity = '1'; // Fade it in
-    subMenuDiv.style.pointerEvents = 'auto'; // Enable interaction
-    subMenuDiv.style.transform = 'translateY(0)'; // Slide it into place
-  });
-}
-
-function updateMenuMoreTabIndex() {
-  // Get the "More" menu link element
-  const menuLink = document.getElementById('menuMoreLink');
-
-  // Select all top-level menu items that have children
-  const menuItems = document.querySelectorAll(
-    '#menu-main-menu > li.menu-item-has-children'
-  );
-
-  if (menuLink) {
-    // Get text content excluding the icon element
-    const textContent = menuLink.childNodes[0]?.nodeValue.trim();
-
-    if (!textContent) {
-      // If there is no text content, make the link unfocusable
-      menuLink.setAttribute('tabindex', '-1');
-      menuLink.setAttribute('aria-hidden', 'true');
-
-      // Apply margin-left: auto to the second last top-level menu item if there are at least two
-      // and its text content contains "Profile"
-      if (menuItems.length > 1) {
-        const menuItem = menuItems[menuItems.length - 2];
-        if (menuItem.textContent.trim().includes('Profile')) {
-          menuItem.style.marginLeft = 'auto';
-
-          // override padding left
-          const anchor = menuItem.querySelector('a');
-          anchor.style.paddingLeft = '0.5rem';
-        }
-      }
-    } else {
-      // If text content exists, restore tabindex and remove margin adjustment
-      menuLink.removeAttribute('tabindex');
-      menuLink.removeAttribute('aria-hidden');
-
-      // add a margin right of 0.5rem to the profile class
-      const profile = document.querySelector('.profile');
-      profile.style.marginRight = '0.5rem';
-    }
-  }
-}
-
-function watchForHover() {
-  let hasHoverClass = false;
-  let lastTouchTime = 0;
-
-  function enableHover() {
-    // filter emulated events coming from touch events
-    if (new Date() - lastTouchTime < 500) return;
-    if (hasHoverClass) return;
-
-    document.body.classList.add('has-hover');
-    hasHoverClass = true;
-  }
-
-  function disableHover() {
-    if (!hasHoverClass) return;
-
-    document.body.classList.remove('has-hover');
-    hasHoverClass = false;
-  }
-
-  function updateLastTouchTime() {
-    lastTouchTime = new Date();
-  }
-
-  document.addEventListener('touchstart', updateLastTouchTime, true);
-  document.addEventListener('touchstart', disableHover, true);
-  document.addEventListener('mousemove', enableHover, true);
-
-  enableHover();
-}
-
 /**
- * Preserve the active menu link color when hovering over the "More" menu item.
+ * Populates multiple mega menu containers with provided menu data.
  *
- * - Adds 'active' class if the submenu is already expanded when mouse enters.
- * - Removes 'active' class when mouse leaves.
- * - Cleans up by removing the class attribute if no other classes remain.
+ * - For each container with the class 'grid-container-multiple',
+ *   initializes a mega menu of type 'multiple'.
+ * - For each container with the class 'grid-container-pages',
+ *   initializes a mega menu of type 'pages'.
+ *
+ * @param {Object} menuData - The data used to build the mega menus.
  */
-function preserveMenuColour() {
-  const menuMore = document.getElementById('menu-more');
-  const menuMoreLink = document.getElementById('menuMoreLink');
+function populateMegaMenu(menuData) {
+  document
+    .querySelectorAll('.grid-container-multiple')
+    .forEach((menuContainer) => {
+      getMegaMenu(menuContainer, 'multiple', menuData);
+    });
 
-  if (!menuMore || !menuMoreLink) return; // Exit if required elements are not found
-
-  menuMore.addEventListener('mouseenter', () => {
-    // If the submenu is expanded, add the 'active' class to highlight it
-    if (menuMoreLink.parentElement.getAttribute('aria-expanded') === 'true') {
-      menuMoreLink.classList.add('active');
-    }
-  });
-
-  menuMore.addEventListener('mouseleave', () => {
-    // Remove 'active' class on mouse leave
-    menuMoreLink.classList.remove('active');
-
-    // If no classes are left, remove the entire class attribute
-    if (menuMoreLink.className.trim() === '') {
-      menuMoreLink.removeAttribute('class');
-    }
-  });
-}
-
-function removeActiveClass() {
-  // Select all anchor elements within the Menu more
-  const moreAnchorLinks = document.querySelectorAll('#menu-more a');
-
-  // Remove 'active' class from each element
-  moreAnchorLinks.forEach((link) => {
-    link.classList.remove('active');
-  });
+  document
+    .querySelectorAll('.grid-container-pages')
+    .forEach((menuContainer) => {
+      getMegaMenu(menuContainer, 'pages', menuData);
+    });
 }
 
 /**
@@ -2109,6 +1951,188 @@ function renderExtraContent(contentData, menuContainer) {
   menuContainer.appendChild(fragment); // Insert all content at once for better performance
 }
 
+function determineMegaMenuPosition() {
+  // Get the "More" menu item and all main menu items
+  const menuMore = document.getElementById('menu-more');
+  const menuItems = document.querySelectorAll('#menu-main-menu > li');
+
+  // Get the screen width (specifically, the header width)
+  const screenWidth = Math.round(
+    document.querySelector('#header').getBoundingClientRect().width
+  );
+
+  let count = 0; // Counter for number of processed menu items before hitting "More"
+
+  // Loop through each menu item up to the "More" item
+  for (const li of menuItems) {
+    count++;
+    if (li === menuMore) break; // Stop once we reach the "More" menu item
+
+    // Check if this menu item has an expanded submenu
+    // let ariaExpanded = li.querySelector('a').getAttribute('aria-expanded');
+    let ariaExpanded = li.getAttribute('aria-expanded');
+
+    // Find the mega menu container inside the current menu item (if any)
+    const subMenuDiv = li.querySelector('.mega-menu');
+
+    if (ariaExpanded === 'true') {
+      if (subMenuDiv && !subMenuDiv.dataset.positioned) {
+        // Hide initially (for smooth animation later)
+        //subMenuDiv.style.opacity = '0';
+        subMenuDiv.style.pointerEvents = 'none';
+        subMenuDiv.style.transform = 'translateY(-200px)';
+
+        // Get reference to the main nav
+        const mainNav = document.getElementById('mainNavigation');
+        const navRect = mainNav.getBoundingClientRect();
+        const subMenuRect = subMenuDiv.getBoundingClientRect();
+
+        // Calculate horizontal center
+        const viewportWidth = window.innerWidth;
+        const subMenuWidth = subMenuRect.width;
+        const leftPosition = (viewportWidth - subMenuWidth) / 2;
+
+        // Position submenu just below the nav
+        const topPosition = navRect.bottom; // distance from top of viewport
+
+        // Apply positioning
+        subMenuDiv.style.position = 'fixed'; // position relative to viewport
+        subMenuDiv.style.left = `${leftPosition}px`;
+        subMenuDiv.style.top = `${topPosition}px`;
+        subMenuDiv.style.right = 'auto'; // clear any conflicting style
+
+        // Mark it as positioned
+        subMenuDiv.dataset.positioned = 'true';
+
+        // Show the submenu (your existing animation logic)
+        displaySubMegaMenu(subMenuDiv);
+      }
+    }
+  }
+}
+
+function displaySubMegaMenu(subMenuDiv) {
+  requestAnimationFrame(() => {
+    //subMenuDiv.style.opacity = '1'; // Fade it in
+    subMenuDiv.style.pointerEvents = 'auto'; // Enable interaction
+    subMenuDiv.style.transform = 'translateY(0)'; // Slide it into place
+  });
+}
+
+function updateMenuMoreTabIndex() {
+  // Get the "More" menu link element
+  const menuLink = document.getElementById('menuMoreLink');
+
+  // Select all top-level menu items that have children
+  const menuItems = document.querySelectorAll(
+    '#menu-main-menu > li.menu-item-has-children'
+  );
+
+  if (menuLink) {
+    // Get text content excluding the icon element
+    const textContent = menuLink.childNodes[0]?.nodeValue.trim();
+
+    if (!textContent) {
+      // If there is no text content, make the link unfocusable
+      menuLink.setAttribute('tabindex', '-1');
+      menuLink.setAttribute('aria-hidden', 'true');
+
+      // Apply margin-left: auto to the second last top-level menu item if there are at least two
+      // and its text content contains "Profile"
+      if (menuItems.length > 1) {
+        const menuItem = menuItems[menuItems.length - 2];
+        if (menuItem.textContent.trim().includes('Profile')) {
+          menuItem.style.marginLeft = 'auto';
+
+          // override padding left
+          const anchor = menuItem.querySelector('a');
+          anchor.style.paddingLeft = '0.5rem';
+        }
+      }
+    } else {
+      // If text content exists, restore tabindex and remove margin adjustment
+      menuLink.removeAttribute('tabindex');
+      menuLink.removeAttribute('aria-hidden');
+
+      // add a margin right of 0.5rem to the profile class
+      const profile = document.querySelector('.profile');
+      profile.style.marginRight = '0.5rem';
+    }
+  }
+}
+
+function watchForHover() {
+  let hasHoverClass = false;
+  let lastTouchTime = 0;
+
+  function enableHover() {
+    // filter emulated events coming from touch events
+    if (new Date() - lastTouchTime < 500) return;
+    if (hasHoverClass) return;
+
+    document.body.classList.add('has-hover');
+    hasHoverClass = true;
+  }
+
+  function disableHover() {
+    if (!hasHoverClass) return;
+
+    document.body.classList.remove('has-hover');
+    hasHoverClass = false;
+  }
+
+  function updateLastTouchTime() {
+    lastTouchTime = new Date();
+  }
+
+  document.addEventListener('touchstart', updateLastTouchTime, true);
+  document.addEventListener('touchstart', disableHover, true);
+  document.addEventListener('mousemove', enableHover, true);
+
+  enableHover();
+}
+
+/**
+ * Preserve the active menu link color when hovering over the "More" menu item.
+ *
+ * - Adds 'active' class if the submenu is already expanded when mouse enters.
+ * - Removes 'active' class when mouse leaves.
+ * - Cleans up by removing the class attribute if no other classes remain.
+ */
+function preserveMenuColour() {
+  const menuMore = document.getElementById('menu-more');
+  const menuMoreLink = document.getElementById('menuMoreLink');
+
+  if (!menuMore || !menuMoreLink) return; // Exit if required elements are not found
+
+  menuMore.addEventListener('mouseenter', () => {
+    // If the submenu is expanded, add the 'active' class to highlight it
+    if (menuMoreLink.parentElement.getAttribute('aria-expanded') === 'true') {
+      menuMoreLink.classList.add('active');
+    }
+  });
+
+  menuMore.addEventListener('mouseleave', () => {
+    // Remove 'active' class on mouse leave
+    menuMoreLink.classList.remove('active');
+
+    // If no classes are left, remove the entire class attribute
+    if (menuMoreLink.className.trim() === '') {
+      menuMoreLink.removeAttribute('class');
+    }
+  });
+}
+
+function removeActiveClass() {
+  // Select all anchor elements within the Menu more
+  const moreAnchorLinks = document.querySelectorAll('#menu-more a');
+
+  // Remove 'active' class from each element
+  moreAnchorLinks.forEach((link) => {
+    link.classList.remove('active');
+  });
+}
+
 ///////  Navigation through tabs begin /////////////////
 
 function setTabsContainer() {
@@ -2210,30 +2234,6 @@ function switchTab(clickedTab, menuContainer, type, menuData = []) {
 }
 
 ///////  Navigation through tabs ends /////////////////
-
-/**
- * Populates multiple mega menu containers with provided menu data.
- *
- * - For each container with the class 'grid-container-multiple',
- *   initializes a mega menu of type 'multiple'.
- * - For each container with the class 'grid-container-pages',
- *   initializes a mega menu of type 'pages'.
- *
- * @param {Object} menuData - The data used to build the mega menus.
- */
-function populateMegaMenu(menuData) {
-  document
-    .querySelectorAll('.grid-container-multiple')
-    .forEach((menuContainer) => {
-      getMegaMenu(menuContainer, 'multiple', menuData);
-    });
-
-  document
-    .querySelectorAll('.grid-container-pages')
-    .forEach((menuContainer) => {
-      getMegaMenu(menuContainer, 'pages', menuData);
-    });
-}
 
 /**
  * Transforms raw menu data into a structured format for rendering.
