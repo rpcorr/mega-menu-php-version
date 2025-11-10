@@ -478,72 +478,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      function createMenu(menuData) {
-        let menuHTML = '';
-        let createdPagesMenu = false;
-        let createdServicesMenu = false;
-
-        menuData.forEach((section) => {
-          // If section_id is 0, create top-level menu items
-          if (section.section_id === '0' && ukey !== '') {
-            if (createdPagesMenu === false) {
-              createdPagesMenu = true;
-              menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="Pages has a sub menu. Click enter to open">Pages <i class="caret angle-down"></i></a>
-            <div class="mega-menu">
-            <div class="grid-container-pages tabs-container"></div>
-            </div>
-          </li>`;
-            }
-          } else if (isServiceSection(section.section_id)) {
-            if (createdServicesMenu === false) {
-              createdServicesMenu = true;
-              menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
-            <div class="mega-menu">
-            <div class="grid-container-multiple tabs-container"></div>
-            </div>
-          </li>`;
-            }
-          } else if (section.section_id === '0' && ukey === '') {
-            // Logout state
-            data.pages.forEach((page) => {
-              menuHTML += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
-            });
-          } else {
-            if (section.section_prompt != 'LibSat') {
-              let openSubmenu = false;
-              // Create submenus for other sections
-              if (section.section_prompt) {
-                menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="${section.section_prompt} has a sub menu. Click enter to open">${section.section_prompt} <i class="caret angle-down"></i></a>`;
-
-                menuHTML += '<ul class="sub-menu">';
-
-                section.pages.forEach((page, index) => {
-                  if (
-                    page.page_prompt.toLowerCase() !==
-                    section.section_prompt.toLowerCase()
-                  )
-                    if (page.page_link === '') {
-                      menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#"aria-label="${page.page_prompt} has a sub menu. Click enter to open">${page.page_prompt} <i class="caret angle-down"></i></a>`;
-                      menuHTML += '<ul class="sub-menu">';
-                      openSubmenu = true;
-                    } else {
-                      menuHTML += `<li><a href="${page.page_link}" tabindex="-1">${page.page_prompt}</a></li>`;
-                    }
-
-                  // close sub menu if index is at the end of section and openSubmenu is true
-                  if (index === section.pages.length - 1 && openSubmenu) {
-                    menuHTML += '</ul></li>';
-                  }
-                });
-                menuHTML += '</ul></li>';
-              }
-            }
-          }
-        });
-
-        return menuHTML;
-      }
-
       console.log(finalGroupedArray);
       // Call the function to create the menu
       let menuHTML = createMenu(finalGroupedArray);
@@ -2053,6 +1987,109 @@ function setTabsContainer() {
   }
 }
 
+/* ============================================================================
+   DATA PROCESSING
+   ============================================================================ */
+
+/**
+ * Transforms raw menu data into a structured format for rendering.
+ *
+ * - Filters out items without a corresponding entry in the `menuMap`.
+ * - Maps each valid item to a new object containing graphic metadata and URL info.
+ *
+ * @param {Array} data - Array of menu item objects, each containing a section_id and section_prompt.
+ * @returns {Array} - Array of formatted menu item objects ready for display.
+ */
+function createMenuItems(data) {
+  return (
+    data
+      // Only keep items that have a matching entry in the menuMap
+      .filter((item) => menuMap[item.section_id])
+      .map((item) => {
+        if (item.section_prompt !== null && menuMap[item.section_id]) {
+          const { iconId, width, height, subText } = menuMap[item.section_id];
+          // optional extra check in case some fields are missing
+          if (iconId && width && height && subText) {
+            return {
+              iconId, // Name of the graphic associated with this menu item
+              width, // Graphic width (used for layout/styling)
+              height, // Graphic height (used for layout/styling)
+              url: `#${item.section_prompt.toLowerCase()}`, // Anchor link generated from the section prompt
+              menuTitle: item.section_prompt, // Display text for the menu item
+              subText, // Optional subtitle or description for the menu item
+            };
+          }
+        }
+      })
+  );
+}
+
+function createMenu(menuData) {
+  let menuHTML = '';
+  let createdPagesMenu = false;
+  let createdServicesMenu = false;
+
+  menuData.forEach((section) => {
+    // If section_id is 0, create top-level menu items
+    if (section.section_id === '0' && ukey !== '') {
+      if (createdPagesMenu === false) {
+        createdPagesMenu = true;
+        menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="Pages has a sub menu. Click enter to open">Pages <i class="caret angle-down"></i></a>
+            <div class="mega-menu">
+            <div class="grid-container-pages tabs-container"></div>
+            </div>
+          </li>`;
+      }
+    } else if (isServiceSection(section.section_id)) {
+      if (createdServicesMenu === false) {
+        createdServicesMenu = true;
+        menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
+            <div class="mega-menu">
+            <div class="grid-container-multiple tabs-container"></div>
+            </div>
+          </li>`;
+      }
+    } else if (section.section_id === '0' && ukey === '') {
+      // Logout state
+      data.pages.forEach((page) => {
+        menuHTML += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
+      });
+    } else {
+      if (section.section_prompt != 'LibSat') {
+        let openSubmenu = false;
+        // Create submenus for other sections
+        if (section.section_prompt) {
+          menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="${section.section_prompt} has a sub menu. Click enter to open">${section.section_prompt} <i class="caret angle-down"></i></a>`;
+
+          menuHTML += '<ul class="sub-menu">';
+
+          section.pages.forEach((page, index) => {
+            if (
+              page.page_prompt.toLowerCase() !==
+              section.section_prompt.toLowerCase()
+            )
+              if (page.page_link === '') {
+                menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#"aria-label="${page.page_prompt} has a sub menu. Click enter to open">${page.page_prompt} <i class="caret angle-down"></i></a>`;
+                menuHTML += '<ul class="sub-menu">';
+                openSubmenu = true;
+              } else {
+                menuHTML += `<li><a href="${page.page_link}" tabindex="-1">${page.page_prompt}</a></li>`;
+              }
+
+            // close sub menu if index is at the end of section and openSubmenu is true
+            if (index === section.pages.length - 1 && openSubmenu) {
+              menuHTML += '</ul></li>';
+            }
+          });
+          menuHTML += '</ul></li>';
+        }
+      }
+    }
+  });
+
+  return menuHTML;
+}
+
 function determineMegaMenuPosition() {
   // Get the "More" menu item and all main menu items
   const menuMore = document.getElementById('menu-more');
@@ -2233,39 +2270,6 @@ function removeActiveClass() {
   moreAnchorLinks.forEach((link) => {
     link.classList.remove('active');
   });
-}
-
-/**
- * Transforms raw menu data into a structured format for rendering.
- *
- * - Filters out items without a corresponding entry in the `menuMap`.
- * - Maps each valid item to a new object containing graphic metadata and URL info.
- *
- * @param {Array} data - Array of menu item objects, each containing a section_id and section_prompt.
- * @returns {Array} - Array of formatted menu item objects ready for display.
- */
-function createMenuItems(data) {
-  return (
-    data
-      // Only keep items that have a matching entry in the menuMap
-      .filter((item) => menuMap[item.section_id])
-      .map((item) => {
-        if (item.section_prompt !== null && menuMap[item.section_id]) {
-          const { iconId, width, height, subText } = menuMap[item.section_id];
-          // optional extra check in case some fields are missing
-          if (iconId && width && height && subText) {
-            return {
-              iconId, // Name of the graphic associated with this menu item
-              width, // Graphic width (used for layout/styling)
-              height, // Graphic height (used for layout/styling)
-              url: `#${item.section_prompt.toLowerCase()}`, // Anchor link generated from the section prompt
-              menuTitle: item.section_prompt, // Display text for the menu item
-              subText, // Optional subtitle or description for the menu item
-            };
-          }
-        }
-      })
-  );
 }
 
 function initMenuTemplates() {
