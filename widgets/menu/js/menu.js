@@ -1951,6 +1951,108 @@ function renderExtraContent(contentData, menuContainer) {
   menuContainer.appendChild(fragment); // Insert all content at once for better performance
 }
 
+/* ============================================================================
+   MEGA MENU - Tab Navigation
+   ============================================================================ */
+
+// Handles tab switching and menu rendering based on the clicked tab
+function switchTab(clickedTab, menuContainer, type, menuData = []) {
+  // Find the closest parent <li> element and retrieve its ID in lowercase
+  const id = clickedTab.closest('li')?.id?.toLowerCase();
+
+  // Exit early if no valid ID is found
+  if (!id) {
+    console.error('Error: Unable to determine tab ID.');
+    return;
+  }
+
+  // Dynamically create menu items based on provided menuData
+  const menu = createMenuItems(menuData);
+
+  // Determine which tab was clicked and render the corresponding menu
+  switch (id) {
+    case 'libpas':
+      // For 'LibPAS', render the menu according to the type ('multiple' or 'single')
+      if (type === 'multiple') {
+        renderMenu(menu, menuContainer, type, 'LibPAS');
+      }
+      if (type === 'single') {
+        renderMenu(menuSingle, menuContainer, type, 'LibPAS');
+      }
+      break;
+
+    case 'libsat':
+      // For 'LibSAT', render the full menu
+      renderMenu(menu, menuContainer, type, 'LibSAT');
+      break;
+
+    case 'informsus':
+      // For 'InformsUs', render the full menu
+      renderMenu(menu, menuContainer, type, 'InformsUs');
+      break;
+
+    default:
+      console.log('Error: Unknown tab ID.');
+  }
+
+  // After rendering the menu, attempt to render any extra body content
+  if (Array.isArray(extraContent)) {
+    renderBodyContent(menuContainer, type, menuData);
+    renderExtraContent(extraContent, menuContainer);
+  } else {
+    console.error('Error: extraContent is undefined or not an array.');
+  }
+}
+
+function moveTab(menuContainer, type, direction, menuData = []) {
+  // Find the list of tabs (assumes tabs are contained within a <ul> element)
+  const tabsList = menuContainer.querySelector('ul');
+  if (!tabsList) {
+    console.error('No <ul> found inside menuContainer');
+    return;
+  }
+
+  // Get all tab buttons (assumes tabs are anchor <a> elements inside the <ul>)
+  const tabButtons = Array.from(tabsList.querySelectorAll('a'));
+
+  // Get the currently focused tab (element with active focus)
+  const currentTab = document.activeElement;
+
+  // Find the index of the currently focused tab among the tab buttons
+  const currentIndex = tabButtons.findIndex((tab) => tab === currentTab);
+
+  // If the currently focused element is not a tab button, exit early
+  if (currentIndex === -1) return;
+
+  // Calculate the next tab index based on direction (-1 for previous, +1 for next)
+  // Wrap around if moving beyond the first or last tab
+  const nextIndex =
+    (currentIndex + direction + tabButtons.length) % tabButtons.length;
+
+  // Move focus to the next tab and update its corresponding content
+  switchTab(tabButtons[nextIndex], menuContainer, type, menuData);
+}
+
+function setTabsContainer() {
+  // Find the main tabs container element
+  const tabsContainer = document.querySelector('.tabs-container');
+  if (!tabsContainer) return; // If no container is found, exit early
+
+  // Find the <ul> element inside the tabs container (assumed to be the list of tabs)
+  const tabsList = tabsContainer.querySelector('ul');
+  if (tabsList) {
+    // Set the ARIA role to 'tablist' to improve accessibility for assistive technologies
+    tabsList.setAttribute('role', 'tablist');
+  }
+
+  // Find the first tab link inside the menu list
+  const firstTab = tabsContainer.querySelector('.menu-list li:first-child a');
+  if (firstTab) {
+    // Remove tabindex to make the first tab focusable by default (for keyboard navigation)
+    firstTab.removeAttribute('tabindex');
+  }
+}
+
 function determineMegaMenuPosition() {
   // Get the "More" menu item and all main menu items
   const menuMore = document.getElementById('menu-more');
@@ -2132,108 +2234,6 @@ function removeActiveClass() {
     link.classList.remove('active');
   });
 }
-
-///////  Navigation through tabs begin /////////////////
-
-function setTabsContainer() {
-  // Find the main tabs container element
-  const tabsContainer = document.querySelector('.tabs-container');
-  if (!tabsContainer) return; // If no container is found, exit early
-
-  // Find the <ul> element inside the tabs container (assumed to be the list of tabs)
-  const tabsList = tabsContainer.querySelector('ul');
-  if (tabsList) {
-    // Set the ARIA role to 'tablist' to improve accessibility for assistive technologies
-    tabsList.setAttribute('role', 'tablist');
-  }
-
-  // Find the first tab link inside the menu list
-  const firstTab = tabsContainer.querySelector('.menu-list li:first-child a');
-  if (firstTab) {
-    // Remove tabindex to make the first tab focusable by default (for keyboard navigation)
-    firstTab.removeAttribute('tabindex');
-  }
-}
-
-function moveTab(menuContainer, type, direction, menuData = []) {
-  // Find the list of tabs (assumes tabs are contained within a <ul> element)
-  const tabsList = menuContainer.querySelector('ul');
-  if (!tabsList) {
-    console.error('No <ul> found inside menuContainer');
-    return;
-  }
-
-  // Get all tab buttons (assumes tabs are anchor <a> elements inside the <ul>)
-  const tabButtons = Array.from(tabsList.querySelectorAll('a'));
-
-  // Get the currently focused tab (element with active focus)
-  const currentTab = document.activeElement;
-
-  // Find the index of the currently focused tab among the tab buttons
-  const currentIndex = tabButtons.findIndex((tab) => tab === currentTab);
-
-  // If the currently focused element is not a tab button, exit early
-  if (currentIndex === -1) return;
-
-  // Calculate the next tab index based on direction (-1 for previous, +1 for next)
-  // Wrap around if moving beyond the first or last tab
-  const nextIndex =
-    (currentIndex + direction + tabButtons.length) % tabButtons.length;
-
-  // Move focus to the next tab and update its corresponding content
-  switchTab(tabButtons[nextIndex], menuContainer, type, menuData);
-}
-
-// Handles tab switching and menu rendering based on the clicked tab
-function switchTab(clickedTab, menuContainer, type, menuData = []) {
-  // Find the closest parent <li> element and retrieve its ID in lowercase
-  const id = clickedTab.closest('li')?.id?.toLowerCase();
-
-  // Exit early if no valid ID is found
-  if (!id) {
-    console.error('Error: Unable to determine tab ID.');
-    return;
-  }
-
-  // Dynamically create menu items based on provided menuData
-  const menu = createMenuItems(menuData);
-
-  // Determine which tab was clicked and render the corresponding menu
-  switch (id) {
-    case 'libpas':
-      // For 'LibPAS', render the menu according to the type ('multiple' or 'single')
-      if (type === 'multiple') {
-        renderMenu(menu, menuContainer, type, 'LibPAS');
-      }
-      if (type === 'single') {
-        renderMenu(menuSingle, menuContainer, type, 'LibPAS');
-      }
-      break;
-
-    case 'libsat':
-      // For 'LibSAT', render the full menu
-      renderMenu(menu, menuContainer, type, 'LibSAT');
-      break;
-
-    case 'informsus':
-      // For 'InformsUs', render the full menu
-      renderMenu(menu, menuContainer, type, 'InformsUs');
-      break;
-
-    default:
-      console.log('Error: Unknown tab ID.');
-  }
-
-  // After rendering the menu, attempt to render any extra body content
-  if (Array.isArray(extraContent)) {
-    renderBodyContent(menuContainer, type, menuData);
-    renderExtraContent(extraContent, menuContainer);
-  } else {
-    console.error('Error: extraContent is undefined or not an array.');
-  }
-}
-
-///////  Navigation through tabs ends /////////////////
 
 /**
  * Transforms raw menu data into a structured format for rendering.
