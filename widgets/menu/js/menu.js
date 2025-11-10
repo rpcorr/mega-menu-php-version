@@ -30,11 +30,9 @@ const bTimerInactivityWidget = false;
 const navItemWidth = [];
 const navItemVisible = [];
 let allMenuItemsinArray;
-//let initialColumns = '';
 let megaMenuLinks = '';
 let moreWidth = 0;
 let navItems = [];
-//let output = '';
 let winWidth = 0;
 
 /* ============================================================================
@@ -236,7 +234,7 @@ function showErrorAlert(message) {
   alert.setAttribute('role', 'alert');
   alert.innerHTML = `
     <strong>Error:</strong> ${message}
-    <button onclick="this.parentElement.remove()" aria-label="Close alert">×</button>
+    <button onclick="this.parentElement.remove()" aria-label="Close alert">&times;</button>
   `;
 
   document.body.insertAdjacentElement('afterbegin', alert);
@@ -355,17 +353,18 @@ document.addEventListener('DOMContentLoaded', () => {
   // render header  a custom logo can be set, else it is Counting Opinions logo
 
   // renderHeader({
-  //   logo: 'download-1350.svg',
-  //   simpleLogo: 'download-m.svg',
-  //   logoPath: '',
-  //   logoAlt: 'Company Full Logo',
-  //   simpleLogoAlt: 'Company Simplified Logo',
+  //   logo: 'download-800.svg',
+  //   simpleLogo: 'download-m-250.svg',
+  //   logoAlt: 'Counting Opinions',
+  //   simpleLogoAlt: 'Counting Opinions',
+  //   brandingWidth: '',
+  //   brandingBgColour: 'red',
+  //   logoBgColour: 'green',
   // });
 
   // renderHeader({
   //   logo: 'CO_logo.svg',
   //   simpleLogo: 'CO_simple_logo.svg',
-  //   logoPath: 'widgets/menu/imgs/',
   //   logoAlt: 'Counting Opinions',
   //   simpleLogoAlt: 'Counting Opinions',
   //   brandingWidth: '80rem',
@@ -772,7 +771,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (toggleBtn) {
         toggleBtn.addEventListener('click', toggleSidebar);
       } else {
-        console.warn('⚠️ Toggle button not found – event not attached');
+        console.warn('⚠️ Toggle button not found - event not attached');
       }
 
       document.addEventListener('keydown', handleEscapeKey);
@@ -882,13 +881,6 @@ function formatNav() {
     tempWidth = totalWidth + navItemWidth[count] + navPadding;
 
     // Check if item fits within the container (adjusting for "More" menu space)
-    /*
-     if (
-       (tempWidth < containerWidth - moreWidth - navPadding ||
-       (tempWidth < containerWidth && count === numItems)) &&
-       room === true
-     ) {
-    */
     if (
       count < numItems &&
       tempWidth < containerWidth - moreWidth - navPadding &&
@@ -2539,8 +2531,6 @@ function capitalizeFirstLetterOfEachWord(text) {
 function isEmpty(str) {
   return !str || str.trim().length === 0;
 }
-
-/*********************************************************** */
 
 console.log(
   `I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}. User is ${user}. Switchable is ${switchAble}`
