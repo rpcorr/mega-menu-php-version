@@ -1,43 +1,124 @@
 'use strict';
-/* flexbox priority navigation */
 
-// -- Global variables
+/* ============================================================================
+   CONFIGURATION & CONSTANTS
+   ============================================================================ */
 
 // get getRelativePath prefix
 const prefix = getRelativePath();
+const MOBILE_BREAKPOINT = 600;
+const SERVICE_SECTIONS = ['2', '5', '1']; // LibPAS, InformsUs, LibSat
 
-////////////////////////////////////////////////////
-// Widgets file paths needs to be defined here
+// Widget paths
 const widgetsPath = `${prefix}assets/widgets/`;
-
 const resetCssPath = `${prefix}widgets/menu/css/reset.min.css`;
 const switchableJsPath = `${prefix}widgets/switchable/switchable.js`;
-
 const selectThemeJsPath = `${prefix}widgets/selectTheme/selectTheme.js`;
 const selectThemeCssPath = `${prefix}widgets/selectTheme/selectTheme.min.css`;
-
 const sidebarJsPath = `${prefix}widgets/sidebar/sidebar.js`;
 const sidebarCssPath = `${prefix}widgets/sidebar/sidebar.css`;
-
 const timerInactivityJsPath = `${prefix}widgets/timerInactivity/timerInactivity.js`;
-////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////
-// Enable/disable widgets
+// Feature flags
 const bSidebarWidget = false;
 const bTimerInactivityWidget = false;
-////////////////////////////////////////////////////
+
+/* ============================================================================
+   GLOBAL STATE
+   ============================================================================ */
 
 const navItemWidth = [];
 const navItemVisible = [];
-const MOBILE_BREAKPOINT = 600;
 let allMenuItemsinArray;
-let initialColumns = '';
+//let initialColumns = '';
 let megaMenuLinks = '';
 let moreWidth = 0;
 let navItems = [];
-let output = '';
+//let output = '';
 let winWidth = 0;
+
+/* ============================================================================
+   DATA MAPPINGS
+   ============================================================================ */
+
+// LibPAS, InformUS, LibSat menu items
+const menuMap = {
+  2: {
+    iconId: 'co-icons-pie',
+    width: '40',
+    height: '40',
+    subText: 'Periodic data',
+  },
+  5: {
+    iconId: 'co-icons-puzzle-piece',
+    width: '40',
+    height: '40',
+    subText: 'Survey data',
+  },
+  1: {
+    iconId: 'co-icons-medal',
+    width: '40',
+    height: '40',
+    subText: 'Qualitative data',
+  },
+};
+
+const menuSingle = [
+  {
+    iconId: 'co-icons-pie',
+    width: '36',
+    height: '33',
+    url: '#',
+    menuTitle: 'LibPAS',
+    subText: 'Periodic data',
+  },
+];
+
+const bodyContentIcons = [
+  {
+    iconId: 'co-icons-generic-report',
+    width: '85',
+    height: '90',
+  },
+  {
+    iconId: 'co-icons-generic-file',
+    width: '85',
+    height: '90',
+  },
+  {
+    iconId: 'co-icons-data-input',
+    width: '85',
+    height: '90',
+  },
+];
+
+const extraContent = [
+  {
+    graphic: 'light-bulb.svg',
+    width: '37',
+    height: '37',
+    heading: 'Did you know?',
+    extraBodyContent: [
+      {
+        bodyText: 'Extra Content',
+      },
+      {
+        bodyText:
+          'You can now sed efficitur orci vel dolor faucibus, vitae vehicula odio tristique. Donec finibus ultrices ullamcorper. Sed elit libero, mattis pellentesque blandit.',
+      },
+      {
+        listItems: [
+          {
+            li: 'Ut enim ad minim veniam, quis nostrud exercitation',
+          },
+          {
+            li: 'Ullamco laboris nisi ut aliquip ex ea commodo consequat',
+          },
+        ],
+      },
+    ],
+  },
+];
 
 /* ============================================================================
    UTILITY FUNCTIONS - Path Building
@@ -48,15 +129,12 @@ let winWidth = 0;
  */
 const MenuPaths = {
   _base: getRelativePath(),
-
   widget(name, file) {
     return `${this._base}widgets/${name}/${file}`;
   },
-
   menuCss(file) {
     return `${this._base}widgets/menu/css/${file}`;
   },
-
   menuImg(file) {
     return `${this._base}widgets/menu/imgs/${file}`;
   },
@@ -168,6 +246,53 @@ function showErrorAlert(message) {
 }
 
 /* ============================================================================
+   UTILITY FUNCTIONS - DOM Creation (Security)
+   ============================================================================ */
+
+/**
+ * Safely creates a menu item to prevent XSS
+ * @param {Object} page - Page data object
+ * @returns {HTMLLIElement} The created menu item
+ */
+function createSafeMenuItem(page) {
+  const li = document.createElement('li');
+  const a = document.createElement('a');
+  a.href = page.page_link; // Automatically escaped by browser
+  a.textContent = page.page_prompt; // Not interpreted as HTML
+  li.appendChild(a);
+  return li;
+}
+
+/**
+ * Safely creates a menu item with submenu
+ * @param {Object} options - Configuration object
+ * @returns {HTMLLIElement} The created menu item
+ */
+function createMenuItemWithSubmenu(options) {
+  const li = document.createElement('li');
+  li.className = 'menu-item-has-children';
+  li.setAttribute('aria-expanded', 'false');
+
+  const a = document.createElement('a');
+  a.href = '#';
+  a.setAttribute('aria-label', options.ariaLabel);
+  a.textContent = options.text;
+
+  const icon = document.createElement('i');
+  icon.className = 'caret angle-down';
+  a.appendChild(icon);
+
+  if (options.submenuClass) {
+    const submenu = document.createElement('ul');
+    submenu.className = 'sub-menu';
+    li.appendChild(a);
+    li.appendChild(submenu);
+  }
+
+  return li;
+}
+
+/* ============================================================================
    UTILITY FUNCTIONS - Validation & Helpers
    ============================================================================ */
 
@@ -177,7 +302,7 @@ function showErrorAlert(message) {
  * @returns {boolean} True if service section
  */
 function isServiceSection(sectionId) {
-  return ['2', '5', '1'].includes(sectionId);
+  return SERVICE_SECTIONS.includes(sectionId);
 }
 
 /**
@@ -189,84 +314,48 @@ function isEmpty(str) {
   return !str || str.trim().length === 0;
 }
 
-// LibPAS, InformUS, LibSat menu items
-const menuMap = {
-  2: {
-    iconId: 'co-icons-pie',
-    width: '40',
-    height: '40',
-    subText: 'Periodic data',
-  },
-  5: {
-    iconId: 'co-icons-puzzle-piece',
-    width: '40',
-    height: '40',
-    subText: 'Survey data',
-  },
-  1: {
-    iconId: 'co-icons-medal',
-    width: '40',
-    height: '40',
-    subText: 'Qualitative data',
-  },
-};
+function getInitials(user) {
+  const firstLetter = user.charAt(0);
 
-const menuSingle = [
-  {
-    iconId: 'co-icons-pie',
-    width: '36',
-    height: '33',
-    url: '#',
-    menuTitle: 'LibPAS',
-    subText: 'Periodic data',
-  },
-];
+  // Check for _ or &
+  const match = user.match(/[_&]([A-Za-z])/);
+  if (match) {
+    return firstLetter + match[1];
+  }
 
-const bodyContentIcons = [
-  {
-    iconId: 'co-icons-generic-report',
-    width: '85',
-    height: '90',
-  },
-  {
-    iconId: 'co-icons-generic-file',
-    width: '85',
-    height: '90',
-  },
-  {
-    iconId: 'co-icons-data-input',
-    width: '85',
-    height: '90',
-  },
-];
+  // Find next capital letter (after first character)
+  const rest = user.slice(1);
+  const nextCap = rest.match(/[A-Z]/);
+  if (nextCap) {
+    return firstLetter + nextCap[0];
+  }
 
-const extraContent = [
-  {
-    graphic: 'light-bulb.svg',
-    width: '37',
-    height: '37',
-    heading: 'Did you know?',
-    extraBodyContent: [
-      {
-        bodyText: 'Extra Content',
-      },
-      {
-        bodyText:
-          'You can now sed efficitur orci vel dolor faucibus, vitae vehicula odio tristique. Donec finibus ultrices ullamcorper. Sed elit libero, mattis pellentesque blandit.',
-      },
-      {
-        listItems: [
-          {
-            li: 'Ut enim ad minim veniam, quis nostrud exercitation',
-          },
-          {
-            li: 'Ullamco laboris nisi ut aliquip ex ea commodo consequat',
-          },
-        ],
-      },
-    ],
-  },
-];
+  // Fallback: just return first letter
+  return firstLetter;
+}
+
+function getRelativePath() {
+  // Get the current path (e.g. /, /mmenu/, /a/b/c/page.php)
+  const path = window.location.pathname;
+
+  // Break it into segments
+  const segments = path.split('/').filter(Boolean);
+
+  // If last segment looks like a file (e.g. has a dot), don't count it as a folder
+  let depth = segments.length;
+  if (segments.length > 0 && segments[segments.length - 1].includes('.')) {
+    depth -= 1;
+  }
+
+  // Build the relative prefix (e.g. '', '../', '../../', etc.)
+  let prefix = '';
+  for (let i = 0; i < depth - 1; i++) {
+    prefix += '../';
+  }
+  return prefix;
+}
+
+/*********************************************************** */
 
 console.log(
   `I am inside the menu.js.  Ukey is ${ukey}.  Portal is ${portal}. User is ${user}. Switchable is ${switchAble}`
@@ -2197,47 +2286,6 @@ function adjustMoreSubMenuOffset() {
       break; // Stop at the first matching rule
     }
   }
-}
-
-function getInitials(user) {
-  const firstLetter = user.charAt(0);
-
-  // Check for _ or &
-  const match = user.match(/[_&]([A-Za-z])/);
-  if (match) {
-    return firstLetter + match[1];
-  }
-
-  // Find next capital letter (after first character)
-  const rest = user.slice(1);
-  const nextCap = rest.match(/[A-Z]/);
-  if (nextCap) {
-    return firstLetter + nextCap[0];
-  }
-
-  // Fallback: just return first letter
-  return firstLetter;
-}
-
-function getRelativePath() {
-  // Get the current path (e.g. /, /mmenu/, /a/b/c/page.php)
-  const path = window.location.pathname;
-
-  // Break it into segments
-  const segments = path.split('/').filter(Boolean);
-
-  // If last segment looks like a file (e.g. has a dot), don't count it as a folder
-  let depth = segments.length;
-  if (segments.length > 0 && segments[segments.length - 1].includes('.')) {
-    depth -= 1;
-  }
-
-  // Build the relative prefix (e.g. '', '../', '../../', etc.)
-  let prefix = '';
-  for (let i = 0; i < depth - 1; i++) {
-    prefix += '../';
-  }
-  return prefix;
 }
 
 function initMenuTemplates() {
