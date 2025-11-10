@@ -248,23 +248,31 @@ function showErrorAlert(message) {
    ============================================================================ */
 
 /**
- * Creates a safe <li><a>...</a></li> from page data
- * @param {{page_link: string, page_prompt: string}} page
- * @param {object} [opts] - optional { tabindex }
+ * Safely creates a <li><a>...</a></li> element.
+ * Allows optional attributes such as tabindex or ARIA labels.
+ * Prevents XSS by never inserting user data into HTML directly.
+ *
+ * @param {Object} page - Page data object.
+ * @param {Object} [opts] - Optional attributes (e.g. { tabindex: -1, ariaLabel: '...' }).
  * @returns {HTMLLIElement}
  */
 function createSafeMenuItem(page, opts = {}) {
   const li = document.createElement('li');
   const a = document.createElement('a');
 
-  // set href — browser will treat it as a URL, not raw HTML
-  a.href = page.page_link || '#';
+  // --- Safe URL assignment ---
+  const link = page.page_link || '#';
+  // prevent potential javascript: links
+  a.href = /^javascript:/i.test(link) ? '#' : link;
 
-  // visible text safely (no HTML parsing)
+  // --- Safe text ---
   a.textContent = page.page_prompt || '';
 
-  // optional tabindex (your original used tabindex="-1")
+  // --- Optional attributes ---
   if (opts.tabindex !== undefined) a.tabIndex = opts.tabindex;
+  if (opts.ariaLabel) a.setAttribute('aria-label', opts.ariaLabel);
+  if (opts.target) a.target = opts.target; // e.g., "_blank"
+  if (opts.rel) a.rel = opts.rel; // e.g., "noopener noreferrer"
 
   li.appendChild(a);
   return li;
