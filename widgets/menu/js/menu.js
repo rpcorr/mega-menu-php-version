@@ -248,46 +248,65 @@ function showErrorAlert(message) {
    ============================================================================ */
 
 /**
- * Safely creates a menu item to prevent XSS
- * @param {Object} page - Page data object
- * @returns {HTMLLIElement} The created menu item
+ * Creates a safe <li><a>...</a></li> from page data
+ * @param {{page_link: string, page_prompt: string}} page
+ * @param {object} [opts] - optional { tabindex }
+ * @returns {HTMLLIElement}
  */
-function createSafeMenuItem(page) {
+function createSafeMenuItem(page, opts = {}) {
   const li = document.createElement('li');
   const a = document.createElement('a');
-  a.href = page.page_link; // Automatically escaped by browser
-  a.textContent = page.page_prompt; // Not interpreted as HTML
+
+  // set href — browser will treat it as a URL, not raw HTML
+  a.href = page.page_link || '#';
+
+  // visible text safely (no HTML parsing)
+  a.textContent = page.page_prompt || '';
+
+  // optional tabindex (your original used tabindex="-1")
+  if (opts.tabindex !== undefined) a.tabIndex = opts.tabindex;
+
   li.appendChild(a);
   return li;
 }
 
 /**
- * Safely creates a menu item with submenu
- * @param {Object} options - Configuration object
- * @returns {HTMLLIElement} The created menu item
+ * Creates a menu-item that contains a submenu container.
+ * Returns { li, submenu } so caller can append items to submenu easily.
+ * @param {object} options - { text, ariaLabel, submenuTag='ul'|'div', submenuClass }
+ * @returns {{li: HTMLLIElement, submenu: HTMLElement}}
  */
-function createMenuItemWithSubmenu(options) {
+function createMenuItemWithSubmenu(options = {}) {
   const li = document.createElement('li');
   li.className = 'menu-item-has-children';
   li.setAttribute('aria-expanded', 'false');
 
   const a = document.createElement('a');
-  a.href = '#';
-  a.setAttribute('aria-label', options.ariaLabel);
-  a.textContent = options.text;
+  a.href = options.href || '#';
+  if (options.ariaLabel) a.setAttribute('aria-label', options.ariaLabel);
+  a.textContent = options.text || '';
 
+  // add caret icon element (keeps same class as your CSS)
   const icon = document.createElement('i');
   icon.className = 'caret angle-down';
   a.appendChild(icon);
 
+  li.appendChild(a);
+
+  // submenu element (ul by default)
+  const tag = options.submenuTag || 'ul';
+  const submenu = document.createElement(tag);
   if (options.submenuClass) {
-    const submenu = document.createElement('ul');
-    submenu.className = 'sub-menu';
-    li.appendChild(a);
-    li.appendChild(submenu);
+    // support multiple classes in a single string
+    options.submenuClass.split(/\s+/).forEach((c) => {
+      if (c) submenu.classList.add(c);
+    });
   }
 
-  return li;
+  // If tag is 'ul' use class 'sub-menu' by default (matches your CSS), but caller can override
+  li.appendChild(submenu);
+
+  return { li, submenu };
 }
 
 /* ============================================================================
@@ -2009,69 +2028,143 @@ function createMenuItems(data) {
 }
 
 function createMenu(menuData) {
-  let menuHTML = '';
+  // We'll build a <ul> container and then return outerHTML for compatibility.
+  const rootUl = document.createElement('ul');
+
   let createdPagesMenu = false;
   let createdServicesMenu = false;
 
   menuData.forEach((section) => {
-    // If section_id is 0, create top-level menu items
+    // 1) Top-level Pages (when logged in)
     if (section.section_id === '0' && ukey !== '') {
-      if (createdPagesMenu === false) {
+      if (!createdPagesMenu) {
         createdPagesMenu = true;
-        menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="Pages has a sub menu. Click enter to open">Pages <i class="caret angle-down"></i></a>
-            <div class="mega-menu">
-            <div class="grid-container-pages tabs-container"></div>
-            </div>
-          </li>`;
+
+        // Create a li with an inner submenu container that will hold the grid container
+        const pages = createMenuItemWithSubmenu({
+          text: 'Pages',
+          ariaLabel: 'Pages has a sub menu. Click enter to open',
+          // make submenu a placeholder div (we'll insert the grid container inside a mega-menu div)
+          submenuTag: 'div',
+          submenuClass: 'grid-container-pages tabs-container',
+        });
+
+        // Wrap in mega-menu div structure to match your original markup
+        const mega = document.createElement('div');
+        mega.className = 'mega-menu';
+        // move the submenu (grid container) into mega-menu
+        mega.appendChild(pages.submenu);
+
+        // remove the submenu already appended to li (we appended a submenu earlier),
+        // so replace with mega (ensure we don't append twice)
+        // first remove the existing appended submenu (the createMenuItemWithSubmenu appended it)
+        const existingSub = pages.li.querySelector(
+          ':scope > ' + pages.submenu.tagName.toLowerCase()
+        );
+        if (existingSub) pages.li.removeChild(existingSub);
+
+        mega.appendChild(pages.submenu);
+        pages.li.appendChild(mega);
+        rootUl.appendChild(pages.li);
       }
+
+      // 2) Services top level
     } else if (isServiceSection(section.section_id)) {
-      if (createdServicesMenu === false) {
+      if (!createdServicesMenu) {
         createdServicesMenu = true;
-        menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="Services has a sub menu. Click enter to open">Services <i class="caret angle-down"></i></a>
-            <div class="mega-menu">
-            <div class="grid-container-multiple tabs-container"></div>
-            </div>
-          </li>`;
+
+        const services = createMenuItemWithSubmenu({
+          text: 'Services',
+          ariaLabel: 'Services has a sub menu. Click enter to open',
+          submenuTag: 'div',
+          submenuClass: 'grid-container-multiple tabs-container',
+        });
+
+        const mega = document.createElement('div');
+        mega.className = 'mega-menu';
+        // remove previously attached submenu and insert inside mega
+        const existingSub = services.li.querySelector(
+          ':scope > ' + services.submenu.tagName.toLowerCase()
+        );
+        if (existingSub) services.li.removeChild(existingSub);
+
+        mega.appendChild(services.submenu);
+        services.li.appendChild(mega);
+
+        rootUl.appendChild(services.li);
       }
+
+      // 3) Logout state: simple page links
     } else if (section.section_id === '0' && ukey === '') {
-      // Logout state
-      data.pages.forEach((page) => {
-        menuHTML += `<li><a href="${page.page_link}">${page.page_prompt}</a></li>`;
+      (data.pages || []).forEach((page) => {
+        const safeItem = createSafeMenuItem(page);
+        rootUl.appendChild(safeItem);
       });
+
+      // 4) Other sections with potential nested pages
     } else {
-      if (section.section_prompt != 'LibSat') {
-        let openSubmenu = false;
-        // Create submenus for other sections
-        if (section.section_prompt) {
-          menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#" aria-label="${section.section_prompt} has a sub menu. Click enter to open">${section.section_prompt} <i class="caret angle-down"></i></a>`;
+      if (section.section_prompt !== 'LibSat' && section.section_prompt) {
+        // create the parent section li + a + an <ul class="sub-menu">
+        const sectionItem = createMenuItemWithSubmenu({
+          text: section.section_prompt,
+          ariaLabel: `${section.section_prompt} has a sub menu. Click enter to open`,
+          submenuTag: 'ul',
+          submenuClass: 'sub-menu',
+        });
 
-          menuHTML += '<ul class="sub-menu">';
+        const subMenuUl = sectionItem.submenu; // this is the <ul class="sub-menu">
+        let currentNestedUl = null; // when a page opens its own submenu, this will point to that inner ul
 
-          section.pages.forEach((page, index) => {
-            if (
-              page.page_prompt.toLowerCase() !==
-              section.section_prompt.toLowerCase()
-            )
-              if (page.page_link === '') {
-                menuHTML += `<li class="menu-item-has-children" aria-expanded="false"><a href="#"aria-label="${page.page_prompt} has a sub menu. Click enter to open">${page.page_prompt} <i class="caret angle-down"></i></a>`;
-                menuHTML += '<ul class="sub-menu">';
-                openSubmenu = true;
-              } else {
-                menuHTML += `<li><a href="${page.page_link}" tabindex="-1">${page.page_prompt}</a></li>`;
-              }
+        section.pages.forEach((page, index) => {
+          // skip if the page prompt equals the section prompt (original logic)
+          if (
+            page.page_prompt.toLowerCase() ===
+            section.section_prompt.toLowerCase()
+          ) {
+            return;
+          }
 
-            // close sub menu if index is at the end of section and openSubmenu is true
-            if (index === section.pages.length - 1 && openSubmenu) {
-              menuHTML += '</ul></li>';
+          // if page has no link -> it creates its own submenu (li with inner ul)
+          if (!page.page_link) {
+            // create li with submenu for this page
+            const nested = createMenuItemWithSubmenu({
+              text: page.page_prompt,
+              ariaLabel: `${page.page_prompt} has a sub menu. Click enter to open`,
+              submenuTag: 'ul',
+              submenuClass: 'sub-menu',
+            });
+
+            // append nested li to the section subMenu
+            subMenuUl.appendChild(nested.li);
+
+            // make currentNestedUl point to nested.submenu so subsequent pages get added there
+            currentNestedUl = nested.submenu;
+          } else {
+            // create a safe leaf item
+            const safeItem = createSafeMenuItem(page, { tabindex: -1 });
+
+            // if we currently have an open nested ul, append there; otherwise append to top-level subMenuUl
+            if (currentNestedUl) {
+              currentNestedUl.appendChild(safeItem);
+            } else {
+              subMenuUl.appendChild(safeItem);
             }
-          });
-          menuHTML += '</ul></li>';
-        }
+          }
+
+          // If this is last page, and we had opened a nested submenu, close the nested context
+          // (in DOM approach we just reset the pointer; this mirrors your original "close sub menu" logic)
+          if (index === section.pages.length - 1) {
+            currentNestedUl = null;
+          }
+        });
+
+        rootUl.appendChild(sectionItem.li);
       }
     }
   });
 
-  return menuHTML;
+  // Return as string so your existing usage (menuHTML variable) continues to work:
+  return rootUl.innerHTML;
 }
 
 /* ============================================================================
