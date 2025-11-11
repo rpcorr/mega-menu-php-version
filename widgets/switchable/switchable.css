@@ -64,3 +64,22 @@
   color: #002752;
   text-decoration: none;
 }
+
+body.modal-open::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5); /* dim the background */
+  z-index: 998; /* just below the modal */
+}
+
+/* Ensure your modal stays above that overlay */
+#userModal {
+  position: fixed;
+  z-index: 999;
+}
+
+.modal-open > *:not(.modal) {
+  pointer-events: none; /* disables clicks outside modal */
+  user-select: none; /* optional: prevent text selection outside modal */
+}

@@ -1,7 +1,8 @@
 'use strict';
 
-// this script runs at the top of the app, before other initialization
-// will help switch users when the starting URL doesn't contain ukey variable
+// ===============================
+// Initial URL reload for ukey switch
+// ===============================
 (function () {
   const FLAG = 'ukey_switch_pending';
 
@@ -15,16 +16,16 @@
       window.location.replace(
         window.location.pathname + '?' + params.toString()
       );
-    } else {
-      // After the forced reload, remove the flag
-      //localStorage.removeItem(FLAG);
     }
   }
 })();
 
+// ===============================
+// Initialize switchable user modal
+// ===============================
 function initSwitchable() {
   console.log(
-    `Inside switchable.js.  Portal is: ${portal}.  Ukey is: ${ukey}. User is: ${window.user}. Switchable is ${switchAble}.`
+    `Inside switchable.js. Portal: ${portal}, Ukey: ${ukey}, User: ${window.user}, Switchable: ${switchAble}`
   );
 
   document.addEventListener(
@@ -42,14 +43,16 @@ function initSwitchable() {
   displaySwitchableForm();
 }
 
-// If user is already set (fetch finished early), run immediately
+// Run init when user is ready
 if (window.user) {
   initSwitchable();
 } else {
-  // Otherwise wait for userReady event
   document.addEventListener('userReady', initSwitchable);
 }
 
+// ===============================
+// Display the switchable form/modal
+// ===============================
 function displaySwitchableForm() {
   const basePath = getRelativePath('');
 
@@ -69,15 +72,15 @@ function displaySwitchableForm() {
     document.head.appendChild(link);
   }
 
-  // Decide which JSON file to fetch
+  // Determine JSON file
   let userJSONfile = `${baseURL}users-demo.json`;
-
   if (portal.toLowerCase() === 'democa')
     userJSONfile = `${baseURL}users-democa.json`;
-
   console.log(userJSONfile);
 
+  // =========================
   // Build modal structure
+  // =========================
   const modal = document.createElement('div');
   modal.id = 'userModal';
   modal.className = 'modal';
@@ -136,16 +139,11 @@ function displaySwitchableForm() {
   goButton.id = 'goUser';
   goButton.textContent = 'Switch User';
 
-  // DOM order for correct tab sequence: Input / Suggestions / Go
+  // Assemble container
+  // sequence: Input / Suggestions / Go
   inputContainer.appendChild(userInput);
-
-  // Add suggestions list directly after the input
   inputContainer.appendChild(suggestionsList);
-
-  // Then add the Go button last
   inputContainer.appendChild(goButton);
-
-  // Finally append the whole container
   modalBody.appendChild(inputContainer);
 
   // Close button
@@ -170,45 +168,43 @@ function displaySwitchableForm() {
     // Fetch users JSON
     let userData = [];
     fetch(userJSONfile)
-      .then((response) => {
-        if (!response.ok)
-          throw new Error(
-            'Network response was not ok: ' + response.statusText
-          );
-        return response.json();
+      .then((res) => {
+        if (!res.ok)
+          throw new Error('Network response not ok: ' + res.statusText);
+        return res.json();
       })
       .then((data) => {
         console.log(data); // { users: [ ... ] }
         userData = data.users;
       })
-      .catch((error) => console.error('Problem fetching JSON:', error));
+      .catch((err) => console.error('Problem fetching JSON:', err));
 
     // =========================
     // Autocomplete functionality
     // =========================
     let currentIndex = -1;
 
-    userInput.addEventListener('input', () => {
-      const query = userInput.value.trim().toLowerCase();
+    const highlightItem = (item, active) => {
+      item.style.background = active ? '#0078d4' : '#fff';
+      item.style.color = active ? '#fff' : '#000';
+    };
 
-      if (query.length < 1) {
-        suggestionsList.style.display = 'none';
-        return;
-      }
+    const highlight = (items) => {
+      items.forEach((item, idx) => highlightItem(item, idx === currentIndex));
+    };
+
+    const renderSuggestions = () => {
+      const query = userInput.value.trim().toLowerCase();
+      if (query.length < 1) return (suggestionsList.style.display = 'none');
 
       // Match on EITHER username OR name
-      const matches = userData.filter((user) => {
-        const username = user.username ? user.username.toLowerCase() : '';
-        const name = user.name ? user.name.toLowerCase() : '';
-        return username.includes(query) || name.includes(query);
-      });
-
+      const matches = userData.filter(
+        (u) =>
+          u.username?.toLowerCase().includes(query) ||
+          u.name?.toLowerCase().includes(query)
+      );
       suggestionsList.innerHTML = '';
-
-      if (matches.length === 0) {
-        suggestionsList.style.display = 'none';
-        return;
-      }
+      if (!matches.length) return (suggestionsList.style.display = 'none');
 
       matches.forEach((user) => {
         const li = document.createElement('li');
@@ -249,11 +245,15 @@ function displaySwitchableForm() {
 
       suggestionsList.style.display = 'block';
       currentIndex = -1;
-    });
+    };
 
-    userInput.addEventListener('keydown', (e) => {
+    userInput.addEventListener('input', renderSuggestions);
+    userInput.addEventListener('keydown', navigateSuggestions);
+    suggestionsList.addEventListener('keydown', navigateSuggestions);
+
+    function navigateSuggestions(e) {
       const items = suggestionsList.querySelectorAll('li');
-      if (items.length === 0) return;
+      if (!items.length) return;
 
       if (e.key === 'ArrowDown') {
         e.preventDefault();
@@ -270,131 +270,84 @@ function displaySwitchableForm() {
         items[currentIndex].click();
         userInput.focus();
       }
-    });
-
-    // Allow navigation when list itself has focus
-    suggestionsList.addEventListener('keydown', (e) => {
-      const items = suggestionsList.querySelectorAll('li');
-      if (items.length === 0) return;
-
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        currentIndex = (currentIndex + 1) % items.length;
-        highlight(items);
-        items[currentIndex].focus();
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        currentIndex = (currentIndex - 1 + items.length) % items.length;
-        highlight(items);
-        items[currentIndex].focus();
-      } else if (e.key === 'Enter' && currentIndex >= 0) {
-        e.preventDefault();
-        items[currentIndex].click();
-        userInput.focus();
-      }
-    });
-
-    function highlight(items) {
-      items.forEach((item, idx) => {
-        if (idx === currentIndex) {
-          item.style.background = '#0078d4'; // accessible blue
-          item.style.color = '#fff';
-        } else {
-          item.style.background = '#fff';
-          item.style.color = '#000';
-        }
-      });
     }
 
-    function highlightItem(item, active) {
-      item.style.background = active ? '#0078d4' : '#fff';
-      item.style.color = active ? '#fff' : '#000';
-    }
-
-    // Handle Go button
+    // =========================
+    // Switch User button
+    // =========================
     goButton.addEventListener('click', () => {
       const typedValue = userInput.value.trim().toLowerCase();
       const match =
         userData.find(
           (u) =>
             u.username.toLowerCase() === typedValue ||
-            (u.name && u.name.toLowerCase() === typedValue)
+            u.name?.toLowerCase() === typedValue
         ) || userData.find((u) => u.ukey === userInput.dataset.ukey);
 
-      if (match) {
-        if (ukey === match.ukey) {
-          alert(
-            'You are already logged in as this user. Please select a different user.'
-          );
-          return;
-        }
+      if (!match) return alert('Please select a valid user from suggestions.');
 
-        const urlParams = new URLSearchParams(window.location.search);
+      if (ukey === match.ukey) return alert('Already logged in as this user.');
 
-        let originalUKey = getCookie('originalUkey');
-        if (!originalUKey) {
-          originalUKey = ukey; // current key becomes the original
-          setCookie('originalUkey', originalUKey, 7); // keep cookie for 7 days
-        }
+      let originalUKey = getCookie('originalUkey') || ukey;
+      if (!getCookie('originalUkey'))
+        setCookie('originalUkey', originalUKey, 7);
 
-        urlParams.set('ukey', match.ukey);
-        urlParams.set('originalUkey', originalUKey);
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.set('ukey', match.ukey);
+      urlParams.set('originalUkey', originalUKey);
 
-        const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+      sessionStorage.setItem('ukey_switch_pending', '1');
 
-        // Mark that we intentionally switched and need a follow-up reload on next load
-        sessionStorage.setItem('ukey_switch_pending', '1');
-
-        window.location.replace(newUrl);
-      } else {
-        alert('Please select a valid user from suggestions.');
-      }
+      window.location.replace(
+        `${window.location.pathname}?${urlParams.toString()}`
+      );
     });
 
-    // ============
-    // Modal Logic
-    // ============
-
+    // =========================
+    // Modal logic with focus & mouse trap
+    // =========================
     const hideModal = () => {
       modal.setAttribute('aria-hidden', 'true');
       modal.style.display = 'none';
 
-      // Restore original tabindex to outside elements
-      const focusableOutside = document.querySelectorAll(
-        'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      focusableOutside.forEach((el) => {
-        if (!modal.contains(el)) {
-          if (el.dataset.prevTabindex !== null) {
-            el.setAttribute('tabindex', el.dataset.prevTabindex);
-            delete el.dataset.prevTabindex;
-          } else {
-            el.removeAttribute('tabindex');
-          }
-        }
+      const disabled = document.querySelectorAll('[data-focus-disabled]');
+      disabled.forEach((el) => {
+        if (el.dataset.prevTabindex && el.dataset.prevTabindex !== 'null')
+          el.setAttribute('tabindex', el.dataset.prevTabindex);
+        else el.removeAttribute('tabindex');
+
+        el.removeAttribute('data-focus-disabled');
+        delete el.dataset.prevTabindex;
       });
+
+      document.body.classList.remove('modal-open');
+      document.removeEventListener('keydown', handleKeydown);
+      document.removeEventListener('focusin', preventOutsideFocus, true);
+      document.removeEventListener('click', preventOutsideClick, true);
     };
 
     function handleKeydown(e) {
-      const focusableInside = modal.querySelectorAll(
-        'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
+      const focusableInside = Array.from(
+        modal.querySelectorAll(
+          'a[href], area[href], input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => el.offsetParent !== null);
+
+      if (!focusableInside.length) return;
+
       const firstEl = focusableInside[0];
       const lastEl = focusableInside[focusableInside.length - 1];
 
       if (e.key === 'Tab') {
-        if (e.shiftKey) {
-          if (document.activeElement === firstEl) {
-            e.preventDefault();
-            lastEl.focus();
-          }
-        } else {
-          if (document.activeElement === lastEl) {
-            e.preventDefault();
-            firstEl.focus();
-          }
+        if (e.shiftKey && document.activeElement === firstEl) {
+          e.preventDefault();
+          lastEl.focus();
+        } else if (!e.shiftKey && document.activeElement === lastEl) {
+          e.preventDefault();
+          firstEl.focus();
         }
       } else if (e.key === 'Escape') {
+        e.preventDefault();
         cleanupAndHideModal();
         const showLink = document.getElementById('showUsersLink');
         if (showLink) showLink.focus();
@@ -402,27 +355,59 @@ function displaySwitchableForm() {
     }
 
     function cleanupAndHideModal() {
-      document.removeEventListener('keydown', handleKeydown);
       hideModal();
     }
 
     function showModal() {
-      modal.setAttribute('aria-hidden', 'false');
       modal.style.display = 'block';
+      modal.setAttribute('aria-hidden', 'false');
       userInput.focus();
 
-      // Disable outside tabbing
-      const focusableOutside = document.querySelectorAll(
-        'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      // Disable all focusable outside modal
+      const allFocusable = Array.from(
+        document.querySelectorAll(
+          'a[href], area[href], input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex]:not([tabindex="-1"]), [contenteditable="true"]'
+        )
       );
-      focusableOutside.forEach((el) => {
-        if (!modal.contains(el)) {
-          el.dataset.prevTabindex = el.getAttribute('tabindex');
+
+      allFocusable.forEach((el) => {
+        if (!modal.contains(el) && !el.hasAttribute('data-focus-disabled')) {
+          const oldIndex = el.getAttribute('tabindex');
+          if (oldIndex !== '-1') el.dataset.prevTabindex = oldIndex ?? '';
           el.setAttribute('tabindex', '-1');
+          el.setAttribute('data-focus-disabled', 'true');
         }
       });
 
+      document.body.classList.add('modal-open');
       document.addEventListener('keydown', handleKeydown);
+      document.addEventListener('focusin', preventOutsideFocus, true);
+      document.addEventListener('click', preventOutsideClick, true);
+    }
+
+    function preventOutsideFocus(e) {
+      if (
+        modal.getAttribute('aria-hidden') === 'false' &&
+        !modal.contains(e.target)
+      ) {
+        e.stopPropagation();
+        e.preventDefault();
+        const firstFocusable = modal.querySelector(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        if (firstFocusable) firstFocusable.focus();
+      }
+    }
+
+    function preventOutsideClick(e) {
+      if (
+        modal.getAttribute('aria-hidden') === 'false' &&
+        !modal.contains(e.target)
+      ) {
+        e.stopPropagation();
+        e.preventDefault();
+        modal.focus();
+      }
     }
 
     closeModal.addEventListener('click', cleanupAndHideModal);
@@ -434,11 +419,13 @@ function displaySwitchableForm() {
     document.addEventListener('openUserModal', showModal);
   }
 
-  // call impersonationBanner to show or not
+  // Show impersonation banner if needed
   impersonationBanner();
 }
 
-// Utility: set cookie
+// ===============================
+// Utility functions
+// ===============================
 function setCookie(name, value, days) {
   let expires = '';
   if (days) {
@@ -458,51 +445,35 @@ function setCookie(name, value, days) {
 function getCookie(name) {
   const nameEQ = name + '=';
   const ca = document.cookie.split(';');
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+  for (let c of ca) {
+    c = c.trim();
     if (c.indexOf(nameEQ) === 0)
-      return decodeURIComponent(c.substring(nameEQ.length, c.length));
+      return decodeURIComponent(c.substring(nameEQ.length));
   }
   return null;
 }
 
+// ===============================
+// Impersonation banner
+// ===============================
 function impersonationBanner() {
   // Determine whether to show the impersonation message or not
   const originalUkey = getCookie('originalUkey');
-
-  const params = new URLSearchParams(window.location.search);
-
-  // Get value of "ukey"
-
-  const currentUKey = params.get('ukey');
+  const currentUKey = new URLSearchParams(window.location.search).get('ukey');
 
   console.log(`currentUKey ${currentUKey}`);
 
   console.log(`original Ukey is ${originalUkey}`);
   console.log(`ukey is ${ukey}`);
-
-  if (originalUkey !== null && originalUkey !== currentUKey) {
+  if (originalUkey && originalUkey !== currentUKey) {
     // Create the banner
     const banner = document.createElement('div');
     banner.className = 'impersonation-banner';
-    banner.innerHTML = `
-      <p>
-          You are currently viewing the portal as user: <strong>${window.user}</strong>.
-          <a href="#" id="stopImpersonationLink">Click here to stop impersonating this user.</a>
-      </p>
-    `;
+    banner.innerHTML = `<p>You are currently viewing the portal as user: <strong>${window.user}</strong>. <a href="#" id="stopImpersonationLink">Click here to stop impersonating this user.</a></p>`;
 
     // Insert banner at the top of <main>
-    const main = document.querySelector('main');
-    if (main) {
-      main.insertBefore(banner, main.firstChild);
-    } else {
-      console.warn(
-        '<main> element not found — banner added to top of body instead.'
-      );
-      document.body.prepend(banner);
-    }
+    const main = document.querySelector('main') || document.body;
+    main.prepend(banner);
 
     // Add click handler
     document
@@ -526,7 +497,6 @@ function impersonationBanner() {
         url.searchParams.delete('originalUkey');
         url.searchParams.delete('_reloaded');
         url.searchParams.delete('_bust');
-
         localStorage.removeItem('ukey_switch_pending');
 
         // Redirect to the cleaned-up URL
@@ -535,51 +505,20 @@ function impersonationBanner() {
   }
 }
 
+// ===============================
+// Open modal programmatically
+// ===============================
 function openUserModal() {
-  const modal = document.getElementById('userModal');
-  const userInput = document.getElementById('userInput');
-
-  modal.style.display = 'block';
-  modal.setAttribute('aria-hidden', 'false');
-
-  if (userInput) {
-    const listId = userInput.getAttribute('list');
-    userInput.removeAttribute('list');
-
-    userInput.value = '';
-    userInput.focus();
-
-    const showListAfterTyping = (e) => {
-      if (userInput.value.length >= 1) {
-        userInput.setAttribute('list', listId);
-        userInput.removeEventListener('input', showListAfterTyping);
-      }
-    };
-
-    userInput.addEventListener('input', showListAfterTyping);
-  }
+  document.dispatchEvent(new Event('openUserModal'));
 }
 
+// ===============================
+// Get relative path
+// ===============================
 function getRelativePath(targetPath) {
-  // Get the current script's directory path
-  const currentDir = window.location.pathname;
-
-  // Break into path segments, remove empty ones
-  const currentDirParts = currentDir.split('/').filter(Boolean);
-
-  // Count directory depth
-  const depth = currentDirParts.length;
-
-  // Create prefix like ../../
-  let relativePath = '../'.repeat(depth - 2);
-
-  // Normalize slashes & combine
+  const currentDirParts = window.location.pathname.split('/').filter(Boolean);
+  let relativePath = '../'.repeat(currentDirParts.length - 2);
   relativePath =
     relativePath.replace(/\/+$/, '') + '/' + targetPath.replace(/^\/+/, '');
-
-  if (relativePath === '/') {
-    relativePath = '';
-  }
-
-  return relativePath;
+  return relativePath === '/' ? '' : relativePath;
 }
