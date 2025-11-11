@@ -1,5 +1,7 @@
 'use strict';
 
+let lastTriggerElement = null;
+
 // ===============================
 // Initial URL reload for ukey switch
 // ===============================
@@ -34,7 +36,7 @@ function initSwitchable() {
       const link = e.target.closest('#showUsersLink');
       if (link) {
         e.preventDefault();
-        openUserModal();
+        openUserModal(link);
       }
     },
     true
@@ -324,6 +326,12 @@ function displaySwitchableForm() {
       document.removeEventListener('keydown', handleKeydown);
       document.removeEventListener('focusin', preventOutsideFocus, true);
       document.removeEventListener('click', preventOutsideClick, true);
+
+      // Restore focus to the triggering element
+      if (lastTriggerElement) {
+        lastTriggerElement.focus();
+        lastTriggerElement = null;
+      }
     };
 
     function handleKeydown(e) {
@@ -508,7 +516,8 @@ function impersonationBanner() {
 // ===============================
 // Open modal programmatically
 // ===============================
-function openUserModal() {
+function openUserModal(trigger = null) {
+  if (trigger) lastTriggerElement = trigger;
   document.dispatchEvent(new Event('openUserModal'));
 }
 
