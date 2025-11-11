@@ -322,6 +322,11 @@ function displaySwitchableForm() {
         delete el.dataset.prevTabindex;
       });
 
+      // Permanently keep <ul class="sub-menu"> links unfocusable
+      document.querySelectorAll('ul.sub-menu a').forEach((a) => {
+        a.setAttribute('tabindex', '-1');
+      });
+
       document.body.classList.remove('modal-open');
       document.removeEventListener('keydown', handleKeydown);
       document.removeEventListener('focusin', preventOutsideFocus, true);
