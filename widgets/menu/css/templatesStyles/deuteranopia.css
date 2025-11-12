@@ -49,9 +49,6 @@
 
   --subTitleColour: #cc5500;
 
-  --menuListTextColour: #000;
+  --menuListTextColour: #fff;
   --menuListTextColourActiveFocus: #000;
-
-  --mobileMenuTextColour: #000;
-  --mobileMenuTextColourFocus: #000;
 }
