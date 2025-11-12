@@ -988,6 +988,16 @@ ul#menu-main-menu a {
   color: var(--firstSubLevelTextColour);
 }
 
+#moreSubMenu .mega-menu a {
+  color: #000 !important;
+}
+
+#moreSubMenu .mega-menu a:hover,
+#moreSubMenu .mega-menu a:focus,
+#moreSubMenu .mega-menu a:focus-visible {
+  color: var(--mobileTabsPanelsActiveFocus) !important;
+}
+
 /* first submenu hover and focus font colour */
 header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
 .menu-main-menu-container > #menu-main-menu > li > .mega-menu a:hover,
@@ -1000,6 +1010,28 @@ header nav ul.menu > li > .mega-menu > .list-item > ul > li > a:hover,
 /* menu-list non selected state under More */
 #moreSubMenu .menu-list a {
   color: var(--menuListTextColour) !important;
+}
+
+#moreSubMenu
+  .menu-main-menu-container
+  > #menu-main-menu
+  > li
+  > .sub-menu
+  .tabs__panels
+  a {
+  color: #000 !important;
+}
+
+#moreSubMenu
+  .tabs__panels
+  a:hover
+  #moreSubMenu
+  .tabs__panels
+  a:focus
+  #moreSubMenu
+  .tabs__panels
+  a:focus-visible {
+  color: #000 !important;
 }
 
 /* Selected, Hover and focus states under More */
@@ -1246,12 +1278,6 @@ ul#menu-main-menu > li.menu-item-has-children:hover > a {
 /* ===============================
    Submenu Levels Background + Text
    =============================== */
-
-/* First level submenu links */
-#menu-main-menu .sub-menu a,
-#menu-main-menu .mega-menu a {
-  color: var(--firstSubLevelTextColour);
-}
 
 /* Hover - First Submenu */
 #menu-main-menu .sub-menu a:hover,
@@ -1742,10 +1768,5 @@ svg {
     width: 90%;
     right: 5%;
     padding: 0.75rem 1rem;
-  }
-
-  .menu-main-menu-container > #menu-main-menu > li > .sub-menu a,
-  .menu-main-menu-container > #menu-main-menu > li > .sub-menu a {
-    color: var(--topMenuTextColour);
   }
 }

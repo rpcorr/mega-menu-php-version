@@ -51,4 +51,6 @@
 
   --menuListTextColour: #fff;
   --menuListTextColourActiveFocus: #000;
+
+  --mobileTabsPanelsActiveFocus: #000;
 }
