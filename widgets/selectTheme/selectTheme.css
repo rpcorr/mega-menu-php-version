@@ -31,19 +31,16 @@ input {
   margin-right: 0.625rem;
 }
 
-@media (max-width: 48rem) {
+/* =========================
+   Tablet: Swatches stack vertically
+   ========================= */
+@media (max-width: 768px) {
+  /* ≤ 768px */
   .swatches-container {
     flex-direction: column;
   }
 
   .column-2 {
-    margin-bottom: 1.5em;
-  }
-}
-
-@media (max-width: 31.25rem) {
-  .swatch {
-    width: 1.875rem;
-    height: 1.875rem;
+    margin-bottom: 24px; /* 1.5em × 16px */
   }
 }
