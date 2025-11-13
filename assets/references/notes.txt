@@ -2,8 +2,13 @@ URL
 
 counting-opinions-wrapper.php?is_menu&portal=demo&ukey=b5e79c05b3f12219e725fc167edefdd1
 
+https://dev.countingopinions.com/mmenu/counting_opinions-wrapper.php?is_menu&portal=demo&ukey=b5e79c05b3f12219e725fc167edefdd1
+
 CO&DEMO
 CO&SUCC3$$
+
+
+https://dev.countingopinions.com/ws/portal/get_users.php?is_menu&portal=${portal}&ukey=${ukey}`;
 
 
                         

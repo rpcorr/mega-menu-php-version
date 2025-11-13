@@ -1,0 +1,30 @@
+fetch(JSONData)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json(); // This returns a promise
+  })
+  .then((data) => {
+    // `data` contains the JSON object parsed from the file
+
+    console.log(data);
+    console.log(data['pages'].length);
+    console.log(data['pages']);
+
+    console.log('\nusing a for loop');
+    for (i = 0; i < data['pages'].length; i++) {
+      console.log(data['pages'][i]['page_title']);
+    }
+
+    console.log('\nusing ES6+ arrow function');
+    data['pages'].forEach((page) => {
+      console.log(page['page_title']);
+    });
+
+    console.log('\ndirect');
+    console.log(data['pages'][0]['page_title']);
+  })
+  .catch((error) => {
+    console.error('There has been a problem with your fetch operation:', error);
+  });
