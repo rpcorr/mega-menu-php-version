@@ -14,7 +14,9 @@ if (isset($_POST['username'])) {
 
 
   // Path to the JSON file
-  $json_file = 'assets/json/users.json';
+  //$json_file = 'widgets/menu/json/users.json';
+  $json_file = $_SERVER['DOCUMENT_ROOT'] . '/mmenu/widgets/menu/json/users.json';
+
  
 
   // Check if the file exists

@@ -175,11 +175,13 @@ else $_SESSION['switchAble'] = false;
       const portal = <?php echo json_encode($portal); ?>;
       const queryString = <?php echo json_encode($queryString); ?>;
 
-      const baseURL = 'http://localhost/mmenu/widgets/menu/json/';
-
-      let JSONfile = baseURL;
-
+      const baseURL = '/mmenu/widgets/menu/json/';
       let userJSONfile = baseURL + 'users-demo.json';
+
+      fetch(userJSONfile)
+  .then(res => res.json())
+  .then(data => console.log(data))
+  .catch(err => console.error('Failed to load JSON', err));
 
       console.log(`userJSONfile: ${userJSONfile}`);
 
