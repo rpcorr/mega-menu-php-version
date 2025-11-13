@@ -29,11 +29,16 @@ no `<header>` markup required in the page itself.
 
 Handles:
 
+- SVG loading
 - CSS loading
 - JavaScript widget loading
 - `<header>` + mega-menu UI generation
 - `<template>` tag injection
-- Optional UI features
+- Optional UI features (Sidebar and Timer Inactivity)
+
+#### Loads SVG Icons
+
+The icons.svg file, located in **widgets/menu/icons/** gets insert right after **<body>** in order for the SVG icons to dispaly throughout the mega menu widget
 
 #### Loads Stylesheets
 
@@ -113,3 +118,58 @@ The timeout is currently set to 1 minute, which can be modified at the top of **
     --------------------------------
                   |
     Fully-rendered dynamic menu UI
+
+---
+
+## SVG Icons
+
+The mega menu uses SVG icons stored in
+**widgets/menu/icons/icons.svg**.
+
+This file contains all existing icons, and new ones can be added as needed.
+Each icon follows the naming convention: **co-icons-[icon-name]**.
+
+This SVG file is automatically included on pages that contain the mega menu through **menu.js**.
+
+### Adding Additional Icons
+
+1. Find or create an SVG icon you want to use (from an icon library, design tool, or AI generator).
+
+2. Convert it into a <symbol> element and add it to **widgets/menu/icons/icons.svg**, above the comment:
+
+<!-- Add more <symbol> blocks here -->
+
+3. Give the <symbol> a unique id that starts with **co-icons-**, for example:
+
+<symbol id="co-icons-{unique-name}" viewBox="0 0 24 24">
+  <!-- SVG paths go here -->
+</symbol>
+
+**NOTE:** You may need to adjust the viewBox value so the entire icon is visible.
+
+### Current Icons
+
+The following icons are currently available:
+
+- co-icons-lightbulb
+- co-icons-pie
+- co-icons-medal
+- co-icons-puzzle-piece
+- co-icons-generic-file
+- co-icons-generic-report
+- co-icons-data-input
+- co-icons-lifebuoy
+
+### Using the Icons
+
+To display an icon, use the following markup:
+
+<svg><use href="#co-icons-{unique-name}"></use></svg>
+
+Replace {unique-name} with the desired icon ID.
+
+**NOTES:**
+
+- Menu list icons (far left) — pie, puzzle-piece, and medal — are sized at 40 × 40 px in navigation-menu.css.
+
+- Menu body icons (middle portion) — generic-file, generic-report, and data-input — are sized at 80 × 85 px in navigation-menu.css.
