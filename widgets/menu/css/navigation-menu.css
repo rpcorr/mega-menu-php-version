@@ -1486,7 +1486,7 @@ svg {
 @media (min-width: 85.375rem) {
   /* > 1366px */
   .mega-menu .tabs__panels {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .mega-menu .tabs__panels svg {
