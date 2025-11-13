@@ -9,8 +9,10 @@ const prefix = getRelativePath();
 const MOBILE_BREAKPOINT = 600;
 const SERVICE_SECTIONS = ['2', '5', '1']; // LibPAS, InformsUs, LibSat
 
+// SVG Path
+const svgsPath = `${prefix}widgets/menu/icons/icons.svg`;
+
 // Widget paths
-const widgetsPath = `${prefix}assets/widgets/`;
 const resetCssPath = `${prefix}widgets/menu/css/reset.min.css`;
 const switchableJsPath = `${prefix}widgets/switchable/switchable.js`;
 const selectThemeJsPath = `${prefix}widgets/selectTheme/selectTheme.js`;
@@ -20,7 +22,7 @@ const sidebarCssPath = `${prefix}widgets/sidebar/sidebar.css`;
 const timerInactivityJsPath = `${prefix}widgets/timerInactivity/timerInactivity.js`;
 
 // Feature flags
-const bSidebarWidget = false;
+const bSidebarWidget = true;
 const bTimerInactivityWidget = false;
 
 /* ============================================================================
@@ -714,6 +716,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
   moreWidth = document.getElementById('menu-main-menu').offsetWidth;
+
+  // insert SVG file dynmacically
+  fetch(svgsPath)
+    .then((response) => {
+      if (!response.ok) throw new Error(`Failed to load: ${svgsPath}`);
+      return response.text();
+    })
+    .then((svgContent) => {
+      const div = document.createElement('div');
+      div.style.display = 'none'; // hide it
+      div.innerHTML = svgContent;
+      document.body.insertBefore(div, document.body.firstChild);
+    })
+    .catch((error) => console.error('SVG load error:', error));
 
   // Begin to Insert CSS and JS dynamically
 

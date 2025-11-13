@@ -103,7 +103,7 @@ else $_SESSION['switchAble'] = false;
     <title><?php echo $title ?></title>
 </head>
 <body>
-    <?php include getRelativePath('') . 'widgets/menu/icons/icons.svg'; ?>
+    <?php //include getRelativePath('') . 'widgets/menu/icons/icons.svg'; ?>
     <main>
         <div class="container">
             <h1>Welcome </h1>
