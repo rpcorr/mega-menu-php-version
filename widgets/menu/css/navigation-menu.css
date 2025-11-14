@@ -397,6 +397,12 @@ ul.sub-menu li > ul.sub-menu {
 /*  2. Mega Menu Styles                  */
 /*****************************************/
 
+.mega-menu,
+.grid-container-multiple,
+.tabs-container {
+  overflow: visible;
+}
+
 /* styles for Mega menu */
 header nav ul.menu > li.menu-item-has-children > .mega-menu {
   position: absolute;
@@ -513,7 +519,9 @@ header nav ul.menu > li > .mega-menu {
   height: 100%;
   max-width: 100%; /* Ensures it does not exceed the parent width */
   box-sizing: border-box; /* Ensures padding does not add to the width */
-  overflow: hidden; /* Prevents content from overflowing */
+  /*overflow: hidden;*/ /* Prevents content from overflowing */
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 #moreSubMenu .mega-menu .tabs-container {
@@ -964,8 +972,8 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100vw;
-  max-width: 20em;
+  width: 100%;
+  max-width: 40rem;
   text-align: center;
 }
 
@@ -1501,7 +1509,8 @@ svg {
    ========================= */
 @media (max-width: 20rem) {
   #moreSubMenu .mega-menu .tabs-container {
-    grid-template-columns: 20rem;
+    width: 100%;
+    grid-template-columns: 1fr;
   }
 
   .mega-menu .menu-list li img {
@@ -1536,7 +1545,8 @@ svg {
    ========================= */
 @media (max-width: 27rem) {
   #moreSubMenu .mega-menu .tabs-container {
-    grid-template-columns: 28rem;
+    width: 100%;
+    grid-template-columns: 1fr;
   }
 
   .mega-menu .tabs__panels {
@@ -1585,7 +1595,8 @@ svg {
    ========================= */
 @media (max-width: 30rem) {
   #moreSubMenu .mega-menu .tabs-container {
-    grid-template-columns: 30rem;
+    width: 100%;
+    grid-template-columns: 1fr;
   }
 
   .mega-menu .tabs__panels [role='listitem'] {
@@ -1611,7 +1622,8 @@ svg {
    ========================= */
 @media (max-width: 33.75rem) {
   #moreSubMenu .mega-menu .tabs-container {
-    grid-template-columns: 34rem;
+    width: 100%;
+    grid-template-columns: 1fr;
   }
 
   .mega-menu .menu-list li {
@@ -1624,7 +1636,8 @@ svg {
    ========================= */
 @media (max-width: 37.5rem) {
   #moreSubMenu .mega-menu .tabs-container {
-    grid-template-columns: 38rem;
+    width: 100%;
+    grid-template-columns: 1fr;
   }
 
   .mega-menu .grid-container-pages > .left-content {
@@ -1714,6 +1727,23 @@ svg {
 
   .mega-menu .menu-list {
     flex-direction: row;
+    flex-wrap: nowrap; /* keep items on one line */
+    overflow-x: auto; /* enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* smooth scroll on mobile */
+    gap: 1rem; /* optional: space between items */
+  }
+
+  .mega-menu .menu-list li {
+    flex: 0 0 auto; /* prevent shrinking */
+  }
+
+  /* Optional: hide scrollbar if you want a clean look */
+  .mega-menu .menu-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mega-menu .menu-list {
+    scrollbar-width: none; /* hide scrollbar in Firefox */
   }
 
   .mega-menu .menu-list p {
@@ -1723,6 +1753,22 @@ svg {
   .mega-menu .extra-content {
     margin-left: 0;
     margin-top: 1rem;
+  }
+}
+
+@media (max-width: 37.5625rem) {
+  .mega-menu .menu-list {
+    display: flex;
+    /* flex-direction: row; */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 1rem;
+  }
+
+  .mega-menu .menu-list li {
+    flex: 0 0 auto;
+    /* flex: 0 0 250px; */
   }
 }
 
