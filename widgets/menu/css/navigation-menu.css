@@ -4,6 +4,7 @@
 /* 2. Mega Menu Styles                  */
 /* 3. Defaults Navigation Styles        */
 /* 4. Navigation Colour Template        */
+/* 5. Breadcrumbs                       */
 /****************************************/
 
 /*****************************************/
@@ -2012,6 +2013,50 @@ h2 {
     border-top: 4px solid var(--subMenuBgColour);
   }
 }
+
+/*****************************************/
+/*  5. Breadcrumbs                       */
+/*****************************************/
+
+#breadcrumbsMenu {
+  margin-top: 6em;
+}
+
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0 0 0 2em;
+}
+.breadcrumbs li {
+  margin-right: 5px;
+}
+.breadcrumbs li a {
+  text-decoration: none;
+  color: blue;
+}
+
+.breadcrumbs li::after {
+  content: '';
+}
+
+.breadcrumbs li::after {
+  content: attr(data-symbol);
+  margin-left: 5px;
+}
+
+.breadcrumbs li span {
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
+}
+
+/***********************************/
 
 /* Error Alert Styling */
 .menu-error-alert {
