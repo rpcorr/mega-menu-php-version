@@ -27,7 +27,7 @@ const timerInactivityJsPath = `${widgetsPath}timerInactivity/timerInactivity.js`
 
 ////////////////////////////////////////////////////
 // Enable/disable widgets
-const bSidebarWidget = true;
+const bSidebarWidget = false;
 const bTimerInactivityWidget = false;
 ////////////////////////////////////////////////////
 
@@ -1438,6 +1438,7 @@ function renderBodyContent(contentContainer, type, menuData) {
 
         // Add ARIA attribute to indicate collapsible section
         anchor.setAttribute('aria-expanded', 'false');
+        anchor.setAttribute('role', 'button');
       }
 
       spanEl.textContent = `Brief description of the function for ${menuItem.prompt}`;
