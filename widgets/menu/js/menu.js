@@ -6,6 +6,9 @@
 // get getRelativePath prefix
 const prefix = getRelativePath();
 
+// SVG Path
+const svgsPath = `${prefix}widgets/menu/icons/icons.svg`;
+
 ////////////////////////////////////////////////////
 // Widgets file paths needs to be defined here
 const widgetsPath = `${prefix}widgets/`;
@@ -443,6 +446,20 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Failed to load menu data:', error);
       // Error alert already shown to user by fetchWithRetry
     });
+
+  // insert SVG file dynmacically
+  fetch(svgsPath)
+    .then((response) => {
+      if (!response.ok) throw new Error(`Failed to load: ${svgsPath}`);
+      return response.text();
+    })
+    .then((svgContent) => {
+      const div = document.createElement('div');
+      div.style.display = 'none'; // hide it
+      div.innerHTML = svgContent;
+      document.body.insertBefore(div, document.body.firstChild);
+    })
+    .catch((error) => console.error('SVG load error:', error));
 
   // Begin to Insert CSS and JS dynamically
 
