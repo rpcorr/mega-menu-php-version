@@ -22,15 +22,11 @@ const selectThemeCssPath = `${widgetsPath}selectTheme/selectTheme.min.css`;
 const sidebarJsPath = `${widgetsPath}sidebar/sidebar.js`;
 const sidebarCssPath = `${widgetsPath}sidebar/sidebar.css`;
 
-//const breadcrumbsJsPath = `${widgetsPath}breadcrumbs/breadcrumbs.js`;
-//const breadcrumbsCssPath = `${widgetsPath}breadcrumbs/breadcrumbs.css`;
-
 const timerInactivityJsPath = `${widgetsPath}timerInactivity/timerInactivity.js`;
 ////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////
 // Enable/disable widgets
-const bBreadcrumbsWidget = true;
 const bSidebarWidget = true;
 const bTimerInactivityWidget = false;
 ////////////////////////////////////////////////////
@@ -553,75 +549,6 @@ document.addEventListener('DOMContentLoaded', () => {
       document.addEventListener('keydown', handleEscapeKey);
     };
   }
-
-  // // Dynamically add breadcrumbs.js if tag exists and place it right after menu.js
-  //if (bBreadcrumbsWidget) {
-  //const breadcrumbScriptSrc = breadcrumbsJsPath;
-  //const breadcrumbCssHref = breadcrumbsCssPath;
-
-  // --- Insert breadcrumbs.css right after navigation-menu.css ---
-  //const linkBreadcrumbs = document.createElement('link');
-  //linkBreadcrumbs.rel = 'stylesheet';
-  //linkBreadcrumbs.type = 'text/css';
-  //linkBreadcrumbs.href = breadcrumbCssHref;
-
-  //const navCss = document.querySelector('link[href*="navigation-menu.css"]');
-  ///if (navCss && navCss.parentNode) {
-  //navCss.parentNode.insertBefore(linkBreadcrumbs, navCss.nextSibling);
-  //} else {
-  // fallback (rare)
-  //(document.head || document.body).appendChild(linkBreadcrumbs);
-  //}
-
-  // --- Insert breadcrumbs.js after menu.js ---
-  //const breadcrumbsScript = document.createElement('script');
-  //breadcrumbsScript.src = breadcrumbScriptSrc;
-  //breadcrumbsScript.defer = true;
-
-  //breadcrumbsScript.onload = () => {
-  // Make sure the nav exists before generating
-  //insertBreadcrumbNav();
-
-  //   if (typeof generateBreadcrumbs === 'function') {
-  //     generateBreadcrumbs();
-  //   } else {
-  //     console.warn('GenerateBreadcrumbs() not found yet');
-  //   }
-  // };
-
-  // breadcrumbsScript.onload = () => {
-  //   console.log('Breadcrumbs.js loaded');
-
-  //   // Make sure the nav exists before generating
-  //   insertBreadcrumbNav();
-
-  //   if (typeof generateBreadcrumbs === 'function') {
-  //     generateBreadcrumbs();
-  //   } else {
-  //     console.warn('GenerateBreadcrumbs() not found yet');
-  //   }
-  // };
-
-  // Insert after menu.js
-  // const menuScript = document.querySelector('script[src*="menu.js"]');
-  // if (menuScript && menuScript.parentNode) {
-  //   menuScript.parentNode.insertBefore(
-  //     breadcrumbsScript,
-  //     menuScript.nextSibling
-  //   );
-  // } else {
-  //   // fallback (should never happen)
-  //   (document.body || document.head).appendChild(breadcrumbsScript);
-  // }
-  //}
-
-  // else {
-  //   // No breadcrumbs: push <main> down
-  //   const mainElement = document.querySelector('main');
-  //   if (mainElement) {
-  //     mainElement.style.marginTop = '8em';
-  //   }
-  // }
 
   // --- Check if user/ukey is defined ---
   if (
