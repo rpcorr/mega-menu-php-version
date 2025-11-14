@@ -226,27 +226,6 @@ header nav#menu ul.menu > li.menu-item-has-children > .mega-menu {
   text-decoration: underline;
 }
 
-@media (min-width: 27rem) {
-  .logo {
-    display: block;
-  }
-  .simple-logo {
-    display: none;
-  }
-}
-@media (max-width: 27rem) {
-  .logo {
-    display: none;
-  }
-  .simple-logo {
-    display: block;
-  }
-
-  #branding {
-    width: 30%;
-  }
-}
-
 #siteIdentity a {
   display: block;
 }
@@ -349,12 +328,6 @@ ul#menu-main-menu
   li.menu-item-has-children
   > a.active::after {
   top: 1.25rem;
-}
-
-@media (max-width: 27em) {
-  .menu-main-menu-container > #menu-main-menu > li > a {
-    padding: 1.5rem 1.25rem;
-  }
 }
 
 .menu-main-menu-container > #menu-main-menu > li > .sub-menu a {
@@ -499,213 +472,6 @@ ul.sub-menu li > ul.sub-menu {
   clip: rect(0 0 0 0);
   white-space: nowrap;
   border: 0;
-}
-
-/* Mobile styles */
-@media (max-width: 960px) {
-  #menu {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-  }
-
-  .hamburger {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 48px;
-    height: 48px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-left: auto;
-  }
-
-  .hamburger-bar {
-    width: 24px;
-    height: 3px;
-    background-color: #333;
-    margin: 3px 0;
-    transition: all 0.3s ease;
-  }
-
-  .hamburger.open .hamburger-bar:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-
-  .hamburger.open .hamburger-bar:nth-child(2) {
-    opacity: 0;
-  }
-
-  .hamburger.open .hamburger-bar:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
-  }
-
-  /* When hamburger is open, reduce margin between bars */
-  .hamburger.open .hamburger-bar {
-    margin: 2px 0;
-  }
-
-  #menu-main-menu {
-    display: none;
-    flex-direction: column;
-    /* gap: 0.5rem; */
-    background: #fff;
-    position: fixed;
-    top: 98px;
-    left: 0;
-    width: 100vw;
-    height: unset;
-  }
-
-  #menu-main-menu > li {
-    width: 100%;
-    min-height: 36px;
-    height: auto;
-    /* border-bottom: 1px solid #ccc; */
-    border-radius: unset;
-  }
-
-  .menu-main-menu-container > #menu-main-menu > li > .sub-menu a {
-    border: unset;
-  }
-
-  #menu-main-menu > li > a {
-    border-radius: unset;
-  }
-
-  #menu-main-menu li > a {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 2.75em;
-    padding: 0.75rem 1rem; /* or match your existing padding */
-  }
-
-  #menu-main-menu li.menu-item-has-children > a .caret {
-    margin-left: auto;
-    text-align: right;
-  }
-
-  #menu-main-menu.open {
-    display: flex;
-  }
-
-  #adminMenu > .sub-menu {
-    margin-top: 0;
-  }
-
-  #profileMenu {
-    text-align: left;
-    width: 100%;
-    margin-left: 0;
-  }
-
-  #profileMenu .profile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: #ccc; /* or your desired color */
-    font-weight: bold;
-    flex-shrink: 0;
-  }
-
-  #profileMenu .sub-menu {
-    box-shadow: inset 0 2px 2px #000, inset 0 -2px 2px #000 !important;
-  }
-
-  #profileMenu .sub-menu li {
-    padding: 0.5rem 0;
-  }
-
-  #profileMenu > a {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important; /* Centers profile circle and text */
-    gap: 0.5rem;
-    width: 20% !important;
-    padding: 0.75rem 1rem;
-    text-align: center;
-    margin: auto;
-    margin-bottom: 1rem;
-  }
-
-  #profileMenu[aria-expanded='true'] > .sub-menu {
-    align-items: start;
-    width: auto;
-    padding: 0.5rem 1rem;
-    margin: 0 auto; /* centers the <ul> itself */
-    background: #e0e0e0 !important;
-    border-top: 1px solid #000 !important;
-    border-bottom: 1px solid #000;
-  }
-
-  #profileMenu > ul > li a {
-    padding: 0.5em 0;
-  }
-
-  #adminMenu > .sub-menu,
-  #profileMenu > .sub-menu {
-    border-radius: unset;
-    border: unset;
-  }
-}
-
-/* Desktop styles */
-@media (min-width: 961px) {
-  .hamburger {
-    display: none;
-  }
-
-  #menu {
-    display: block;
-  }
-
-  #menu-main-menu {
-    display: flex !important;
-    position: static;
-    flex-direction: row;
-  }
-
-  a[role='tab'] .caret.angle-down {
-    display: none;
-  }
-}
-
-@media (max-width: 768px) {
-  #profileMenu > a {
-    width: 23% !important;
-  }
-}
-
-@media (max-width: 600px) {
-  #profileMenu > a {
-    width: 30% !important;
-  }
-}
-
-@media (max-width: 480px) {
-  #profileMenu > a {
-    width: 37% !important;
-  }
-}
-
-@media (max-width: 375px) {
-  #profileMenu > a {
-    width: 47% !important;
-  }
-}
-
-@media (max-width: 320px) {
-  #profileMenu > a {
-    width: 55% !important;
-  }
 }
 
 /*****************************************/
@@ -1174,68 +940,6 @@ h5 {
   border-bottom: 0.15rem dashed #000;
 }
 
-/* Mobile styles */
-@media (max-width: 960px) {
-  .mega-menu .grid-container-pages {
-    grid-template-columns: 2fr;
-  }
-
-  .mega-menu .grid-container-multiple {
-    grid-template-columns: 1fr;
-    overflow: visible; /* <-- prevents parent from clipping the scroll */
-  }
-
-  .mega-menu .grid-container-pages,
-  .mega-menu .grid-container-multiple {
-    padding-right: 0.15rem;
-  }
-
-  .menu-main-menu-container > #menu-main-menu > li > .mega-menu {
-    top: unset;
-  }
-
-  /* Active panel & all tab panels share the same scroll settings */
-  #LibPAS:has(p.selected-tab) + div,
-  #InformsUs:has(p.selected-tab) + div,
-  #LibSat:has(p.selected-tab) + div,
-  .tabs__panels[role='tabpanel'] {
-    display: block;
-    overflow-y: auto;
-    scrollbar-gutter: stable;
-    padding-bottom: 17rem;
-    scroll-padding-bottom: 2rem; /* ensures last item is visible */
-  }
-
-  /* optional: gap after last item */
-  .tabs__panels[role='tabpanel'] [role='listitem']:last-of-type {
-    scroll-margin-bottom: 2rem;
-  }
-}
-
-@media (max-width: 479px) {
-  .tabs__panels {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .left-content > [role='listitem'] {
-    flex: 0 0 50%; /* Two per row */
-    box-sizing: border-box;
-    padding-right: 0;
-  }
-}
-
-@media (max-width: 400px) {
-  .tabs__panels {
-    grid-template-columns: 1fr;
-  }
-
-  .left-content > [role='listitem'] {
-    flex: 0 0 100%; /* One per row */
-    box-sizing: border-box;
-    padding-right: 0;
-  }
-}
-
 #LibPAS + div,
 #InformsUs + div,
 #LibSat + div {
@@ -1260,18 +964,6 @@ body {
 
 main {
   min-height: 86.5vh;
-}
-
-@media (max-width: 27em) {
-  main {
-    min-height: 85vh;
-  }
-}
-
-@media (max-width: 20em) {
-  main {
-    min-height: 82vh;
-  }
 }
 
 /* link colour */
@@ -1351,12 +1043,6 @@ h3 {
   cursor: pointer;
 }
 
-@media (max-width: 27em) {
-  .login-form {
-    width: 100%;
-  }
-}
-
 .user-type {
   display: flex;
   align-items: center;
@@ -1369,13 +1055,6 @@ h3 {
 #currentUser {
   font-weight: bold;
   text-transform: capitalize;
-}
-
-@media (max-width: 20em) {
-  .user-type {
-    width: 80vw;
-    max-width: 40em;
-  }
 }
 
 ul#menu-main-menu a {
@@ -1784,28 +1463,11 @@ footer p {
   font-size: 0.88em;
 }
 
-@media (max-width: 20em) {
-  footer p {
-    margin: 0 1em;
-  }
-}
-
 .log-status {
   display: flex;
   justify-content: start;
   gap: 20px;
   margin-bottom: 20px;
-}
-
-@media (max-width: 20em) {
-  .log-status {
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .log-status p {
-    margin-bottom: 5px;
-  }
 }
 
 .center {
@@ -1996,24 +1658,6 @@ h2 {
   color: var(--headingTwoTextColour);
 }
 
-@media (max-width: 960px) {
-  #menu-main-menu > li {
-    background-color: var(--subMenuBgColour);
-  }
-
-  ul#menu-main-menu a {
-    color: var(--subMenuTextColour);
-  }
-
-  .menu-item-has-children i.angle-down:before {
-    border-top: 7px solid var(--subMenuTextColour);
-  }
-
-  .menu-item-has-children i.angle-down:after {
-    border-top: 4px solid var(--subMenuBgColour);
-  }
-}
-
 /*****************************************/
 /*  5. Breadcrumbs                       */
 /*****************************************/
@@ -2103,11 +1747,346 @@ h2 {
   }
 }
 
-/* Mobile responsive */
+@media (min-width: 27rem) {
+  .logo {
+    display: block;
+  }
+  .simple-logo {
+    display: none;
+  }
+}
+
+@media (max-width: 27rem) {
+  .logo {
+    display: none;
+  }
+  .simple-logo {
+    display: block;
+  }
+
+  #branding {
+    width: 30%;
+  }
+
+  .menu-main-menu-container > #menu-main-menu > li > a {
+    padding: 1.5rem 1.25rem;
+  }
+
+  main {
+    min-height: 85vh;
+  }
+
+  .login-form {
+    width: 100%;
+  }
+}
+
+@media (max-width: 20em) {
+  main {
+    min-height: 82vh;
+  }
+
+  .log-status {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .log-status p {
+    margin-bottom: 5px;
+  }
+
+  footer p {
+    margin: 0 1em;
+  }
+
+  .user-type {
+    width: 80vw;
+    max-width: 40em;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 961px) {
+  .hamburger {
+    display: none;
+  }
+
+  #menu {
+    display: block;
+  }
+
+  #menu-main-menu {
+    display: flex !important;
+    position: static;
+    flex-direction: row;
+  }
+
+  a[role='tab'] .caret.angle-down {
+    display: none;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 960px) {
+  #menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: auto;
+  }
+
+  .hamburger-bar {
+    width: 24px;
+    height: 3px;
+    background-color: #333;
+    margin: 3px 0;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger.open .hamburger-bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .hamburger.open .hamburger-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.open .hamburger-bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  /* When hamburger is open, reduce margin between bars */
+  .hamburger.open .hamburger-bar {
+    margin: 2px 0;
+  }
+
+  #menu-main-menu {
+    display: none;
+    flex-direction: column;
+    /* gap: 0.5rem; */
+    background: #fff;
+    position: fixed;
+    top: 98px;
+    left: 0;
+    width: 100vw;
+    height: unset;
+  }
+
+  #menu-main-menu > li {
+    width: 100%;
+    min-height: 36px;
+    height: auto;
+    /* border-bottom: 1px solid #ccc; */
+    border-radius: unset;
+  }
+
+  .menu-main-menu-container > #menu-main-menu > li > .sub-menu a {
+    border: unset;
+  }
+
+  #menu-main-menu > li > a {
+    border-radius: unset;
+  }
+
+  #menu-main-menu li > a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 2.75em;
+    padding: 0.75rem 1rem; /* or match your existing padding */
+  }
+
+  #menu-main-menu li.menu-item-has-children > a .caret {
+    margin-left: auto;
+    text-align: right;
+  }
+
+  #menu-main-menu.open {
+    display: flex;
+  }
+
+  #adminMenu > .sub-menu {
+    margin-top: 0;
+  }
+
+  #profileMenu {
+    text-align: left;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  #profileMenu .profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #ccc; /* or your desired color */
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  #profileMenu .sub-menu {
+    box-shadow: inset 0 2px 2px #000, inset 0 -2px 2px #000 !important;
+  }
+
+  #profileMenu .sub-menu li {
+    padding: 0.5rem 0;
+  }
+
+  #profileMenu > a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important; /* Centers profile circle and text */
+    gap: 0.5rem;
+    width: 20% !important;
+    padding: 0.75rem 1rem;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 1rem;
+  }
+
+  #profileMenu[aria-expanded='true'] > .sub-menu {
+    align-items: start;
+    width: auto;
+    padding: 0.5rem 1rem;
+    margin: 0 auto; /* centers the <ul> itself */
+    background: #e0e0e0 !important;
+    border-top: 1px solid #000 !important;
+    border-bottom: 1px solid #000;
+  }
+
+  #profileMenu > ul > li a {
+    padding: 0.5em 0;
+  }
+
+  #adminMenu > .sub-menu,
+  #profileMenu > .sub-menu {
+    border-radius: unset;
+    border: unset;
+  }
+
+  #menu-main-menu > li {
+    background-color: var(--subMenuBgColour);
+  }
+
+  ul#menu-main-menu a {
+    color: var(--subMenuTextColour);
+  }
+
+  .menu-item-has-children i.angle-down:before {
+    border-top: 7px solid var(--subMenuTextColour);
+  }
+
+  .menu-item-has-children i.angle-down:after {
+    border-top: 4px solid var(--subMenuBgColour);
+  }
+
+  .mega-menu .grid-container-pages {
+    grid-template-columns: 2fr;
+  }
+
+  .mega-menu .grid-container-multiple {
+    grid-template-columns: 1fr;
+    overflow: visible; /* <-- prevents parent from clipping the scroll */
+  }
+
+  .mega-menu .grid-container-pages,
+  .mega-menu .grid-container-multiple {
+    padding-right: 0.15rem;
+  }
+
+  .menu-main-menu-container > #menu-main-menu > li > .mega-menu {
+    top: unset;
+  }
+
+  /* Active panel & all tab panels share the same scroll settings */
+  #LibPAS:has(p.selected-tab) + div,
+  #InformsUs:has(p.selected-tab) + div,
+  #LibSat:has(p.selected-tab) + div,
+  .tabs__panels[role='tabpanel'] {
+    display: block;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    padding-bottom: 17rem;
+    scroll-padding-bottom: 2rem; /* ensures last item is visible */
+  }
+
+  /* optional: gap after last item */
+  .tabs__panels[role='tabpanel'] [role='listitem']:last-of-type {
+    scroll-margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  #profileMenu > a {
+    width: 23% !important;
+  }
+}
+
 @media (max-width: 600px) {
+  #profileMenu > a {
+    width: 30% !important;
+  }
+
   .menu-error-alert {
     width: 90%;
     right: 5%;
     padding: 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #profileMenu > a {
+    width: 37% !important;
+  }
+
+  .tabs__panels {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .left-content > [role='listitem'] {
+    flex: 0 0 50%; /* Two per row */
+    box-sizing: border-box;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .tabs__panels {
+    grid-template-columns: 1fr;
+  }
+
+  .left-content > [role='listitem'] {
+    flex: 0 0 100%; /* One per row */
+    box-sizing: border-box;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 375px) {
+  #profileMenu > a {
+    width: 47% !important;
+  }
+}
+
+@media (max-width: 320px) {
+  #profileMenu > a {
+    width: 55% !important;
   }
 }
