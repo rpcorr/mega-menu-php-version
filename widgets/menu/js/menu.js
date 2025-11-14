@@ -22,8 +22,8 @@ const selectThemeCssPath = `${widgetsPath}selectTheme/selectTheme.min.css`;
 const sidebarJsPath = `${widgetsPath}sidebar/sidebar.js`;
 const sidebarCssPath = `${widgetsPath}sidebar/sidebar.css`;
 
-const breadcrumbsJsPath = `${widgetsPath}breadcrumbs/breadcrumbs.js`;
-const breadcrumbsCssPath = `${widgetsPath}breadcrumbs/breadcrumbs.css`;
+//const breadcrumbsJsPath = `${widgetsPath}breadcrumbs/breadcrumbs.js`;
+//const breadcrumbsCssPath = `${widgetsPath}breadcrumbs/breadcrumbs.css`;
 
 const timerInactivityJsPath = `${widgetsPath}timerInactivity/timerInactivity.js`;
 ////////////////////////////////////////////////////
@@ -283,6 +283,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // render Skip to main content link
   insertSkipMenuAnchor();
+
+  // generate Breadcrumbs
+  generateBreadcrumbs();
 
   // iniltialize menu templates
   initMenuTemplates();
@@ -551,72 +554,74 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  // Dynamically add breadcrumbs.js if tag exists and place it right after menu.js
-  if (bBreadcrumbsWidget) {
-    const breadcrumbScriptSrc = breadcrumbsJsPath;
-    const breadcrumbCssHref = breadcrumbsCssPath;
+  // // Dynamically add breadcrumbs.js if tag exists and place it right after menu.js
+  //if (bBreadcrumbsWidget) {
+  //const breadcrumbScriptSrc = breadcrumbsJsPath;
+  //const breadcrumbCssHref = breadcrumbsCssPath;
 
-    // --- Insert breadcrumbs.css right after navigation-menu.css ---
-    const linkBreadcrumbs = document.createElement('link');
-    linkBreadcrumbs.rel = 'stylesheet';
-    linkBreadcrumbs.type = 'text/css';
-    linkBreadcrumbs.href = breadcrumbCssHref;
+  // --- Insert breadcrumbs.css right after navigation-menu.css ---
+  //const linkBreadcrumbs = document.createElement('link');
+  //linkBreadcrumbs.rel = 'stylesheet';
+  //linkBreadcrumbs.type = 'text/css';
+  //linkBreadcrumbs.href = breadcrumbCssHref;
 
-    const navCss = document.querySelector('link[href*="navigation-menu.css"]');
-    if (navCss && navCss.parentNode) {
-      navCss.parentNode.insertBefore(linkBreadcrumbs, navCss.nextSibling);
-    } else {
-      // fallback (rare)
-      (document.head || document.body).appendChild(linkBreadcrumbs);
-    }
+  //const navCss = document.querySelector('link[href*="navigation-menu.css"]');
+  ///if (navCss && navCss.parentNode) {
+  //navCss.parentNode.insertBefore(linkBreadcrumbs, navCss.nextSibling);
+  //} else {
+  // fallback (rare)
+  //(document.head || document.body).appendChild(linkBreadcrumbs);
+  //}
 
-    // --- Insert breadcrumbs.js after menu.js ---
-    const breadcrumbsScript = document.createElement('script');
-    breadcrumbsScript.src = breadcrumbScriptSrc;
-    breadcrumbsScript.defer = true;
+  // --- Insert breadcrumbs.js after menu.js ---
+  //const breadcrumbsScript = document.createElement('script');
+  //breadcrumbsScript.src = breadcrumbScriptSrc;
+  //breadcrumbsScript.defer = true;
 
-    breadcrumbsScript.onload = () => {
-      // Make sure the nav exists before generating
-      //insertBreadcrumbNav();
+  //breadcrumbsScript.onload = () => {
+  // Make sure the nav exists before generating
+  //insertBreadcrumbNav();
 
-      if (typeof generateBreadcrumbs === 'function') {
-        generateBreadcrumbs();
-      } else {
-        console.warn('GenerateBreadcrumbs() not found yet');
-      }
-    };
+  //   if (typeof generateBreadcrumbs === 'function') {
+  //     generateBreadcrumbs();
+  //   } else {
+  //     console.warn('GenerateBreadcrumbs() not found yet');
+  //   }
+  // };
 
-    breadcrumbsScript.onload = () => {
-      console.log('Breadcrumbs.js loaded');
+  // breadcrumbsScript.onload = () => {
+  //   console.log('Breadcrumbs.js loaded');
 
-      // Make sure the nav exists before generating
-      insertBreadcrumbNav();
+  //   // Make sure the nav exists before generating
+  //   insertBreadcrumbNav();
 
-      if (typeof generateBreadcrumbs === 'function') {
-        generateBreadcrumbs();
-      } else {
-        console.warn('GenerateBreadcrumbs() not found yet');
-      }
-    };
+  //   if (typeof generateBreadcrumbs === 'function') {
+  //     generateBreadcrumbs();
+  //   } else {
+  //     console.warn('GenerateBreadcrumbs() not found yet');
+  //   }
+  // };
 
-    // Insert after menu.js
-    const menuScript = document.querySelector('script[src*="menu.js"]');
-    if (menuScript && menuScript.parentNode) {
-      menuScript.parentNode.insertBefore(
-        breadcrumbsScript,
-        menuScript.nextSibling
-      );
-    } else {
-      // fallback (should never happen)
-      (document.body || document.head).appendChild(breadcrumbsScript);
-    }
-  } else {
-    // No breadcrumbs: push <main> down
-    const mainElement = document.querySelector('main');
-    if (mainElement) {
-      mainElement.style.marginTop = '8em';
-    }
-  }
+  // Insert after menu.js
+  // const menuScript = document.querySelector('script[src*="menu.js"]');
+  // if (menuScript && menuScript.parentNode) {
+  //   menuScript.parentNode.insertBefore(
+  //     breadcrumbsScript,
+  //     menuScript.nextSibling
+  //   );
+  // } else {
+  //   // fallback (should never happen)
+  //   (document.body || document.head).appendChild(breadcrumbsScript);
+  // }
+  //}
+
+  // else {
+  //   // No breadcrumbs: push <main> down
+  //   const mainElement = document.querySelector('main');
+  //   if (mainElement) {
+  //     mainElement.style.marginTop = '8em';
+  //   }
+  // }
 
   // --- Check if user/ukey is defined ---
   if (
@@ -2924,6 +2929,9 @@ function renderHeader() {
         </div>
       </div>
     </header>
+    <nav id="breadcrumbsMenu" aria-label="breadcrumbs">
+      <ul id="breadcrumbs" class="breadcrumbs"></ul>
+    </nav>
   `;
 
   document.body.insertAdjacentHTML('afterbegin', headerHTML);
@@ -2943,5 +2951,123 @@ function insertSkipMenuAnchor() {
     main.parentNode.insertBefore(skip, main);
   } else {
     console.warn('<main> not found in document');
+  }
+}
+
+function generateBreadcrumbs() {
+  const breadcrumbContainer = document.getElementById('breadcrumbs');
+  if (!breadcrumbContainer) return; // Exit if container is not found
+
+  // Clear any existing breadcrumbs to avoid duplication
+  breadcrumbContainer.innerHTML = '';
+
+  const basePath = '/mmenu'; // Base path for all links
+
+  // Split the current pathname into parts, filter out empty strings
+  let pathArray = window.location.pathname
+    .split('/')
+    .filter((el) => el.length > 0);
+
+  // Remove 'index.php' and 'mmenu' from the path array
+  pathArray = pathArray.filter(
+    (item) => item !== 'index.php' && item !== 'mmenu'
+  );
+
+  // Try to get page title from the H1 element, fallback to document.title
+  const pageTitleElement = document.querySelector('h1');
+  const pageTitle = pageTitleElement
+    ? pageTitleElement.textContent
+    : document.title;
+
+  // Get query string if it exists (excluding the leading '?')
+  const queryString = window.location.search
+    ? window.location.search.substring(1)
+    : null;
+
+  let fullPath = basePath; // Track the cumulative path for each breadcrumb
+
+  // -------- First breadcrumb: "Home" --------
+  const homeItem = document.createElement('li');
+  const homeLink = document.createElement('a');
+
+  // Updated link to mmenu.php with optional query string
+  homeLink.href = `${basePath}/mmenu.php${
+    queryString && queryString !== 'inactivity' ? `?${queryString}` : ''
+  }`;
+  homeLink.textContent = 'Home';
+
+  homeItem.appendChild(homeLink);
+
+  // Add separator after Home
+  const homeSep = document.createElement('span');
+  homeSep.setAttribute('aria-hidden', 'true');
+  homeSep.setAttribute('data-symbol', '>');
+  homeSep.textContent = ' > ';
+  homeItem.appendChild(homeSep);
+
+  breadcrumbContainer.appendChild(homeItem);
+
+  // -------- Generate remaining breadcrumbs --------
+  pathArray.forEach((dir, index) => {
+    const isLast = index === pathArray.length - 1;
+
+    // Capitalize and format the directory name
+    const formattedDir = capitalizeFirstLetterOfEachWord(
+      dir.replace(/-/g, ' ')
+    );
+
+    // Add the current directory to the cumulative path
+    fullPath += `/${dir}`;
+
+    const listItem = document.createElement('li');
+
+    if (isLast) {
+      // Final breadcrumb: plain text with the page title
+      listItem.textContent = pageTitle;
+    } else {
+      // Intermediate breadcrumb: link to index.php in the directory
+      const link = document.createElement('a');
+      link.href = `${fullPath}/index.php${
+        queryString && queryString !== 'inactivity' ? `?${queryString}` : ''
+      }`;
+      link.textContent = formattedDir;
+
+      listItem.appendChild(link);
+
+      // Add separator
+      const separator = document.createElement('span');
+      separator.setAttribute('aria-hidden', 'true');
+      separator.setAttribute('data-symbol', '>');
+      separator.textContent = ' > ';
+      listItem.appendChild(separator);
+    }
+
+    // Add the <li> to the breadcrumb container
+    breadcrumbContainer.appendChild(listItem);
+  });
+}
+
+// Helper function to capitalize the first letter of each word
+function capitalizeFirstLetterOfEachWord(text) {
+  return text.replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function insertBreadcrumbNav() {
+  const nav = document.createElement('nav');
+  nav.id = 'breadcrumbsMenu';
+  nav.setAttribute('aria-label', 'breadcrumbs');
+
+  const ul = document.createElement('ul');
+  ul.id = 'breadcrumbs';
+  ul.className = 'breadcrumbs';
+
+  nav.appendChild(ul);
+
+  // Insert before <main> (best UX placement)
+  const main = document.querySelector('main');
+  if (main) {
+    main.parentNode.insertBefore(nav, main);
+  } else {
+    console.warn('<main> not found — breadcrumbs not inserted');
   }
 }
