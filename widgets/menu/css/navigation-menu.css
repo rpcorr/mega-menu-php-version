@@ -519,13 +519,13 @@ header nav ul.menu > li > .mega-menu {
   height: 100%;
   max-width: 100%; /* Ensures it does not exceed the parent width */
   box-sizing: border-box; /* Ensures padding does not add to the width */
-  /*overflow: hidden;*/ /* Prevents content from overflowing */
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: visible;
 }
 
 #moreSubMenu .mega-menu .tabs-container {
-  grid-template-columns: 80em;
+  grid-template-columns: 1fr;
+  width: 100%;
+  max-width: 100%;
   grid-auto-flow: row;
   padding-right: 0;
 }
@@ -575,6 +575,7 @@ header nav ul.menu > li > .mega-menu {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-template-rows: repeat(5, auto); /* Forces at least 5 rows */
+  overflow: visible;
   row-gap: 1rem;
   background-color: #fff;
   box-sizing: border-box;
@@ -1714,6 +1715,59 @@ svg {
     right: 5%;
     padding: 0.75rem 1rem;
   }
+
+  /* MENU LIST: enable horizontal scrolling */
+  .mega-menu .menu-list {
+    display: flex;
+    /* flex-direction: row; */
+    flex-wrap: nowrap; /* keep items in one line */
+    overflow-x: auto; /* horizontal scroll */
+    overflow-y: hidden; /* prevent vertical scroll flicker */
+    -webkit-overflow-scrolling: touch;
+    gap: 0rem;
+    padding-bottom: 0.5rem; /* gives scroll thumb breathing room */
+
+    scrollbar-width: thin; /* Firefox: thin scrollbar */
+    scrollbar-color: #c0c0c0 #f0f0f0; /* thumb track */
+  }
+  .mega-menu .menu-list::-webkit-scrollbar {
+    /*display: none;*/ /* Chrome/Safari hide scrollbar */
+    display: block;
+    height: 8px;
+  }
+
+  .mega-menu .menu-list::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Track color */
+    border-radius: 4px;
+  }
+
+  .mega-menu .menu-list::-webkit-scrollbar-thumb {
+    background: #c0c0c0; /* Thumb color */
+    border-radius: 4px;
+  }
+
+  /* MENU ITEMS: prevent shrinking so horizontal scroll works */
+  .mega-menu .menu-list li {
+    flex: 0 0 auto;
+  }
+
+  /* =============================
+     KEEP TABS PANELS FULLY INTACT
+     No scrolling. No shrinking.
+     No shifting.
+     ============================= */
+  .mega-menu .tabs__panels {
+    overflow: visible;
+    width: 100%;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: 1fr; /* Single column on mobile */
+  }
+
+  .mega-menu .tabs__panels [role='listitem'] {
+    width: 100%; /* prevents unexpected compression */
+    overflow: visible;
+  }
 }
 
 /* =========================
@@ -1730,20 +1784,33 @@ svg {
     flex-wrap: nowrap; /* keep items on one line */
     overflow-x: auto; /* enable horizontal scrolling */
     -webkit-overflow-scrolling: touch; /* smooth scroll on mobile */
-    gap: 1rem; /* optional: space between items */
+    gap: 1rem; /* space between items */
+    padding-bottom: 0;
   }
 
   .mega-menu .menu-list li {
     flex: 0 0 auto; /* prevent shrinking */
   }
 
-  /* Optional: hide scrollbar if you want a clean look */
+  /* Styled horizontal scrollbar for Chrome, Safari, Edge */
   .mega-menu .menu-list::-webkit-scrollbar {
-    display: none;
+    height: 8px;
   }
 
+  .mega-menu .menu-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 4px;
+  }
+
+  .mega-menu .menu-list::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border-radius: 4px;
+  }
+
+  /* Styled scrollbar for Firefox */
   .mega-menu .menu-list {
-    scrollbar-width: none; /* hide scrollbar in Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #c0c0c0 #f0f0f0;
   }
 
   .mega-menu .menu-list p {
@@ -1756,19 +1823,42 @@ svg {
   }
 }
 
+/* =========================
+   Small devices ≤ 601px
+   ========================= */
 @media (max-width: 37.5625rem) {
   .mega-menu .menu-list {
     display: flex;
-    /* flex-direction: row; */
     flex-wrap: nowrap;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     gap: 1rem;
+    padding-bottom: 0;
   }
 
   .mega-menu .menu-list li {
     flex: 0 0 auto;
-    /* flex: 0 0 250px; */
+  }
+
+  /* Styled horizontal scrollbar for Chrome, Safari, Edge */
+  .mega-menu .menu-list::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .mega-menu .menu-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 4px;
+  }
+
+  .mega-menu .menu-list::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border-radius: 4px;
+  }
+
+  /* Styled scrollbar for Firefox */
+  .mega-menu .menu-list {
+    scrollbar-width: thin;
+    scrollbar-color: #c0c0c0 #f0f0f0;
   }
 }
 
