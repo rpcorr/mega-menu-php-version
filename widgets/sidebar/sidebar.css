@@ -94,6 +94,7 @@
   height: 30px;
 }
 
+/*  the three bars */
 .sidebar-hamburger div {
   width: 30px;
   height: 4px;
@@ -112,6 +113,13 @@
 
 .sidebar-hamburger.active div:nth-child(3) {
   transform: translateY(-9px) rotate(-45deg);
+}
+
+/* lifebuoy svg icon width and height */
+.sidebar-hamburger svg {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
 }
 
 @media (max-width: 650px) {

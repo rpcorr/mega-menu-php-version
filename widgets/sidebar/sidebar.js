@@ -451,7 +451,10 @@ function insertSidebar() {
   toggleBtn.className = 'toggle-btn';
   toggleBtn.innerHTML = `
     <div class="sidebar-hamburger" aria-hidden="true">
-      <div></div><div></div><div></div>
+      <!--<div></div><div></div><div></div>-->
+       <svg>
+        <use href="#co-icons-lifebuoy"></use>
+      </svg>
     </div>
   `;
   toggleBtn.setAttribute('aria-controls', 'sidebar');
@@ -459,4 +462,10 @@ function insertSidebar() {
   toggleBtn.setAttribute('aria-label', 'Open sidebar');
 
   sidebarContainer.parentNode.insertBefore(toggleBtn, sidebarContainer);
+
+  // Apply padding if lifebuoy icon is present
+  const lifebuoyIcon = toggleBtn.querySelector('use[href*="lifebuoy"]');
+  if (lifebuoyIcon) {
+    toggleBtn.style.padding = '10px 15px 3px 8px';
+  }
 }
