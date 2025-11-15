@@ -1405,26 +1405,33 @@ function renderBodyContent(contentContainer, type, menuData) {
     // Toggle expanded state
     const isExpanded = headingAnchor.getAttribute('aria-expanded') === 'true';
     const newState = !isExpanded;
+
+    // Update ARIA
     headingAnchor.setAttribute('aria-expanded', String(newState));
 
-    // Visual toggle: find the parent listitem div (template root) and toggle p.open
+    // Toggle the plus/minus sign
+    const plusSign = headingAnchor.querySelector('.plus-sign');
+    if (plusSign) plusSign.textContent = newState ? '−' : '+';
+
+    // Toggle <p> open class (for styling)
     const parentDiv = headingAnchor.closest('div[role="listitem"]');
     if (parentDiv) {
       const pTag = parentDiv.querySelector('p');
       if (pTag) pTag.classList.toggle('open', newState);
+
+      // --- NEW: Toggle the next sibling listitem (your child) ---
+      let next = parentDiv.nextElementSibling;
+      if (next && next.getAttribute('role') === 'listitem') {
+        next.style.display = newState ? '' : 'none';
+        next.setAttribute('aria-hidden', String(!newState));
+      }
     }
 
-    // Update plus/minus sign if present
-    const plusSign = headingAnchor.querySelector('.plus-sign');
-    if (plusSign) plusSign.textContent = newState ? '−' : '+';
-
-    // Maintain existing grouping behavior by deferring to your functions
-    // hideShowSiblings expects (anchor, isExpanded)
+    // Optional: call any existing grouping helpers
     try {
       hideShowSiblings(headingAnchor, newState);
       toggleCustomGroupChildren(headingAnchor);
     } catch (err) {
-      // If your helper functions are not present in scope, fail silently but log
       console.warn('hideShowSiblings/toggleCustomGroupChildren error:', err);
     }
   }
