@@ -1492,23 +1492,7 @@ function renderBodyContent(contentContainer, type, menuData) {
       anchor.setAttribute('aria-expanded', 'false');
       anchor.setAttribute('role', 'button');
 
-      anchor.addEventListener('click', function (e) {
-        // HEADINGS ONLY — prevent navigation
-        e.preventDefault();
-
-        const expanded = anchor.getAttribute('aria-expanded') === 'true';
-        anchor.setAttribute('aria-expanded', !expanded);
-
-        // toggle plus/minus
-        plusSpan.textContent = expanded ? '+' : '−';
-
-        // the description <span> is the last child inside <a>
-        const description = anchor.querySelector('span:last-child');
-
-        if (description) {
-          description.style.display = expanded ? 'none' : 'inline';
-        }
-      });
+      attachHeadingHandler(anchor, plusSpan);
     } else {
       // regular item: set actual URL
       anchor.setAttribute('href', menuItem.link);
@@ -3020,5 +3004,50 @@ function insertBreadcrumbNav() {
     main.parentNode.insertBefore(nav, main);
   } else {
     console.warn('<main> not found — breadcrumbs not inserted');
+  }
+}
+
+function attachHeadingHandler(anchor, plusSpan) {
+  let touchTriggered = false;
+
+  // MOBILE: touchend
+  anchor.addEventListener('touchend', function (e) {
+    touchTriggered = true; // flag to ignore subsequent click
+    e.preventDefault(); // prevent ghost click & navigation
+    toggleHeading(anchor, plusSpan);
+  });
+
+  // DESKTOP: click
+  anchor.addEventListener('click', function (e) {
+    if (touchTriggered) {
+      touchTriggered = false; // ignore the ghost click after touch
+      return;
+    }
+    e.preventDefault();
+    toggleHeading(anchor, plusSpan);
+  });
+}
+
+function toggleHeading(anchor, plusSpan) {
+  const expanded = anchor.getAttribute('aria-expanded') === 'true';
+  const newState = !expanded;
+
+  anchor.setAttribute('aria-expanded', String(newState));
+  plusSpan.textContent = newState ? '−' : '+';
+
+  // Toggle description span
+  const description = anchor.querySelector('span:last-child');
+  if (description) {
+    description.style.display = newState ? 'inline' : 'none';
+  }
+
+  // Toggle children list
+  const parentDiv = anchor.closest('div[role="listitem"]');
+  if (parentDiv) {
+    const children = parentDiv.nextElementSibling;
+    if (children) {
+      children.style.display = newState ? '' : 'none';
+      children.setAttribute('aria-hidden', newState ? 'false' : 'true');
+    }
   }
 }
