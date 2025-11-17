@@ -2013,6 +2013,7 @@ h2 {
 
   .menu-main-menu-container > #menu-main-menu > li > .mega-menu {
     top: unset;
+    transform: translateY(-20px);
   }
 
   /* Active panel & all tab panels share the same scroll settings */
