@@ -4,12 +4,30 @@ This project generate a dynamic accessible mega menu on any page with optional U
 
 ---
 
+## File Structure
+
+The menu widget file structure is as followed:
+
+mmenu
+
+- widgets
+  - menu
+    - css
+    - icons
+    - imgs
+      - fav-icons
+    - js
+  - selectTheme
+  - sidebar
+  - switchable
+  - timerInactivitity
+
 ## Required Scripts
 
 Include these scripts at the **bottom** of each page before `</body>`:
 
-1. `assets/js/user-pages.js`
-2. `assets/js/menu.js`
+1. `widgets/menu/js/user-pages.js`
+2. `widgets/menu/js/menu.js`
 
 Once included, the menu system initializes automatically —
 no `<header>` markup required in the page itself.
