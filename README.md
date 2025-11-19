@@ -172,4 +172,19 @@ Replace {unique-name} with the desired icon ID.
 
 - Menu list icons (far left) — pie, puzzle-piece, and medal — are sized at 40 × 40 px in navigation-menu.css.
 
-- Menu body icons (middle portion) — generic-file, generic-report, and data-input — are sized at 80 × 85 px in navigation-menu.css.
+- Menu body icons (middle portion) — generic-file, generic-report, and data-input — are sized at 3.75rem x 3.75rem in navigation-menu.css.
+
+## Custom Logo Support
+
+The menu supports custom logos. To use your own logo, provide **two SVG files**:
+
+- **Desktop logo**: Displayed on larger screens.
+
+  - Height: `50px`
+  - Width: Between `100px` and `1350px`
+
+- **Mobile logo**: Displayed on smaller screens.
+  - Height: `50px`
+  - Width: Up to `250px`
+
+Both the branding area and logo backgrounds can have a custom color, allowing you to match your site’s design. Ensure both SVGs maintain proper scaling and aspect ratio for best results.
