@@ -2013,6 +2013,7 @@ h2 {
 
   .menu-main-menu-container > #menu-main-menu > li > .mega-menu {
     top: unset;
+    transform: translateY(-20px);
   }
 
   /* Active panel & all tab panels share the same scroll settings */
@@ -2089,4 +2090,17 @@ h2 {
   #profileMenu > a {
     width: 55% !important;
   }
+}
+
+.mobile-hidden {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: opacity 0.55s ease, height 0.55s ease;
+}
+
+.mobile-visible {
+  opacity: 1;
+  height: auto;
+  transition: opacity 0.55s ease, height 0.55s ease;
 }
