@@ -42,6 +42,9 @@ let navItems = [];
 let output = '';
 let winWidth = 0;
 
+let hasMobileExpandRun = false; // prevents multiple calls
+let lastExpandTimestamp = 0; // prevents double-taps on mobile
+
 /* ============================================================================
    UTILITY FUNCTIONS - Path Building
    ============================================================================ */
@@ -1853,6 +1856,7 @@ function moveTab(menuContainer, type, direction, menuData = []) {
 
 // Handles tab switching and menu rendering based on the clicked tab
 function switchTab(clickedTab, menuContainer, type, menuData = []) {
+  safeMobileExpand();
   // Find the closest parent <li> element and retrieve its ID in lowercase
   const id = clickedTab.closest('li')?.id;
   const idLowerCase = id?.toLowerCase();
@@ -1888,7 +1892,7 @@ function switchTab(clickedTab, menuContainer, type, menuData = []) {
     }
     return;
   } else {
-    // add classs seleted-tab
+    // add class selected-tab
     const li = document.getElementById(id);
     const pTag = li.querySelector('p');
     const iTag = pTag.querySelector('i');
@@ -3007,47 +3011,167 @@ function insertBreadcrumbNav() {
   }
 }
 
+// function attachHeadingHandler(anchor, plusSpan) {
+//   let isTouch = false;
+
+//   // 1. TOUCH / MOBILE — use pointerup (not pointerdown)
+//   anchor.addEventListener('pointerup', function (e) {
+//     if (e.pointerType === 'touch') {
+//       isTouch = true;
+//       e.preventDefault(); // stop link navigation
+//       e.stopPropagation(); // stop bubbling that triggers click
+//       toggleHeading(anchor, plusSpan);
+//     }
+//   });
+
+//   // 2. DESKTOP CLICK
+//   anchor.addEventListener('click', function (e) {
+//     // Ignore the "ghost click" after a touch
+//     if (isTouch) {
+//       isTouch = false; // reset flag
+//       return;
+//     }
+
+//     e.preventDefault();
+//     toggleHeading(anchor, plusSpan);
+//   });
+
+//   // 3. STOP LONG-PRESS CONTEXT MENU
+//   anchor.addEventListener('contextmenu', function (e) {
+//     if (isTouch) e.preventDefault();
+//   });
+// }
+
 function attachHeadingHandler(anchor, plusSpan) {
-  let touchTriggered = false;
+  let touchStartTime = 0;
+  let isTouch = false;
 
-  // MOBILE: touchend
-  anchor.addEventListener('touchend', function (e) {
-    touchTriggered = true; // flag to ignore subsequent click
-    e.preventDefault(); // prevent ghost click & navigation
-    toggleHeading(anchor, plusSpan);
-  });
-
-  // DESKTOP: click
-  anchor.addEventListener('click', function (e) {
-    if (touchTriggered) {
-      touchTriggered = false; // ignore the ghost click after touch
-      return;
+  // TOUCH START
+  anchor.addEventListener('pointerdown', function (e) {
+    if (e.pointerType === 'touch') {
+      isTouch = true;
+      touchStartTime = Date.now();
+      e.preventDefault(); // stop highlight / DS navigation
+      e.stopPropagation();
     }
-    e.preventDefault();
-    toggleHeading(anchor, plusSpan);
   });
+
+  // TOUCH END with minimum press time requirement
+  anchor.addEventListener('pointerup', function (e) {
+    if (isTouch && e.pointerType === 'touch') {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const pressDuration = Date.now() - touchStartTime;
+
+      // Require at least 120ms touch to prevent instant double toggles
+      if (pressDuration > 120) {
+        console.log('call 3');
+        //toggleHeading(anchor, plusSpan);
+      }
+
+      isTouch = false;
+    }
+  });
+
+  // DESKTOP CLICK
+  anchor.addEventListener('click', function (e) {
+    if (isTouch) return; // ignore ghost clicks after touch
+    e.preventDefault();
+    console.log('call 4');
+    //toggleHeading(anchor, plusSpan);
+  });
+
+  // Block long-press context menu on mobile
+  anchor.addEventListener('contextmenu', function (e) {
+    if (isTouch) e.preventDefault();
+  });
+
+  handleMobileMenuExpand();
 }
 
-function toggleHeading(anchor, plusSpan) {
-  const expanded = anchor.getAttribute('aria-expanded') === 'true';
-  const newState = !expanded;
+function safeMobileExpand() {
+  const now = Date.now();
 
-  anchor.setAttribute('aria-expanded', String(newState));
-  plusSpan.textContent = newState ? '−' : '+';
+  // Prevent double tap within 300ms (mobile)
+  if (now - lastExpandTimestamp < 300) return;
 
-  // Toggle description span
-  const description = anchor.querySelector('span:last-child');
-  if (description) {
-    description.style.display = newState ? 'inline' : 'none';
-  }
+  lastExpandTimestamp = now;
 
-  // Toggle children list
-  const parentDiv = anchor.closest('div[role="listitem"]');
-  if (parentDiv) {
-    const children = parentDiv.nextElementSibling;
-    if (children) {
-      children.style.display = newState ? '' : 'none';
-      children.setAttribute('aria-hidden', newState ? 'false' : 'true');
+  // Guard — prevent running twice during same render
+  if (hasMobileExpandRun) return;
+  hasMobileExpandRun = true;
+
+  // Run your function
+  handleMobileMenuExpand();
+
+  // Reset AFTER animation ends (so content won’t collapse prematurely)
+  setTimeout(() => {
+    hasMobileExpandRun = false;
+  }, 400); // match your transition duration
+}
+
+let mobileExpandTimeout = null;
+
+// function handleMobileMenuExpand() {
+//   // debounce to prevent multiple rapid executions
+//   clearTimeout(mobileExpandTimeout);
+
+//   mobileExpandTimeout = setTimeout(() => {
+//     const libPAS = document.getElementById('LibPAS');
+//     const libSat = document.getElementById('LibSat');
+//     const informsUs = document.getElementById('InformsUs');
+
+//     if (!window.matchMedia('(max-width: 960px)').matches) return;
+
+//     // Check if LibSat <p> has selected-tab
+//     const isLibSatOpen = libSat.querySelector('p.selected-tab') !== null;
+
+//     if (isLibSatOpen) {
+//       libPAS.classList.remove('mobile-visible');
+//       libPAS.classList.add('mobile-hidden');
+
+//       informsUs.classList.remove('mobile-visible');
+//       informsUs.classList.add('mobile-hidden');
+//     } else {
+//       libPAS.classList.remove('mobile-hidden');
+//       libPAS.classList.add('mobile-visible');
+
+//       informsUs.classList.remove('mobile-hidden');
+//       informsUs.classList.add('mobile-visible');
+//     }
+//   }, 50); // 50–75ms is ideal for eliminating ghost clicks
+// }
+
+function handleMobileMenuExpand() {
+  clearTimeout(mobileExpandTimeout);
+
+  mobileExpandTimeout = setTimeout(() => {
+    if (!window.matchMedia('(max-width: 960px)').matches) return;
+
+    const libPAS = document.getElementById('LibPAS');
+    const libSat = document.getElementById('LibSat');
+    const informsUs = document.getElementById('InformsUs');
+
+    const tabs = [libPAS, libSat, informsUs];
+
+    // Determine which one is currently open
+    const openTab = tabs.find((tab) => tab.querySelector('p.selected-tab'));
+
+    if (openTab) {
+      // Hide all *other* tabs
+      tabs.forEach((tab) => {
+        if (tab !== openTab) {
+          tab.classList.remove('mobile-visible');
+          tab.classList.add('mobile-hidden');
+        }
+      });
+    } else {
+      // No tab open → show all
+      tabs.forEach((tab) => {
+        tab.classList.remove('mobile-hidden');
+        tab.classList.add('mobile-visible');
+      });
     }
-  }
+  }, 50);
 }

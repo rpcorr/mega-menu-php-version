@@ -2091,3 +2091,16 @@ h2 {
     width: 55% !important;
   }
 }
+
+.mobile-hidden {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: opacity 0.55s ease, height 0.55s ease;
+}
+
+.mobile-visible {
+  opacity: 1;
+  height: auto;
+  transition: opacity 0.55s ease, height 0.55s ease;
+}
