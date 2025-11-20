@@ -2032,6 +2032,11 @@ h2 {
   .tabs__panels[role='tabpanel'] [role='listitem']:last-of-type {
     scroll-margin-bottom: 2rem;
   }
+
+  [role='listitem'] p {
+    width: 85%;
+    margin: auto;
+  }
 }
 
 @media (max-width: 768px) {
