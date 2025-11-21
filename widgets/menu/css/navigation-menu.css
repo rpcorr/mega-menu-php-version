@@ -632,7 +632,7 @@ a[role='tab'] .menu-row {
 .left-content > ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.5rem;
   padding: 0;
   margin: 0;
   list-style: none;
@@ -640,7 +640,7 @@ a[role='tab'] .menu-row {
 
 .tabs__panels > ul > li,
 .left-content > ul > li {
-  flex: 0 0 325px; /* <-- fixed width for all items */
+  flex: 0 0 315px; /* <-- fixed width for all items */
   /* or calc(33.333% - 1rem) for 3-per-row */
   box-sizing: border-box;
 
@@ -673,7 +673,7 @@ a[role='tab'] .menu-row {
   border: 3px solid #fff;
   border-radius: 0.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  padding: 0.25rem;
+  padding: 0.25rem 0.75rem;
   margin: 0;
 }
 
