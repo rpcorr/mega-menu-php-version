@@ -650,6 +650,19 @@ a[role='tab'] .menu-row {
   word-wrap: break-word;
 }
 
+.tabs__panels > ul > li,
+.left-content > ul > li {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 0; /* prevent overflow issues */
+  background-color: #fff;
+  border: 3px solid #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 0.25rem;
+  margin: 0;
+}
+
 [role='list'] {
   display: contents;
 }
