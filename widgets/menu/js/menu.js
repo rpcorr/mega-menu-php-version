@@ -872,6 +872,7 @@ function toggleTopLevelMenu(menuLink, e) {
 }
 
 function toggleAriaExpanded(menuLink) {
+  console.log('inside toggleAriaExpanded');
   const parentLi = menuLink.closest('.menu-item-has-children');
   const isExpanded = parentLi.getAttribute('aria-expanded') === 'true';
   const newState = !isExpanded;
@@ -909,33 +910,33 @@ function toggleAriaExpanded(menuLink) {
   // Toggle aria-expanded for the clicked item
   parentLi.setAttribute('aria-expanded', newState.toString());
 
-  // Manage focusability in the opened/closed menu
-  const megaMenu = parentLi.querySelector('.mega-menu');
+  // // Manage focusability in the opened/closed menu
+  // const megaMenu = parentLi.querySelector('.mega-menu');
 
-  if (megaMenu) {
-    const tabList = megaMenu.querySelector('.menu-list');
-    const listItems = megaMenu.querySelectorAll('[role="listitem"] a');
+  // if (megaMenu) {
+  //   const tabList = megaMenu.querySelector('.menu-list');
+  //   const listItems = megaMenu.querySelectorAll('[role="listitem"] a');
 
-    if (newState) {
-      if (tabList) {
-        // Tabbed structure: only one <a> should be focusable in the tablist
-        const tabLinks = tabList.querySelectorAll('a[role="tab"]');
-        tabLinks.forEach((link, index) => {
-          link.setAttribute('tabindex', index === 0 ? '0' : '-1');
-        });
+  //   if (newState) {
+  //     if (tabList) {
+  //       // Tabbed structure: only one <a> should be focusable in the tablist
+  //       const tabLinks = tabList.querySelectorAll('a[role="tab"]');
+  //       tabLinks.forEach((link, index) => {
+  //         link.setAttribute('tabindex', index === 0 ? '0' : '-1');
+  //       });
 
-        // Remove tabindex -1 from all panel links
-        listItems.forEach((link) => link.removeAttribute('tabindex'));
-      } else {
-        // Flat structure:  Remove tabindex -1 from all list item anchors
-        listItems.forEach((link) => link.removeAttribute('tabindex'));
-      }
-    } else {
-      // Collapse state: remove all links from tab order
-      const allLinks = megaMenu.querySelectorAll('a');
-      allLinks.forEach((link) => link.setAttribute('tabindex', '-1'));
-    }
-  }
+  //       // Remove tabindex -1 from all panel links
+  //       listItems.forEach((link) => link.removeAttribute('tabindex'));
+  //     } else {
+  //       // Flat structure:  Remove tabindex -1 from all list item anchors
+  //       listItems.forEach((link) => link.removeAttribute('tabindex'));
+  //     }
+  //   } else {
+  //     // Collapse state: remove all links from tab order
+  //     const allLinks = megaMenu.querySelectorAll('a');
+  //     allLinks.forEach((link) => link.setAttribute('tabindex', '-1'));
+  //   }
+  // }
 }
 
 function toggleArrowIcon(menuLink) {
