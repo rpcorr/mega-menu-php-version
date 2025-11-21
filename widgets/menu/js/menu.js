@@ -1449,13 +1449,15 @@ function renderBodyContent(contentContainer, type, menuData) {
   // ---------- createMenuContent uses your template and returns a DOM node ----------
   function createMenuContent(menuItem, menuHeading = false) {
     const menuContent = contentTemplate.content.cloneNode(true);
-    const img = menuContent.querySelector('img');
+    //const img = menuContent.querySelector('img');
+    const svg = menuContent.querySelector('svg');
+    const svgUse = menuContent.querySelector('svg use');
     const p = menuContent.querySelector('p');
     const anchor = menuContent.querySelector('a');
     const strongEl = p.querySelector('strong');
     const spanEl = p.querySelector('span');
 
-    if (!img || !p || !anchor || !strongEl || !spanEl) {
+    if (!svg || !svgUse || !p || !anchor || !strongEl || !spanEl) {
       console.error('Error: Missing elements inside body content template.');
       return null;
     }
@@ -1472,11 +1474,28 @@ function renderBodyContent(contentContainer, type, menuData) {
       return null;
     }
 
+    if (svgUse) {
+      const iconId = randomIcon.iconId || 'co-icons-medal'; // fallback if not provided
+      svgUse.setAttribute('href', `#${iconId}`);
+
+      const fileType = extractIconName(iconId);
+
+      svg.classList.add(fileType);
+
+      function extractIconName(input) {
+        const prefix = 'co-icons-';
+        if (input.startsWith(prefix)) {
+          return input.substring(prefix.length);
+        }
+        return null; // or return input if you'd rather return the full input when it doesn't match
+      }
+    }
+
     // populate icon
-    img.src = `${prefix}widgets/menu/imgs/${randomIcon.graphic}`;
-    img.width = randomIcon.width;
-    img.height = randomIcon.height;
-    img.alt = '';
+    // img.src = `${prefix}widgets/menu/imgs/${randomIcon.graphic}`;
+    // img.width = randomIcon.width;
+    // img.height = randomIcon.height;
+    // img.alt = '';
 
     // Clear <strong> and add spans
     strongEl.innerHTML = '';
@@ -2088,8 +2107,8 @@ function initMenuTemplates() {
       id: 'menuContent',
       html: `
         <li>
-          <img src="" width="" height="" alt="" />
-          <p><a href="#"><strong></strong><br/><span></span></a></p>
+          <p><a href="#"><strong></strong><br/><span></span></a>
+          <svg><use href=""></use></svg></p>
         </li>
       `,
     },
