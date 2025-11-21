@@ -1372,157 +1372,174 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
  * @param {string} type - The type of rendering ("pages" or "multiple").
  * @param {Array} menuData - Array of menu data objects used to generate the content.
  */
-function renderBodyContent(contentContainer, type, menuData) {
-  // Helper function to check if a value is empty or not
-  const isEmpty = (value) => !value || value.trim() === '';
 
-  // Validate menuData input
+function renderBodyContent(contentContainer, type, menuData) {
   if (!Array.isArray(menuData) || menuData.length === 0) {
     console.error('Error: menuData is missing or not an array.');
     return;
   }
 
-  // Retrieve the content template from the DOM
   const contentTemplate = document.querySelector('#menuContent');
-
   if (!contentTemplate || !contentContainer) {
     console.error('Error: Body content template or container not found.');
     return;
   }
 
-  // Ensure a tab is selected; fallback to the first tab if none is selected
-  let selectedAnchor =
+  // Find selected anchor
+  const selectedAnchor =
     document.querySelector('a[aria-selected="true"]') ||
     [...document.querySelectorAll('.menu-list a')][0];
-
-  if (!selectedAnchor) {
-    console.error('Error: No selectable tab found.');
-    return;
-  }
+  if (!selectedAnchor) return;
 
   const selectedLi = selectedAnchor.closest('li');
-  if (!selectedLi) {
-    console.error('Error: Selected anchor is not inside a <li> element.');
-    return;
-  }
+  const selectedText = selectedLi?.id.toLowerCase() || '';
 
-  const selectedText = selectedLi.id.toLowerCase();
-
-  // Root wrapper for list items — we'll delegate events here
   const listWrapper = document.createElement('ul');
-  //listWrapper.setAttribute('role', 'list');
-
   const fragment = document.createDocumentFragment();
 
-  // Delegated handler for headings (works for dynamically added items too)
-  function headingClickHandler(e) {
-    // Ensure we respond to clicks/touches on the heading anchor or inside it
-    const headingAnchor = e.target.closest('a[role="button"]');
-    if (!headingAnchor || !listWrapper.contains(headingAnchor)) return;
+  // ----------------- Heading toggle logic -----------------
+  function toggleHeadingChildren(headingAnchor) {
+    console.log('here');
+    const parentLi = headingAnchor.closest('li[data-id]');
+    if (!parentLi) return;
 
-    // Prevent native navigation and stop bubbling
-    e.preventDefault();
-    e.stopPropagation();
-
-    // Toggle expanded state
+    // Toggle based on current state
     const isExpanded = headingAnchor.getAttribute('aria-expanded') === 'true';
-    const newState = !isExpanded;
+    const newState = !isExpanded; // flip it
 
-    // Update ARIA
     headingAnchor.setAttribute('aria-expanded', String(newState));
 
-    // Toggle the plus/minus sign
     const plusSign = headingAnchor.querySelector('.plus-sign');
     if (plusSign) plusSign.textContent = newState ? '−' : '+';
 
-    // Toggle <p> open class (for styling)
-    const parentDiv = headingAnchor.closest('div[role="listitem"]');
-    if (parentDiv) {
-      const pTag = parentDiv.querySelector('p');
-      if (pTag) pTag.classList.toggle('open', newState);
+    const pTag = parentLi.querySelector('p');
+    if (pTag) pTag.classList.toggle('open', newState);
 
-      // --- NEW: Toggle the next sibling listitem (your child) ---
-      let next = parentDiv.nextElementSibling;
-      if (next && next.getAttribute('role') === 'listitem') {
-        next.style.display = newState ? '' : 'none';
-        next.setAttribute('aria-hidden', String(!newState));
-      }
+    const headingId = parentLi.getAttribute('data-id');
+    if (headingId) {
+      const childLis = listWrapper.querySelectorAll(
+        `li[data-parent="${headingId}"]`
+      );
+      childLis.forEach((child) => {
+        child.style.display = newState ? '' : 'none';
+        child.setAttribute('aria-hidden', String(!newState));
+      });
     }
 
-    // Optional: call any existing grouping helpers
     try {
-      hideShowSiblings(headingAnchor, newState);
-      toggleCustomGroupChildren(headingAnchor);
+      hideShowSiblings?.(headingAnchor, newState);
+      toggleCustomGroupChildren?.(headingAnchor);
     } catch (err) {
-      console.warn('hideShowSiblings/toggleCustomGroupChildren error:', err);
+      console.warn('Error in custom toggle helpers:', err);
     }
   }
 
-  // Add both click and touchstart to handle real mobile reliably
-  listWrapper.addEventListener('click', headingClickHandler, true);
-  listWrapper.addEventListener('touchstart', headingClickHandler, {
-    passive: false,
-    capture: true,
+  // ----------------- Event delegation -----------------
+  // listWrapper.addEventListener('pointerdown', (e) => {
+  //   const headingAnchor = e.target.closest('a[role="button"]');
+  //   if (!headingAnchor) return;
+  //   e.preventDefault(); // prevent ghost clicks on touch
+  //   e.stopPropagation();
+  //   toggleHeadingChildren(headingAnchor);
+  // });
+
+  // listWrapper.addEventListener('keydown', (e) => {
+  //   if (e.key !== 'Enter' && e.key !== ' ') return;
+  //   const headingAnchor = e.target.closest('a[role="button"]');
+  //   if (!headingAnchor) return;
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   toggleHeadingChildren(headingAnchor);
+  // });
+
+  // listWrapper.addEventListener('click', (e) => {
+  //   // if the click is on the plus-sign or prompt span, still get the anchor
+  //   const headingAnchor = e.target.closest('a[role="button"]');
+  //   if (!headingAnchor || !listWrapper.contains(headingAnchor)) return;
+
+  //   e.preventDefault();
+  //   e.stopPropagation();
+
+  //   toggleHeadingChildren(headingAnchor);
+  // });
+
+  // listWrapper.addEventListener(
+  //   'touchstart',
+  //   (e) => {
+  //     const headingAnchor = e.target.closest('a[role="button"]');
+  //     if (!headingAnchor || !listWrapper.contains(headingAnchor)) return;
+
+  //     e.preventDefault();
+  //     e.stopPropagation();
+
+  //     toggleHeadingChildren(headingAnchor);
+  //   },
+  //   { passive: false }
+  // );
+
+  // Use only pointer + keyboard events.
+  // Remove ALL click and touchstart listeners — they break mobile.
+
+  // 👉 MASTER HANDLER: pointerdown
+  listWrapper.addEventListener('pointerdown', (e) => {
+    const headingAnchor = e.target.closest('a[role="button"]');
+    if (!headingAnchor) return;
+
+    // Stop link navigation and click from triggering later
+    e.preventDefault();
+
+    toggleHeadingChildren(headingAnchor);
   });
 
-  // ---------- createMenuContent uses your template and returns a DOM node ----------
-  function createMenuContent(menuItem, menuHeading = false) {
+  // 👉 Keyboard support
+  listWrapper.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+
+    const headingAnchor = e.target.closest('a[role="button"]');
+    if (!headingAnchor) return;
+
+    e.preventDefault();
+    toggleHeadingChildren(headingAnchor);
+  });
+
+  // 👉 Optional: click blocker to stop unwanted navigation
+  listWrapper.addEventListener('click', (e) => {
+    const headingAnchor = e.target.closest('a[role="button"]');
+    if (!headingAnchor) return;
+    e.preventDefault();
+  });
+
+  // ----------------- Create menu item -----------------
+  function createMenuContent(menuItem, menuHeading = false, parentId = null) {
     const menuContent = contentTemplate.content.cloneNode(true);
-    //const img = menuContent.querySelector('img');
-    const svg = menuContent.querySelector('svg');
-    const svgUse = menuContent.querySelector('svg use');
-    const p = menuContent.querySelector('p');
-    const anchor = menuContent.querySelector('a');
-    const strongEl = p.querySelector('strong');
-    const spanEl = p.querySelector('span');
+    const li = menuContent.querySelector('li');
+    if (!li) return null;
 
-    if (!svg || !svgUse || !p || !anchor || !strongEl || !spanEl) {
-      console.error('Error: Missing elements inside body content template.');
-      return null;
-    }
+    const svg = li.querySelector('svg');
+    const svgUse = svg?.querySelector('use');
+    const p = li.querySelector('p');
+    const anchor = li.querySelector('a');
+    const strongEl = p?.querySelector('strong');
+    const spanEl = p?.querySelector('span');
 
+    if (!svg || !svgUse || !p || !anchor || !strongEl || !spanEl) return null;
+    if (!ukey || menuItem.prompt?.toLowerCase() === 'login') return null;
+
+    // Assign random icon
     const randomIcon =
       bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
+    svgUse.setAttribute('href', `#${randomIcon.iconId || 'co-icons-medal'}`);
+    svg.classList.add(
+      (randomIcon.iconId || 'co-icons-medal').replace('co-icons-', '')
+    );
 
-    if (
-      typeof ukey === 'undefined' ||
-      !ukey ||
-      menuItem.prompt?.toLowerCase() === 'login'
-    ) {
-      // don't render for logout / login prompts
-      return null;
-    }
-
-    if (svgUse) {
-      const iconId = randomIcon.iconId || 'co-icons-medal'; // fallback if not provided
-      svgUse.setAttribute('href', `#${iconId}`);
-
-      const fileType = extractIconName(iconId);
-
-      svg.classList.add(fileType);
-
-      function extractIconName(input) {
-        const prefix = 'co-icons-';
-        if (input.startsWith(prefix)) {
-          return input.substring(prefix.length);
-        }
-        return null; // or return input if you'd rather return the full input when it doesn't match
-      }
-    }
-
-    // populate icon
-    // img.src = `${prefix}widgets/menu/imgs/${randomIcon.graphic}`;
-    // img.width = randomIcon.width;
-    // img.height = randomIcon.height;
-    // img.alt = '';
-
-    // Clear <strong> and add spans
+    // Set prompt text
     strongEl.innerHTML = '';
     const promptSpan = document.createElement('span');
     promptSpan.textContent = menuItem.prompt;
     strongEl.appendChild(promptSpan);
 
-    // If this is a heading (empty link), turn anchor into a button-like control
+    // Heading or child
     if (menuHeading) {
       const plusSpan = document.createElement('span');
       plusSpan.className = 'plus-sign';
@@ -1530,41 +1547,41 @@ function renderBodyContent(contentContainer, type, menuData) {
       plusSpan.setAttribute('aria-hidden', 'true');
       strongEl.appendChild(plusSpan);
 
-      const panelId = `tabpanel-${selectedAnchor.id}`;
-      anchor.setAttribute('id', panelId);
-      anchor.setAttribute('aria-expanded', 'false');
+      const headingId = 'heading-' + Math.random().toString(36).substr(2, 9);
+      li.setAttribute('data-id', headingId);
       anchor.setAttribute('role', 'button');
-
-      attachHeadingHandler(anchor, plusSpan);
+      anchor.setAttribute('aria-expanded', 'false');
+    } else if (parentId) {
+      li.setAttribute('data-parent', parentId);
+      li.style.display = 'none';
+      li.setAttribute('aria-hidden', 'true');
+      anchor.setAttribute('href', menuItem.link);
     } else {
-      // regular item: set actual URL
       anchor.setAttribute('href', menuItem.link);
     }
 
     spanEl.textContent = `Brief description of the function for ${menuItem.prompt}`;
+    li.setAttribute('role', 'listitem');
 
-    // Ensure the root node has role="listitem"
-    const rootDiv = menuContent.querySelector('div');
-    if (rootDiv) rootDiv.setAttribute('role', 'listitem');
-
-    // Return the node (not appended yet)
-    return menuContent;
+    return li;
   }
 
-  // Build items depending on type
+  // ----------------- Build menu -----------------
+  let currentHeadingId = null;
+
   if (type === 'pages') {
-    const pagePromptsAndLinks = menuData[0].pages
+    const pageItems = menuData[0].pages
       .filter((page) => page.section_id === '0' && page.section_prompt === null)
       .map((page) => ({ prompt: page.page_prompt, link: page.page_link }));
 
-    pagePromptsAndLinks.forEach((item) => {
-      const node = createMenuContent(item, false);
-      if (node) listWrapper.appendChild(node);
+    pageItems.forEach((item) => {
+      const li = createMenuContent(item, false);
+      if (li) listWrapper.appendChild(li);
     });
   }
 
   if (type === 'multiple') {
-    const pagePromptsAndLinks =
+    const pageItems =
       menuData
         .find((item) => item.section_prompt?.toLowerCase() === selectedText)
         ?.pages.map((page) => ({
@@ -1572,39 +1589,22 @@ function renderBodyContent(contentContainer, type, menuData) {
           link: page.page_link,
         })) || [];
 
-    pagePromptsAndLinks.forEach((menuItem) => {
-      const promptText = menuItem.prompt.toLowerCase();
-      const isDifferentPrompt = promptText !== selectedText;
-      const isExcludedPrompt = ['maphat trends', 'maphat rankings'].includes(
-        promptText
-      );
-
-      // treat survey reports specially (your original logic)
-      if (promptText === 'survey reports') {
-        // keep same behavior (skip now, store earlier if needed)
-        // your original code handled it; if you need the same behavior reimplement here
-        return;
-      }
-
-      if (!['libpas', 'libsat'].includes(promptText)) {
-        if (
-          menuItem.prompt === 'MAPHAT Trends' ||
-          menuItem.prompt === 'MAPHAT Rankings'
-        ) {
-          const node = createMenuContent(menuItem, false);
-          if (node) listWrapper.appendChild(node);
-        } else if (menuItem.link === '') {
-          const node = createMenuContent(menuItem, true); // heading
-          if (node) listWrapper.appendChild(node);
-        } else {
-          const node = createMenuContent(menuItem, false);
-          if (node) listWrapper.appendChild(node);
+    pageItems.forEach((item) => {
+      if (item.link === '') {
+        // Heading
+        const li = createMenuContent(item, true);
+        if (li) {
+          listWrapper.appendChild(li);
+          currentHeadingId = li.getAttribute('data-id');
         }
+      } else {
+        // Child
+        const li = createMenuContent(item, false, currentHeadingId);
+        if (li) listWrapper.appendChild(li);
       }
     });
   }
 
-  // finally append wrapper to fragment and then into the container (preserve your previous structure)
   fragment.appendChild(listWrapper);
 
   const containerWrapper = document.createElement('div');
@@ -1612,9 +1612,8 @@ function renderBodyContent(contentContainer, type, menuData) {
     type !== 'pages' ? 'tabs__panels' : 'left-content'
   );
 
-  if (type == 'multiple') {
+  if (type === 'multiple') {
     containerWrapper.setAttribute('role', 'tabpanel');
-
     const panelId = `tabpanel-${selectedAnchor.id}`;
     containerWrapper.setAttribute('id', panelId);
     containerWrapper.setAttribute('aria-labelledby', selectedAnchor.id);
@@ -1625,84 +1624,10 @@ function renderBodyContent(contentContainer, type, menuData) {
   containerWrapper.appendChild(fragment);
   contentContainer.appendChild(containerWrapper);
 
-  // keep your post rendering behavior
-  //reorderCustomReportsSection(containerWrapper);
-
   // Remove tabindex="-1" from anchors within panels
-  document
-    .querySelectorAll('.tabs__panels a[tabindex="-1"]')
-    .forEach((anchor) => {
-      anchor.removeAttribute('tabindex');
-    });
-
-  // Re-attach any focus/blur logic you already had for tabPanelIds
-  // (leaving your existing code intact below)
-  const tabPanelIds = [
-    'tabpanel-tab-LibPAS',
-    'tabpanel-tab-InformsUs',
-    'tabpanel-tab-LibSat',
-  ];
-
-  // Variables to track custom reports count
-  let customReportsCount = 0;
-  let hasCustomReportsCountBeenSet = false;
-
-  // Utility to set customReportsCount once
-  function setCustomReportsCountOnce() {
-    if (!hasCustomReportsCountBeenSet) {
-      const groupedItems = document.querySelectorAll(
-        '[data-group-id="custom-child"]'
-      );
-      customReportsCount = groupedItems.length + 1;
-      hasCustomReportsCountBeenSet = true;
-    }
-  }
-
-  // Add blur and focus listeners to anchors
-  tabPanelIds.forEach((id) => {
-    document.querySelectorAll(`.tabs__panels#${id} a`).forEach((anchor) => {
-      // Blur: Clear live region
-      anchor.addEventListener('blur', () => {
-        const announcement = document.getElementById('itemCountAnnouncement');
-        if (announcement) announcement.textContent = '';
-      });
-
-      // Focus: Announce item count
-      anchor.addEventListener('focus', () => {
-        const selectedDiv = anchor.closest('div');
-        const groupId = selectedDiv?.getAttribute('data-group-id');
-
-        if (groupId && selectedDiv.querySelector('p.open')) {
-          let count = 0;
-
-          const isCustomReports = anchor.textContent
-            .toLowerCase()
-            .includes('custom reports');
-
-          if (isCustomReports) {
-            setCustomReportsCountOnce(); // Only sets once
-            count = customReportsCount;
-          } else {
-            count = document.querySelectorAll(
-              `[data-group-id="${groupId}"]`
-            ).length;
-
-            // Subtract 1 to exclude the header (focused anchor's parent)
-            count--;
-            if (count === 0) count = 1; // Fallback to 1 if no children
-          }
-
-          const announcement = document.getElementById('itemCountAnnouncement');
-          if (announcement) {
-            announcement.textContent =
-              count === 1
-                ? 'There is 1 item in this menu.'
-                : `There are ${count} items in this menu.`;
-          }
-        }
-      });
-    });
-  });
+  containerWrapper
+    .querySelectorAll('a[tabindex="-1"]')
+    .forEach((a) => a.removeAttribute('tabindex'));
 }
 
 /**
@@ -3108,7 +3033,27 @@ function attachHeadingHandler(anchor, plusSpan) {
       // Require at least 120ms touch to prevent instant double toggles
       if (pressDuration > 120) {
         console.log('call 3');
-        //toggleHeading(anchor, plusSpan);
+        // TOUCH END
+        anchor.addEventListener('pointerup', function (e) {
+          if (isTouch && e.pointerType === 'touch') {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const pressDuration = Date.now() - touchStartTime;
+            if (pressDuration > 120) {
+              toggleHeadingChildren(anchor);
+            }
+
+            isTouch = false;
+          }
+        });
+
+        // DESKTOP CLICK
+        anchor.addEventListener('click', function (e) {
+          if (isTouch) return; // ignore ghost clicks after touch
+          e.preventDefault();
+          toggleHeadingChildren(anchor);
+        });
       }
 
       isTouch = false;
@@ -3120,7 +3065,27 @@ function attachHeadingHandler(anchor, plusSpan) {
     if (isTouch) return; // ignore ghost clicks after touch
     e.preventDefault();
     console.log('call 4');
-    //toggleHeading(anchor, plusSpan);
+    // TOUCH END
+    anchor.addEventListener('pointerup', function (e) {
+      if (isTouch && e.pointerType === 'touch') {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const pressDuration = Date.now() - touchStartTime;
+        if (pressDuration > 120) {
+          toggleHeadingChildren(anchor);
+        }
+
+        isTouch = false;
+      }
+    });
+
+    // DESKTOP CLICK
+    anchor.addEventListener('click', function (e) {
+      if (isTouch) return; // ignore ghost clicks after touch
+      e.preventDefault();
+      toggleHeadingChildren(anchor);
+    });
   });
 
   // Block long-press context menu on mobile
@@ -3153,36 +3118,6 @@ function safeMobileExpand() {
 }
 
 let mobileExpandTimeout = null;
-
-// function handleMobileMenuExpand() {
-//   // debounce to prevent multiple rapid executions
-//   clearTimeout(mobileExpandTimeout);
-
-//   mobileExpandTimeout = setTimeout(() => {
-//     const libPAS = document.getElementById('LibPAS');
-//     const libSat = document.getElementById('LibSat');
-//     const informsUs = document.getElementById('InformsUs');
-
-//     if (!window.matchMedia('(max-width: 960px)').matches) return;
-
-//     // Check if LibSat <p> has selected-tab
-//     const isLibSatOpen = libSat.querySelector('p.selected-tab') !== null;
-
-//     if (isLibSatOpen) {
-//       libPAS.classList.remove('mobile-visible');
-//       libPAS.classList.add('mobile-hidden');
-
-//       informsUs.classList.remove('mobile-visible');
-//       informsUs.classList.add('mobile-hidden');
-//     } else {
-//       libPAS.classList.remove('mobile-hidden');
-//       libPAS.classList.add('mobile-visible');
-
-//       informsUs.classList.remove('mobile-hidden');
-//       informsUs.classList.add('mobile-visible');
-//     }
-//   }, 50); // 50–75ms is ideal for eliminating ghost clicks
-// }
 
 function handleMobileMenuExpand() {
   clearTimeout(mobileExpandTimeout);
