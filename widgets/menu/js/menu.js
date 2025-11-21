@@ -228,16 +228,34 @@ const menuSingle = [
   },
 ];
 
+// const bodyContentIcons = [
+//   {
+//     graphic: 'reports.gif',
+//     width: '42',
+//     height: '55',
+//   },
+//   {
+//     graphic: 'data-input.gif',
+//     width: '42',
+//     height: '55',
+//   },
+// ];
+
 const bodyContentIcons = [
   {
-    graphic: 'reports.gif',
-    width: '42',
-    height: '55',
+    iconId: 'co-icons-generic-report',
+    width: '85',
+    height: '90',
   },
   {
-    graphic: 'data-input.gif',
-    width: '42',
-    height: '55',
+    iconId: 'co-icons-generic-file',
+    width: '85',
+    height: '90',
+  },
+  {
+    iconId: 'co-icons-data-input',
+    width: '85',
+    height: '90',
   },
 ];
 
