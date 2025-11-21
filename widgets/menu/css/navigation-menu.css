@@ -681,36 +681,8 @@ a[role='tab'] .menu-row {
   display: contents;
 }
 
-[role='listitem'] {
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-  flex: 1 1 calc(25% - 1rem); /* Adjusts with gap taken into account */
-  align-items: flex-start; /* or center if you prefer vertical centering */
-  gap: 1rem;
-  padding: 1rem 0 0 1rem;
-  box-sizing: border-box;
-}
-
-[role='listitem'] img {
-  display: none;
-}
-
-[role='listitem'] p {
-  display: inline-block;
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  min-height: 0; /* prevent overflow issues */
-  background-color: #fff;
-  border: 3px solid #fff;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  padding: 0.25rem;
-  margin: 0;
-}
-
-[role='listitem'] a {
+.tabs__panels > ul > li a,
+.left-content > ul > li a {
   display: block;
   width: 100%;
   padding: 1rem;
@@ -719,23 +691,22 @@ a[role='tab'] .menu-row {
   white-space: normal; /* allow line wrapping */
 }
 
-[role='listitem'] strong {
+.tabs__panels > ul > li strong,
+.left-content > ul > li strong {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
+  /* justify-content: space-between; */
+  /* width: 100%; */
   border-bottom: #000 3px solid;
+  margin-bottom: 0.5rem;
 }
 
-[role='listitem'] strong > span {
+.tabs__panels > ul > li strong > span,
+.left-content > ul > li strong > span {
   font-weight: bold;
 }
 
-[role='listitem'] a span:last-of-type {
-  display: block;
-  margin-top: 0.25rem;
-}
-
-[role='listitem'] span {
+.tabs__panels > ul > li span,
+.left-content > ul > li span {
   font-weight: normal;
 }
 
@@ -761,14 +732,17 @@ a[role='tab'] .menu-row {
 }
 
 [role='presentation'] p > a:focus-within,
-[role='listitem'] p > a:focus-within {
+.tabs__panels > ul > li p > a:focus-within,
+.left-content > ul > li p > a:focus-within {
   outline: none;
 }
 
 [role='presentation'] p:hover,
 [role='presentation'] p:focus-within,
-[role='listitem'] p:hover,
-[role='listitem'] p:focus-within {
+.tabs__panels > ul > li p:hover,
+.tabs__panels > ul > li p:focus-within,
+.left-content > ul > li p:hover,
+.left-content > ul > li p:focus-within {
   border-color: #000;
 }
 
@@ -784,7 +758,7 @@ a[role='tab'] .menu-row {
   background-color: #fbd3af !important;
 }
 
-[aria-labelledby='tab-LibPAS'] [role='listitem'] strong {
+[aria-labelledby='tab-LibPAS'] ul > li strong {
   border-bottom: 3px solid rgb(242, 153, 74);
 }
 
@@ -825,7 +799,7 @@ a[role='tab'] .menu-row {
   background-color: #f0dcfb !important;
 }
 
-[aria-labelledby='tab-InformsUs'] [role='listitem'] strong {
+[aria-labelledby='tab-InformsUs'] ul > li strong {
   border-bottom: 3px solid rgb(155, 81, 224);
 }
 
@@ -866,7 +840,7 @@ a[role='tab'] .menu-row {
   background-color: #fff4d6 !important;
 }
 
-[aria-labelledby='tab-LibSat'] [role='listitem'] strong {
+[aria-labelledby='tab-LibSat'] ul > li strong {
   border-bottom: 3px solid rgb(242, 201, 76);
 }
 
