@@ -2125,7 +2125,7 @@ function initMenuTemplates() {
       id: 'menuContent',
       html: `
         <li>
-          <p><a href="#"><strong></strong><br/><span></span></a>
+          <p><a href="#"><strong></strong><span></span></a>
           </p>
           <svg><use href=""></use></svg>
         </li>
