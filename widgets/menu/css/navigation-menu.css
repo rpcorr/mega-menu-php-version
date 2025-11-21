@@ -538,6 +538,20 @@ li[role='presentation'] {
   font-weight: 600;
 }
 
+.mega-menu .menu-list svg {
+  flex-shrink: 0; /* prevents squishing */
+  width: 40px;
+  height: 40px;
+}
+
+.mega-menu .tabs__panels svg,
+.mega-menu .left-content svg {
+  flex-shrink: 0; /* prevents squishing */
+  width: 80px;
+  height: 85px;
+  margin-top: 1em;
+}
+
 #LibPAS strong,
 #LibSat strong,
 #InformsUs strong {

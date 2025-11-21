@@ -2108,7 +2108,8 @@ function initMenuTemplates() {
       html: `
         <li>
           <p><a href="#"><strong></strong><br/><span></span></a>
-          <svg><use href=""></use></svg></p>
+          </p>
+          <svg><use href=""></use></svg>
         </li>
       `,
     },
