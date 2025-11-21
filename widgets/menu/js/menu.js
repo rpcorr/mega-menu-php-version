@@ -1390,8 +1390,8 @@ function renderBodyContent(contentContainer, type, menuData) {
   const selectedText = selectedLi.id.toLowerCase();
 
   // Root wrapper for list items — we'll delegate events here
-  const listWrapper = document.createElement('div');
-  listWrapper.setAttribute('role', 'list');
+  const listWrapper = document.createElement('ul');
+  //listWrapper.setAttribute('role', 'list');
 
   const fragment = document.createDocumentFragment();
 
@@ -2087,10 +2087,10 @@ function initMenuTemplates() {
     {
       id: 'menuContent',
       html: `
-        <div role="listitem">
+        <li>
           <img src="" width="" height="" alt="" />
           <p><a href="#"><strong></strong><br/><span></span></a></p>
-        </div>
+        </li>
       `,
     },
     {

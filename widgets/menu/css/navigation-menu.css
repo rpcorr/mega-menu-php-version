@@ -603,14 +603,51 @@ a[role='tab'] .menu-row {
   width: 100%;
 }
 
-.tabs__panels {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.tabs__panels,
+.left-content {
+  /* display: grid; */
+  /* grid-template-columns: repeat(3, 1fr); */
   max-height: 68.5vh; /* or any height limit you prefer */
   overflow-y: auto;
   padding-right: 1rem; /* optional: space for scrollbar */
   padding-bottom: 0.5rem;
   scrollbar-gutter: stable;
+}
+
+.tabs__panels > ul,
+.left-content > ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.tabs__panels > ul > li,
+.left-content > ul > li {
+  flex: 0 0 325px; /* <-- fixed width for all items */
+  /* or calc(33.333% - 1rem) for 3-per-row */
+  box-sizing: border-box;
+
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  /* text-align: center; */
+
+  padding: 0.5rem;
+}
+
+.tabs__panels > ul > li p,
+.tabs__panels > ul > li a,
+.tabs__panels > ul > li span,
+.tabs__panels > ul > li strong,
+.left-content > ul > li p,
+.left-content > ul > li a,
+.left-content > ul > li span,
+.left-content > ul > li strong {
+  white-space: normal; /* <-- allow wrapping */
+  word-wrap: break-word;
 }
 
 [role='list'] {
