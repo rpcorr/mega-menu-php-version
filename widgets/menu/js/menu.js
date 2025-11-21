@@ -1530,6 +1530,8 @@ function renderBodyContent(contentContainer, type, menuData) {
       plusSpan.setAttribute('aria-hidden', 'true');
       strongEl.appendChild(plusSpan);
 
+      const panelId = `tabpanel-${selectedAnchor.id}`;
+      anchor.setAttribute('id', panelId);
       anchor.setAttribute('aria-expanded', 'false');
       anchor.setAttribute('role', 'button');
 
