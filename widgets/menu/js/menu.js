@@ -228,19 +228,6 @@ const menuSingle = [
   },
 ];
 
-// const bodyContentIcons = [
-//   {
-//     graphic: 'reports.gif',
-//     width: '42',
-//     height: '55',
-//   },
-//   {
-//     graphic: 'data-input.gif',
-//     width: '42',
-//     height: '55',
-//   },
-// ];
-
 const bodyContentIcons = [
   {
     iconId: 'co-icons-generic-report',
@@ -909,34 +896,6 @@ function toggleAriaExpanded(menuLink) {
 
   // Toggle aria-expanded for the clicked item
   parentLi.setAttribute('aria-expanded', newState.toString());
-
-  // // Manage focusability in the opened/closed menu
-  // const megaMenu = parentLi.querySelector('.mega-menu');
-
-  // if (megaMenu) {
-  //   const tabList = megaMenu.querySelector('.menu-list');
-  //   const listItems = megaMenu.querySelectorAll('[role="listitem"] a');
-
-  //   if (newState) {
-  //     if (tabList) {
-  //       // Tabbed structure: only one <a> should be focusable in the tablist
-  //       const tabLinks = tabList.querySelectorAll('a[role="tab"]');
-  //       tabLinks.forEach((link, index) => {
-  //         link.setAttribute('tabindex', index === 0 ? '0' : '-1');
-  //       });
-
-  //       // Remove tabindex -1 from all panel links
-  //       listItems.forEach((link) => link.removeAttribute('tabindex'));
-  //     } else {
-  //       // Flat structure:  Remove tabindex -1 from all list item anchors
-  //       listItems.forEach((link) => link.removeAttribute('tabindex'));
-  //     }
-  //   } else {
-  //     // Collapse state: remove all links from tab order
-  //     const allLinks = megaMenu.querySelectorAll('a');
-  //     allLinks.forEach((link) => link.setAttribute('tabindex', '-1'));
-  //   }
-  // }
 }
 
 function toggleArrowIcon(menuLink) {
@@ -1107,29 +1066,6 @@ function getMegaMenu(menuContainer, type, menuData) {
         event.stopPropagation(); // Stop event from bubbling up
         const anchor = event.target.closest('a');
         if (!anchor) return;
-
-        const href = anchor.getAttribute('href');
-
-        // Prevent default if href is missing, empty, or starts with #
-        if (!href || href === '' || href.startsWith('#')) {
-          event.preventDefault();
-
-          // Toggle "+" and "−" for anchors with .plus-sign span
-          const plusSign = anchor.querySelector('.plus-sign');
-          if (plusSign) {
-            const wasExpanded = plusSign.textContent === '−';
-
-            // Toggle the sign
-            plusSign.textContent = wasExpanded ? '+' : '−';
-
-            // Toggle the aria-expanded attribute
-            const nowExpanded = !wasExpanded;
-            anchor.setAttribute('aria-expanded', String(nowExpanded));
-
-            // Call hideShowSiblings with the updated state
-            hideShowSiblings(anchor, nowExpanded);
-          }
-        }
 
         // Tab switching logic
         if (anchor.getAttribute('role') === 'tab') {
@@ -1372,7 +1308,6 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
  * @param {string} type - The type of rendering ("pages" or "multiple").
  * @param {Array} menuData - Array of menu data objects used to generate the content.
  */
-
 function renderBodyContent(contentContainer, type, menuData) {
   if (!Array.isArray(menuData) || menuData.length === 0) {
     console.error('Error: menuData is missing or not an array.');
@@ -1399,86 +1334,34 @@ function renderBodyContent(contentContainer, type, menuData) {
 
   // ----------------- Heading toggle logic -----------------
   function toggleHeadingChildren(headingAnchor) {
-    console.log('here');
     const parentLi = headingAnchor.closest('li[data-id]');
     if (!parentLi) return;
 
-    // Toggle based on current state
-    const isExpanded = headingAnchor.getAttribute('aria-expanded') === 'true';
-    const newState = !isExpanded; // flip it
+    // Determine current state: true if children are hidden
+    const isExpanded = headingAnchor.getAttribute('aria-expanded') === 'false';
+    console.log('isExpanded:', isExpanded);
 
-    headingAnchor.setAttribute('aria-expanded', String(newState));
+    // Flip aria-expanded on parent anchor
+    headingAnchor.setAttribute('aria-expanded', String(isExpanded));
 
+    // // Update the plus/minus sign
     const plusSign = headingAnchor.querySelector('.plus-sign');
-    if (plusSign) plusSign.textContent = newState ? '−' : '+';
+    if (plusSign) plusSign.textContent = isExpanded ? '−' : '+';
 
-    const pTag = parentLi.querySelector('p');
-    if (pTag) pTag.classList.toggle('open', newState);
+    // Toggle all child <li>s
+    const parentId = parentLi.getAttribute('data-id');
+    const children = document.querySelectorAll(`li[data-parent="${parentId}"]`);
 
-    const headingId = parentLi.getAttribute('data-id');
-    if (headingId) {
-      const childLis = listWrapper.querySelectorAll(
-        `li[data-parent="${headingId}"]`
-      );
-      childLis.forEach((child) => {
-        child.style.display = newState ? '' : 'none';
-        child.setAttribute('aria-hidden', String(!newState));
-      });
-    }
-
-    try {
-      hideShowSiblings?.(headingAnchor, newState);
-      toggleCustomGroupChildren?.(headingAnchor);
-    } catch (err) {
-      console.warn('Error in custom toggle helpers:', err);
-    }
+    children.forEach((child) => {
+      if (isExpanded) {
+        child.style.display = ''; // show child
+        child.setAttribute('aria-hidden', 'false');
+      } else {
+        child.style.display = 'none'; // hide child
+        child.setAttribute('aria-hidden', 'true');
+      }
+    });
   }
-
-  // ----------------- Event delegation -----------------
-  // listWrapper.addEventListener('pointerdown', (e) => {
-  //   const headingAnchor = e.target.closest('a[role="button"]');
-  //   if (!headingAnchor) return;
-  //   e.preventDefault(); // prevent ghost clicks on touch
-  //   e.stopPropagation();
-  //   toggleHeadingChildren(headingAnchor);
-  // });
-
-  // listWrapper.addEventListener('keydown', (e) => {
-  //   if (e.key !== 'Enter' && e.key !== ' ') return;
-  //   const headingAnchor = e.target.closest('a[role="button"]');
-  //   if (!headingAnchor) return;
-  //   e.preventDefault();
-  //   e.stopPropagation();
-  //   toggleHeadingChildren(headingAnchor);
-  // });
-
-  // listWrapper.addEventListener('click', (e) => {
-  //   // if the click is on the plus-sign or prompt span, still get the anchor
-  //   const headingAnchor = e.target.closest('a[role="button"]');
-  //   if (!headingAnchor || !listWrapper.contains(headingAnchor)) return;
-
-  //   e.preventDefault();
-  //   e.stopPropagation();
-
-  //   toggleHeadingChildren(headingAnchor);
-  // });
-
-  // listWrapper.addEventListener(
-  //   'touchstart',
-  //   (e) => {
-  //     const headingAnchor = e.target.closest('a[role="button"]');
-  //     if (!headingAnchor || !listWrapper.contains(headingAnchor)) return;
-
-  //     e.preventDefault();
-  //     e.stopPropagation();
-
-  //     toggleHeadingChildren(headingAnchor);
-  //   },
-  //   { passive: false }
-  // );
-
-  // Use only pointer + keyboard events.
-  // Remove ALL click and touchstart listeners — they break mobile.
 
   // 👉 MASTER HANDLER: pointerdown
   listWrapper.addEventListener('pointerdown', (e) => {
@@ -2976,37 +2859,6 @@ function insertBreadcrumbNav() {
     console.warn('<main> not found — breadcrumbs not inserted');
   }
 }
-
-// function attachHeadingHandler(anchor, plusSpan) {
-//   let isTouch = false;
-
-//   // 1. TOUCH / MOBILE — use pointerup (not pointerdown)
-//   anchor.addEventListener('pointerup', function (e) {
-//     if (e.pointerType === 'touch') {
-//       isTouch = true;
-//       e.preventDefault(); // stop link navigation
-//       e.stopPropagation(); // stop bubbling that triggers click
-//       toggleHeading(anchor, plusSpan);
-//     }
-//   });
-
-//   // 2. DESKTOP CLICK
-//   anchor.addEventListener('click', function (e) {
-//     // Ignore the "ghost click" after a touch
-//     if (isTouch) {
-//       isTouch = false; // reset flag
-//       return;
-//     }
-
-//     e.preventDefault();
-//     toggleHeading(anchor, plusSpan);
-//   });
-
-//   // 3. STOP LONG-PRESS CONTEXT MENU
-//   anchor.addEventListener('contextmenu', function (e) {
-//     if (isTouch) e.preventDefault();
-//   });
-// }
 
 function attachHeadingHandler(anchor, plusSpan) {
   let touchStartTime = 0;
