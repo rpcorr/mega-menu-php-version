@@ -1995,7 +1995,7 @@ function moveTab(menuContainer, type, direction, menuData = []) {
 
 function setTabsContainer() {
   // Find the main tabs container element
-  const tabsContainer = document.querySelector('.tabs-container');
+  const tabsContainer = document.querySelector('.mm-tabs-container');
   if (!tabsContainer) return; // If no container is found, exit early
 
   // Find the <ul> element inside the tabs container (assumed to be the list of tabs)
@@ -2069,7 +2069,7 @@ function createMenu(menuData) {
           ariaLabel: 'Pages has a sub menu. Click enter to open',
           // make submenu a placeholder div (we'll insert the grid container inside a mega-menu div)
           submenuTag: 'div',
-          submenuClass: 'grid-container-pages tabs-container',
+          submenuClass: 'grid-container-pages mm-tabs-container',
         });
 
         // Wrap in mega-menu div structure to match your original markup
@@ -2100,7 +2100,7 @@ function createMenu(menuData) {
           text: 'Services',
           ariaLabel: 'Services has a sub menu. Click enter to open',
           submenuTag: 'div',
-          submenuClass: 'grid-container-multiple tabs-container',
+          submenuClass: 'grid-container-multiple mm-tabs-container',
         });
 
         const mega = document.createElement('div');
