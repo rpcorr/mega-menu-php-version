@@ -1,16 +1,178 @@
 /****************************************/
 /* This file is divided into 5 sections */
-/* 1. Navigation Menu                   */
-/* 2. Mega Menu Styles                  */
-/* 3. Defaults Navigation Styles        */
-/* 4. Navigation Colour Template        */
-/* 5. Breadcrumbs                       */
-/* 6. SVG Styles                        */
-/* 7. Error Alert Styling               */
+/* 1. Reset Styles                     */
+/* 2. Navigation Menu                   */
+/* 3. Mega Menu Styles                  */
+/* 4. Defaults Navigation Styles        */
+/* 5. Navigation Colour Template        */
+/* 6. Breadcrumbs                       */
+/* 7. SVG Styles                        */
+/* 8. Error Alert Styling               */
+/* 9. Responsive Styles                 */
 /****************************************/
 
 /*****************************************/
-/*  1. Navigation Menu                   */
+/*  1. Reset Styles                      */
+/*****************************************/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  font: inherit;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  vertical-align: baseline;
+}
+
+/* Global box-sizing */
+* {
+  box-sizing: border-box;
+}
+
+/* Base typography */
+html,
+input,
+button,
+select,
+textarea {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 100%;
+  line-height: 1.5;
+}
+
+body {
+  min-height: 100vh;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* basic styles */
+body,
+p,
+ul,
+ol,
+li,
+button,
+input[type='reset'],
+input[type='button'],
+input[type='submit'] {
+  font-size: 1rem;
+}
+
+/* Lists */
+ol,
+ul {
+  list-style: none;
+}
+
+/* Structural elements */
+header,
+nav,
+section {
+  display: block;
+}
+
+/* Accessibility */
+.screen-reader-text {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px);
+  margin: 0;
+  padding: 0;
+}
+
+/* Navigation */
+nav li {
+  margin-left: 0;
+}
+
+/* basic styles */
+/* https://css-tricks.com/snippets/css/clear-fix/ */
+.group:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+/*****************************************/
+/*  2. Navigation Menu                   */
 /*****************************************/
 
 /* -- SKIP NAV LINK STYLES -- */
@@ -395,7 +557,7 @@ ul.sub-menu li > ul.sub-menu {
 }
 
 /*****************************************/
-/*  2. Mega Menu Styles                  */
+/*  3. Mega Menu Styles                  */
 /*****************************************/
 
 .mega-menu,
@@ -874,7 +1036,7 @@ header nav ul.menu > li.menu-item-has-children > .mega-menu {
 }
 
 /*****************************************/
-/*  3. Defaults Navigation Styles        */
+/*  4. Defaults Navigation Styles        */
 /*****************************************/
 
 /* default colours */
@@ -1214,7 +1376,7 @@ footer p {
 }
 
 /*****************************************/
-/*  4. Navigation Colour Template        */
+/*  5. Navigation Colour Template        */
 /*****************************************/
 
 /* ===============================
@@ -1414,7 +1576,7 @@ li > .active {
 }
 
 /*******************************************
-      6. SVG styles
+      7. SVG styles
 /********************************************/
 
 svg {
@@ -1443,7 +1605,7 @@ svg {
 }
 
 /*******************************************
-      7. Error Alert Styling
+      8. Error Alert Styling
 /********************************************/
 
 .menu-error-alert {
@@ -1489,6 +1651,10 @@ svg {
     opacity: 1;
   }
 }
+
+/*****************************************/
+/*  9. Responsive Styles                 */
+/*****************************************/
 
 /* =========================
    Desktop / Large screens
