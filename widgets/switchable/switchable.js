@@ -151,7 +151,7 @@ function displaySwitchableForm() {
   // Close button
   const closeModal = document.createElement('span');
   closeModal.id = 'closeModal';
-  closeModal.className = 'close';
+  closeModal.className = 'switchable-close';
   closeModal.setAttribute('role', 'button');
   closeModal.setAttribute('aria-label', 'Close modal dialog');
   closeModal.setAttribute('tabindex', '0');

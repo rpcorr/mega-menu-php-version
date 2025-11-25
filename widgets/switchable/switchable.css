@@ -24,7 +24,7 @@
 }
 
 /* Close button */
-.close {
+.switchable-close {
   position: absolute;
   top: 0.5rem; /* space from top edge */
   right: 0.5rem; /* space from right edge */
@@ -36,7 +36,7 @@
   border: none;
 }
 
-.close:hover {
+.switchable-close:hover {
   color: red;
 }
 
