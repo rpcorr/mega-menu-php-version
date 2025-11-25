@@ -11,6 +11,7 @@
 /* 9. Responsive Styles                 */
 /****************************************/
 
+html,
 body {
   overflow-x: hidden; /* hide any accidental horizontal scroll */
 }
@@ -615,9 +616,10 @@ header nav ul.menu > li:nth-of-type(8) > .mega-menu,
 header nav ul.menu > li:nth-of-type(9) > .mega-menu,
 header nav ul.menu > li:nth-of-type(10) > .mega-menu {
   top: 60px;
-  width: 98vw;
-  right: 5.5vw;
-  transform: translateX(17%);
+  width: auto; /* Let it size naturally */
+  max-width: 100%; /* Never exceed viewport */
+  right: 0; /* Align to the right edge */
+  transform: none; /* Remove translate offsets */
 }
 
 header nav ul.menu > li > .mega-menu.mega-menu-column-1 {
