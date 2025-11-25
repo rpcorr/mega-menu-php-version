@@ -11,6 +11,10 @@
 /* 9. Responsive Styles                 */
 /****************************************/
 
+body {
+  overflow-x: hidden; /* hide any accidental horizontal scroll */
+}
+
 /*****************************************/
 /*  1. Reset Styles                      */
 /*****************************************/
