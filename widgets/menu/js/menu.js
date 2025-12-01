@@ -655,44 +655,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const isPreferencesPage =
     window.location.pathname.endsWith('preferences.php');
 
-  // Dynamically add reset.css or reset.min.css as the first style if not already present
-  //const resetHref = resetCssPath;
-
-  // Check if reset.css or reset.min.css already exists
-  // const existingReset = document.querySelector(
-  //   `link[href*="reset.css"], link[href*="reset.min.css"]`
-  // );
-
-  //if (!existingReset) {
-  // --- Create reset link ---
-  // const linkReset = document.createElement('link');
-  // linkReset.rel = 'stylesheet';
-  // linkReset.type = 'text/css';
-  // linkReset.href = resetHref;
-
-  // --- Determine where navigation-menu.css currently is ---
-  // const navLink = document.querySelector(`link[href*="navigation-menu.css"]`);
-  //const parent = navLink
-  // ? navLink.parentNode
-  // : document.head || document.body;
-
-  //if (navLink && parent) {
-  // Insert reset.css immediately before the existing navigation link
-  //parent.insertBefore(linkReset, navLink);
-  //} else {
-  // Fallback: insert at the top of head or body
-  // const head = document.head;
-  // if (head) {
-  //   const firstLink = head.querySelector('link[rel="stylesheet"]');
-  //   head.insertBefore(linkReset, firstLink || null);
-  // } else {
-  //   const body = document.body || document.documentElement;
-  //   const firstStyleLink = body.querySelector('link[rel="stylesheet"]');
-  //   body.insertBefore(linkReset, firstStyleLink || null);
-  // }
-  //}
-  //}
-
   // Dynamically add switchable.js if switchAble is true and place it right before menu.js
   if (switchAble || Number(localStorage.getItem('ukey_switch_pending'))) {
     const currentScript = document.querySelector('script[src*="menu.js"]');
