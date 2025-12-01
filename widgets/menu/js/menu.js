@@ -2000,7 +2000,7 @@ function createMenu(menuData) {
 
       // 3) Logout state: simple page links
     } else if (section.section_id === '0' && ukey === '') {
-      (data.pages || []).forEach((page) => {
+      (menuData.pages || []).forEach((page) => {
         const safeItem = createSafeMenuItem(page);
         rootUl.appendChild(safeItem);
       });
