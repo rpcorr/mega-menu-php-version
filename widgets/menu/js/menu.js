@@ -21,7 +21,7 @@ const sidebarCssPath = `${prefix}widgets/sidebar/sidebar.css`;
 const timerInactivityJsPath = `${prefix}widgets/timerInactivity/timerInactivity.js`;
 
 // Feature flags
-const bSidebarWidget = true;
+const bSidebarWidget = false;
 const bTimerInactivityWidget = false;
 
 /* ============================================================================
