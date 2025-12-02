@@ -94,7 +94,10 @@ if ($ukey !== '') $_SESSION['switchAble'] = true;
 else $_SESSION['switchAble'] = false;
 
 // Load JSON file (use your real filename)
-$pagesJSONfile = __DIR__ . "/widgets/menu/json/co-demo.json";
+if ($ukey !== '')
+    $pagesJSONfile = __DIR__ . "/widgets/menu/json/co-demo.json";
+else
+    $pagesJSONfile = __DIR__ . "/widgets/menu/json/co-pages.json";
 
 if (!file_exists($pagesJSONfile)) {
     die("File not found: " . $pagesJSONfile);
@@ -180,7 +183,6 @@ require_once __DIR__ . '/widgets/menu/php/buildMenuArray.php';
   return $relativePath;
 }
 
-$finalGroupedArray = buildGroupedMenuArray($pagesJSONfile);
 ?>
 
 <script>
@@ -188,8 +190,9 @@ $finalGroupedArray = buildGroupedMenuArray($pagesJSONfile);
       const ukey = '<?php echo $ukey; ?>'; 
       const portal = <?php echo json_encode($portal); ?>;
       const queryString = <?php echo json_encode($queryString); ?>;
-
-      const finalGroupedArray = <?php echo json_encode($finalGroupedArray); ?>;
+    
+      console.log('finalGroupedArray from PHP:');
+      console.log(finalGroupedArray);
 
       const baseURL = '/mmenu/widgets/menu/json/';
       let userJSONfile = baseURL + 'users-demo.json';
@@ -210,9 +213,10 @@ $finalGroupedArray = buildGroupedMenuArray($pagesJSONfile);
       return response.json();
     })
     .then((data) => {
-      const match = data.users.find((user) => user.ukey === ukey);
-      window.user = match ? match.username : 'DEMO';
-
+        const match = data.users.find((user) => user.ukey === ukey);
+        window.user = match ? match.username : '';
+        
+      console.log('Data is:', data);
       console.log('Footer: fetched user:', window.user);
 
       // Notify any script waiting for user

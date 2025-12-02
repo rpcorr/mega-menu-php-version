@@ -414,224 +414,220 @@ document.addEventListener('DOMContentLoaded', () => {
   // call injectNavigationMenuCSS to ensure navigation-menu.css is present
   injectNavigationMenuCSS();
 
-  fetchWithRetry(pagesJSONfile)
-    .then(() => {
-      console.log(finalGroupedArray);
-      // Call the function to create the menu
-      let menuHTML = createMenu(finalGroupedArray);
+  /////////////////////////////////////////
+  // Call the function to create the menu
+  let menuHTML = createMenu(finalGroupedArray);
 
-      // if switchAble session variable is true, show Show Users link
-      if (switchAble === true)
-        menuHTML += `<li> <a href="#" id="showUsersLink">View page as...</a></li>`;
+  // if switchAble session variable is true, show Show Users link
+  if (switchAble === true)
+    menuHTML += `<li> <a href="#" id="showUsersLink">View page as...</a></li>`;
 
-      let initials = '';
-      let profileName = '';
+  console.log('window.user:', window.user);
+  let initials = '';
+  let profileName = '';
 
-      if (user) {
-        initials = getInitials(user);
-        profileName = user;
+  if (window.user) {
+    initials = getInitials(user);
+    profileName = window.user;
+  }
+
+  // if logged in, show profile
+  if (ukey.trim() !== '') {
+    menuHTML += `<li class="menu-item-has-children hover" aria-expanded="false"><a href="#" aria-label="${profileName} profile has a sub menu. Click enter to open" id="profile"><div class="profile"><span aria-hidden="true">${initials}</span></div>${profileName} <span class="hidden-text">profile</span> <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="#" tabindex='-1'>My Profile</a></li><li><a href="#" tabindex='-1'>Settings</a></li><li><a href="#" tabindex='-1'>Notifications</a></li><li><a href="#" tabindex='-1'>Help &amp; Support</a></li><li><a href="logout.php" tabindex='-1'>Sign Out</a></li></ul></li>`;
+  }
+
+  document.getElementById('menu-main-menu').innerHTML = menuHTML;
+
+  populateMegaMenu(finalGroupedArray);
+
+  navItems = document.querySelectorAll('#menu-main-menu > li');
+
+  // call alignSubMenusToViewport to initially align them
+  alignSubMenusToViewport('initial');
+
+  megaMenuLinks = document.querySelectorAll('nav a');
+
+  for (let i = 0; i < megaMenuLinks.length; i++) {
+    megaMenuLinks[i].addEventListener('click', handleLinkClick);
+  }
+
+  // assign window width to winWidth
+  winWidth = window.innerWidth;
+
+  // close All Menus when the esc is pressed
+  document
+    .getElementById('menu-main-menu')
+    .addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        closeAllMenus();
+      }
+    });
+
+  navItems = document.querySelectorAll('#menu-main-menu > li');
+
+  // add hover class to those with class menu-item-has-children
+  navItems.forEach(function (item) {
+    if (item.classList.contains('menu-item-has-children')) {
+      item.classList.add('hover');
+    }
+  });
+
+  // get width of each item, and list each as visible
+  navItems.forEach(function (item) {
+    navItemWidth.push(item.offsetWidth);
+    navItemVisible.push(true);
+  });
+
+  // add more link
+  const menuMainMenu = document.getElementById('menu-main-menu');
+  const newMenuItem = document.createElement('li');
+  newMenuItem.setAttribute('aria-expanded', 'false');
+
+  newMenuItem.id = 'menu-more';
+  newMenuItem.className = 'menu-item menu-item-has-children';
+
+  const newMenuLink = document.createElement('a');
+  newMenuLink.id = 'menuMoreLink';
+  newMenuLink.href = '#';
+  newMenuLink.setAttribute(
+    'aria-label',
+    'More has a sub menu. Click enter to open'
+  );
+
+  const newSubMenu = document.createElement('ul');
+  newSubMenu.id = 'moreSubMenu';
+  newSubMenu.className = 'sub-menu';
+
+  newMenuItem.appendChild(newMenuLink);
+  newMenuItem.appendChild(newSubMenu);
+  menuMainMenu.appendChild(newMenuItem);
+
+  moreWidth = document.getElementById('menu-more').offsetWidth;
+
+  adjustMoreSubMenuOffset();
+
+  // toggle More menu
+  document
+    .getElementById('menuMoreLink')
+    .addEventListener('click', function (event) {
+      event.preventDefault();
+
+      const moreMenu = this.parentElement;
+      const icon = this.querySelector('i');
+
+      const expanded = moreMenu.getAttribute('aria-expanded') === 'true';
+      const newState = !expanded;
+
+      moreMenu.setAttribute('aria-expanded', String(newState));
+
+      // Adjust icon direction
+      if (icon) {
+        icon.classList.replace(
+          expanded ? 'angle-up' : 'angle-down',
+          newState ? 'angle-up' : 'angle-down'
+        );
       }
 
-      // if logged in, show profile
-      if (ukey.trim() !== '') {
-        menuHTML += `<li class="menu-item-has-children hover" aria-expanded="false"><a href="#" aria-label="${profileName} profile has a sub menu. Click enter to open" id="profile"><div class="profile"><span aria-hidden="true">${initials}</span></div>${profileName} <span class="hidden-text">profile</span> <i class="caret angle-down"></i></a><ul class="sub-menu"><li><a href="#" tabindex='-1'>My Profile</a></li><li><a href="#" tabindex='-1'>Settings</a></li><li><a href="#" tabindex='-1'>Notifications</a></li><li><a href="#" tabindex='-1'>Help &amp; Support</a></li><li><a href="logout.php" tabindex='-1'>Sign Out</a></li></ul></li>`;
-      }
+      const subLinks = document.querySelectorAll('#moreSubMenu a');
 
-      document.getElementById('menu-main-menu').innerHTML = menuHTML;
-
-      populateMegaMenu(finalGroupedArray);
-
-      navItems = document.querySelectorAll('#menu-main-menu > li');
-
-      // call alignSubMenusToViewport to initially align them
-      alignSubMenusToViewport('initial');
-
-      megaMenuLinks = document.querySelectorAll('nav a');
-
-      for (let i = 0; i < megaMenuLinks.length; i++) {
-        megaMenuLinks[i].addEventListener('click', handleLinkClick);
-      }
-
-      // assign window width to winWidth
-      winWidth = window.innerWidth;
-
-      // close All Menus when the esc is pressed
-      document
-        .getElementById('menu-main-menu')
-        .addEventListener('keydown', function (e) {
-          if (e.key === 'Escape') {
-            closeAllMenus();
-          }
+      if (newState) {
+        // Opening: make all submenu links focusable
+        subLinks.forEach((link) => {
+          link.removeAttribute('tabindex');
         });
-
-      navItems = document.querySelectorAll('#menu-main-menu > li');
-
-      // add hover class to those with class menu-item-has-children
-      navItems.forEach(function (item) {
-        if (item.classList.contains('menu-item-has-children')) {
-          item.classList.add('hover');
-        }
-      });
-
-      // get width of each item, and list each as visible
-      navItems.forEach(function (item) {
-        navItemWidth.push(item.offsetWidth);
-        navItemVisible.push(true);
-      });
-
-      // add more link
-      const menuMainMenu = document.getElementById('menu-main-menu');
-      const newMenuItem = document.createElement('li');
-      newMenuItem.setAttribute('aria-expanded', 'false');
-
-      newMenuItem.id = 'menu-more';
-      newMenuItem.className = 'menu-item menu-item-has-children';
-
-      const newMenuLink = document.createElement('a');
-      newMenuLink.id = 'menuMoreLink';
-      newMenuLink.href = '#';
-      newMenuLink.setAttribute(
-        'aria-label',
-        'More has a sub menu. Click enter to open'
-      );
-
-      const newSubMenu = document.createElement('ul');
-      newSubMenu.id = 'moreSubMenu';
-      newSubMenu.className = 'sub-menu';
-
-      newMenuItem.appendChild(newMenuLink);
-      newMenuItem.appendChild(newSubMenu);
-      menuMainMenu.appendChild(newMenuItem);
-
-      moreWidth = document.getElementById('menu-more').offsetWidth;
-
-      adjustMoreSubMenuOffset();
-
-      // toggle More menu
-      document
-        .getElementById('menuMoreLink')
-        .addEventListener('click', function (event) {
-          event.preventDefault();
-
-          const moreMenu = this.parentElement;
-          const icon = this.querySelector('i');
-
-          const expanded = moreMenu.getAttribute('aria-expanded') === 'true';
-          const newState = !expanded;
-
-          moreMenu.setAttribute('aria-expanded', String(newState));
-
-          // Adjust icon direction
-          if (icon) {
-            icon.classList.replace(
-              expanded ? 'angle-up' : 'angle-down',
-              newState ? 'angle-up' : 'angle-down'
-            );
-          }
-
-          const subLinks = document.querySelectorAll('#moreSubMenu a');
-
-          if (newState) {
-            // Opening: make all submenu links focusable
-            subLinks.forEach((link) => {
-              link.removeAttribute('tabindex');
-            });
-          } else {
-            // Closing: close all expanded submenus and hide links from tab order
-            const subItems = document.querySelectorAll(
-              '#moreSubMenu li[aria-expanded="true"]'
-            );
-            subItems.forEach((li) => {
-              if (li.classList.contains('menu-item-has-children')) {
-                li.setAttribute('aria-expanded', 'false');
-                const nestedLinks = li.querySelectorAll('.sub-menu a');
-                nestedLinks.forEach((link) => {
-                  link.setAttribute('tabindex', '-1');
-                });
-              }
-            });
-
-            // Also set tabindex=-1 on all direct submenu links
-            subLinks.forEach((link) => {
+      } else {
+        // Closing: close all expanded submenus and hide links from tab order
+        const subItems = document.querySelectorAll(
+          '#moreSubMenu li[aria-expanded="true"]'
+        );
+        subItems.forEach((li) => {
+          if (li.classList.contains('menu-item-has-children')) {
+            li.setAttribute('aria-expanded', 'false');
+            const nestedLinks = li.querySelectorAll('.sub-menu a');
+            nestedLinks.forEach((link) => {
               link.setAttribute('tabindex', '-1');
             });
           }
-
-          // Update sidebar content
-          if (bSidebarWidget) populateSidebar();
         });
 
-      // collapse all sub-menus when user clicks off
-      document.body.addEventListener('click', function (event) {
-        if (event.target.getAttribute('onClick') === 'toggleSidebar()') return;
-
-        if (!event.target.closest('li')) {
-          document
-            .querySelectorAll('.menu-item-has-children')
-            .forEach(function (element) {
-              //element.classList.remove('visible');
-            });
-        }
-
-        // reset arrows to down position
-        resetArrows();
-
-        //  reset aria-labels to Click enter to open
-        document
-          .querySelectorAll('.menu-item-has-children > a')
-          .forEach(function (element) {
-            element.setAttribute(
-              'aria-label',
-              `${element.textContent} has a sub menu. Click enter to open`
-            );
-            //element.setAttribute('aria-expanded', 'false');
-          });
-        // call removeActiveClass
-        removeActiveClass();
-      });
-
-      preserveMenuColour();
-
-      // stop propagation for .menu-item-has-children a
-      document
-        .querySelectorAll('.menu-item-has-children a')
-        .forEach(function (element) {
-          element.addEventListener('click', function (e) {
-            e.stopPropagation();
-          });
+        // Also set tabindex=-1 on all direct submenu links
+        subLinks.forEach((link) => {
+          link.setAttribute('tabindex', '-1');
         });
+      }
 
-      // stop propagation for .menu-item-has-children ul
-      document
-        .querySelectorAll('.menu-item-has-children ul')
-        .forEach(function (element) {
-          element.addEventListener('click', function (e) {
-            e.stopPropagation();
-          });
-        });
-
-      // stop propagation for .menu-item-has-children li
-      document
-        .querySelectorAll('.menu-item-has-children li')
-        .forEach(function (element) {
-          element.addEventListener('click', function (e) {
-            e.stopPropagation();
-          });
-        });
-
-      // format navigation on page load
-      formatNav();
-
-      // set More Menu tabindex to -1 if there are no children
-      updateMenuMoreTabIndex();
-
-      // watch for difference between touchscreen and mouse
-      watchForHover();
-    })
-    .catch((error) => {
-      console.error('Failed to load menu data:', error);
-      // Error alert already shown to user by fetchWithRetry
+      // Update sidebar content
+      if (bSidebarWidget) populateSidebar();
     });
+
+  // collapse all sub-menus when user clicks off
+  document.body.addEventListener('click', function (event) {
+    if (event.target.getAttribute('onClick') === 'toggleSidebar()') return;
+
+    if (!event.target.closest('li')) {
+      document
+        .querySelectorAll('.menu-item-has-children')
+        .forEach(function (element) {
+          //element.classList.remove('visible');
+        });
+    }
+
+    // reset arrows to down position
+    resetArrows();
+
+    //  reset aria-labels to Click enter to open
+    document
+      .querySelectorAll('.menu-item-has-children > a')
+      .forEach(function (element) {
+        element.setAttribute(
+          'aria-label',
+          `${element.textContent} has a sub menu. Click enter to open`
+        );
+        //element.setAttribute('aria-expanded', 'false');
+      });
+    // call removeActiveClass
+    removeActiveClass();
+  });
+
+  preserveMenuColour();
+
+  // stop propagation for .menu-item-has-children a
+  document
+    .querySelectorAll('.menu-item-has-children a')
+    .forEach(function (element) {
+      element.addEventListener('click', function (e) {
+        e.stopPropagation();
+      });
+    });
+
+  // stop propagation for .menu-item-has-children ul
+  document
+    .querySelectorAll('.menu-item-has-children ul')
+    .forEach(function (element) {
+      element.addEventListener('click', function (e) {
+        e.stopPropagation();
+      });
+    });
+
+  // stop propagation for .menu-item-has-children li
+  document
+    .querySelectorAll('.menu-item-has-children li')
+    .forEach(function (element) {
+      element.addEventListener('click', function (e) {
+        e.stopPropagation();
+      });
+    });
+
+  // format navigation on page load
+  formatNav();
+
+  // set More Menu tabindex to -1 if there are no children
+  updateMenuMoreTabIndex();
+
+  // watch for difference between touchscreen and mouse
+  watchForHover();
+
+  ///////////////////////////////
 
   moreWidth = document.getElementById('menu-main-menu').offsetWidth;
 
@@ -1513,17 +1509,222 @@ function renderMenu(menuData, menuContainer, type, currentMenuItem) {
  * @param {string} type - The type of rendering ("pages" or "multiple").
  * @param {Array} menuData - Array of menu data objects used to generate the content.
  */
+// function renderBodyContent(contentContainer, type, menuData) {
+//   console.log('inside renderBodyContent');
+//   // Helper function to check if a value is empty or not
+//   const isEmpty = (value) => !value || value.trim() === '';
+
+//   // Validate menuData input
+//   if (!Array.isArray(menuData) || menuData.length === 0) {
+//     console.error('Error: menuData is missing or not an array.');
+//     return;
+//   }
+
+//   // Retrieve the content template from the DOM
+//   const contentTemplate = document.querySelector('#menuContent');
+
+//   if (!contentTemplate || !contentContainer) {
+//     console.error('Error: Body content template or container not found.');
+//     return;
+//   }
+
+//   // Ensure a tab is selected; fallback to the last tab if none is selected
+//   let selectedAnchor =
+//     document.querySelector('a[aria-selected="true"]') ||
+//     [...document.querySelectorAll('.menu-list a')].pop();
+
+//   if (!selectedAnchor) {
+//     console.error('Error: No selectable tab found.');
+//     return;
+//   }
+
+//   selectedAnchor.setAttribute('aria-selected', 'true');
+
+//   const selectedLi = selectedAnchor.closest('li');
+//   if (!selectedLi) {
+//     console.error('Error: Selected anchor is not inside a <li> element.');
+//     return;
+//   }
+
+//   const selectedText = selectedLi.id.toLowerCase();
+//   const fragment = document.createDocumentFragment();
+
+//   /**
+//    * Creates and appends a menu content item based on a given menu item object.
+//    * @param {Object} menuItem - Object containing 'prompt' and 'link' properties.
+//    */
+//   function createMenuContent(menuItem) {
+//     const menuContent = contentTemplate.content.cloneNode(true);
+//     const svg = menuContent.querySelector('svg');
+//     const svgUse = menuContent.querySelector('svg use');
+//     const p = menuContent.querySelector('p');
+//     const anchor = menuContent.querySelector('a');
+
+//     if (!svg || !svgUse || !p || !anchor) {
+//       console.error('Error: Missing elements inside body content template.');
+//       return;
+//     }
+
+//     const randomIcon =
+//       bodyContentIcons[Math.floor(Math.random() * bodyContentIcons.length)];
+
+//     if (ukey && menuItem.prompt.toLowerCase() !== 'login') {
+//       if (svgUse) {
+//         const iconId = randomIcon.iconId || 'co-icons-medal'; // fallback if not provided
+//         svgUse.setAttribute('href', `#${iconId}`);
+
+//         const fileType = extractIconName(iconId);
+
+//         svg.classList.add(fileType);
+
+//         function extractIconName(input) {
+//           const prefix = 'co-icons-';
+//           if (input.startsWith(prefix)) {
+//             return input.substring(prefix.length);
+//           }
+//           return null; // or return input if you'd rather return the full input when it doesn't match
+//         }
+//       }
+
+//       p.querySelector('strong').textContent = menuItem.prompt;
+//       p.querySelector(
+//         'span'
+//       ).textContent = `Brief description of the function of ${menuItem.prompt}`;
+
+//       anchor.href = menuItem.link;
+
+//       fragment.appendChild(menuContent);
+//     }
+//   }
+
+//   if (type === 'pages') {
+//     // Handle simple 'pages' type content rendering
+//     const pagePromptsAndLinks = menuData[0].pages
+//       .filter((page) => page.section_id === '0' && page.section_prompt === null)
+//       .map((page) => ({ prompt: page.page_prompt, link: page.page_link }));
+
+//     pagePromptsAndLinks.forEach(createMenuContent);
+//   }
+
+//   if (type === 'multiple') {
+//     // Handle grouped 'multiple' type content rendering
+//     const pagePromptsAndLinks =
+//       menuData
+//         .find((item) => item.section_prompt?.toLowerCase() === selectedText)
+//         ?.pages.map((page) => ({
+//           prompt: page.page_prompt,
+//           link: page.page_link,
+//         })) || [];
+
+//     let groupedHeading = '';
+//     let isGrouping = false;
+//     let customReportsAdded = false;
+//     let surveyReportsStored = null;
+
+//     pagePromptsAndLinks.forEach((menuItem, index) => {
+//       const promptText = menuItem.prompt.toLowerCase();
+//       const isDifferentPrompt = promptText !== selectedText;
+//       const isExcludedPrompt = ['maphat trends', 'maphat rankings'].includes(
+//         promptText
+//       );
+//       const isSurveyReports = promptText === 'survey reports';
+//       const isCustomReports = promptText === 'custom reports';
+
+//       if (isSurveyReports) {
+//         surveyReportsStored = menuItem;
+//         return;
+//       }
+
+//       // Group unlinked prompts together
+//       if (isDifferentPrompt && isEmpty(menuItem.link) && !isExcludedPrompt) {
+//         groupedHeading += groupedHeading
+//           ? `, ${menuItem.prompt}`
+//           : menuItem.prompt;
+//         isGrouping = true;
+
+//         // Check the next item in the array
+//         const nextItem = pagePromptsAndLinks[index + 1];
+//         const shouldEndGrouping =
+//           !nextItem ||
+//           !isEmpty(nextItem.link) ||
+//           ['maphat trends', 'maphat rankings'].includes(
+//             nextItem.prompt?.toLowerCase()
+//           );
+
+//         if (shouldEndGrouping) {
+//           // Check if the grouped heading should be `h5` instead of `h4`
+//           const headingTag =
+//             /benchmarking reports|postal reports|email reports/i.test(
+//               groupedHeading
+//             )
+//               ? 'h5'
+//               : 'h4';
+//           const heading = document.createElement(headingTag);
+//           heading.textContent = groupedHeading;
+//           heading.style.gridColumn = '1 / -1'; // Span full grid width
+
+//           // Add tabindex="0" to make the heading focusable
+//           heading.setAttribute('tabindex', '0');
+
+//           fragment.appendChild(heading);
+//           groupedHeading = '';
+//           isGrouping = false;
+//         }
+//       }
+
+//       // Handle Custom Reports section separately
+//       if (isCustomReports && !customReportsAdded) {
+//         const customReportsHeading = document.createElement('h4');
+//         customReportsHeading.textContent = 'Custom Reports';
+//         customReportsHeading.style.gridColumn = '1 / -1';
+//         fragment.appendChild(customReportsHeading);
+//         customReportsAdded = true;
+
+//         if (surveyReportsStored) {
+//           createMenuContent(surveyReportsStored);
+//           surveyReportsStored = null;
+//         }
+//       }
+//       // Handle menu items with valid links or excluded prompts
+//       if (!isEmpty(menuItem.link) || isExcludedPrompt) {
+//         createMenuContent(menuItem);
+//       }
+//     });
+//   }
+
+//   // Append constructed fragment to content container
+//   const containerWrapper = document.createElement('div');
+//   containerWrapper.classList.add(
+//     type !== 'pages' ? 'tabs__panels' : 'left-content'
+//   );
+
+//   containerWrapper.setAttribute('role', 'list');
+//   containerWrapper.setAttribute('aria-label', 'Menu Options');
+
+//   containerWrapper.appendChild(fragment);
+//   contentContainer.appendChild(containerWrapper);
+
+//   // Remove duplicate 'Custom Reports' headings if necessary
+//   const h4Elements = document.querySelectorAll('h4');
+//   const matchingHeadings = [...h4Elements].filter(
+//     (h4) => h4.textContent.trim().toLowerCase() === 'custom reports'
+//   );
+
+//   if (matchingHeadings.length > 1) {
+//     matchingHeadings.slice(1).forEach((h4) => h4.remove());
+//   }
+// }
+
 function renderBodyContent(contentContainer, type, menuData) {
-  // Helper function to check if a value is empty or not
+  console.log('inside renderBodyContent');
+
   const isEmpty = (value) => !value || value.trim() === '';
 
-  // Validate menuData input
   if (!Array.isArray(menuData) || menuData.length === 0) {
     console.error('Error: menuData is missing or not an array.');
     return;
   }
 
-  // Retrieve the content template from the DOM
   const contentTemplate = document.querySelector('#menuContent');
 
   if (!contentTemplate || !contentContainer) {
@@ -1531,31 +1732,28 @@ function renderBodyContent(contentContainer, type, menuData) {
     return;
   }
 
-  // Ensure a tab is selected; fallback to the last tab if none is selected
+  // --- UPDATED: Allow selectedAnchor to be null ---
   let selectedAnchor =
     document.querySelector('a[aria-selected="true"]') ||
     [...document.querySelectorAll('.menu-list a')].pop();
 
-  if (!selectedAnchor) {
-    console.error('Error: No selectable tab found.');
-    return;
+  if (selectedAnchor) {
+    selectedAnchor.setAttribute('aria-selected', 'true');
   }
 
-  selectedAnchor.setAttribute('aria-selected', 'true');
+  // --- UPDATED: We only derive selectedText if needed ---
+  let selectedText = '';
 
-  const selectedLi = selectedAnchor.closest('li');
-  if (!selectedLi) {
-    console.error('Error: Selected anchor is not inside a <li> element.');
-    return;
+  if (type === 'multiple' && selectedAnchor) {
+    const selectedLi = selectedAnchor.closest('li');
+    if (selectedLi) {
+      selectedText = selectedLi.id.toLowerCase();
+    }
   }
 
-  const selectedText = selectedLi.id.toLowerCase();
   const fragment = document.createDocumentFragment();
 
-  /**
-   * Creates and appends a menu content item based on a given menu item object.
-   * @param {Object} menuItem - Object containing 'prompt' and 'link' properties.
-   */
+  // Utility to create a card
   function createMenuContent(menuItem) {
     const menuContent = contentTemplate.content.cloneNode(true);
     const svg = menuContent.querySelector('svg');
@@ -1573,20 +1771,14 @@ function renderBodyContent(contentContainer, type, menuData) {
 
     if (ukey && menuItem.prompt.toLowerCase() !== 'login') {
       if (svgUse) {
-        const iconId = randomIcon.iconId || 'co-icons-medal'; // fallback if not provided
+        const iconId = randomIcon.iconId || 'co-icons-medal';
         svgUse.setAttribute('href', `#${iconId}`);
 
-        const fileType = extractIconName(iconId);
+        const fileType = iconId.startsWith('co-icons-')
+          ? iconId.substring('co-icons-'.length)
+          : null;
 
-        svg.classList.add(fileType);
-
-        function extractIconName(input) {
-          const prefix = 'co-icons-';
-          if (input.startsWith(prefix)) {
-            return input.substring(prefix.length);
-          }
-          return null; // or return input if you'd rather return the full input when it doesn't match
-        }
+        if (fileType) svg.classList.add(fileType);
       }
 
       p.querySelector('strong').textContent = menuItem.prompt;
@@ -1600,27 +1792,36 @@ function renderBodyContent(contentContainer, type, menuData) {
     }
   }
 
+  // --- PAGES MODE ---
   if (type === 'pages') {
-    // Handle simple 'pages' type content rendering
-    const pagePromptsAndLinks = menuData[0].pages
+    const pageItems = menuData[0].pages
       .filter((page) => page.section_id === '0' && page.section_prompt === null)
       .map((page) => ({ prompt: page.page_prompt, link: page.page_link }));
 
-    pagePromptsAndLinks.forEach(createMenuContent);
+    pageItems.forEach(createMenuContent);
   }
 
+  // --- MULTIPLE MODE ---
   if (type === 'multiple') {
-    // Handle grouped 'multiple' type content rendering
-    const pagePromptsAndLinks =
-      menuData
-        .find((item) => item.section_prompt?.toLowerCase() === selectedText)
-        ?.pages.map((page) => ({
+    let pagePromptsAndLinks = [];
+
+    if (!selectedText) {
+      console.warn(
+        'Warning: No selected tab detected. Rendering empty content for type="multiple".'
+      );
+    } else {
+      const match = menuData.find(
+        (item) => item.section_prompt?.toLowerCase() === selectedText
+      );
+      if (match) {
+        pagePromptsAndLinks = match.pages.map((page) => ({
           prompt: page.page_prompt,
           link: page.page_link,
-        })) || [];
+        }));
+      }
+    }
 
     let groupedHeading = '';
-    let isGrouping = false;
     let customReportsAdded = false;
     let surveyReportsStored = null;
 
@@ -1638,49 +1839,45 @@ function renderBodyContent(contentContainer, type, menuData) {
         return;
       }
 
-      // Group unlinked prompts together
+      // --- Group headings ---
       if (isDifferentPrompt && isEmpty(menuItem.link) && !isExcludedPrompt) {
         groupedHeading += groupedHeading
           ? `, ${menuItem.prompt}`
           : menuItem.prompt;
-        isGrouping = true;
 
-        // Check the next item in the array
         const nextItem = pagePromptsAndLinks[index + 1];
-        const shouldEndGrouping =
+        const endGrouping =
           !nextItem ||
           !isEmpty(nextItem.link) ||
           ['maphat trends', 'maphat rankings'].includes(
             nextItem.prompt?.toLowerCase()
           );
 
-        if (shouldEndGrouping) {
-          // Check if the grouped heading should be `h5` instead of `h4`
+        if (endGrouping) {
           const headingTag =
             /benchmarking reports|postal reports|email reports/i.test(
               groupedHeading
             )
               ? 'h5'
               : 'h4';
+
           const heading = document.createElement(headingTag);
           heading.textContent = groupedHeading;
-          heading.style.gridColumn = '1 / -1'; // Span full grid width
-
-          // Add tabindex="0" to make the heading focusable
+          heading.style.gridColumn = '1 / -1';
           heading.setAttribute('tabindex', '0');
-
           fragment.appendChild(heading);
+
           groupedHeading = '';
-          isGrouping = false;
         }
       }
 
-      // Handle Custom Reports section separately
+      // --- Custom Reports Section ---
       if (isCustomReports && !customReportsAdded) {
-        const customReportsHeading = document.createElement('h4');
-        customReportsHeading.textContent = 'Custom Reports';
-        customReportsHeading.style.gridColumn = '1 / -1';
-        fragment.appendChild(customReportsHeading);
+        const h = document.createElement('h4');
+        h.textContent = 'Custom Reports';
+        h.style.gridColumn = '1 / -1';
+        fragment.appendChild(h);
+
         customReportsAdded = true;
 
         if (surveyReportsStored) {
@@ -1688,33 +1885,30 @@ function renderBodyContent(contentContainer, type, menuData) {
           surveyReportsStored = null;
         }
       }
-      // Handle menu items with valid links or excluded prompts
+
+      // --- Add regular content items ---
       if (!isEmpty(menuItem.link) || isExcludedPrompt) {
         createMenuContent(menuItem);
       }
     });
   }
 
-  // Append constructed fragment to content container
-  const containerWrapper = document.createElement('div');
-  containerWrapper.classList.add(
-    type !== 'pages' ? 'tabs__panels' : 'left-content'
-  );
+  const wrapper = document.createElement('div');
+  wrapper.classList.add(type !== 'pages' ? 'tabs__panels' : 'left-content');
+  wrapper.setAttribute('role', 'list');
+  wrapper.setAttribute('aria-label', 'Menu Options');
 
-  containerWrapper.setAttribute('role', 'list');
-  containerWrapper.setAttribute('aria-label', 'Menu Options');
+  wrapper.appendChild(fragment);
+  contentContainer.appendChild(wrapper);
 
-  containerWrapper.appendChild(fragment);
-  contentContainer.appendChild(containerWrapper);
-
-  // Remove duplicate 'Custom Reports' headings if necessary
+  // Cleanup duplicate Custom Reports headings
   const h4Elements = document.querySelectorAll('h4');
-  const matchingHeadings = [...h4Elements].filter(
+  const matching = [...h4Elements].filter(
     (h4) => h4.textContent.trim().toLowerCase() === 'custom reports'
   );
 
-  if (matchingHeadings.length > 1) {
-    matchingHeadings.slice(1).forEach((h4) => h4.remove());
+  if (matching.length > 1) {
+    matching.slice(1).forEach((h4) => h4.remove());
   }
 }
 
@@ -1973,34 +2167,117 @@ function createMenu(menuData) {
       }
 
       // 2) Services top level
-    } else if (isServiceSection(section.section_id)) {
-      if (!createdServicesMenu) {
-        createdServicesMenu = true;
-
-        const services = createMenuItemWithSubmenu({
-          text: 'Services',
-          ariaLabel: 'Services has a sub menu. Click enter to open',
-          submenuTag: 'div',
-          submenuClass: 'grid-container-multiple mm-tabs-container',
+    } else if (
+      isServiceSection(section.section_id) &&
+      section.section_prompt !== null
+    ) {
+      console.log(section.pages.length);
+      if (section.pages.length < 4) {
+        console.log('less than 4 items');
+        // create the parent section li + a + an <ul class="sub-menu">
+        const sectionItem = createMenuItemWithSubmenu({
+          text: section.section_prompt,
+          ariaLabel: `${section.section_prompt} has a sub menu. Click enter to open`,
+          submenuTag: 'ul',
+          submenuClass: 'sub-menu',
         });
-
-        const mega = document.createElement('div');
-        mega.className = 'mega-menu';
-        // remove previously attached submenu and insert inside mega
-        const existingSub = services.li.querySelector(
-          ':scope > ' + services.submenu.tagName.toLowerCase()
-        );
-        if (existingSub) services.li.removeChild(existingSub);
-
-        mega.appendChild(services.submenu);
-        services.li.appendChild(mega);
-
-        rootUl.appendChild(services.li);
+        const subMenuUl = sectionItem.submenu; // this is the <ul class="sub-menu">
+        let currentNestedUl = null; // when a page opens its own submenu, this will point to that inner ul
+        section.pages.forEach((page, index) => {
+          // skip if the page prompt equals the section prompt (original logic)
+          if (
+            page.page_prompt.toLowerCase() ===
+            section.section_prompt.toLowerCase()
+          ) {
+            return;
+          }
+          // if page has no link -> it creates its own submenu (li with inner ul)
+          if (!page.page_link) {
+            // create li with submenu for this page
+            const nested = createMenuItemWithSubmenu({
+              text: page.page_prompt,
+              ariaLabel: `${page.page_prompt} has a sub menu. Click enter to open`,
+              submenuTag: 'ul',
+              submenuClass: 'sub-menu',
+            });
+            // append nested li to the section subMenu
+            subMenuUl.appendChild(nested.li);
+            // make currentNestedUl point to nested.submenu so subsequent pages get added there
+            currentNestedUl = nested.submenu;
+          } else {
+            // create a safe leaf item
+            const safeItem = createSafeMenuItem(page, { tabindex: -1 });
+            // if we currently have an open nested ul, append there; otherwise append to top-level subMenuUl
+            if (currentNestedUl) {
+              currentNestedUl.appendChild(safeItem);
+            } else {
+              subMenuUl.appendChild(safeItem);
+            }
+          }
+          // If this is last page, and we had opened a nested submenu, close the nested context
+          // (in DOM approach we just reset the pointer; this mirrors your original "close sub menu" logic)
+          if (index === section.pages.length - 1) {
+            currentNestedUl = null;
+          }
+        });
+        rootUl.appendChild(sectionItem.li);
+      } else {
+        console.log(' 4 or more items');
+        if (!createdServicesMenu) {
+          createdServicesMenu = true;
+          const services = createMenuItemWithSubmenu({
+            text: 'Services',
+            ariaLabel: 'Services has a sub menu. Click enter to open',
+            submenuTag: 'div',
+            submenuClass: 'grid-container-multiple mm-tabs-container',
+            // text: section.section_prompt,
+            // ariaLabel: `${section.section_prompt} has a sub menu. Click enter to open`,
+            // submenuTag: 'ul',
+            // submenuClass: 'sub-menu',
+          });
+          const mega = document.createElement('div');
+          mega.className = 'mega-menu';
+          // remove previously attached submenu and insert inside mega
+          const existingSub = services.li.querySelector(
+            ':scope > ' + services.submenu.tagName.toLowerCase()
+          );
+          if (existingSub) services.li.removeChild(existingSub);
+          mega.appendChild(services.submenu);
+          services.li.appendChild(mega);
+          rootUl.appendChild(services.li);
+        }
       }
-
+      // if (!section.section_prompt && section.pages.length < 4) {
+      //   console.log('I am hereeeeee');
+      // } else {
+      //   console.log('createServicesMENU');
+      //   if (!createdServicesMenu) {
+      //     createdServicesMenu = true;
+      //     const services = createMenuItemWithSubmenu({
+      //       text: 'Services',
+      //       ariaLabel: 'Services has a sub menu. Click enter to open',
+      //       submenuTag: 'div',
+      //       submenuClass: 'grid-container-multiple mm-tabs-container',
+      //       // text: section.section_prompt,
+      //       // ariaLabel: `${section.section_prompt} has a sub menu. Click enter to open`,
+      //       // submenuTag: 'ul',
+      //       // submenuClass: 'sub-menu',
+      //     });
+      //     const mega = document.createElement('div');
+      //     mega.className = 'mega-menu';
+      //     // remove previously attached submenu and insert inside mega
+      //     const existingSub = services.li.querySelector(
+      //       ':scope > ' + services.submenu.tagName.toLowerCase()
+      //     );
+      //     if (existingSub) services.li.removeChild(existingSub);
+      //     mega.appendChild(services.submenu);
+      //     services.li.appendChild(mega);
+      //     rootUl.appendChild(services.li);
+      //   }
+      // }
       // 3) Logout state: simple page links
     } else if (section.section_id === '0' && ukey === '') {
-      (menuData.pages || []).forEach((page) => {
+      (section.pages || []).forEach((page) => {
         const safeItem = createSafeMenuItem(page);
         rootUl.appendChild(safeItem);
       });
@@ -2015,10 +2292,8 @@ function createMenu(menuData) {
           submenuTag: 'ul',
           submenuClass: 'sub-menu',
         });
-
         const subMenuUl = sectionItem.submenu; // this is the <ul class="sub-menu">
         let currentNestedUl = null; // when a page opens its own submenu, this will point to that inner ul
-
         section.pages.forEach((page, index) => {
           // skip if the page prompt equals the section prompt (original logic)
           if (
@@ -2027,7 +2302,6 @@ function createMenu(menuData) {
           ) {
             return;
           }
-
           // if page has no link -> it creates its own submenu (li with inner ul)
           if (!page.page_link) {
             // create li with submenu for this page
@@ -2037,16 +2311,13 @@ function createMenu(menuData) {
               submenuTag: 'ul',
               submenuClass: 'sub-menu',
             });
-
             // append nested li to the section subMenu
             subMenuUl.appendChild(nested.li);
-
             // make currentNestedUl point to nested.submenu so subsequent pages get added there
             currentNestedUl = nested.submenu;
           } else {
             // create a safe leaf item
             const safeItem = createSafeMenuItem(page, { tabindex: -1 });
-
             // if we currently have an open nested ul, append there; otherwise append to top-level subMenuUl
             if (currentNestedUl) {
               currentNestedUl.appendChild(safeItem);
@@ -2054,20 +2325,19 @@ function createMenu(menuData) {
               subMenuUl.appendChild(safeItem);
             }
           }
-
           // If this is last page, and we had opened a nested submenu, close the nested context
           // (in DOM approach we just reset the pointer; this mirrors your original "close sub menu" logic)
           if (index === section.pages.length - 1) {
             currentNestedUl = null;
           }
         });
-
         rootUl.appendChild(sectionItem.li);
       }
     }
   });
 
   // Return as string so your existing usage (menuHTML variable) continues to work:
+  console.log(rootUl.innerHTML);
   return rootUl.innerHTML;
 }
 
